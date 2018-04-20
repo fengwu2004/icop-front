@@ -40,12 +40,12 @@ export default new Router({
   routes: constantRouterMap
 })
 
-const rightmenu = null
+const rightmenu = _import('systemadmin/usermanager/rightmenu')
 
 const createuser = {
   path: 'createuser',
-  component:_import('systemadmin/usermanager/createuser/index'),
-  // components: {main:_import('systemadmin/usermanager/createuser/index'), rightmenu:rightmenu},
+  // component:_import('systemadmin/usermanager/createuser/index'),
+  components: {main:_import('systemadmin/usermanager/createuser/index'), rightmenu:null},
   name: 'createuser',
   meta: { title: 'createuser', icon: 'table' },
   hidden: true
@@ -53,24 +53,23 @@ const createuser = {
 
 const usermanager = {
   path: 'usermanager',
-  component:_import('systemadmin/usermanager/index'),
-  // components: {main:_import('systemadmin/usermanager/index'), rightmenu:rightmenu},
+  // component:_import('systemadmin/usermanager/index'),
+  components: {main:_import('systemadmin/usermanager/index'), rightmenu:rightmenu},
   name: 'usermanager',
   meta: { title: 'usermanager', icon: 'table' },
-  children:[ createuser ]
 }
 
 const accountmanager = {
   path: 'accountmanager',
-  component:_import('systemadmin/accountmanager/index'),
-  // components: {main:_import('systemadmin/accountmanager/index'), rightmenu:rightmenu},
+  // component:_import('systemadmin/accountmanager/index'),
+  components: {main:_import('systemadmin/accountmanager/index'), rightmenu:null},
   name: 'accountmanager',
   meta: { title: 'accountmanager', icon: 'table' }}
 
 const projectsetting = {
   path: 'projectsetting',
-  component:_import('systemadmin/projectsetting/index'),
-  // components: {main:_import('systemadmin/projectsetting/index'), rightmenu:rightmenu},
+  // component:_import('systemadmin/projectsetting/index'),
+  components: {main:_import('systemadmin/projectsetting/index'), rightmenu:null},
   name: 'projectsetting',
   meta: { title: 'projectsetting', icon: 'table' }}
 
@@ -86,22 +85,23 @@ const systemadmin = {
   children: [
     usermanager,
     accountmanager,
-    projectsetting
+    projectsetting,
+    createuser
   ]
 }
 
 const innerpush = {
   path: 'innerpush',
-  component:_import('messagepush/innerpush/index'),
-  // components: {main:_import('messagepush/innerpush/index'), rightmenu:rightmenu},
+  // component:_import('messagepush/innerpush/index'),
+  components: {main:_import('messagepush/innerpush/index'), rightmenu:null},
   name: 'innerpush',
   meta: { title: 'innerpush', icon: 'table' }
 }
 
 const areapush = {
   path: 'areapush',
-  component:_import('messagepush/areapush/index'),
-  // components: {main:_import('messagepush/areapush/index'), rightmenu:rightmenu},
+  // component:_import('messagepush/areapush/index'),
+  components: {main:_import('messagepush/areapush/index'), rightmenu:null},
   name: 'areapush',
   meta: { title: 'areapush', icon: 'table' }}
 

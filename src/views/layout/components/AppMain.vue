@@ -2,7 +2,7 @@
   <section class="app-main" style="min-height: 100%">
     <navbar></navbar>
     <transition name="fade" mode="out-in">
-        <router-view></router-view>
+        <router-view name="main"></router-view>
     </transition>
   </section>
 </template>
