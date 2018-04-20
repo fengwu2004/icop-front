@@ -33,6 +33,7 @@ export default {
     accountmanager:'账户管理',
     projectsetting:'项目账户配置',
     usermanager:'角色管理',
+    createuser:'创建角色',
     inlineEditTable: 'Table内编辑',
     complexTable: '综合Table',
     treeTable: '树形表格',
