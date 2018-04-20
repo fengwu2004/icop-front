@@ -68,5 +68,36 @@ export const asyncRouterMap = [
     ]
   },
   
+  {
+    path: '/messagepush',
+    component: Layout,
+    redirect: '/messagepush/innerpush',
+    name: 'messagepush',
+    meta: {
+      title: 'messagepush',
+      icon: 'table'
+    },
+    children: [
+      { path: 'innerpush', component: _import('messagepush/innerpush/index'), name: 'innerpush', meta: { title: 'innerpush' }},
+      { path: 'areapush', component: _import('messagepush/areapush/index'), name: 'areapush', meta: { title: 'areapush' }}
+    ]
+  },
+  
+  {
+    path: '/systemadmin',
+    component: Layout,
+    redirect: '/systemadmin/usermanager',
+    name: 'systemadmin',
+    meta: {
+      title: 'systemadmin',
+      icon: 'table'
+    },
+    children: [
+      { path: 'usermanager', component: _import('systemadmin/usermanager/index'), name: 'usermanager', meta: { title: 'usermanager' }},
+      { path: 'accountmanager', component: _import('systemadmin/accountmanager/index'), name: 'accountmanager', meta: { title: 'accountmanager' }},
+      { path: 'projectsetting', component: _import('systemadmin/projectsetting/index'), name: 'projectsetting', meta: { title: 'projectsetting' }}
+    ]
+  },
+  
   { path: '*', redirect: '/404', hidden: true }
 ]
