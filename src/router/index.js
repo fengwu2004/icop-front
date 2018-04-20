@@ -52,21 +52,6 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-
-  {
-    path: '/table',
-    component: Layout,
-    redirect: '/table/complex-table',
-    name: 'Table',
-    meta: {
-      title: 'Table',
-      icon: 'table'
-    },
-    children: [
-      { path: 'drag-table', component: _import('table/dragTable'), name: 'dragTable', meta: { title: 'dragTable' }},
-      { path: 'complex-table', component: _import('table/complexTable'), name: 'complexTable', meta: { title: 'complexTable' }}
-    ]
-  },
   
   {
     path: '/messagepush',
@@ -78,8 +63,8 @@ export const asyncRouterMap = [
       icon: 'table'
     },
     children: [
-      { path: 'innerpush', component: _import('messagepush/innerpush/index'), name: 'innerpush', meta: { title: 'innerpush' }},
-      { path: 'areapush', component: _import('messagepush/areapush/index'), name: 'areapush', meta: { title: 'areapush' }}
+      { path: 'innerpush', component: _import('messagepush/innerpush/index'), name: 'innerpush', meta: { title: 'innerpush', icon: 'table' }},
+      { path: 'areapush', component: _import('messagepush/areapush/index'), name: 'areapush', meta: { title: 'areapush', icon: 'table' }}
     ]
   },
   
@@ -93,9 +78,9 @@ export const asyncRouterMap = [
       icon: 'table'
     },
     children: [
-      { path: 'usermanager', component: _import('systemadmin/usermanager/index'), name: 'usermanager', meta: { title: 'usermanager' }},
-      { path: 'accountmanager', component: _import('systemadmin/accountmanager/index'), name: 'accountmanager', meta: { title: 'accountmanager' }},
-      { path: 'projectsetting', component: _import('systemadmin/projectsetting/index'), name: 'projectsetting', meta: { title: 'projectsetting' }}
+      { path: 'usermanager', component: _import('systemadmin/usermanager/index'), name: 'usermanager', meta: { title: 'usermanager', icon: 'table' }},
+      { path: 'accountmanager', component: _import('systemadmin/accountmanager/index'), name: 'accountmanager', meta: { title: 'accountmanager', icon: 'table' }},
+      { path: 'projectsetting', component: _import('systemadmin/projectsetting/index'), name: 'projectsetting', meta: { title: 'projectsetting', icon: 'table' }}
     ]
   },
   
