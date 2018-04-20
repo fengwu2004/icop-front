@@ -48,6 +48,7 @@ const createuser = {
   // components: {main:_import('systemadmin/usermanager/createuser/index'), rightmenu:rightmenu},
   name: 'createuser',
   meta: { title: 'createuser', icon: 'table' },
+  hidden: true
 }
 
 const usermanager = {
@@ -56,7 +57,7 @@ const usermanager = {
   // components: {main:_import('systemadmin/usermanager/index'), rightmenu:rightmenu},
   name: 'usermanager',
   meta: { title: 'usermanager', icon: 'table' },
-  // children:[ createuser ]
+  children:[ createuser ]
 }
 
 const accountmanager = {

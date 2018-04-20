@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div @click="click">角色管理</div>
+    <div @click="click">创建角色</div>
   </div>
 </template>
 

@@ -1,7 +1,6 @@
 <template>
   <div class="menu-wrapper">
     <template v-for="item in routes" v-if="!item.hidden&&item.children">
-
       <router-link v-if="hasOneShowingChildren(item.children) && !item.children[0].children&&!item.alwaysShow" :to="item.path+'/'+item.children[0].path"
         :key="item.children[0].name">
         <el-menu-item :index="item.path+'/'+item.children[0].path" :class="{'submenu-title-noDropdown':!isNest}">
@@ -9,7 +8,6 @@
           <span v-if="item.children[0].meta&&item.children[0].meta.title" slot="title">{{generateTitle(item.children[0].meta.title)}}</span>
         </el-menu-item>
       </router-link>
-
       <el-submenu v-else :index="item.name||item.path" :key="item.name">
         <template slot="title">
           <svg-icon v-if="item.meta&&item.meta.icon" :icon-class="item.meta.icon"></svg-icon>
@@ -27,7 +25,6 @@
           </router-link>
         </template>
       </el-submenu>
-
     </template>
   </div>
 </template>
@@ -48,12 +45,17 @@ export default {
   },
   methods: {
     hasOneShowingChildren(children) {
+
       const showingChildren = children.filter(item => {
+
         return !item.hidden
       })
+
       if (showingChildren.length === 1) {
+
         return true
       }
+      
       return false
     },
     generateTitle
