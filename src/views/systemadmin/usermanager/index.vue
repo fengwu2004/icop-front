@@ -6,7 +6,6 @@
 
 <script>
 export default {
-
   methods:{
     click() {
       this.$router.push({ name: 'createuser' })
@@ -22,5 +21,6 @@ export default {
     align-items: center;
     width: 100%;
     height: 500px;
+    background: green;
   }
 </style>

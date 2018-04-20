@@ -40,55 +40,84 @@ export default new Router({
   routes: constantRouterMap
 })
 
+const createuser = {
+  path: 'createuser',
+  components: {default:_import('systemadmin/usermanager/createuser/index'), rightmenu:null},
+  name: 'createuser',
+  meta: { title: 'createuser', icon: 'table' },
+}
+
 const usermanager = {
   path: 'usermanager',
   components: {default:_import('systemadmin/usermanager/index'), rightmenu:_import('systemadmin/usermanager/rightmenu')},
   name: 'usermanager',
-  meta: { title: 'usermanager', icon: 'table' }
+  meta: { title: 'usermanager', icon: 'table' },
+  // children:[ createuser ]
 }
 
+const accountmanager = {
+  path: 'accountmanager',
+  components: {default:_import('systemadmin/accountmanager/index'), rightmenu:null},
+  name: 'accountmanager',
+  meta: { title: 'accountmanager', icon: 'table' }}
+
+const projectsetting = {
+  path: 'projectsetting',
+  components: {default:_import('systemadmin/projectsetting/index'), rightmenu:null},
+  name: 'projectsetting',
+  meta: { title: 'projectsetting', icon: 'table' }}
+
+const systemadmin = {
+  path: '/systemadmin',
+  component: Layout,
+  redirect: '/systemadmin/usermanager',
+  name: 'systemadmin',
+  meta: {
+    title: 'systemadmin',
+    icon: 'table'
+  },
+  children: [
+    usermanager,
+    accountmanager,
+    projectsetting
+  ]
+}
+
+const innerpush = {
+  path: 'innerpush',
+  components: {default:_import('messagepush/innerpush/index'), rightmenu:null},
+  name: 'innerpush',
+  meta: { title: 'innerpush', icon: 'table' }
+}
+
+const areapush = {
+  path: 'areapush',
+  components: {default:_import('messagepush/areapush/index'), rightmenu:null},
+  name: 'areapush',
+  meta: { title: 'areapush', icon: 'table' }}
+
+const messagepush = {
+  path: '/messagepush',
+  component: Layout,
+  redirect: '/messagepush/innerpush',
+  name: 'messagepush',
+  meta: {
+    title: 'messagepush',
+    icon: 'table'
+  },
+  children: [
+    innerpush,
+    areapush
+  ]
+}
+
+const error404 = {
+  path: '*',
+  redirect: '/404',
+  hidden: true }
+
 export const asyncRouterMap = [
-  
-  {
-    path: '/messagepush',
-    component: Layout,
-    redirect: '/messagepush/innerpush',
-    name: 'messagepush',
-    meta: {
-      title: 'messagepush',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'innerpush',
-        component: _import('messagepush/innerpush/index'),
-        name: 'innerpush',
-        meta: { title: 'innerpush', icon: 'table' }
-      },
-      { path: 'areapush', component: _import('messagepush/areapush/index'), name: 'areapush', meta: { title: 'areapush', icon: 'table' }}
-    ]
-  },
-  
-  {
-    path: '/systemadmin',
-    component: Layout,
-    redirect: '/systemadmin/usermanager',
-    name: 'systemadmin',
-    meta: {
-      title: 'systemadmin',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'usermanager',
-        components: {default:_import('systemadmin/usermanager/index'), rightmenu:_import('systemadmin/usermanager/rightmenu')},
-        name: 'usermanager',
-        meta: { title: 'usermanager', icon: 'table' }
-      },
-      { path: 'accountmanager', component: _import('systemadmin/accountmanager/index'), name: 'accountmanager', meta: { title: 'accountmanager', icon: 'table' }},
-      { path: 'projectsetting', component: _import('systemadmin/projectsetting/index'), name: 'projectsetting', meta: { title: 'projectsetting', icon: 'table' }}
-    ]
-  },
-  
-  { path: '*', redirect: '/404', hidden: true }
+  messagepush,
+  systemadmin,
+  error404
 ]
