@@ -85,13 +85,14 @@
 
   .title {
 
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .main {
 
-    width: calc(100% - 100px);
-    margin: auto;
+    box-shadow: 0px 2px 2px 0px #000000;
+    padding: 0 2rem;
+    width: 100%;
     height: 50px;
     display: flex;
     justify-content: space-between;
