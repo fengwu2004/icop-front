@@ -52,62 +52,21 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/index',
-    meta: { roles: ['admin'] }, // you can set roles in root nav
-    children: [{
-      path: 'index',
-      component: _import('permission/index'),
-      name: 'permission',
-      meta: {
-        title: 'permission',
-        icon: 'lock',
-        roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }]
-  },
 
   {
-    path: '/example/table',
-    component: _import('example/table/index'),
-    redirect: '/example/table/complex-table',
+    path: '/table',
+    component: Layout,
+    redirect: '/table/complex-table',
     name: 'Table',
     meta: {
       title: 'Table',
       icon: 'table'
     },
     children: [
-      { path: 'dynamic-table', component: _import('example/table/dynamicTable/index'), name: 'dynamicTable', meta: { title: 'dynamicTable' }},
-      { path: 'drag-table', component: _import('example/table/dragTable'), name: 'dragTable', meta: { title: 'dragTable' }},
-      { path: 'inline-edit-table', component: _import('example/table/inlineEditTable'), name: 'inlineEditTable', meta: { title: 'inlineEditTable' }},
-      { path: 'tree-table', component: _import('example/table/treeTable/treeTable'), name: 'treeTableDemo', meta: { title: 'treeTable' }},
-      { path: 'custom-tree-table', component: _import('example/table/treeTable/customTreeTable'), name: 'customTreeTableDemo', meta: { title: 'customTreeTable' }},
-      { path: 'complex-table', component: _import('example/table/complexTable'), name: 'complexTable', meta: { title: 'complexTable' }}
+      { path: 'drag-table', component: _import('table/dragTable'), name: 'dragTable', meta: { title: 'dragTable' }},
+      { path: 'complex-table', component: _import('table/complexTable'), name: 'complexTable', meta: { title: 'complexTable' }}
     ]
   },
-
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'errorPages',
-    meta: {
-      title: 'errorPages',
-      icon: '404'
-    },
-    children: [
-      { path: '401', component: _import('errorPage/401'), name: 'page401', meta: { title: 'page401', noCache: true }},
-      { path: '404', component: _import('errorPage/404'), name: 'page404', meta: { title: 'page404', noCache: true }}
-    ]
-  },
-
-  {
-    path: '/i18n',
-    component: Layout,
-    children: [{ path: 'index', component: _import('i18n-demo/index'), name: 'i18n', meta: { title: 'i18n', icon: 'international' }}]
-  },
-
+  
   { path: '*', redirect: '/404', hidden: true }
 ]
