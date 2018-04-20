@@ -1,5 +1,6 @@
 <template>
   <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
+    <AppHeaderBar></AppHeaderBar>
     <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
       <navbar></navbar>
@@ -9,14 +10,15 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { Navbar, Sidebar, AppMain, AppHeaderBar } from './components'
 
 export default {
   name: 'layout',
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    AppHeaderBar
   },
   computed: {
     sidebar() {
@@ -34,4 +36,11 @@ export default {
     height: 100%;
     width: 100%;
   }
+
+  .mainheader {
+
+    height: 50px;
+    width: 100%;
+  }
+
 </style>
