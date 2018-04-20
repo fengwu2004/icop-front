@@ -1,7 +1,7 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
     <breadcrumb class="breadcrumb-container"></breadcrumb>
-    <router-view class="rightmenu" name="rightmenu"></router-view>
+    <!--<router-view class="rightmenu" name="rightmenu"></router-view>-->
   </el-menu>
 </template>
 

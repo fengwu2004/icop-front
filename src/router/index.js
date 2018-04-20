@@ -40,16 +40,20 @@ export default new Router({
   routes: constantRouterMap
 })
 
+const rightmenu = null
+
 const createuser = {
   path: 'createuser',
-  components: {default:_import('systemadmin/usermanager/createuser/index'), rightmenu:null},
+  component:_import('systemadmin/usermanager/createuser/index'),
+  // components: {main:_import('systemadmin/usermanager/createuser/index'), rightmenu:rightmenu},
   name: 'createuser',
   meta: { title: 'createuser', icon: 'table' },
 }
 
 const usermanager = {
   path: 'usermanager',
-  components: {default:_import('systemadmin/usermanager/index'), rightmenu:_import('systemadmin/usermanager/rightmenu')},
+  component:_import('systemadmin/usermanager/index'),
+  // components: {main:_import('systemadmin/usermanager/index'), rightmenu:rightmenu},
   name: 'usermanager',
   meta: { title: 'usermanager', icon: 'table' },
   // children:[ createuser ]
@@ -57,13 +61,15 @@ const usermanager = {
 
 const accountmanager = {
   path: 'accountmanager',
-  components: {default:_import('systemadmin/accountmanager/index'), rightmenu:null},
+  component:_import('systemadmin/accountmanager/index'),
+  // components: {main:_import('systemadmin/accountmanager/index'), rightmenu:rightmenu},
   name: 'accountmanager',
   meta: { title: 'accountmanager', icon: 'table' }}
 
 const projectsetting = {
   path: 'projectsetting',
-  components: {default:_import('systemadmin/projectsetting/index'), rightmenu:null},
+  component:_import('systemadmin/projectsetting/index'),
+  // components: {main:_import('systemadmin/projectsetting/index'), rightmenu:rightmenu},
   name: 'projectsetting',
   meta: { title: 'projectsetting', icon: 'table' }}
 
@@ -85,14 +91,16 @@ const systemadmin = {
 
 const innerpush = {
   path: 'innerpush',
-  components: {default:_import('messagepush/innerpush/index'), rightmenu:null},
+  component:_import('messagepush/innerpush/index'),
+  // components: {main:_import('messagepush/innerpush/index'), rightmenu:rightmenu},
   name: 'innerpush',
   meta: { title: 'innerpush', icon: 'table' }
 }
 
 const areapush = {
   path: 'areapush',
-  components: {default:_import('messagepush/areapush/index'), rightmenu:null},
+  component:_import('messagepush/areapush/index'),
+  // components: {main:_import('messagepush/areapush/index'), rightmenu:rightmenu},
   name: 'areapush',
   meta: { title: 'areapush', icon: 'table' }}
 
