@@ -67,7 +67,7 @@ export const asyncRouterMap = [
       icon: 'table'
     },
     children: [
-      { path: 'usermanager', component: _import('systemadmin/usermanager/index'), name: 'usermanager', meta: { title: 'usermanager', icon: 'table' }},
+      { path: 'usermanager', components: {default:_import('systemadmin/usermanager/index'), rightmenu:_import('systemadmin/usermanager/rightmenu')}, name: 'usermanager', meta: { title: 'usermanager', icon: 'table' }},
       { path: 'accountmanager', component: _import('systemadmin/accountmanager/index'), name: 'accountmanager', meta: { title: 'accountmanager', icon: 'table' }},
       { path: 'projectsetting', component: _import('systemadmin/projectsetting/index'), name: 'projectsetting', meta: { title: 'projectsetting', icon: 'table' }}
     ]
