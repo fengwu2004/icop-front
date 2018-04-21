@@ -47,7 +47,7 @@ export default {
 .scroll-container {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 50px);
   background-color: #e0e5ee;
   .scroll-wrapper {
     position: absolute;

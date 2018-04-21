@@ -28,6 +28,8 @@
 
   .app-main {
 
+    position: relative;
+    height: 100%;
     width: 98%;
     margin: 2px auto 0;
     min-height: calc(100% - 2px);
@@ -54,6 +56,8 @@
 
     .mainframe {
 
+      position: relative;
+      height: 100%;
       margin-top: 1rem;
     }
   }

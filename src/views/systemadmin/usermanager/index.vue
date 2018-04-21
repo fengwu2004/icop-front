@@ -15,7 +15,7 @@
       </el-table>
     </div>
     <div class="pagination">
-    <page-widget :total="100" :pagesizes="[10, 20, 40, 50]"></page-widget>
+      <page-widget :total="100" :pagesizes="[10, 20, 40, 50]"></page-widget>
     </div>
   </div>
 </template>

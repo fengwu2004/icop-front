@@ -36,10 +36,4 @@ export default {
     width: 100%;
   }
 
-  .mainheader {
-
-    height: 50px;
-    width: 100%;
-  }
-
 </style>
