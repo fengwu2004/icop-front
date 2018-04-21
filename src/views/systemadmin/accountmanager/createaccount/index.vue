@@ -44,7 +44,7 @@
     <div class="settings">
       <el-button>取消</el-button>
       <el-button type="primary">保存</el-button>
-      <el-button type="success">继续分配角色</el-button>
+      <el-button type="success" @click="setpermission">继续分配角色</el-button>
     </div>
   </div>
 </template>
@@ -93,6 +93,13 @@
           children: 'children',
           label: 'label'
         }
+      }
+    },
+
+    methods:{
+      setpermission() {
+
+        this.$router.push({name:'permissionsetting'})
       }
     }
   }

@@ -51,13 +51,22 @@ const createuser = {
   hidden: true
 }
 
+const permissionsetting = {
+  path: 'permissionsetting',
+  // component:_import('systemadmin/usermanager/createuser/index'),
+  components: {default:_import('systemadmin/accountmanager/createaccount/permissionsetting/index'), rightmenu:null},
+  name: 'permissionsetting',
+  meta: { title: 'permissionsetting', icon: 'table' },
+  hidden: true
+}
+
 const createaccount = {
   path: 'createaccount',
   // component:_import('systemadmin/usermanager/createuser/index'),
   components: {default:_import('systemadmin/accountmanager/createaccount/index'), rightmenu:null},
   name: 'createaccount',
   meta: { title: 'createaccount', icon: 'table' },
-  hidden: true
+  hidden: true,
 }
 
 const usermanager = {
@@ -98,7 +107,8 @@ const systemadmin = {
     accountmanager,
     projectsetting,
     createuser,
-    createaccount
+    createaccount,
+    permissionsetting
   ]
 }
 

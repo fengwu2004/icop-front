@@ -35,6 +35,7 @@ export default {
     usermanager:'角色管理',
     createuser:'创建角色',
     createaccount:'创建账户',
+    permissionsetting:'设置权限',
     inlineEditTable: 'Table内编辑',
     complexTable: '综合Table',
     treeTable: '树形表格',
