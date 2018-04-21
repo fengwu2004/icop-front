@@ -19,6 +19,7 @@
     height: 50px;
     line-height: 50px;
     border-radius: 0px !important;
+    border-bottom: 1px solid red;
 
     .breadcrumb-container {
 

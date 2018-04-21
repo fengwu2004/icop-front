@@ -1,10 +1,12 @@
 <template>
-  <section class="app-main" style="min-height: 100%">
+  <div class="app-main">
     <navbar></navbar>
     <transition name="fade" mode="out-in">
-        <router-view></router-view>
+      <div class="mainframe">
+        <router-view class="router-view"></router-view>
+      </div>
     </transition>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -15,3 +17,19 @@
     components: { Navbar },
   }
 </script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+
+  .app-main {
+
+    width: 98%;
+    margin: auto;
+    min-height: 100%;
+
+    .mainframe {
+
+      margin-top: 2rem;
+    }
+  }
+
+</style>
