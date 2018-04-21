@@ -24,18 +24,22 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
+  $primcolor:#d0d5e5;
+
   .app-main {
 
     width: 98%;
-    margin: auto;
-    min-height: 100%;
+    margin: 2px auto 0;
+    min-height: calc(100% - 2px);
 
     .navbar {
-      background: #d0d5e5;
+
+      background: white;
       height: 50px;
       line-height: 50px;
       border-radius: 0px !important;
-      border-bottom: 1px solid red;
+      border-bottom: 1px solid $primcolor;
+      box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
 
       .breadcrumb-container {
 
@@ -43,13 +47,14 @@
       }
 
       .rightmenu {
+
         float: right;
       }
     }
 
     .mainframe {
 
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
   }
 

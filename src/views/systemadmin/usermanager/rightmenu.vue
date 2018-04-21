@@ -1,14 +1,23 @@
 <template>
   <div class="rightmenu">
     <el-input class="input" placeholder="请输入角色名称查询"></el-input>
-    <el-button class="search">查询</el-button>
-    <el-button class="create">创建</el-button>
+    <el-button class="search" @click="search">查询</el-button>
+    <el-button class="create" @click="create">创建</el-button>
   </div>
 </template>
 
 <script>
 export default {
 
+  methods:{
+    search() {
+
+    },
+    create() {
+
+      this.$router.push({name:'createuser'})
+    }
+  }
 }
 </script>
 

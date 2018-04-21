@@ -90,7 +90,7 @@
 
   .main {
 
-    box-shadow: 0px 2px 2px 0px #000000;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
     padding: 0 2rem;
     width: 100%;
     height: 50px;

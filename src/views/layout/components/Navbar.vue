@@ -15,7 +15,7 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .navbar {
-    background: #d0d5e5;
+    background: white;
     height: 50px;
     line-height: 50px;
     border-radius: 0px !important;
