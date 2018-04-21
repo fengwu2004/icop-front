@@ -7,7 +7,7 @@
       </el-select>
     </div>
     <div class="right">
-      <el-pagination background :page-sizes="pagesizes" layout="prev, pager, next" :total="total"></el-pagination>
+      <el-pagination background :page-sizes="pagesizes" :page-size="value" layout="prev, pager, next" :total="total"></el-pagination>
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@
     props:['total', 'pagesizes'],
     data() {
       return {
-        value:'10条',
+        value:'10',
       }
     },
     methods:{
