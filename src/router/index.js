@@ -40,7 +40,7 @@ export default new Router({
   routes: constantRouterMap
 })
 
-const rightmenu = _import('systemadmin/usermanager/rightmenu')
+const createuserrightmenu = _import('systemadmin/usermanager/rightmenu')
 
 const createuser = {
   path: 'createuser',
@@ -51,18 +51,29 @@ const createuser = {
   hidden: true
 }
 
+const createaccount = {
+  path: 'createaccount',
+  // component:_import('systemadmin/usermanager/createuser/index'),
+  components: {default:_import('systemadmin/accountmanager/createaccount/index'), rightmenu:null},
+  name: 'createaccount',
+  meta: { title: 'createaccount', icon: 'table' },
+  hidden: true
+}
+
 const usermanager = {
   path: 'usermanager',
   // component:_import('systemadmin/usermanager/index'),
-  components: {default:_import('systemadmin/usermanager/index'), rightmenu:rightmenu},
+  components: {default:_import('systemadmin/usermanager/index'), rightmenu:createuserrightmenu},
   name: 'usermanager',
   meta: { title: 'usermanager', icon: 'table' },
 }
 
+const accountmanagerrightmenu = _import('systemadmin/accountmanager/rightmenu')
+
 const accountmanager = {
   path: 'accountmanager',
   // component:_import('systemadmin/accountmanager/index'),
-  components: {default:_import('systemadmin/accountmanager/index'), rightmenu:null},
+  components: {default:_import('systemadmin/accountmanager/index'), rightmenu:accountmanagerrightmenu},
   name: 'accountmanager',
   meta: { title: 'accountmanager', icon: 'table' }}
 
@@ -86,7 +97,8 @@ const systemadmin = {
     usermanager,
     accountmanager,
     projectsetting,
-    createuser
+    createuser,
+    createaccount
   ]
 }
 
