@@ -5,7 +5,7 @@
         <div>
           <li>人员编号</li>
           <div class="specialinput">
-            <input/><el-button type="primary" plain size="mini">请选择</el-button>
+            <input/><el-button type="primary" plain size="mini" @click="selectaccount">请选择</el-button>
           </div>
         </div>
         <div style="margin-top: 2rem">
@@ -46,14 +46,19 @@
       <el-button type="primary">保存</el-button>
       <el-button type="success" @click="setpermission">继续分配角色</el-button>
     </div>
+    <select-account-dlg v-if="showselectdlg"></select-account-dlg>
   </div>
 </template>
 
 <script>
+  import SelectAccountDlg from '@/components/SelectAccount/index'
   export default {
 
+    components: {SelectAccountDlg},
     data() {
       return {
+        radio:'',
+        showselectdlg:false,
         data2: [{
           id: 1,
           label: '一级 1',
@@ -100,6 +105,10 @@
       setpermission() {
 
         this.$router.push({name:'permissionsetting'})
+      },
+      selectaccount() {
+
+        this.showselectdlg = true
       }
     }
   }
