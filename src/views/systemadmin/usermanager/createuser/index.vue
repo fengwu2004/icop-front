@@ -12,9 +12,9 @@
           <el-input type="textarea" maxlength="50" rows="12"></el-input>
         </div>
       </div>
-      <div class="jwgpermission">
+      <div class="permissionctr">
         <div style="font-size:0.8rem">请勾选可使用的捷物管APP功能</div>
-        <div class="jwgtree">
+        <div class="permissiontree">
           <el-tree
             :data="data2"
             show-checkbox
@@ -25,9 +25,9 @@
           </el-tree>
         </div>
       </div>
-      <div class="jwgpermission">
-        <div style="font-size:0.8rem">请勾选可使用的捷物管APP功能</div>
-        <div class="jwgtree">
+      <div class="permissionctr">
+        <div style="font-size:0.8rem">请勾选可使用的社区运营平台功能</div>
+        <div class="permissiontree">
           <el-tree
             :data="data2"
             show-checkbox
@@ -118,9 +118,9 @@
     justify-content: center;
   }
 
-  .jwgpermission {
+  .permissionctr {
 
-    .jwgtree {
+    .permissiontree {
 
       height: 400px;
       width: 300px;
