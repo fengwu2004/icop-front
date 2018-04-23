@@ -1,6 +1,9 @@
 <template>
-  <el-dialog title="人员选择" :visible.sync="dialogVisible">
+  <el-dialog :visible.sync="dialogVisible">
     <div class="table">
+      <div>
+        <span>人员选择</span>
+      </div>
       <el-table :data="tableData" :show-header="true" :highlight-current-row="true">
         <el-table-column prop="count" label="员工账号" width="200" @current-change="handleCurrentChange"></el-table-column>
         <el-table-column prop="userindex" label="人员编号" width="150"></el-table-column>
