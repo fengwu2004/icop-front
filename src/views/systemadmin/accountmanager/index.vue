@@ -27,7 +27,7 @@
   import { default as PageWidget } from '@/components/PageWidget'
   export default {
 
-    components: {PageWidget},
+    components: { PageWidget },
     data() {
       return {
         tableData: [{

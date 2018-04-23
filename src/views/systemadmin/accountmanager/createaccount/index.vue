@@ -46,15 +46,18 @@
       <el-button type="primary">保存</el-button>
       <el-button type="success" @click="setpermission">继续分配角色</el-button>
     </div>
-    <select-account-dlg ref="sel"></select-account-dlg>
+    <select-account ref="sel"></select-account>
   </div>
 </template>
 
 <script>
-  import SelectAccountDlg from '@/components/SelectAccount/index'
+
+  import SelectAccount from '@/components/SelectAccount'
+
   export default {
 
-    components: {SelectAccountDlg},
+    components: { SelectAccount },
+
     data() {
       return {
         radio:'',

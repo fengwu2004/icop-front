@@ -3,7 +3,7 @@
     <div class="left">
       <span class="pageinfo">共有{{total}}条,每页显示: </span>
       <el-select size="mini" v-model="value" placeholder="请选择">
-        <el-option v-for="(item, index) in pagesizes" :key="PageWidget" :label="getLabel(item)" :value="item"></el-option>
+        <el-option v-for="(item, index) in pagesizes" :key="index" :label="getLabel(item)" :value="item"></el-option>
       </el-select>
     </div>
     <div class="right">
@@ -35,11 +35,11 @@
       },
       handleEdit(index, row) {
 
-        console.log(PageWidget, row);
+
       },
       handleDelete(index, row) {
 
-        console.log(PageWidget, row);
+
       },
       headerrow({row, rowIndex}) {
 

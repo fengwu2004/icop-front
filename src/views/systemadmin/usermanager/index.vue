@@ -38,6 +38,7 @@
         show:true
       }
     },
+
     methods:{
       headercellstyle({row, rowIndex, columnIndex}){
 

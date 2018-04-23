@@ -20,7 +20,6 @@
   import { default as PageWidget } from '@/components/PageWidget'
 1
   export default {
-    name:'SelectAccountDlg',
     components: { PageWidget },
     methods:{
 
@@ -30,8 +29,6 @@
       },
 
       handleCurrentChange(val) {
-
-        console.log('zzz')
 
         console.log(val)
       }
@@ -78,11 +75,16 @@
   };
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style scoped>
 
   .pagination {
 
     margin-top: 2rem;
+  }
+
+  .el-table >>> th {
+
+    background: #d0d5e5;
   }
 
 </style>
