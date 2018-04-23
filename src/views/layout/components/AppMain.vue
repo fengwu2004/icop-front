@@ -14,7 +14,6 @@
 
 <script>
   import Breadcrumb from '@/components/Breadcrumb'
-  import { default as Navbar } from './Navbar'
 
   export default {
     name: 'AppMain',

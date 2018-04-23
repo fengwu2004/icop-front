@@ -21,7 +21,7 @@
     props:['total', 'pagesizes'],
     data() {
       return {
-        value:'10',
+        value:10,
       }
     },
     methods:{
