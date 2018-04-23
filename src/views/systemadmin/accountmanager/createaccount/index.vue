@@ -46,7 +46,7 @@
       <el-button type="primary">保存</el-button>
       <el-button type="success" @click="setpermission">继续分配角色</el-button>
     </div>
-    <select-account-dlg v-if="showselectdlg"></select-account-dlg>
+    <select-account-dlg ref="sel"></select-account-dlg>
   </div>
 </template>
 
@@ -58,7 +58,6 @@
     data() {
       return {
         radio:'',
-        showselectdlg:false,
         data2: [{
           id: 1,
           label: '一级 1',
@@ -108,7 +107,7 @@
       },
       selectaccount() {
 
-        this.showselectdlg = true
+        this.$refs.sel.show()
       }
     }
   }
