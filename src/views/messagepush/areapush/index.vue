@@ -12,8 +12,8 @@
           <el-table-column prop="title" label="内容主题" width="400"></el-table-column>
           <el-table-column prop="type" label="消息类型" width="150"></el-table-column>
           <el-table-column prop="send" label="发送方式" width="150"></el-table-column>
-          <el-table-column prop="tag" label="发布状态" width="100"
-                           :filters="[{ text: '已发布', value: 'alreadysend' }, { text: '未发布', value: 'unsend' }]"
+          <el-table-column prop="tag" label="发布状态" width="150"
+                           :filters="[{ text: '已发布', value: '已发布' }, { text: '未发布', value: '未发布' }]"
                            :filter-method="filterTag"
                            :filter-multiple="false">
             <template slot-scope="scope">
@@ -59,7 +59,6 @@
         }],
       }
     },
-
     methods: {
       headercellstyle({row, rowIndex, columnIndex}) {
 
@@ -78,6 +77,8 @@
 
       },
       filterTag(value, row) {
+
+        console.log('zz')
 
         return row.tag === value;
       },
