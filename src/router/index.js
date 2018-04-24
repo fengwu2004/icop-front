@@ -123,7 +123,7 @@ const innerpush = {
 const areapush = {
   path: 'areapush',
   // component:_import('messagepush/areapush/index'),
-  components: {default:_import('messagepush/areapush/index'), rightmenu:null},
+  components: {default:_import('messagepush/areapush/index'), rightmenu:_import('messagepush/areapush/rightmenu')},
   name: 'areapush',
   meta: { title: 'areapush', icon: 'table' }}
 
@@ -137,8 +137,8 @@ const messagepush = {
     icon: 'table'
   },
   children: [
-    innerpush,
-    areapush
+    areapush,
+    innerpush
   ]
 }
 

@@ -2,10 +2,10 @@
   <el-dialog :visible.sync="dialogVisible">
     <div class="table">
       <div class="header">
-        <span style="font-size: 1.5rem; font-weight: bold">人员选择</span>
+        <span style="font-size: 1.2rem;">人员选择</span>
         <div style="display: flex; align-items: center; justify-content: center;">
-          <el-input style="margin-right: 1rem" placeholder="按人员编号/姓名"></el-input>
-          <el-button style="margin-left: 1rem" >查询</el-button>
+          <el-input style="margin-right: 1rem;" placeholder="按人员编号/姓名"></el-input>
+          <el-button style="margin-left: 1rem" type="primary">查询</el-button>
         </div>
       </div>
       <el-table :data="tableData" :show-header="true" :highlight-current-row="true">
@@ -18,6 +18,10 @@
     </div>
     <div class="pagination">
       <page-widget :total="100" :pagesizes="[10, 20, 40, 50]"></page-widget>
+    </div>
+    <div class="btns">
+      <el-button>取消</el-button>
+      <el-button type="primary">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -92,7 +96,7 @@
 
   .pagination {
 
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   .el-table >>> th {
@@ -106,6 +110,14 @@
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  .btns {
+
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
     align-items: center;
   }
 
