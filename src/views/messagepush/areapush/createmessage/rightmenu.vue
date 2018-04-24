@@ -13,7 +13,7 @@ export default {
     },
     create() {
 
-      this.$router.push({name:'createareamessage'})
+      this.$router.push({name:'createuser'})
     }
   }
 }
