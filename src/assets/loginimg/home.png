@@ -1,0 +1,44 @@
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+<head>
+  <meta charset="utf-8" />
+  <title>捷顺科技智能管理平台</title>
+  <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="http://120.77.201.142:9507/jsis_3.4.1/3party/bootstrap3.3.6/css/bootstrap.css" type="text/css" />
+<link rel="stylesheet" href="http://120.77.201.142:9507/jsis_3.4.1/3party/animate.css" type="text/css" />
+<link rel="stylesheet" href="http://120.77.201.142:9507/jsis_3.4.1/3party/simple-line-icons.css" type="text/css" />
+<link rel="stylesheet" href="http://120.77.201.142:9507/jsis_3.4.1/3party/font-awesome.min.css" type="text/css" />
+<link rel="stylesheet" href="http://120.77.201.142:9507/jsis_3.4.1/3party/font.css" type="text/css" />
+<link rel="stylesheet" href="http://120.77.201.142:9507/jsis_3.4.1/3party/app.css" type="text/css" />
+</head>
+<body>
+	<div class="app ng-scope app-header-fixed" id="app">
+		<div class="fade-in-right-big smooth ng-scope">
+			<div class="container w-xxl w-auto-xs">
+			  <div class="text-center m-b-lg">
+			    <h1 class="text-shadow text-white">404</h1>
+			    <h3 class="text-shadow text-black" style="font-size:18px">页面未找到</h3>
+			  </div>
+			  <div class="list-group bg-info auto m-b-sm m-b-lg">
+			    <a href="#" class="list-group-item" onclick="top.location.href='http://120.77.201.142:9507/jsis_3.4.1/index.action';">
+			      <i class="fa fa-chevron-right text-muted"></i>
+			      <i class="fa fa-fw fa-mail-forward m-r-xs"></i>点击返回主页
+			    </a>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
