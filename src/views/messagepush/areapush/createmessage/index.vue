@@ -1,11 +1,29 @@
 <template>
   <transition name="fade" mode="out-in">
     <div class="content">
-      <div class="header">
-        <li>主题(限30个字)</li>
+      <div class="title">
+        <div>主题<span>(限30个字)</span></div>
         <el-input placeholder="请输入通知标题"></el-input>
       </div>
-
+      <div class="summary">
+        <div>摘要<span>(限60个字)</span></div>
+        <el-input style="margin-top: 1rem" type="textarea" maxlength="60" placeholder="请输入通知内容摘要"></el-input>
+      </div>
+      <div class="otherinfo">
+        <div class="messagetype">
+          <div>消息类型</div>
+          <el-select v-model="value" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+        </div>
+        <div class="sendtype">
+          <div>发送方式</div>
+          <div class="sendtyperadio">
+            <el-radio v-model="sendtype" label="1">备选项</el-radio>
+            <el-radio v-model="sendtype" label="2">备选项</el-radio>
+          </div>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -16,7 +34,24 @@
 
     data() {
       return {
-
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        value:'',
+        sendtype:'',
       }
     },
     methods: {
@@ -28,47 +63,49 @@
 
   .content {
 
-    width: 80%;
+    width: 50%;
     margin: auto;
   }
 
-  .header {
+  .title, .summary {
+
+    .el-input {
+
+      margin-top: 1rem;
+    }
+
+    span {
+
+      color:red;
+    }
+  }
+
+  .summary {
+
+    margin-top: 2rem;
+  }
+
+  .otherinfo {
 
     display: flex;
     justify-content: space-between;
+    margin-top: 2rem;
+  }
 
-    .dateselect {
+  .messagetype {
 
-      display: flex;
-      justify-content: space-around;
-    }
+    .el-select {
 
-    .operatemenu {
-
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .el-button {
-
-      margin-left: 1rem;
+      margin-top: 1rem;
     }
   }
 
-  .table {
+  .sendtype {
 
-    margin-top: 1rem;
-  }
+    .sendtyperadio {
 
-  .headerrowclass {
-
-    background-color: red !important;
-  }
-
-  .pagination {
-
-    margin-top: 1rem;
+      margin-top: 1rem;
+    }
   }
 
 </style>
