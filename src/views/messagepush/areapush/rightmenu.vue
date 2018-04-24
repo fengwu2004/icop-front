@@ -1,6 +1,6 @@
 <template>
   <div class="rightmenu">
-    <el-button @click="create">新增</el-button>
+    <el-button @click="create" type="primary"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
   </div>
 </template>
 
@@ -22,9 +22,10 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 
   .rightmenu {
+    height: 100%;
     display: flex;
     justify-content: center;
+    margin-right: 1rem;
     align-items: center;
-    background: green;
   }
 </style>
