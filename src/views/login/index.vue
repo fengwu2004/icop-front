@@ -1,225 +1,853 @@
 <template>
-  <div class="login-container">
-    <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-      <el-form-item prop="username">
-        <span class="svg-container svg-container_login">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
-      </el-form-item>
-
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password" />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon icon-class="eye" />
-        </span>
-      </el-form-item>
-
-      <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
-
-      <div class="tips">
-        <span>{{$t('login.username')}} : admin</span>
-        <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
+  <div id="login">
+    <div v-show="false">
+      <img class="cloud cloud1" :src="img1">
+      <img class="cloud cloud2" :src="img2">
+      <img class="cloud cloud3" :src="img3">
+      <img class="cloud cloud4" :src="img4">
+      <img class="cloud cloud5" :src="img5">
+      <img class="cloud cloud6" :src="img6">
+      <img class="city" :src="logo">
+    </div>
+    <div class="main">
+      <div class="content">
+        <div class="icon"/>
+        <div class="title"/>
+        <div v-if="isnull" class="text-danger">验证码不能为空</div>
+        <div class="form-group">
+          <input type="text" placeholder="请输入用户名">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="请输入密码">
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="请输入验证码" alt="验证码">
+          <img src="http://120.77.201.142:9507/jsis_3.4.1/randomimage.servlet?falg=1524540618134" class="img-random  "
+               title="点击换一张">
+        </div>
+        <div class="form-group">
+          <a class="btn text-center">登录</a>
+        </div>
       </div>
-      <div class="tips">
-        <span style="margin-right:18px;">{{$t('login.username')}} : editor</span>
-        <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
-      </div>
-    </el-form>
-
+    </div>
   </div>
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
 
-export default {
-  name: 'login',
-  data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
+  import loginimg from '@/assets/loginimg/community-icon.png'
+  import logintitle from '@/assets/loginimg/title.png'
+  import img1 from '@/assets/loginimg/cloud1.png'
+  import img2 from '@/assets/loginimg/cloud2.png'
+  import img3 from '@/assets/loginimg/cloud3.png'
+  import img4 from '@/assets/loginimg/cloud4.png'
+  import img5 from '@/assets/loginimg/cloud5.png'
+  import img6 from '@/assets/loginimg/cloud6.png'
+  import logo from '@/assets/loginimg/logo.png'
+
+
+  export default {
+    data() {
+      return {
+        isnull: false,
+        loginimg,
+        logintitle,
+        img1,
+        img2,
+        img3,
+        img4,
+        img5,
+        img6,
+        logo,
       }
     }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
-    return {
-      loginForm: {
-        username: 'admin',
-        password: '1111111'
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      passwordType: 'password',
-      loading: false,
-      showDialog: false
-    }
-  },
-  methods: {
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
-            this.loading = false
-            this.$router.push({ path: '/messagepush' })
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-    afterQRScan() {
-      // const hash = window.location.hash.slice(1)
-      // const hashObj = getQueryObject(hash)
-      // const originUrl = window.location.origin
-      // history.replaceState({}, '', originUrl)
-      // const codeMap = {
-      //   wechat: 'code',
-      //   tencent: 'code'
-      // }
-      // const codeName = hashObj[codeMap[this.auth_type]]
-      // if (!codeName) {
-      //   alert('第三方登录失败')
-      // } else {
-      //   this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-      //     this.$router.push({ path: '/' })
-      //   })
-      // }
-    }
-  },
-  created() {
-    // window.addEventListener('hashchange', this.afterQRScan)
-  },
-  destroyed() {
-    // window.removeEventListener('hashchange', this.afterQRScan)
   }
-}
+
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
-$bg:#2d3a4b;
-$light_gray:#eee;
-
-/* reset element-ui css */
-.login-container {
-  .el-input {
-    display: inline-block;
-    height: 47px;
-    width: 85%;
-    input {
-      background: transparent;
-      border: 0px;
-      -webkit-appearance: none;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 47px;
-      &:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: #fff !important;
-      }
-    }
-  }
-  .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
-  }
-}
-</style>
-
 <style rel="stylesheet/scss" lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
 
-.login-container {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background-color: $bg;
-  .login-form {
+  .main {
+
+    margin: 10rem auto;width: 40%; max-width: 400px;
+    background: red;
+  }
+
+  .content {
+
+    width: 80%;
+    margin: auto;
+  }
+
+  .icon {
+
+    width: 45px;
+    height: 45px;
+    margin-top: 2rem;
+    background: url("/static/loginimg/community-icon.png") no-repeat center/100% 100%;
+  }
+
+  .city {
     position: absolute;
-    left: 0;
-    right: 0;
-    width: 520px;
-    padding: 35px 35px 15px 35px;
-    margin: 120px auto;
-  }
-  .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
-    }
-  }
-  .svg-container {
-    padding: 6px 5px 6px 15px;
-    color: $dark_gray;
-    vertical-align: middle;
-    width: 30px;
-    display: inline-block;
-    &_login {
-      font-size: 20px;
-    }
-  }
-  .title-container {
-    position: relative;
-    .title {
-      font-size: 26px;
-      font-weight: 400;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-    .set-language {
-      color: #fff;
-      position: absolute;
-      top: 5px;
-      right: 0px;
-    }
-  }
-  .show-pwd {
+    bottom: 0;
+    width: 98%;
+    height: 39.8%;
     position: absolute;
-    right: 10px;
-    top: 7px;
-    font-size: 16px;
-    color: $dark_gray;
-    cursor: pointer;
-    user-select: none;
+    display: block;
+    z-index: 999;
+    animation: city 5s linear infinite;
+    -moz-animation: city 5s linear infinite;
+    -webkit-animation: city 5s linear infinite;
+    -o-animation: city 5s linear infinite;
   }
-  .thirdparty-button {
+
+  @keyframes city {
+    0% {
+      left: 0%;
+    }
+    20% {
+      left: 1%;
+    }
+    50% {
+      left: 2%;
+    }
+    80% {
+      left: 1%;
+    }
+    100% {
+      left: 0%;
+    }
+  }
+
+  @-webkit-keyframes city {
+    0% {
+      left: 0%;
+    }
+    20% {
+      left: 1%;
+    }
+    50% {
+      left: 2%;
+    }
+    80% {
+      left: 1%;
+    }
+    100% {
+      left: 0%;
+    }
+  }
+
+  @-moz-keyframes city {
+    0% {
+      left: 0%;
+    }
+    20% {
+      left: 1%;
+    }
+    50% {
+      left: 2%;
+    }
+    80% {
+      left: 1%;
+    }
+    100% {
+      left: 0%;
+    }
+  }
+
+  @-o-keyframes city {
+    0% {
+      left: 0%;
+    }
+    20% {
+      left: 1%;
+    }
+    50% {
+      left: 2%;
+    }
+    80% {
+      left: 1%;
+    }
+    100% {
+      left: 0%;
+    }
+  }
+
+  .cloud {
+
     position: absolute;
-    right: 35px;
-    bottom: 28px;
   }
-}
+
+  .cloud1 {
+    top: 8%;
+    left: 0%;
+    z-index: 0;
+    animation: cloud1 5s infinite linear;
+    -moz-animation: cloud1 5s infinite linear;
+    -webkit-animation: cloud1 5s infinite linear;
+    -o-animation: cloud1 5s infinite linear;
+  }
+
+  @keyframes cloud1 {
+    0% {
+      transform: rotate(0deg);
+      left: 0%;
+    }
+    25% {
+      transform: rotate(10deg);
+      left: 2%;
+    }
+    50% {
+      transform: rotate(15deg);
+      left: 3%;
+    }
+    55% {
+      transform: rotate(10deg);
+      left: 3.5%;
+    }
+    70% {
+      transform: rotate(5deg);
+      left: 2%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 0%;
+    }
+  }
+
+  @-webkit-keyframes cloud1 {
+    0% {
+      transform: rotate(0deg);
+      left: 0%;
+    }
+    25% {
+      transform: rotate(10deg);
+      left: 2%;
+    }
+    50% {
+      transform: rotate(15deg);
+      left: 3%;
+    }
+    55% {
+      transform: rotate(10deg);
+      left: 3.5%;
+    }
+    70% {
+      transform: rotate(5deg);
+      left: 2%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 0%;
+    }
+  }
+
+  @-moz-keyframes cloud1 {
+    0% {
+      transform: rotate(0deg);
+      left: 0%;
+    }
+    25% {
+      transform: rotate(10deg);
+      left: 2%;
+    }
+    50% {
+      transform: rotate(15deg);
+      left: 3%;
+    }
+    55% {
+      transform: rotate(10deg);
+      left: 3.5%;
+    }
+    70% {
+      transform: rotate(5deg);
+      left: 2%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 0%;
+    }
+  }
+
+  @-o-keyframes cloud1 {
+    0% {
+      transform: rotate(0deg);
+      left: 0%;
+    }
+    25% {
+      transform: rotate(10deg);
+      left: 2%;
+    }
+    50% {
+      transform: rotate(15deg);
+      left: 3%;
+    }
+    55% {
+      transform: rotate(10deg);
+      left: 3.5%;
+    }
+    70% {
+      transform: rotate(5deg);
+      left: 2%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 0%;
+    }
+  }
+
+  .cloud2 {
+    top: 3%;
+    left: 15%;
+    z-index: 0;
+    animation: cloud2 10s infinite linear;
+    -moz-animation: cloud2 10s infinite linear;
+    -webkit-animation: cloud2 10s infinite linear;
+    -o-animation: cloud2 10s infinite linear;
+  }
+
+  @keyframes cloud2 {
+    0% {
+      transform: rotate(5deg);
+      left: 15%;
+    }
+    25% {
+      transform: rotate(0deg);
+      left: 30%;
+    }
+    50% {
+      transform: rotate(-5deg);
+      left: 45%;
+    }
+    65% {
+      transform: rotate(-10deg);
+      left: 45%;
+    }
+    80% {
+      transform: rotate(-5 eg);
+      left: 30%;
+    }
+    100% {
+      transform: rotate(5deg);
+      left: 15%;
+    }
+  }
+
+  @-webkit-keyframes cloud2 {
+    0% {
+      transform: rotate(5deg);
+      left: 15%;
+    }
+    25% {
+      transform: rotate(0deg);
+      left: 30%;
+    }
+    50% {
+      transform: rotate(-5deg);
+      left: 45%;
+    }
+    65% {
+      transform: rotate(-10deg);
+      left: 45%;
+    }
+    80% {
+      transform: rotate(-5 eg);
+      left: 30%;
+    }
+    100% {
+      transform: rotate(5deg);
+      left: 15%;
+    }
+  }
+
+  @-moz-keyframes cloud2 {
+    0% {
+      transform: rotate(5deg);
+      left: 15%;
+    }
+    25% {
+      transform: rotate(0deg);
+      left: 30%;
+    }
+    50% {
+      transform: rotate(-5deg);
+      left: 45%;
+    }
+    65% {
+      transform: rotate(-10deg);
+      left: 45%;
+    }
+    80% {
+      transform: rotate(-5 eg);
+      left: 30%;
+    }
+    100% {
+      transform: rotate(5deg);
+      left: 15%;
+    }
+  }
+
+  @-o-keyframes cloud2 {
+    0% {
+      transform: rotate(5deg);
+      left: 15%;
+    }
+    25% {
+      transform: rotate(0deg);
+      left: 30%;
+    }
+    50% {
+      transform: rotate(-5deg);
+      left: 45%;
+    }
+    65% {
+      transform: rotate(-10deg);
+      left: 45%;
+    }
+    80% {
+      transform: rotate(-5 eg);
+      left: 30%;
+    }
+    100% {
+      transform: rotate(5deg);
+      left: 15%;
+    }
+  }
+
+  .cloud3 {
+    top: 35%;
+    left: 4%;
+    animation: cloud5 3s infinite linear;
+    -moz-animation: cloud3 3s infinite linear;
+    -webkit-animation: cloud3 3s infinite linear;
+    -o-animation: cloud3 3s infinite linear;
+  }
+
+  @keyframes cloud3 {
+    0% {
+      transform: rotate(0deg);
+      top: 35%;
+    }
+    22.5% {
+      transform: rotate(2deg);
+      top: 38%;
+    }
+    45% {
+      transform: rotate(2deg);
+      top: 40%;
+    }
+    67.5% {
+      transform: rotate(0deg);
+      top: 38%;
+    }
+    100% {
+      transform: rotate(2deg);
+      top: 35%;
+    }
+  }
+
+  @-webkit-keyframes cloud3 {
+    0% {
+      transform: rotate(0deg);
+      top: 35%;
+    }
+    22.5% {
+      transform: rotate(2deg);
+      top: 38%;
+    }
+    45% {
+      transform: rotate(2deg);
+      top: 40%;
+    }
+    67.5% {
+      transform: rotate(0deg);
+      top: 38%;
+    }
+    100% {
+      transform: rotate(2deg);
+      top: 35%;
+    }
+  }
+
+  @-moz-keyframes cloud3 {
+    0% {
+      transform: rotate(0deg);
+      top: 35%;
+    }
+    22.5% {
+      transform: rotate(2deg);
+      top: 38%;
+    }
+    45% {
+      transform: rotate(2deg);
+      top: 40%;
+    }
+    67.5% {
+      transform: rotate(0deg);
+      top: 38%;
+    }
+    100% {
+      transform: rotate(2deg);
+      top: 35%;
+    }
+  }
+
+  @-o-keyframes cloud3 {
+    0% {
+      transform: rotate(0deg);
+      top: 35%;
+    }
+    22.5% {
+      transform: rotate(2deg);
+      top: 38%;
+    }
+    45% {
+      transform: rotate(2deg);
+      top: 40%;
+    }
+    67.5% {
+      transform: rotate(0deg);
+      top: 38%;
+    }
+    100% {
+      transform: rotate(2deg);
+      top: 35%;
+    }
+  }
+
+  .cloud4 {
+    top: 29%;
+    left: 68%;
+    animation: cloud4 5s infinite linear;
+    -moz-animation: cloud4 5s infinite linear;
+    -webkit-animation: cloud4 5s infinite linear;
+    -o-animation: cloud4 5s infinite linear;
+  }
+
+  @keyframes cloud4 {
+    0% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+    35% {
+      transform: rotate(20deg);
+      left: 68%;
+    }
+    60% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+    85% {
+      transform: rotate(-20deg);
+      left: 68%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+  }
+
+  @-webkit-keyframes cloud4 {
+    0% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+    35% {
+      transform: rotate(20deg);
+      left: 68%;
+    }
+    60% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+    85% {
+      transform: rotate(-20deg);
+      left: 68%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+  }
+
+  @-moz-keyframes cloud4 {
+    0% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+    35% {
+      transform: rotate(20deg);
+      left: 68%;
+    }
+    60% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+    85% {
+      transform: rotate(-20deg);
+      left: 68%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+  }
+
+  @-o-keyframes cloud4 {
+    0% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+    35% {
+      transform: rotate(20deg);
+      left: 68%;
+    }
+    60% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+    85% {
+      transform: rotate(-20deg);
+      left: 68%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 68%;
+    }
+  }
+
+  .cloud5 {
+    left: 80%;
+    top: 30%;
+    animation: cloud5 5s infinite linear;
+    -moz-animation: cloud5 5s infinite linear;
+    -webkit-animation: cloud5 5s infinite linear;
+    -o-animation: cloud5 5s infinite linear;
+  }
+
+  @keyframes cloud5 {
+    0% {
+      width: 239px;
+      height: 209px
+    }
+    25% {
+      width: 249px;
+      height: 219px
+    }
+    50% {
+      width: 259px;
+      height: 229px
+    }
+    55% {
+      width: 259px;
+      height: 229px
+    }
+    70% {
+      width: 249px;
+      height: 219px
+    }
+    100% {
+      width: 239px;
+      height: 209px
+    }
+  }
+
+  @-webkit-keyframes cloud5 {
+    0% {
+      width: 239px;
+      height: 209px
+    }
+    25% {
+      width: 249px;
+      height: 219px
+    }
+    50% {
+      width: 259px;
+      height: 229px
+    }
+    55% {
+      width: 259px;
+      height: 229px
+    }
+    70% {
+      width: 249px;
+      height: 219px
+    }
+    100% {
+      width: 239px;
+      height: 209px
+    }
+  }
+
+  @-moz-keyframes cloud5 {
+    0% {
+      width: 239px;
+      height: 209px
+    }
+    25% {
+      width: 249px;
+      height: 219px
+    }
+    50% {
+      width: 259px;
+      height: 229px
+    }
+    55% {
+      width: 259px;
+      height: 229px
+    }
+    70% {
+      width: 249px;
+      height: 219px
+    }
+    100% {
+      width: 239px;
+      height: 209px
+    }
+  }
+
+  @-o-keyframes cloud5 {
+    0% {
+      width: 239px;
+      height: 209px
+    }
+    25% {
+      width: 249px;
+      height: 219px
+    }
+    50% {
+      width: 259px;
+      height: 229px
+    }
+    55% {
+      width: 259px;
+      height: 229px
+    }
+    70% {
+      width: 249px;
+      height: 219px
+    }
+    100% {
+      width: 239px;
+      height: 209px
+    }
+  }
+
+  .cloud6 {
+    top: 6%;
+    left: 76%;
+    animation: cloud6 5s infinite linear;
+    -moz-animation: cloud6 5s infinite linear;
+    -webkit-animation: cloud6 5s infinite linear;
+    -o-animation: cloud6 5s infinite linear;
+  }
+
+  @keyframes cloud6 {
+    0% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    25% {
+      transform: rotate(20deg);
+      left: 76%;
+    }
+    50% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    55% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    70% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+  }
+
+  @-webkit-keyframes cloud6 {
+    0% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    25% {
+      transform: rotate(20deg);
+      left: 76%;
+    }
+    50% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    55% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    70% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+  }
+
+  @-moz-keyframes cloud6 {
+    0% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    25% {
+      transform: rotate(20deg);
+      left: 76%;
+    }
+    50% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    55% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    70% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+  }
+
+  @-o-keyframes cloud6 {
+    0% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    25% {
+      transform: rotate(20deg);
+      left: 76%;
+    }
+    50% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    55% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    70% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+    100% {
+      transform: rotate(0deg);
+      left: 76%;
+    }
+  }
+
 </style>
