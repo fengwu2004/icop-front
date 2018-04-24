@@ -115,7 +115,7 @@ const systemadmin = {
 const innerpush = {
   path: 'innerpush',
   // component:_import('messagepush/innerpush/index'),
-  components: {default:_import('messagepush/innerpush/index'), rightmenu:null},
+  components: {default:_import('messagepush/innerpush/index'), rightmenu:_import('messagepush/innerpush/rightmenu')},
   name: 'innerpush',
   meta: { title: 'innerpush', icon: 'table' }
 }
