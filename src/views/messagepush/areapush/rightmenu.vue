@@ -23,10 +23,11 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 
   .rightmenu {
+    position: absolute;
+    width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
-    margin-right: 1rem;
     align-items: center;
+    justify-content: flex-end;
   }
 </style>
