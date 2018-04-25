@@ -106,32 +106,32 @@ const systemadmin = {
 }
 
 const inner = {
+  
   path: 'inner',
-  redirect:'inner/main',
-  component: main,
+  redirect: '/messagepush/inner/main',
   name: 'innerpush',
+  component:main,
   meta: { title: 'innerpush', icon: 'table' },
   children: [
     {
       path: 'main',
-      component: _import('messagepush/inner/main'),
-      name: 'innerpush',
-      meta: { title: 'innerpush', icon: 'table' },
+      component:_import('messagepush/inner/main'),
+      meta: { title: 'areapush', icon: 'table' },
+      hidden:true
+    },
+    {
+      path: 'editor',
+      component: _import('messagepush/inner/editor'),
+      name: 'innereditormessage',
+      meta: { title: 'editormessage', icon: 'table' },
       hidden:true
     },
     {
       path: 'create',
       component: _import('messagepush/inner/create'),
-      name: 'createareamessage',
+      name: 'innercreatemessage',
       meta: {title: 'createareamessage', icon: 'table'},
-      hidden: true
-    },
-    {
-      path: 'editor',
-      component: _import('messagepush/inner/editor'),
-      name: 'editormessage',
-      meta: { title: 'editormessage', icon: 'table' },
-      hidden:true
+      hidden: true,
     }
   ]
 }
@@ -139,7 +139,7 @@ const inner = {
 const area = {
   
   path: 'area',
-  redirect: 'area/main',
+  redirect: '/messagepush/area/main',
   name: 'areapush',
   component:main,
   meta: { title: 'areapush', icon: 'table' },
@@ -178,7 +178,7 @@ const messagepush = {
   },
   children: [
     area,
-    // inner,
+    inner,
   ]
 }
 
