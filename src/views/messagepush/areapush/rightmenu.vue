@@ -1,6 +1,7 @@
 <template>
   <div class="rightmenu">
-    <el-button @click="create" type="primary"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
+    <router-view v-if="$route.name == 'createareamessage'" name="rightmenu"></router-view>
+    <el-button v-else @click="create" type="primary"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
   </div>
 </template>
 
