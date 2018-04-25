@@ -121,7 +121,7 @@ const innerpush = {
 
 const editormessage = {
   path: 'editormessage',
-  component: _import('messagepush/areapush/createmessage/editormessage/index'),
+  components: {default:_import('messagepush/areapush/createmessage/editormessage/index'), rightmenu:_import('messagepush/areapush/createmessage/rightmenu')},
   name: 'editormessage',
   meta: { title: 'editormessage', icon: 'table' },
   hidden:true

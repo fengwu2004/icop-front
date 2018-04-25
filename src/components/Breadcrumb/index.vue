@@ -14,18 +14,22 @@ import { generateTitle } from '@/utils/i18n'
 
 export default {
   created() {
+
     this.getBreadcrumb()
   },
+
   data() {
     return {
       levelList: null
     }
   },
+
   watch: {
     $route() {
       this.getBreadcrumb()
     }
   },
+
   methods: {
     generateTitle,
     getBreadcrumb() {
