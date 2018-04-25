@@ -139,7 +139,7 @@ const inner = {
 const area = {
   
   path: 'area',
-  redirect: 'area/main',
+  redirect: 'main',
   name: 'areapush',
   component:main,
   meta: { title: 'areapush', icon: 'table' },
@@ -170,7 +170,7 @@ const area = {
 const messagepush = {
   path: '/messagepush',
   component: Layout,
-  redirect: '/messagepush/area',
+  redirect: '/messagepush/area/main',
   name: 'messagepush',
   meta: {
     title: 'messagepush',
@@ -178,7 +178,7 @@ const messagepush = {
   },
   children: [
     area,
-    inner,
+    // inner,
   ]
 }
 
