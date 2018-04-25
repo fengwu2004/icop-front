@@ -112,10 +112,8 @@ const systemadmin = {
   ]
 }
 
-
 const innerpush = {
   path: 'innerpush',
-  // component:_import('messagepush/innerpush/index'),
   components: {default:_import('messagepush/innerpush/index'), rightmenu:_import('messagepush/innerpush/rightmenu')},
   name: 'innerpush',
   meta: { title: 'innerpush', icon: 'table' }
@@ -123,16 +121,22 @@ const innerpush = {
 
 const createareamessage = {
   path: 'createmessage',
-  // component:_import('messagepush/innerpush/index'),
   components: {default:_import('messagepush/areapush/createmessage/index'), rightmenu:_import('messagepush/areapush/createmessage/rightmenu')},
   name: 'createareamessage',
   meta: { title: 'createareamessage', icon: 'table' },
   hidden:true
 }
 
+const editormessage = {
+  path: 'editormessage',
+  components: {default:_import('messagepush/areapush/createmessage/editormessage/index'), rightmenu:null},
+  name: 'editormessage',
+  meta: { title: 'editormessage', icon: 'table' },
+  hidden:true
+}
+
 const areapush = {
   path: 'areapush',
-  // component:_import('messagepush/areapush/index'),
   components: {default:_import('messagepush/areapush/index'), rightmenu:_import('messagepush/areapush/rightmenu')},
   name: 'areapush',
   meta: { title: 'areapush', icon: 'table' }}
@@ -149,7 +153,8 @@ const messagepush = {
   children: [
     areapush,
     innerpush,
-    createareamessage
+    createareamessage,
+    editormessage
   ]
 }
 

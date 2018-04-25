@@ -1,10 +1,8 @@
 <template>
   <div class="rightmenu">
-    <el-steps :active="active" finish-status="success" :space="500" align-center>
-      <el-step title="步骤 1"></el-step>
-      <el-step title="步骤 2"></el-step>
-      <el-step title="步骤 3"></el-step>
-    </el-steps>
+    <span>1 填写基本信息</span>
+    <span class="line"></span>
+    <span>2 填写通知内容</span>
   </div>
 </template>
 
@@ -33,11 +31,27 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 
   .rightmenu {
+
+    position: absolute;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
-    margin-right: 1rem;
     align-items: center;
+
+    .line {
+
+      margin: 0 1rem;
+      width: 100px;
+      height: 1px;
+      background: grey;
+    }
+
+    span {
+
+      font-size: 0.6rem;
+      color: deepskyblue;
+    }
   }
+
 </style>

@@ -30,6 +30,7 @@ export default {
     areapush:'社区通知',
     messagepush:'信息发布',
     createareamessage:'创建通知',
+    editormessage:'填写内容',
     systemadmin:'系统管理',
     accountmanager:'账户管理',
     projectsetting:'项目账户配置',

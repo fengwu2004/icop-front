@@ -36,8 +36,8 @@
     .navbar {
 
       background: white;
+      position: relative;
       height: 50px;
-      line-height: 50px;
       border-radius: 0px !important;
       border-bottom: 1px solid $primcolor;
       box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
@@ -50,6 +50,7 @@
       .rightmenu {
 
         float: right;
+        height: 100%;
       }
     }
 

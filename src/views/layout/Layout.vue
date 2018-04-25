@@ -9,12 +9,11 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, AppHeaderBar } from './components'
+import { Sidebar, AppMain, AppHeaderBar } from './components'
 
 export default {
   name: 'layout',
   components: {
-    Navbar,
     Sidebar,
     AppMain,
     AppHeaderBar
