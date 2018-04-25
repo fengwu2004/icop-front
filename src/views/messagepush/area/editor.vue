@@ -16,8 +16,8 @@
 
 <script>
 
-  import BreadCrumb from '@/components/Breadcrumb'
-  import Tinymce from '@/components/Tinymce'
+  import BreadCrumb from '@/components/Breadcrumb/index'
+  import Tinymce from '@/components/Tinymce/index'
 
   export default {
 

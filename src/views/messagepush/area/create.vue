@@ -37,8 +37,8 @@
 </template>
 <script>
 
-  import PageWidget from '@/components/PageWidget'
-  import BreadCrumb from '@/components/Breadcrumb'
+  import PageWidget from '@/components/PageWidget/index'
+  import BreadCrumb from '@/components/Breadcrumb/index'
 
   export default {
 
