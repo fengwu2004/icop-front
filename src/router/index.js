@@ -119,20 +119,20 @@ const innerpush = {
   meta: { title: 'innerpush', icon: 'table' }
 }
 
+const editormessage = {
+  path: 'editormessage',
+  component: _import('messagepush/areapush/createmessage/editormessage/index'),
+  name: 'editormessage',
+  meta: { title: 'editormessage', icon: 'table' },
+  hidden:true
+}
+
 const createareamessage = {
   path: 'createmessage',
   components: {default:_import('messagepush/areapush/createmessage/index'), rightmenu:_import('messagepush/areapush/createmessage/rightmenu')},
   name: 'createareamessage',
   meta: { title: 'createareamessage', icon: 'table' },
-  hidden:true
-}
-
-const editormessage = {
-  path: 'editormessage',
-  components: {default:_import('messagepush/areapush/createmessage/editormessage/index'), rightmenu:null},
-  name: 'editormessage',
-  meta: { title: 'editormessage', icon: 'table' },
-  hidden:true
+  hidden:true,
 }
 
 const areapush = {

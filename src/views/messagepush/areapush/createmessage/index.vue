@@ -30,7 +30,7 @@
         <div class="tip">为了更好的显示捷生活APP首页的信息卡片列表里面，图片尺寸为690*240px</div>
       </div>
       <div class="btns">
-        <el-button>取消</el-button><el-button type="primary">下一步</el-button>
+        <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
       </div>
     </div>
   </transition>
@@ -63,6 +63,12 @@
       }
     },
     methods: {
+      onEditorMessage() {
+
+        console.log('zz')
+
+        this.$router.push({name:'editormessage'})
+      }
     }
   }
 </script>
