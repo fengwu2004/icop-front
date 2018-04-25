@@ -1,8 +1,12 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div>
-      <router-view v-if="$route.name == 'createareamessage'"></router-view>
-      <div v-else>
+    <router-view v-if="$route.name === 'createareamessage'"></router-view>
+    <div v-else>
+      <div class="navbar">
+        <breadcrumb class="breadcrumb"></breadcrumb>
+        <el-button @click="create" type="primary"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
+      </div>
+      <div class="content">
         <div class="header">
           <date-select></date-select>
           <div class="operatemenu">
@@ -42,12 +46,14 @@
 </template>
 
 <script>
-  import PageWidget from '@/components/PageWidget'
+
+  import Breadcrumb from '@/components/Breadcrumb'
   import DateSelect from '@/components/DateSelect'
+  import PageWidget from '@/components/PageWidget'
 
   export default {
 
-    components: { DateSelect, PageWidget },
+    components: { DateSelect, PageWidget, Breadcrumb },
 
     data() {
       return {
@@ -62,6 +68,7 @@
         }],
       }
     },
+
     methods: {
       headercellstyle({row, rowIndex, columnIndex}) {
 
@@ -85,11 +92,29 @@
 
         return row.tag === value;
       },
+      create() {
+
+        this.$router.push({name:'createareamessage'})
+      }
     }
   }
 </script>
 
 <style scoped rel="stylesheet/scss" lang="scss">
+
+  .navbar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: red;
+  }
+
+  .content {
+
+    margin-top: 1rem;
+  }
 
   .header {
 

@@ -74,7 +74,29 @@
   }
 </script>
 
-<style scoped>
+<style rel="stylesheet/scss" lang="scss" scoped>
+
+  .navbar {
+
+    background: white;
+    position: relative;
+    height: 50px;
+    border-radius: 0px !important;
+    border-bottom: 1px solid #d0d5e5;
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
+
+  .breadcrumb-container {
+
+    float: left;
+  }
+
+  .rightmenu {
+
+    float: right;
+    height: 100%;
+  }
+  }
+
   .main {
     width: 100%;
     height: 500px;
@@ -95,4 +117,5 @@
 
     background: #d0d5e5;
   }
+
 </style>

@@ -40,12 +40,10 @@ export default new Router({
   routes: constantRouterMap
 })
 
-const createuserrightmenu = _import('systemadmin/usermanager/rightmenu')
 
 const createuser = {
   path: 'createuser',
-  // component:_import('systemadmin/usermanager/createuser/index'),
-  components: {default:_import('systemadmin/usermanager/createuser/index'), rightmenu:null},
+  component: _import('systemadmin/usermanager/createuser/index'),
   name: 'createuser',
   meta: { title: 'createuser', icon: 'table' },
   hidden: true
@@ -53,8 +51,7 @@ const createuser = {
 
 const permissionsetting = {
   path: 'permissionsetting',
-  // component:_import('systemadmin/usermanager/createuser/index'),
-  components: {default:_import('systemadmin/accountmanager/createaccount/permissionsetting/index'), rightmenu:null},
+  component:_import('systemadmin/accountmanager/createaccount/permissionsetting/index'),
   name: 'permissionsetting',
   meta: { title: 'permissionsetting', icon: 'table' },
   hidden: true
@@ -62,8 +59,7 @@ const permissionsetting = {
 
 const createaccount = {
   path: 'createaccount',
-  // component:_import('systemadmin/usermanager/createuser/index'),
-  components: {default:_import('systemadmin/accountmanager/createaccount/index'), rightmenu:null},
+  component: _import('systemadmin/accountmanager/createaccount/index'),
   name: 'createaccount',
   meta: { title: 'createaccount', icon: 'table' },
   hidden: true,
@@ -71,25 +67,21 @@ const createaccount = {
 
 const usermanager = {
   path: 'usermanager',
-  // component:_import('systemadmin/usermanager/index'),
-  components: {default:_import('systemadmin/usermanager/index'), rightmenu:createuserrightmenu},
+  component: _import('systemadmin/usermanager/index'),
   name: 'usermanager',
   meta: { title: 'usermanager', icon: 'table' },
 }
 
-const accountmanagerrightmenu = _import('systemadmin/accountmanager/rightmenu')
-
 const accountmanager = {
   path: 'accountmanager',
-  // component:_import('systemadmin/accountmanager/index'),
-  components: {default:_import('systemadmin/accountmanager/index'), rightmenu:accountmanagerrightmenu},
+  component: _import('systemadmin/accountmanager/index'),
   name: 'accountmanager',
   meta: { title: 'accountmanager', icon: 'table' }}
 
 const projectsetting = {
   path: 'projectsetting',
   // component:_import('systemadmin/projectsetting/index'),
-  components: {default:_import('systemadmin/projectsetting/index'), rightmenu:null},
+  component: _import('systemadmin/projectsetting/index'),
   name: 'projectsetting',
   meta: { title: 'projectsetting', icon: 'table' }}
 
@@ -114,31 +106,32 @@ const systemadmin = {
 
 const innerpush = {
   path: 'innerpush',
-  components: {default:_import('messagepush/innerpush/index'), rightmenu:_import('messagepush/innerpush/rightmenu')},
+  component: _import('messagepush/innerpush/index'),
   name: 'innerpush',
   meta: { title: 'innerpush', icon: 'table' }
 }
 
-const editormessage = {
-  path: 'editormessage',
-  components: {default:_import('messagepush/areapush/createmessage/editormessage/index'), rightmenu:_import('messagepush/areapush/createmessage/rightmenu')},
-  name: 'editormessage',
-  meta: { title: 'editormessage', icon: 'table' },
-  hidden:true
-}
-
 const areapush = {
-  path: 'areapush',
-  components: {default:_import('messagepush/areapush/index'), rightmenu:_import('messagepush/areapush/rightmenu')},
+  path: 'area',
+  component:_import('messagepush/areapush/index'),
   name: 'areapush',
   meta: { title: 'areapush', icon: 'table' },
   children: [
     {
-      path: 'createmessage',
-      components: {default:_import('messagepush/areapush/createmessage/index'), rightmenu:_import('messagepush/areapush/createmessage/rightmenu')},
+      path: 'create',
+      component: _import('messagepush/areapush/createmessage/index'),
       name: 'createareamessage',
       meta: { title: 'createareamessage', icon: 'table' },
       hidden:true,
+      children:[
+        {
+          path: 'editor',
+          component: _import('messagepush/areapush/createmessage/editormessage/index'),
+          name: 'editormessage',
+          meta: { title: 'editormessage', icon: 'table' },
+          hidden:true
+        }
+      ]
     }
   ]
 }
@@ -155,7 +148,6 @@ const messagepush = {
   children: [
     areapush,
     innerpush,
-    editormessage
   ]
 }
 

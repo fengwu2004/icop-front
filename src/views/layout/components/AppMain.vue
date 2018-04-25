@@ -1,65 +1,28 @@
 <template>
-  <div class="app-main">
-    <div class="navbar">
-      <breadcrumb class="breadcrumb-container"></breadcrumb>
-      <router-view class="rightmenu" name="rightmenu"></router-view>
+  <transition name="fade" mode="out-in">
+    <div class="mainframe">
+      <router-view class="router-view"></router-view>
     </div>
-    <transition name="fade" mode="out-in">
-      <div class="mainframe">
-        <router-view class="router-view"></router-view>
-      </div>
-    </transition>
-  </div>
+  </transition>
 </template>
 
 <script>
-  import Breadcrumb from '@/components/Breadcrumb'
 
   export default {
-    name: 'AppMain',
-    components: { Breadcrumb },
+
   }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
-  $primcolor:#d0d5e5;
-
-  .app-main {
+  .mainframe {
 
     position: relative;
     height: 100%;
     width: 98%;
     margin: 2px auto 0;
     min-height: calc(100% - 2px);
-
-    .navbar {
-
-      background: white;
-      position: relative;
-      height: 50px;
-      border-radius: 0px !important;
-      border-bottom: 1px solid $primcolor;
-      box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
-
-      .breadcrumb-container {
-
-        float: left;
-      }
-
-      .rightmenu {
-
-        float: right;
-        height: 100%;
-      }
-    }
-
-    .mainframe {
-
-      position: relative;
-      height: 100%;
-      margin-top: 1rem;
-    }
+    position: relative;
   }
 
 </style>
