@@ -9,21 +9,22 @@
 </template>
 
 <script>
-import { Sidebar, AppMain, AppHeaderBar } from './components'
 
-export default {
-  name: 'layout',
-  components: {
-    Sidebar,
-    AppMain,
-    AppHeaderBar
-  },
-  computed: {
-    sidebar() {
-      return this.$store.state.app.sidebar
+  import { Sidebar, AppMain, AppHeaderBar } from "@/views/layout/components"
+
+  export default {
+    name: 'layout',
+    components: {
+      Sidebar,
+      AppMain,
+      AppHeaderBar
+    },
+    computed: {
+      sidebar() {
+        return this.$store.state.app.sidebar
+      }
     }
   }
-}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

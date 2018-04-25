@@ -111,35 +111,49 @@ const innerpush = {
   meta: { title: 'innerpush', icon: 'table' }
 }
 
-const areapush = {
-  path: 'area',
+const createareamessage = {
+  path: 'create',
+  component: _import('messagepush/areapush/createmessage/index'),
+  name: 'createareamessage',
+  meta: {title: 'createareamessage', icon: 'table'},
+  hidden: true,
+}
+
+const editormessage = {
+  path: 'editor',
+  component: _import('messagepush/areapush/createmessage/editormessage/index'),
+  name: 'editormessage',
+  meta: { title: 'editormessage', icon: 'table' },
+  hidden:true
+}
+
+const areapushmain = {
+  
+  path: 'areapushmain',
   component:_import('messagepush/areapush/index'),
+  meta: { title: 'areapush', icon: 'table' },
+  hidden:true
+}
+
+const main = { template: '<router-view></router-view>' }
+
+const areapush = {
+  
+  path: 'area',
+  component:main,
   name: 'areapush',
   meta: { title: 'areapush', icon: 'table' },
   children: [
-    {
-      path: 'create',
-      component: _import('messagepush/areapush/createmessage/index'),
-      name: 'createareamessage',
-      meta: { title: 'createareamessage', icon: 'table' },
-      hidden:true,
-      children:[
-        {
-          path: 'editor',
-          component: _import('messagepush/areapush/createmessage/editormessage/index'),
-          name: 'editormessage',
-          meta: { title: 'editormessage', icon: 'table' },
-          hidden:true
-        }
-      ]
-    }
+    areapushmain,
+    createareamessage,
+    editormessage
   ]
 }
 
 const messagepush = {
   path: '/messagepush',
   component: Layout,
-  redirect: '/messagepush/innerpush',
+  // redirect: '/messagepush/innerpush',
   name: 'messagepush',
   meta: {
     title: 'messagepush',

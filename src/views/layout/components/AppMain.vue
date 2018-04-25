@@ -1,6 +1,7 @@
 <template>
   <transition name="fade" mode="out-in">
     <div class="mainframe">
+      <nav-bar @createNewMessage="createNewMessage"></nav-bar>
       <router-view class="router-view"></router-view>
     </div>
   </transition>
@@ -8,8 +9,19 @@
 
 <script>
 
+  import NavBar from './NavBar'
+
   export default {
 
+    components: { NavBar },
+
+    methods:{
+
+      createNewMessage() {
+
+        this.$router.push({name:'createareamessage'})
+      }
+    }
   }
 </script>
 
