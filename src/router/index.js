@@ -139,7 +139,7 @@ const inner = {
 const area = {
   
   path: 'area',
-  redirect: 'main',
+  redirect: 'area/main',
   name: 'areapush',
   component:main,
   meta: { title: 'areapush', icon: 'table' },
