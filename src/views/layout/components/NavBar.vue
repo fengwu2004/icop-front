@@ -54,6 +54,16 @@
         username:''
       }
     },
+    watch:{
+
+      username(newValue) {
+
+        if (!newValue || newValue.length == 0) {
+
+          this.$emit('searchUser', '')
+        }
+      }
+    },
     computed:{
       checkAccountMananger() {
 

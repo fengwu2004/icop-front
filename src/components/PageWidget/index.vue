@@ -7,7 +7,7 @@
       </el-select>
     </div>
     <div class="right">
-      <el-pagination background :page-sizes="pagesizes" :page-size="value" layout="prev, pager, next" :total="total"></el-pagination>
+      <el-pagination background :page-sizes="pagesizes" :page-size="value" layout="prev, pager, next" :total="total" @current-change="changePage"></el-pagination>
     </div>
   </div>
 </template>
@@ -18,10 +18,10 @@
 
 <script>
   export default {
-    props:['total', 'pagesizes'],
+    props:['total', 'pagesizes', 'pagesize'],
     data() {
       return {
-        value:10,
+        value:0
       }
     },
     methods:{
@@ -47,7 +47,21 @@
 
           return {backgroundColor:'blue'}
         }
+      },
+      changePage(value) {
+
+        this.$emit('pageChange', value)
       }
+    },
+    watch:{
+      value:function (value) {
+
+        this.$emit('pageSizeChange', value)
+      }
+    },
+    mounted () {
+
+      this.value = this.pagesize
     }
   }
 </script>

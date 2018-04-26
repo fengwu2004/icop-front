@@ -1,9 +1,9 @@
 <template>
   <div class="content">
     <div class="table">
-      <el-table :data="tableData" :cell-style="cellstyle" :header-cell-style="headercellstyle">
-        <el-table-column prop="index" label="" width="100"></el-table-column>
-        <el-table-column prop="name" label="角色名称" width="200"></el-table-column>
+      <el-table :data="currentPageData" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700" highlight-current-row>
+        <el-table-column prop="index" label="" width="150"></el-table-column>
+        <el-table-column prop="name" label="角色名称" width="250"></el-table-column>
         <el-table-column prop="address" label="备注" width="600"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -15,7 +15,7 @@
       </el-table>
     </div>
     <div class="pagination">
-      <page-widget :total="100" :pagesizes="[10, 20, 40, 50]"></page-widget>
+      <page-widget :total="currentDataLength" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="pageSize"></page-widget>
     </div>
   </div>
 </template>
@@ -29,10 +29,56 @@
     components: { PageWidget },
     data() {
       return {
-        tableData: debugdata,
+        pageSize:20,
+        totalData:debugdata,
+        totalPage:0,
+        pageIndex:1,
+        searchResult:null,
+        currentDataLength:0,
+        currentPageData:null
       }
     },
+    mounted() {
+
+      this.currentDataLength = this.getCurrentDataLength()
+
+      this.currentPageData = this.getCurrPageData()
+    },
     methods:{
+      getCurrentDataLength() {
+
+        let dataSource = []
+
+        if (this.searchResult != null) {
+
+          dataSource = this.searchResult
+        }
+        else {
+
+          dataSource = this.totalData
+        }
+
+        return dataSource.length
+      },
+      getCurrPageData() {
+
+        let dataSource = []
+
+        if (this.searchResult != null) {
+
+          dataSource = this.searchResult
+        }
+        else {
+
+          dataSource = this.totalData
+        }
+
+        let start = (this.pageIndex - 1) * this.pageSize
+
+        let end = Math.min(start + this.pageSize, dataSource.length)
+
+        return dataSource.slice(start, end)
+      },
       headercellstyle({row, rowIndex, columnIndex}){
 
         if (columnIndex == 3) {
@@ -46,10 +92,24 @@
 
         if (columnIndex == 3) {
 
-          return {textAlign:'right'}
+          return {textAlign:'center'}
         }
 
         return {textAlign:'left'}
+      },
+      pageSizeChange(pageSize){
+
+        this.pageSize = pageSize
+
+        this.pageIndex = 1
+
+        this.currentPageData = this.getCurrPageData()
+      },
+      pageChange(pageIndex) {
+
+        this.pageIndex = pageIndex
+
+        this.currentPageData = this.getCurrPageData()
       },
       handleDetail(index, row) {
 
@@ -65,7 +125,13 @@
       },
       handleSearch(name) {
 
-        console.log('查找名字', name)
+        console.log('search', name)
+
+        this.searchResult = this.totalData.filter(obj => obj.name.indexOf(name) != -1)
+
+        this.currentDataLength = this.getCurrentDataLength()
+
+        this.currentPageData = this.getCurrPageData()
       }
     }
   }
@@ -75,17 +141,16 @@
 
   .content {
     width: 100%;
-    height: 500px;
   }
 
   .table {
     width: 100%;
-    height: 100%;
     background: green;
   }
 
   .pagination {
 
+    margin: 1rem auto;
   }
 
 </style>

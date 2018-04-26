@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 
 const List = []
 
-for (let i = 0; i < 148; ++i) {
+for (let i = 0; i < 25; ++i) {
   
   List.push(Mock.mock({
     index: '@increment',
@@ -11,6 +11,6 @@ for (let i = 0; i < 148; ++i) {
   }))
 }
 
-console.log(List)
+// console.log(List)
 
 export { List as default }
