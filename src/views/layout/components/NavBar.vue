@@ -7,12 +7,12 @@
         <span class="line"></span>
         <span>2 填写通知内容</span>
       </div>
-      <div v-if="usercreatesearch" class="createuser">
+      <div v-if="checkUserManger" class="createsearch">
         <el-input class="input" placeholder="请输入角色名称查询"></el-input>
         <el-button class="search" @click="searchuser">查询</el-button>
         <el-button class="create" @click="createuser">创建</el-button>
       </div>
-      <div v-if="checkUserManger" class="createuser">
+      <div v-if="checkAccountMananger" class="createsearch">
         <el-input class="input" placeholder="请输入人员编号、姓名"></el-input>
         <el-button class="search" @click="searchaccount">查询</el-button>
         <el-button class="create" @click="createaccount">创建</el-button>
@@ -67,11 +67,14 @@
     },
     computed:{
 
-      checkUserManger:function() {
+      checkAccountMananger() {
 
-        console.log(this.$route)
+        return this.$route.path == "/systemadmin/account/main"
+      },
 
-        return this.$route.name == "usermanager"
+      checkUserManger() {
+
+        return this.$route.path == "/systemadmin/user/main"
       }
     }
   }
@@ -113,7 +116,7 @@
     }
   }
 
-  .createuser {
+  .createsearch {
 
     display: flex;
     justify-content: center;

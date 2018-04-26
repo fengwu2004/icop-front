@@ -33,12 +33,11 @@ export default {
   methods: {
     generateTitle,
     getBreadcrumb() {
+
       let matched = this.$route.matched.filter(item => item.name)
-      const first = matched[0]
-      if (first && first.name !== 'dashboard') {
-        matched = [].concat(matched)
-      }
+
       console.log(matched)
+
       this.levelList = matched
     }
   }

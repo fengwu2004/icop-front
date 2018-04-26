@@ -39,6 +39,7 @@ export default {
     createaccount:'创建账户',
     accountpermission:'设置权限',
     usermanagermain:'usermanagermain',
+    accountmanagermain:'accountmanagermain',
     inlineEditTable: 'Table内编辑',
     complexTable: '综合Table',
     treeTable: '树形表格',

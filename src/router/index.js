@@ -53,7 +53,7 @@ const account = {
     {
       path: 'main',
       component:_import('systemadmin/account/main'),
-      meta: { title: 'accountmanager', icon: 'table' },
+      meta: { title: 'accountmanagermain', icon: 'table' },
       hidden:true
     },
     {
@@ -84,7 +84,6 @@ const user = {
     {
       path: 'main',
       component:_import('systemadmin/user/main'),
-      name:'usermanagermain',
       meta: { title: 'usermanagermain', icon: 'table' },
       hidden:true
     },

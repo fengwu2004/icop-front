@@ -1,5 +1,5 @@
 <template>
-  <div class="createuserframe">
+  <div class="content">
     <div class="createuser">
       <div class="baseinfo">
         <li>基本信息</li>
@@ -96,6 +96,12 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+
+  .content {
+
+    width: 90%;
+    margin: 1rem auto;
+  }
 
   .baseinfo {
 
