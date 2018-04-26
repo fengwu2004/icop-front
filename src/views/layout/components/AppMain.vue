@@ -2,7 +2,7 @@
   <transition name="fade" mode="out-in">
     <div class="mainframe">
       <nav-bar @createNewMessage="createMessage" @createUser="createUser" @searchUser="searchUser"></nav-bar>
-      <router-view class="router-view" ref="routerview"></router-view>
+      <router-view class="router-view" ref="main"></router-view>
     </div>
   </transition>
 </template>
@@ -12,36 +12,36 @@
   import NavBar from './NavBar'
 
   export default {
-
     components: { NavBar },
-
     data() {
 
       return {
         createmessage:false,
         createmessageprocess:false,
         usercreatesearch:false,
-        accountcreatesearch:false
+        accountcreatesearch:false,
       }
     },
+    mounted() {
 
+      this.routerref = this.$refs.main.$refs.main
+    },
     methods:{
-
       searchUser(name) {
 
-        // console.log(this.$refs.main)
-
-        // this.$refs.routerview.$children[0].handleSearch(name)
+        this.routerref.handleSearch(name)
       },
-
       createUser() {
 
-        this.$router.push({name:'createuser'})
-      },
+        let route = {name:'createuser'}
 
+        this.$router.push(route)
+      },
       createMessage() {
 
-        this.$router.push({name:'createareamessage'})
+        let route = {name:'createareamessage'}
+
+        this.$router.push(route)
       }
     }
   }
