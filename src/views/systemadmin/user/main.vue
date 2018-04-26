@@ -21,7 +21,6 @@
 </template>
 
 <script>
-
   import debugdata from './debugdata'
   import PageWidget from '@/components/PageWidget'
 
