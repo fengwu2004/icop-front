@@ -42,66 +42,92 @@ export default new Router({
 
 const main = { template: '<router-view></router-view>' }
 
-const createuser = {
-  path: 'createuser',
-  component: _import('systemadmin/usermanager/createuser/index'),
-  name: 'createuser',
-  meta: { title: 'createuser', icon: 'table' },
-  hidden: true
-}
-
-const permissionsetting = {
-  path: 'permissionsetting',
-  component:_import('systemadmin/accountmanager/createaccount/permissionsetting/index'),
-  name: 'permissionsetting',
-  meta: { title: 'permissionsetting', icon: 'table' },
-  hidden: true
-}
-
-const createaccount = {
-  path: 'createaccount',
-  component: _import('systemadmin/accountmanager/createaccount/index'),
-  name: 'createaccount',
-  meta: { title: 'createaccount', icon: 'table' },
-  hidden: true,
-}
-
-const usermanager = {
-  path: 'usermanager',
-  component: _import('systemadmin/usermanager/index'),
-  name: 'usermanager',
-  meta: { title: 'usermanager', icon: 'table' },
-}
-
-const accountmanager = {
-  path: 'accountmanager',
-  component: _import('systemadmin/accountmanager/index'),
+const account = {
+  
+  path: 'account',
+  redirect: '/systemadmin/account/main',
   name: 'accountmanager',
-  meta: { title: 'accountmanager', icon: 'table' }}
+  component:main,
+  meta: { title: 'accountmanager', icon: 'table' },
+  children: [
+    {
+      path: 'main',
+      component:_import('systemadmin/account/main'),
+      meta: { title: 'accountmanager', icon: 'table' },
+      hidden:true
+    },
+    {
+      path: 'create',
+      component: _import('systemadmin/account/create'),
+      name: 'createaccount',
+      meta: { title: 'createaccount', icon: 'table' },
+      hidden:true
+    },
+    {
+      path: 'permisson',
+      component: _import('systemadmin/account/permission'),
+      name: 'accountpermission',
+      meta: {title: 'accountpermission', icon: 'table'},
+      hidden: true,
+    }
+  ]
+}
 
-const projectsetting = {
-  path: 'projectsetting',
-  // component:_import('systemadmin/projectsetting/index'),
-  component: _import('systemadmin/projectsetting/index'),
+const user = {
+  
+  path: 'user',
+  redirect: '/systemadmin/user/main',
+  name: 'usermanager',
+  component:main,
+  meta: { title: 'usermanager', icon: 'table' },
+  children: [
+    {
+      path: 'main',
+      component:_import('systemadmin/user/main'),
+      name:'usermanagermain',
+      meta: { title: 'usermanagermain', icon: 'table' },
+      hidden:true
+    },
+    {
+      path: 'create',
+      component: _import('systemadmin/user/create'),
+      name: 'createuser',
+      meta: { title: 'createuser', icon: 'table' },
+      hidden:true
+    }
+  ]
+}
+
+const project = {
+
+  path: 'project',
+  redirect: '/systemadmin/project/main',
   name: 'projectsetting',
-  meta: { title: 'projectsetting', icon: 'table' }}
+  component:main,
+  meta: { title: 'projectsetting', icon: 'table' },
+  children: [
+    {
+      path: 'main',
+      component:_import('systemadmin/project/main'),
+      meta: { title: 'projectsetting', icon: 'table' },
+      hidden:true
+    }
+  ]
+}
 
 const systemadmin = {
   path: '/systemadmin',
   component: Layout,
-  redirect: '/systemadmin/usermanager',
+  redirect: '/systemadmin/user',
   name: 'systemadmin',
   meta: {
     title: 'systemadmin',
     icon: 'table'
   },
   children: [
-    usermanager,
-    accountmanager,
-    projectsetting,
-    createuser,
-    createaccount,
-    permissionsetting
+    user,
+    account,
+    project
   ]
 }
 

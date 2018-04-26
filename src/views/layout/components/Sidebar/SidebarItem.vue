@@ -24,6 +24,10 @@
 import { generateTitle } from '@/utils/i18n'
 
 export default {
+  mounted:function() {
+
+    console.log(this.routes)
+  },
   name: 'SidebarItem',
   props: {
     routes: {
@@ -35,6 +39,10 @@ export default {
     }
   },
   methods: {
+    composePath(item, child) {
+
+      return
+    },
     hasOneShowingChildren(children) {
 
       const showingChildren = children.filter(item => {

@@ -52,7 +52,7 @@
 
 <script>
 
-  import SelectAccount from '@/components/SelectAccount'
+  import SelectAccount from '@/components/SelectAccount/index'
 
   export default {
 

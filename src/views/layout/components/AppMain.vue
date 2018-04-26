@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" mode="out-in">
     <div class="mainframe">
-      <nav-bar @createNewMessage="createNewMessage"></nav-bar>
+      <nav-bar @createNewMessage="createMessage" @createuser="createuser"></nav-bar>
       <router-view class="router-view"></router-view>
     </div>
   </transition>
@@ -15,9 +15,24 @@
 
     components: { NavBar },
 
+    data() {
+
+      return {
+        createmessage:false,
+        createmessageprocess:false,
+        usercreatesearch:false,
+        accountcreatesearch:false
+      }
+    },
+
     methods:{
 
-      createNewMessage() {
+      createuser() {
+
+        this.$router.push({name:'createuser'})
+      },
+
+      createMessage() {
 
         this.$router.push({name:'createareamessage'})
       }

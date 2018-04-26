@@ -1,16 +1,21 @@
 <template>
     <div class="navibarmain">
       <bread-crumb class="breadcrumb"></bread-crumb>
-      <el-button v-if="createmessage" @click="createNewMessage" type="primary"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
+      <el-button v-if="createmessage" @click="createMessage" type="primary"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
       <div v-if="createmessageprocess" class="createmessageprocess">
         <span>1 填写基本信息</span>
         <span class="line"></span>
         <span>2 填写通知内容</span>
       </div>
-      <div v-if="createuser" class="createuser">
+      <div v-if="usercreatesearch" class="createuser">
         <el-input class="input" placeholder="请输入角色名称查询"></el-input>
-        <el-button class="search" @click="search">查询</el-button>
-        <el-button class="create" @click="create">创建</el-button>
+        <el-button class="search" @click="searchuser">查询</el-button>
+        <el-button class="create" @click="createuser">创建</el-button>
+      </div>
+      <div v-if="checkUserManger" class="createuser">
+        <el-input class="input" placeholder="请输入人员编号、姓名"></el-input>
+        <el-button class="search" @click="searchaccount">查询</el-button>
+        <el-button class="create" @click="createaccount">创建</el-button>
       </div>
     </div>
 </template>
@@ -23,9 +28,31 @@
 
     components: { BreadCrumb },
 
+    props:['createmessage', 'createmessageprocess', 'usercreatesearch', 'accountcreatesearch'],
+
     methods:{
 
-      createNewMessage() {
+      searchuser() {
+
+
+      },
+
+      createuser() {
+
+        this.$emit('createuser')
+      },
+
+      searchaccount() {
+
+
+      },
+
+      createaccount() {
+
+
+      },
+
+      createMessage() {
 
         this.$emit('createNewMessage')
       },
@@ -35,11 +62,18 @@
 
       return {
 
-        createmessage:true,
-        createmessageprocess:false,
-        createuser:false
+
       }
     },
+    computed:{
+
+      checkUserManger:function() {
+
+        console.log(this.$route)
+
+        return this.$route.name == "usermanager"
+      }
+    }
   }
 </script>
 
