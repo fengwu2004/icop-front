@@ -40,7 +40,7 @@ export default new Router({
   routes: constantRouterMap
 })
 
-const main = { template: '<router-view></router-view>' }
+const main = { template: '<router-view ref="main"></router-view>' }
 
 const account = {
   

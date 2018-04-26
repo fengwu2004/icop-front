@@ -1,8 +1,8 @@
 <template>
   <transition name="fade" mode="out-in">
     <div class="mainframe">
-      <nav-bar @createNewMessage="createMessage" @createuser="createuser"></nav-bar>
-      <router-view class="router-view"></router-view>
+      <nav-bar @createNewMessage="createMessage" @createUser="createUser" @searchUser="searchUser"></nav-bar>
+      <router-view class="router-view" ref="routerview"></router-view>
     </div>
   </transition>
 </template>
@@ -27,7 +27,14 @@
 
     methods:{
 
-      createuser() {
+      searchUser(name) {
+
+        // console.log(this.$refs.main)
+
+        // this.$refs.routerview.$children[0].handleSearch(name)
+      },
+
+      createUser() {
 
         this.$router.push({name:'createuser'})
       },

@@ -9,13 +9,13 @@
       </div>
       <div v-if="checkUserManger" class="createsearch">
         <el-input class="input" placeholder="请输入角色名称查询"></el-input>
-        <el-button class="search" @click="searchuser">查询</el-button>
-        <el-button class="create" @click="createuser">创建</el-button>
+        <el-button class="search" @click="searchUser">查询</el-button>
+        <el-button class="create" @click="createUser">创建</el-button>
       </div>
       <div v-if="checkAccountMananger" class="createsearch">
         <el-input class="input" placeholder="请输入人员编号、姓名"></el-input>
-        <el-button class="search" @click="searchaccount">查询</el-button>
-        <el-button class="create" @click="createaccount">创建</el-button>
+        <el-button class="search" @click="searchAccount">查询</el-button>
+        <el-button class="create" @click="createAccount">创建</el-button>
       </div>
     </div>
 </template>
@@ -32,22 +32,22 @@
 
     methods:{
 
-      searchuser() {
+      searchUser() {
+
+        this.$emit('searchUser', '王小虎')
+      },
+
+      createUser() {
+
+        this.$emit('createUser')
+      },
+
+      searchAccount() {
 
 
       },
 
-      createuser() {
-
-        this.$emit('createuser')
-      },
-
-      searchaccount() {
-
-
-      },
-
-      createaccount() {
+      createAccount() {
 
 
       },

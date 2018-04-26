@@ -69,6 +69,10 @@
       handleDelete(index, row) {
 
 
+      },
+      handleSearch(name) {
+
+        console.log('查找名字', name)
       }
     }
   }
@@ -111,11 +115,6 @@
   .pagination {
 
 
-  }
-
-  .el-table >>> th {
-
-    background: #d0d5e5;
   }
 
 </style>
