@@ -1,20 +1,6 @@
 import Mock from 'mockjs'
 import { param2Obj } from '@/utils'
 
-const permissions = []
-const count = 20
-
-function createItem(treeId, parentId) {
-  
-  let item = Mock.mock({
-    text: '@ctitle(3, 5)',
-  })
-  
-  Object.assign(item, {treeId:treeId}, {parentId:parentId})
-  
-  return item
-}
-
 let app = [
   {
     "treeId": "300000",
