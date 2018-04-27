@@ -43,25 +43,32 @@
 
     methods:{
 
+      isExist(parentId, tree) {
+
+        return parentId in tree
+      },
+
       createTree(items) {
 
-        let tree = []
+        let tempmap = {}
 
         for (let i = 0; i < items.length; ++i) {
 
-          if (items[i].parentId in tree) {
+          let item = items[i]
 
-            tree[items.parentId].push(items[i])
+          if (!this.isExist(item.parentId, tempmap)) {
+
+            let obj = {treeId:item.parentId, children:[item]}
+
+            tempmap[obj.treeId] = obj
           }
           else {
 
-            tree[items.parentId] = []
-
-            tree[items.parentId].push(items[i])
+            tempmap[item.parentId].children.push(item)
           }
         }
 
-        console.log(tree)
+        console.log(tempmap)
       }
     },
     created() {
