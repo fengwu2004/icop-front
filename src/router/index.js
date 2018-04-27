@@ -42,37 +42,6 @@ export default new Router({
 
 const main = { template: '<router-view ref="main"></router-view>' }
 
-const account = {
-  
-  path: 'account',
-  redirect: '/systemadmin/account/main',
-  name: 'accountmanager',
-  component:main,
-  meta: { title: 'accountmanager', icon: 'table' },
-  children: [
-    {
-      path: 'main',
-      component:_import('systemadmin/account/main'),
-      meta: { title: 'accountmanagermain', icon: 'table' },
-      hidden:true
-    },
-    {
-      path: 'create',
-      component: _import('systemadmin/account/create'),
-      name: 'createaccount',
-      meta: { title: 'createaccount', icon: 'table' },
-      hidden:true
-    },
-    {
-      path: 'permisson',
-      component: _import('systemadmin/account/permission'),
-      name: 'accountpermission',
-      meta: {title: 'accountpermission', icon: 'table'},
-      hidden: true,
-    }
-  ]
-}
-
 const user = {
   
   path: 'user',
@@ -90,8 +59,39 @@ const user = {
     {
       path: 'create',
       component: _import('systemadmin/user/create'),
-      name: 'createuser',
-      meta: { title: 'createuser', icon: 'table' },
+      name: 'usercreate',
+      meta: { title: 'usercreate', icon: 'table' },
+      hidden:true
+    },
+    {
+      path: 'permisson',
+      component: _import('systemadmin/user/permission'),
+      name: 'userpermission',
+      meta: {title: 'userpermission', icon: 'table'},
+      hidden: true,
+    }
+  ]
+}
+
+const role = {
+  
+  path: 'role',
+  redirect: '/systemadmin/role/main',
+  name: 'rolemanager',
+  component:main,
+  meta: { title: 'rolemanager', icon: 'table' },
+  children: [
+    {
+      path: 'main',
+      component:_import('systemadmin/role/main'),
+      meta: { title: 'rolemanager', icon: 'table' },
+      hidden:true
+    },
+    {
+      path: 'create',
+      component: _import('systemadmin/role/create'),
+      name: 'createrole',
+      meta: { title: 'createrole', icon: 'table' },
       hidden:true
     }
   ]
@@ -117,15 +117,15 @@ const project = {
 const systemadmin = {
   path: '/systemadmin',
   component: Layout,
-  redirect: '/systemadmin/user',
+  redirect: '/systemadmin/role',
   name: 'systemadmin',
   meta: {
     title: 'systemadmin',
     icon: 'table'
   },
   children: [
+    role,
     user,
-    account,
     project
   ]
 }

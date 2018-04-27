@@ -67,11 +67,11 @@
     computed:{
       checkAccountMananger() {
 
-        return this.$route.path == "/systemadmin/account/main"
+        return this.$route.path == "/systemadmin/user/main"
       },
       checkUserManger() {
 
-        return this.$route.path == "/systemadmin/user/main"
+        return this.$route.path == "/systemadmin/role/main"
       }
     }
   }
