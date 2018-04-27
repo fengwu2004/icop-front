@@ -74,15 +74,8 @@
 
         this.app = this.createTree(response.data.app)
 
-        this.icop = this.createTree(response.data.icop)
+        // this.icop = this.createTree(response.data.icop)
       })
-    },
-    methods:{
-
-      getTree(permissions) {
-
-        
-      }
     },
     data() {
       return {
