@@ -49,10 +49,21 @@
 
         console.log(response)
 
-        this.app = response.data.app
+        let app = response.data.app
 
-        this.icop = response.data.icop
+        let icop = response.data.icop
+
+        this.app = getTree(app)
+
+        this.icop = getTree(icop)
       })
+    },
+    methods:{
+
+      getTree(permissions) {
+
+        
+      }
     },
     data() {
       return {
