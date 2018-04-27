@@ -41,6 +41,29 @@
 
   export default {
 
+    methods:{
+
+      createTree(items) {
+
+        let tree = []
+
+        for (let i = 0; i < items.length; ++i) {
+
+          if (items[i].parentId in tree) {
+
+            tree[items.parentId].push(items[i])
+          }
+          else {
+
+            tree[items.parentId] = []
+
+            tree[items.parentId].push(items[i])
+          }
+        }
+
+        console.log(tree)
+      }
+    },
     created() {
 
       console.log('aa')
@@ -49,13 +72,9 @@
 
         console.log(response)
 
-        let app = response.data.app
+        this.app = this.createTree(response.data.app)
 
-        let icop = response.data.icop
-
-        this.app = getTree(app)
-
-        this.icop = getTree(icop)
+        this.icop = this.createTree(response.data.icop)
       })
     },
     methods:{
