@@ -133,14 +133,14 @@ let icop = [
   }
 ]
 
+console.log('a')
+
 export default {
   
   queryRolePopedom: config => {
     
     return {
-      data: {
-        app:app, icop:icop
-      },
+      app:app, icop:icop,
     }
   }
 }
