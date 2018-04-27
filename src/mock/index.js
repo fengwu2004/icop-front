@@ -11,9 +11,11 @@ import roleAPI from './role'
 //角色相关
 Mock.mock(/\/jslife-icop-oms\/role\/queryRoleList/, 'post', roleAPI.queryRoleList)
 Mock.mock(/\/jslife-icop-oms\/role\/queryRoleInfo/, 'post', roleAPI.queryRoleInfo)
+Mock.mock(/\/jslife-icop-oms\/popedom\/queryRolePopedom/, 'post', roleAPI.queryRolePopedom)
 Mock.mock(/\/jslife-icop-oms\/role\/add/, 'post', roleAPI.add)
 Mock.mock(/\/jslife-icop-oms\/role\/edit/, 'post', roleAPI.edit)
 Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
+
 
 //用户相关
 Mock.mock(/\/jslife-icop-oms\/user\/queryUserList/, 'post', roleAPI.queryRoleList)

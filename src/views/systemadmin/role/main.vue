@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import { queryRoleList } from '@/api/role'
+  import { queryRoleList, queryRoleInfo } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
 
   export default {
@@ -60,30 +60,10 @@
 
           console.log(response)
 
-          this.tableData.data = response.data.data
-
-          this.tableData.totalCount = response.data.totalCount
+          Object.assign(this.tableData, response.data)
 
           this.listLoading = false
         })
-      },
-      headercellstyle({row, rowIndex, columnIndex}){
-
-        if (columnIndex == 3) {
-
-          return {textAlign:'center'}
-        }
-
-        return {textAlign:'left'}
-      },
-      cellstyle({row, rowIndex, columnIndex}) {
-
-        if (columnIndex == 3) {
-
-          return {textAlign:'center'}
-        }
-
-        return {textAlign:'left'}
       },
       pageSizeChange(pageSize){
 
@@ -119,7 +99,36 @@
       handleSearch(name) {
 
         console.log('search', name)
-      }
+
+        this.listLoading = true
+
+        queryRoleInfo({roleName:name}).then(response => {
+
+          console.log(response)
+
+          Object.assign(this.tableData, response.data)
+
+          this.listLoading = false
+        })
+      },
+      headercellstyle({row, rowIndex, columnIndex}){
+
+        if (columnIndex == 3) {
+
+          return {textAlign:'center'}
+        }
+
+        return {textAlign:'left'}
+      },
+      cellstyle({row, rowIndex, columnIndex}) {
+
+        if (columnIndex == 3) {
+
+          return {textAlign:'center'}
+        }
+
+        return {textAlign:'left'}
+      },
     }
   }
 </script>

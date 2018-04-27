@@ -33,7 +33,7 @@
       },
       createUser() {
 
-        let route = {name:'createuser'}
+        let route = {name:'createrole'}
 
         this.$router.push(route)
       },

@@ -15,26 +15,14 @@
       <div class="permissionctr">
         <div style="font-size:0.8rem">请勾选可使用的捷物管APP功能</div>
         <div class="permissiontree">
-          <el-tree
-            :data="data2"
-            show-checkbox
-            node-key="id"
-            :default-expanded-keys="[2, 3]"
-            :default-checked-keys="[5]"
-            :props="defaultProps">
+          <el-tree :data="data2" show-checkbox node-key="id" :default-expanded-keys="[2, 3]" :default-checked-keys="[5]" :props="defaultProps">
           </el-tree>
         </div>
       </div>
       <div class="permissionctr">
         <div style="font-size:0.8rem">请勾选可使用的社区运营平台功能</div>
         <div class="permissiontree">
-          <el-tree
-            :data="data2"
-            show-checkbox
-            node-key="id"
-            :default-expanded-keys="[2, 3]"
-            :default-checked-keys="[5]"
-            :props="defaultProps">
+          <el-tree :data="data2" show-checkbox node-key="id" :default-expanded-keys="[2, 3]" :default-checked-keys="[5]" :props="defaultProps">
           </el-tree>
         </div>
       </div>
