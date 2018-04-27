@@ -15,15 +15,13 @@
       <div class="permissionctr">
         <div style="font-size:0.8rem">请勾选可使用的捷物管APP功能</div>
         <div class="permissiontree">
-          <el-tree :data="app" show-checkbox node-key="id" :default-expanded-keys="[2, 3]" :default-checked-keys="[5]" :props="defaultProps">
-          </el-tree>
+          <el-tree :data="app" show-checkbox node-key="treeId" @check-change="handleCheckChange" :props="defaultProps"></el-tree>
         </div>
       </div>
       <div class="permissionctr">
         <div style="font-size:0.8rem">请勾选可使用的社区运营平台功能</div>
         <div class="permissiontree">
-          <el-tree :data="icop" show-checkbox node-key="id" :default-expanded-keys="[2, 3]" :default-checked-keys="[5]" :props="defaultProps">
-          </el-tree>
+          <el-tree :data="icop" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
         </div>
       </div>
     </div>
@@ -42,46 +40,36 @@
   export default {
 
     methods:{
+      handleCheckChange(data, checked, indeterminate) {
 
-      isExist(parentId, tree) {
-
-        return parentId in tree
+        console.log(data, checked, indeterminate);
       },
+      build(parentid, items) {
 
-      createTree(items) {
+        var _array = [];
 
-        let tempmap = {}
+        for (var i = 0; i < items.length; i++) {
 
-        for (let i = 0; i < items.length; ++i) {
+          var item = items[i];
 
-          let item = items[i]
+          if (item.parentId === parentid) {
 
-          if (!this.isExist(item.parentId, tempmap)) {
+            item.children = this.build(item.treeId, items);
 
-            let obj = {treeId:item.parentId, children:[item]}
-
-            tempmap[obj.treeId] = obj
-          }
-          else {
-
-            tempmap[item.parentId].children.push(item)
+            _array.push(item);
           }
         }
 
-        console.log(tempmap)
-      }
+        return _array;
+      },
     },
     created() {
 
-      console.log('aa')
-
       queryPopedomTree({}).then(response => {
 
-        console.log(response)
+        this.app = this.build(null, response.data.app)
 
-        this.app = this.createTree(response.data.app)
-
-        // this.icop = this.createTree(response.data.icop)
+        this.icop = this.build(null, response.data.icop)
       })
     },
     data() {
@@ -128,7 +116,7 @@
           }],
         defaultProps: {
           children: 'children',
-          label: 'label'
+          label: 'text'
         }
       }
     }

@@ -15,6 +15,12 @@ let app = [
     "systemType": " APP"
   },
   {
+    "treeId": "301100",
+    "text": "业主查询AAAA",
+    "parentId": "301199",
+    "systemType": " APP"
+  },
+  {
     "treeId": "301200",
     "text": "信息上报",
     "parentId": "300000",
