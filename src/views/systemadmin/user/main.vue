@@ -115,7 +115,9 @@
 
         let user = this.tableData.data[index]
 
-        let router = {name:'edituser', params:{user:user}}
+        this.$store.dispatch('setCurrentUser', user)
+
+        let router = {name:'edituser'}
 
         this.$router.push(router)
       },

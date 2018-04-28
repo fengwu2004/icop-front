@@ -4,15 +4,15 @@
       <div class="left">
         <div>
           <li>人员编号</li>
-          <el-input style="margin-top: 0.5rem" v-model="user.personCode"></el-input>
+          <el-input style="margin-top: 0.5rem" v-model="currentEditUser.personCode"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <li>姓名</li>
-          <el-input style="margin-top: 0.5rem" v-model="user.name"></el-input>
+          <el-input style="margin-top: 0.5rem" v-model="currentEditUser.name"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <li>账户</li>
-          <el-input style="margin-top: 0.5rem" v-model="user.userName"></el-input>
+          <el-input style="margin-top: 0.5rem" v-model="currentEditUser.userName"></el-input>
           <div style="margin-top: 10px">
             <span style="font-size: 0.8rem;color: #445577;">注:不能重名,登录时需同时输入@部分</span>
           </div>
@@ -21,13 +21,13 @@
       <div class="right">
         <div>
           <span>联系电话</span>
-          <el-input style="margin-top: 0.5rem" v-model="user.telephone"></el-input>
+          <el-input style="margin-top: 0.5rem" v-model="currentEditUser.telephone"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <span>性别</span>
           <div style="margin-top: 0.5rem">
-            <el-radio v-model="user.sex" label="1">男</el-radio>
-            <el-radio v-model="user.sex" label="2">女</el-radio>
+            <el-radio v-model="currentEditUser.sex" label="1">男</el-radio>
+            <el-radio v-model="currentEditUser.sex" label="2">女</el-radio>
           </div>
         </div>
         <div style="margin-top: 3rem">
@@ -50,6 +50,7 @@
 
 <script>
 
+  import { mapGetters } from 'vuex'
   import { add } from '@/api/user'
   import SelectAccount from '@/components/SelectAccount/index'
 
@@ -100,9 +101,7 @@
       setRole() {
 
         let route = {
-
-          name:'rolesetting',
-          params:{user:this.user}
+          name:'rolesetting'
         }
 
         this.$router.push(route)

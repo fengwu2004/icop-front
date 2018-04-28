@@ -28,7 +28,7 @@ const usereditmanager = {
       
       return new Promise((resolve) => {
         
-        commit('CLEAR_USER', view)
+        commit('CLEAR_USER')
         
         resolve()
       })
