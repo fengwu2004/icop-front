@@ -148,11 +148,9 @@ export default {
   },
   edit: config => {
     
-    console.log('zz')
+    const { userId, userName, password, personId, roleIds } = param2Obj(config.url)
     
-    const { roleName, remark, popedomIds } = param2Obj(config.url)
-    
-    console.log(roleName, remark, popedomIds)
+    console.log(userId, userName, password, personId, roleIds)
     
     return {
     

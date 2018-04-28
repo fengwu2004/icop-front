@@ -18,9 +18,9 @@
       </div>
     </div>
     <div class="settings">
-      <el-button>上一步</el-button>
-      <el-button>取消</el-button>
-      <el-button type="primary">完成分配</el-button>
+      <el-button @click="preStep">上一步</el-button>
+      <el-button @click="cancelEdit">取消</el-button>
+      <el-button type="primary" @click="onFinishSetting">完成分配</el-button>
     </div>
   </div>
 </template>
@@ -54,6 +54,17 @@
           this.$refs.icoptree.setCheckedKeys(permissons)
         })
       },
+      preStep() {
+
+        this.$router.go(-1)
+      },
+      cancelEdit() {
+
+        this.$router.go(-2)
+      },
+      onFinishSetting() {
+
+      },
       build(parentid, items) {
 
         var _array = [];
@@ -78,6 +89,8 @@
     created() {
 
       console.log('aa')
+
+      this.user = this.$route.params.user
 
       queryTotalPopedomTree({}).then(response => {
 
@@ -110,6 +123,7 @@
     },
     data() {
       return {
+        user:null,
         app: [],
         icop: [],
         roletree:[],

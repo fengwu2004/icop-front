@@ -77,7 +77,8 @@
 
         let route = {
 
-          name:'rolesetting'
+          name:'rolesetting',
+          params:{user:this.user}
         }
 
         this.$router.push(route)
