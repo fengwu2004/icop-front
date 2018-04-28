@@ -4,12 +4,24 @@ import { param2Obj } from '@/utils'
 const roleList = []
 const count = 148
 
+let apppermission = [
+  '300000,301100,301200,301300,301400,301500,301600,301700,301710,301720,301730,301740,301750,301760,301770,301780',
+  '301100,301200,301400,301500,301600,301700,301710,301720,301730,301740,301750,301760,301770,301780',
+  '301100,301200,301400,301500,301600',
+'301100,301200,301400,301500,301600,301760',
+'301100,301200,301400,301500,301600,301760,310000,311100']
+
+let icoppermission = ['', '100000,101000,101100']
+
 for (let i = 0; i < count; i++) {
-  roleList.push(Mock.mock({
+  
+  let item = Mock.mock({
     roleId: '@increment',
     roleName: '@cname',
     remark: '@region' + '@city' + '@county' + '@zip',
-  }))
+  })
+  
+  roleList.push(item)
 }
 
 export default {
@@ -17,10 +29,10 @@ export default {
     
     const { roleIds } = param2Obj(config.url)
     
+    console.log(roleIds)
+    
     return {
-      data: [{
-        popedomIds:'1111,2222,3333'
-      }],
+      popedomIds:'301100,301200,301400,301500,301600,301760,310000,311100',
     }
   },
   queryRoleList: config => {
@@ -71,15 +83,12 @@ export default {
   },
   add: config => {
     
-    const { importance, type, title, page = 1, limit = 20, sort } = param2Obj(config.url)
+    const { roleName, remark, popedomIds } = param2Obj(config.url)
     
-    let mockList = roleList
-    
-    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+    console.log(popedomIds)
     
     return {
-      total: mockList.length,
-      items: pageList
+    
     }
   },
   edit: config => {

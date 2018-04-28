@@ -5,42 +5,57 @@
         <li>基本信息</li>
         <div style="margin-top: 1rem; font-size: 0.8rem">角色名称(不能重名)</div>
         <div style="margin-top: 0.5rem;width: 300px">
-          <el-input maxlength="20"></el-input>
+          <el-input maxlength="20" v-model="roleName"></el-input>
         </div>
         <div style="margin-top: 2rem;font-size:0.8rem">备注(限50字)</div>
         <div style="margin-top: 0.5rem;">
-          <el-input type="textarea" maxlength="50" rows="12"></el-input>
+          <el-input type="textarea" maxlength="50" rows="12" v-model="remark"></el-input>
         </div>
       </div>
       <div class="permissionctr">
         <div style="font-size:0.8rem">请勾选可使用的捷物管APP功能</div>
         <div class="permissiontree">
-          <el-tree :data="app" show-checkbox node-key="treeId" @check-change="handleCheckChange" :props="defaultProps"></el-tree>
+          <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
         </div>
       </div>
       <div class="permissionctr">
         <div style="font-size:0.8rem">请勾选可使用的社区运营平台功能</div>
         <div class="permissiontree">
-          <el-tree :data="icop" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
+          <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" @check-change="appcheckchange" :props="defaultProps"></el-tree>
         </div>
       </div>
     </div>
     <div class="settings">
       <el-button>取消</el-button>
-      <el-button type="primary">保存</el-button>
+      <el-button type="primary" @click="createRole">保存</el-button>
     </div>
   </div>
 </template>
 
 <script>
 
-  import { queryPopedomTree  } from '@/api/permissiontree'
+  import { queryPopedomTree } from '@/api/permissiontree'
+  import { add } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
 
   export default {
-
     methods:{
-      handleCheckChange(data, checked, indeterminate) {
+      appcheckchange() {
+
+        let apppermissions = this.$refs.icoptree.getCheckedKeys()
+
+        console.log(apppermissions.join(','))
+      },
+      handleIcopPermissionChange(data, checked, indeterminate) {
+
+        if (indeterminate) {
+
+          return
+        }
+
+        console.log(data, checked, indeterminate);
+      },
+      handleAppPermissionChange(data, checked, indeterminate) {
 
         console.log(data, checked, indeterminate);
       },
@@ -50,11 +65,13 @@
 
         for (var i = 0; i < items.length; i++) {
 
-          var item = items[i];
+          var item = items[i]
+
+          item.disabled = !this.enableedit
 
           if (item.parentId === parentid) {
 
-            item.children = this.build(item.treeId, items);
+            item.children = this.build(item.treeId, items)
 
             _array.push(item);
           }
@@ -62,6 +79,27 @@
 
         return _array;
       },
+      createRole() {
+
+        let apppermissions = this.$refs.apptree.getCheckedKeys()
+
+        let icoppermissions = this.$refs.icoptree.getCheckedKeys()
+
+        let permissons = apppermissions.concat(icoppermissions)
+
+        let strpermissions = permissons.join(',')
+
+        let data = {
+          roleName:this.roleName,
+          remark:this.remark,
+          popedomIds:strpermissions
+        }
+
+        add(data).then(response => {
+
+          this.$router.push({name:'rolemanager'})
+        })
+      }
     },
     created() {
 
@@ -76,44 +114,9 @@
       return {
         app: [],
         icop: [],
-        test: [
-          {
-            id: 1,
-            label: '一级 1',
-            children: [{
-              id: 4,
-              label: '二级 1-1',
-              children: [{
-                id: 9,
-                label: '三级 1-1-1'
-              }, {
-                id: 10,
-                label: '三级 1-1-2'
-              }]
-            }]
-          },
-          {
-            id: 2,
-            label: '一级 2',
-            children: [{
-              id: 5,
-              label: '二级 2-1'
-            }, {
-              id: 6,
-              label: '二级 2-2'
-            }]
-          },
-          {
-            id: 3,
-            label: '一级 3',
-            children: [{
-              id: 7,
-              label: '二级 3-1'
-            }, {
-              id: 8,
-              label: '二级 3-2'
-            }]
-          }],
+        roleName:'',
+        remark:'',
+        enableedit:false,
         defaultProps: {
           children: 'children',
           label: 'text'

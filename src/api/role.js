@@ -16,6 +16,14 @@ export function queryRoleInfo(query) {
   })
 }
 
+export function queryRolePopedom(query) {
+  return request({
+    url: '/jslife-icop-oms/popedom/queryRolePopedom',
+    method: 'post',
+    params: query
+  })
+}
+
 export function add(query) {
   return request({
     url: '/jslife-icop-oms/role/add',

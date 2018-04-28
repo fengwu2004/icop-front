@@ -64,6 +64,15 @@
 
           this.listLoading = false
         })
+
+        queryRoleList(this.getRequestData()).then(response => {
+
+          console.log(response)
+
+          Object.assign(this.tableData, response.data)
+
+          this.listLoading = false
+        })
       },
       pageSizeChange(pageSize){
 
@@ -86,7 +95,13 @@
       },
       handleDetail(index, row) {
 
+        console.log('handleDetail')
 
+        let role = this.tableData.data[index]
+
+        let router = {name:'roledetails', params:{role:role}}
+
+        this.$router.push(router)
       },
       handleManager(index, row) {
 
