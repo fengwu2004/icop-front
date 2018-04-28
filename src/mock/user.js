@@ -16,13 +16,29 @@ let icoppermission = ['', '100000,101000,101100']
 for (let i = 0; i < count; i++) {
   
   let item = Mock.mock({
-    roleId: '@increment',
-    roleName: '@cname',
-    remark: '@region' + '@city' + '@county' + '@zip',
+    userId:'@increment',
+    userName: '@email',
+    personCode:'@integer(1, 300)',
+    name: '@cname',
   })
+  
+  if (Math.random() % 2 === 0) {
+  
+    item.sex = "男"
+    
+    item.telephone = '18910000000'
+  }
+  else {
+  
+    item.sex = "女"
+  
+    item.telephone = '18910003450'
+  }
   
   userList.push(item)
 }
+
+console.log(userList)
 
 function removeUser(roleId) {
   

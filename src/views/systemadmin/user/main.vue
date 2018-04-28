@@ -3,7 +3,7 @@
     <div class="table">
       <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle">
         <el-table-column prop="userName" label="员工账号" width="200"></el-table-column>
-        <el-table-column prop="userindex" label="人员编号" width="150"></el-table-column>
+        <el-table-column prop="personCode" label="人员编号" width="150"></el-table-column>
         <el-table-column prop="name" label="姓名" width="150"></el-table-column>
         <el-table-column prop="sex" label="性别" width="100"></el-table-column>
         <el-table-column prop="telephone" label="联系电话" width="200"></el-table-column>
