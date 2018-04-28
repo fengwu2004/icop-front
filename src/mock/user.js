@@ -38,7 +38,7 @@ for (let i = 0; i < count; i++) {
   userList.push(item)
 }
 
-console.log(userList)
+// console.log(userList)
 
 function removeUser(roleId) {
   
@@ -102,21 +102,27 @@ export default {
   },
   queryRoleListByIds: config => {
     
-    const { pageIndex, pageSize } = param2Obj(config.url)
+    let role0 = {
+      roleId:10,
+      roleName:'收费员',
+      roleName:'收费员使用',
+    }
+  
+    let role1 = {
+      roleId:11,
+      roleName:'收费员',
+      roleName:'收费员使用',
+    }
+  
+    let role2 = {
+      roleId:12,
+      roleName:'收费员',
+      roleName:'收费员使用',
+    }
     
-    let mockList = userList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
-    
-    const pageList = mockList
-    
-    let pageTotal = userList.length / pageSize
-    
-    let totalCount = userList.length
+    const pageList = [role0, role1, role2]
     
     return {
-      pageIndex:pageIndex,
-      pageSize:pageSize,
-      pageTotal:pageTotal,
-      totalCount:totalCount,
       data: pageList,
     }
   },

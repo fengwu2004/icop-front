@@ -71,10 +71,10 @@ const user = {
       hidden:true
     },
     {
-      path: 'permisson',
-      component: _import('systemadmin/user/permission'),
-      name: 'userpermission',
-      meta: {title: 'userpermission', icon: 'table'},
+      path: 'rolesetting',
+      component: _import('systemadmin/user/rolesetting'),
+      name: 'rolesetting',
+      meta: {title: 'rolesetting', icon: 'table'},
       hidden: true,
     }
   ]
