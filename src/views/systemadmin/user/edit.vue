@@ -71,6 +71,8 @@
       console.log('created')
 
       this.user = this.$route.params.user
+
+      this.$store.dispatch('setCurrentUser', this.user)
     },
     methods:{
       setRole() {
