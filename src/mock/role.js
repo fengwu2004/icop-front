@@ -24,6 +24,19 @@ for (let i = 0; i < count; i++) {
   roleList.push(item)
 }
 
+function removeRole(roleId) {
+  
+  for (let i = 0; i < roleList.length; ++i) {
+    
+    if (parseInt(roleId) === roleList[i].roleId) {
+      
+      roleList.splice(i, 1)
+      
+      return
+    }
+  }
+}
+
 export default {
   queryRolePopedom: config => {
     
@@ -105,15 +118,14 @@ export default {
   },
   deleteRole: config => {
     
-    const { importance, type, title, page = 1, limit = 20, sort } = param2Obj(config.url)
+    const { roleId } = param2Obj(config.url)
     
-    let mockList = roleList
-    
-    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+    console.log('删除的roleId是' + roleId)
+  
+    removeRole(roleId)
     
     return {
-      total: mockList.length,
-      items: pageList
+    
     }
   },
 }

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import { queryRoleList, queryRoleInfo } from '@/api/role'
+  import { queryRoleList, queryRoleInfo, deleteRole } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
 
   export default {
@@ -113,7 +113,14 @@
       },
       handleDelete(index, row) {
 
+        let role = this.tableData.data[index]
 
+        let data = {roleId:role.roleId}
+
+        deleteRole(data).then(response => {
+
+          this.getList()
+        })
       },
       handleSearch(name) {
 
