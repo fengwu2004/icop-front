@@ -27,7 +27,7 @@
 
 <script>
   import { queryRoleListByIds } from '@/api/user'
-  import { queryPopedomTree } from '@/api/permissiontree'
+  import { queryTotalPopedomTree } from '@/api/permissiontree'
 
   export default {
     methods:{
@@ -39,7 +39,7 @@
 
           var item = items[i]
 
-          item.disabled = true
+          item.disabled = false
 
           if (item.parentId === parentid) {
 

@@ -34,7 +34,7 @@
 
 <script>
 
-  import { queryPopedomTree } from '@/api/permissiontree'
+  import { queryTotalPopedomTree } from '@/api/permissiontree'
   import { add } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
 
@@ -103,7 +103,7 @@
     },
     created() {
 
-      queryPopedomTree({}).then(response => {
+      queryTotalPopedomTree({}).then(response => {
 
         this.app = this.build(null, response.data.app)
 

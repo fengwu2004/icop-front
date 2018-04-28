@@ -30,7 +30,7 @@
 
 <script>
 
-  import { queryPopedomTree } from '@/api/permissiontree'
+  import { queryTotalPopedomTree } from '@/api/permissiontree'
   import { queryRolePopedom } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
 
@@ -63,7 +63,7 @@
 
       this.role = this.$route.params.role
 
-      queryPopedomTree({}).then(response => {
+      queryTotalPopedomTree({}).then(response => {
 
         this.app = this.build(null, response.data.app)
 

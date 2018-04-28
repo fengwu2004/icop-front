@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function queryPopedomTree(query) {
+export function queryTotalPopedomTree(query) {
   return request({
     url: '/jslife-icop-oms/user/queryPopedomTree',
     method: 'post',
