@@ -24,6 +24,7 @@
 
 <script>
 
+  import { queryRoleList, queryRoleInfo, deleteRole } from '@/api/role'
   import { default as PageWidget } from '@/components/PageWidget'
   export default {
 

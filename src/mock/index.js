@@ -2,6 +2,7 @@ import Mock from 'mockjs'
 import loginAPI from './login'
 import permissiontree from './permissiontree'
 import roleAPI from './role'
+import userAPI from './user'
 
 Mock.setup({
   timeout: '350-600'
@@ -19,11 +20,15 @@ Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
 Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomTree/, 'post', permissiontree.queryRolePopedom)
 
 // //用户相关
-// Mock.mock(/\/jslife-icop-oms\/user\/queryUserList/, 'post', roleAPI.queryRoleList)
-// Mock.mock(/\/jslife-icop-oms\/role\/userInfo/, 'post', roleAPI.queryRoleInfo)
-// Mock.mock(/\/jslife-icop-oms\/role\/queryPopedomTree/, 'post', roleAPI.add)
-// Mock.mock(/\/jslife-icop-oms\/role\/edit/, 'post', roleAPI.edit)
-// Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
+Mock.mock(/\/jslife-icop-oms\/user\/queryUserList/, 'post', userAPI.queryUserList)
+Mock.mock(/\/jslife-icop-oms\/user\/userInfo/, 'post', userAPI.userInfo)
+Mock.mock(/\/jslife-icop-oms\/user\/queryRoleListByIds/, 'post', userAPI.queryRoleListByIds)
+Mock.mock(/\/jslife-icop-oms\/user\/edit/, 'post', userAPI.edit)
+Mock.mock(/\/jslife-icop-oms\/user\/delete/, 'post', userAPI.deleteUser)
+Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', userAPI.editPwd)
+Mock.mock(/\/jslife-icop-oms\/user\/add/, 'post', userAPI.add)
+Mock.mock(/\/jslife-icop-oms\/user\/queryPersonList/, 'post', userAPI.queryPersonList)
+
 
 // 登录相关
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
