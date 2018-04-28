@@ -32,7 +32,7 @@ export default {
     console.log(roleIds)
     
     return {
-      popedomIds:'301100,301200,301400,301500,301600,301760,310000,311100',
+      popedomIds:'301100,301200,301400,301500,301600,301760,310000,311100,100000,101000,101100',
     }
   },
   queryRoleList: config => {

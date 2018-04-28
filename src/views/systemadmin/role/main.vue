@@ -105,7 +105,11 @@
       },
       handleManager(index, row) {
 
+        let role = this.tableData.data[index]
 
+        let router = {name:'editroledetails', params:{role:role}}
+
+        this.$router.push(router)
       },
       handleDelete(index, row) {
 
