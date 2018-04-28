@@ -17,7 +17,7 @@ Mock.mock(/\/jslife-icop-oms\/role\/edit/, 'post', roleAPI.edit)
 Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
 
 //权限树相关
-Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomTree/, 'post', permissiontree.queryRolePopedom)
+Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomTree/, 'post', permissiontree.queryTotalRolePopedomTree)
 
 // //用户相关
 Mock.mock(/\/jslife-icop-oms\/user\/queryUserList/, 'post', userAPI.queryUserList)

@@ -2,7 +2,7 @@
   <div class="content">
     <div class="createuser">
       <div class="permissiontree" style="padding: 20px">
-        <el-tree :data="roletree" show-checkbox node-key="treeId" :default-expanded-keys="[0]" :props="roleProps"></el-tree>
+        <el-tree ref="roletree" :data="roletree" @check-change="roleCheckChange" show-checkbox node-key="treeId" :default-expanded-keys="[0]" :props="roleProps"></el-tree>
       </div>
       <div class="permissionctr">
         <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
@@ -26,11 +26,34 @@
 </template>
 
 <script>
+  import { queryRolePopedom } from '@/api/role'
   import { queryRoleListByIds } from '@/api/user'
   import { queryTotalPopedomTree } from '@/api/permissiontree'
 
   export default {
     methods:{
+      roleCheckChange(data, checked, indeterminate) {
+
+        console.log(data, checked, indeterminate)
+
+        if (indeterminate) {
+
+          return
+        }
+
+        let roleIds = this.$refs.roletree.getCheckedKeys()
+
+        let reqeustdata = {roleIds:roleIds.join(',')}
+
+        queryRolePopedom(reqeustdata).then(response => {
+
+          let permissons = response.data.popedomIds.split(',')
+
+          this.$refs.apptree.setCheckedKeys(permissons)
+
+          this.$refs.icoptree.setCheckedKeys(permissons)
+        })
+      },
       build(parentid, items) {
 
         var _array = [];
@@ -56,11 +79,9 @@
 
       console.log('aa')
 
-      queryPopedomTree({}).then(response => {
+      queryTotalPopedomTree({}).then(response => {
 
         this.app = this.build(null, response.data.app)
-
-        console.log(this.app)
 
         this.icop = this.build(null, response.data.icop)
       })

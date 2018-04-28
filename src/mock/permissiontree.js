@@ -143,7 +143,7 @@ console.log('a')
 
 export default {
   
-  queryRolePopedom: config => {
+  queryTotalRolePopedomTree: config => {
     
     return {
       app:app, icop:icop,

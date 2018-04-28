@@ -1,15 +1,16 @@
 import Mock from 'mockjs'
 import { param2Obj } from '@/utils'
+import permission from "@/store/modules/permission";
 
 const roleList = []
 const count = 148
 
 let apppermission = [
-  '300000,301100,301200,301300,301400,301500,301600,301700,301710,301720,301730,301740,301750,301760,301770,301780',
-  '301100,301200,301400,301500,301600,301700,301710,301720,301730,301740,301750,301760,301770,301780',
-  '301100,301200,301400,301500,301600',
-'301100,301200,301400,301500,301600,301760',
-'301100,301200,301400,301500,301600,301760,310000,311100']
+  '300000,301100,301200,301750,301760,301770,301780',
+  '301100,301200,301400,301500,301600,301740,301750,301760,301770,301780',
+  '301100,301200,301400,301500,301600,100000,101000,101100',
+'301100,301500,301600,301760',
+'301100,301200,301400,301500,310000,311100']
 
 let icoppermission = ['', '100000,101000,101100']
 
@@ -42,10 +43,32 @@ export default {
     
     const { roleIds } = param2Obj(config.url)
     
-    console.log(roleIds)
+    let roleIdsArray = roleIds.split(',')
+    
+    console.log(roleIdsArray)
+    
+    let result = []
+    
+    for (let i = 0; i < roleIdsArray.length; ++i) {
+    
+      if (roleIdsArray[i] == '10') {
+  
+        result = result.concat(apppermission[0].split(','))
+      }
+      
+      if (roleIdsArray[i] == '11') {
+  
+        result = result.concat(apppermission[2].split(','))
+      }
+  
+      if (roleIdsArray[i] == '12') {
+  
+        result = result.concat(apppermission[3].split(','))
+      }
+    }
     
     return {
-      popedomIds:'301100,301200,301400,301500,301600,301760,310000,311100,100000,101000,101100',
+      popedomIds:result.join(','),
     }
   },
   queryRoleList: config => {
