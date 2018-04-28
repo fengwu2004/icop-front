@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="settings">
-      <el-button>取消</el-button>
+      <el-button @click="cancelEdit">取消</el-button>
       <el-button type="primary">保存</el-button>
       <el-button type="success" @click="setRole">继续分配角色</el-button>
     </div>
@@ -66,15 +66,37 @@
         }
       }
     },
+    computed: {
+      ...mapGetters([
+        'currentEditUser'
+      ]),
+    },
     created() {
 
       console.log('created')
 
-      this.user = this.$route.params.user
+      if (this.$route.params.user != undefined) {
 
-      this.$store.dispatch('setCurrentUser', this.user)
+        this.user = this.$route.params.user
+
+        this.$store.dispatch('setCurrentUser', this.user)
+      }
+      else {
+
+        console.log('zz')
+        console.log(this.$store.state.usereditmanager.currentUser)
+        console.log('zzz')
+
+        this.user = this.$store.state.usereditmanager.currentUser
+      }
     },
     methods:{
+      cancelEdit() {
+
+        this.$store.dispatch('clearUser')
+
+        this.$router.back()
+      },
       setRole() {
 
         let route = {
