@@ -105,7 +105,7 @@ const role = {
       path: 'edit',
       component: _import('systemadmin/role/edit'),
       name: 'editroledetails',
-      meta: { title: 'edit', icon: 'table' },
+      meta: { title: 'editroledetails', icon: 'table' },
       hidden:true
     }
   ]

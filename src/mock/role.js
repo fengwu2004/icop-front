@@ -92,16 +92,15 @@ export default {
     }
   },
   edit: config => {
+  
+    console.log('zz')
     
-    const { importance, type, title, page = 1, limit = 20, sort } = param2Obj(config.url)
-    
-    let mockList = roleList
-    
-    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
-    
+    const { roleName, remark, popedomIds } = param2Obj(config.url)
+  
+    console.log(roleName, remark, popedomIds)
+  
     return {
-      total: mockList.length,
-      items: pageList
+    
     }
   },
   deleteRole: config => {
