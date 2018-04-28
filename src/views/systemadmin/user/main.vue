@@ -1,23 +1,23 @@
 <template>
   <div class="content">
     <div class="table">
-      <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle">
+      <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700">
         <el-table-column prop="userName" label="员工账号" width="200"></el-table-column>
-        <el-table-column prop="personCode" label="人员编号" width="150"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="150"></el-table-column>
-        <el-table-column prop="sex" label="性别" width="100"></el-table-column>
+        <el-table-column prop="personCode" label="人员编号" width="200"></el-table-column>
+        <el-table-column prop="name" label="姓名" width="200"></el-table-column>
+        <el-table-column prop="sex" label="性别" width="200"></el-table-column>
         <el-table-column prop="telephone" label="联系电话" width="200"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">修改</el-button>
-            <el-button size="mini" @click="handleManager(scope.$index, scope.row)">重置密码</el-button>
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
+            <el-button size="mini" @click="handleChangePwd(scope.$index, scope.row)">重置密码</el-button>
             <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">注销账户</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <div class="pagination">
-      <page-widget :total="100" :pagesizes="[10, 20, 40, 50]"></page-widget>
+      <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
     </div>
   </div>
 </template>
@@ -111,7 +111,15 @@
           this.listLoading = false
         })
       },
-      handleManager(index, row) {
+      handleEdit(index, row) {
+
+        let user = this.tableData.data[index]
+
+        let router = {name:'edituser', params:{user:user}}
+
+        this.$router.push(router)
+      },
+      handleChangePwd(index, row) {
 
         let role = this.tableData.data[index]
 
@@ -132,7 +140,7 @@
 
         if (columnIndex == 5) {
 
-          return {textAlign:'right'}
+          return {textAlign:'center'}
         }
 
         return {textAlign:'left'}

@@ -64,6 +64,13 @@ const user = {
       hidden:true
     },
     {
+      path: 'edit',
+      component: _import('systemadmin/user/edit'),
+      name: 'edituser',
+      meta: { title: 'editcreate', icon: 'table' },
+      hidden:true
+    },
+    {
       path: 'permisson',
       component: _import('systemadmin/user/permission'),
       name: 'userpermission',

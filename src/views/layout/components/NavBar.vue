@@ -8,14 +8,14 @@
         <span>2 填写通知内容</span>
       </div>
       <div v-if="checkUserManger" class="createsearch">
-        <el-input class="input" v-model="username" placeholder="请输入角色名称查询"></el-input>
-        <el-button class="search" @click="searchUser">查询</el-button>
-        <el-button class="create" @click="createUser">创建</el-button>
+        <el-input class="input" v-model="rolename" placeholder="请输入角色名称查询"></el-input>
+        <el-button class="search" @click="searchRole">查询</el-button>
+        <el-button class="create" @click="createRole">创建</el-button>
       </div>
       <div v-if="checkAccountMananger" class="createsearch">
         <el-input class="input" placeholder="请输入人员编号、姓名"></el-input>
-        <el-button class="search" @click="searchAccount">查询</el-button>
-        <el-button class="create" @click="createAccount">创建</el-button>
+        <el-button class="search" @click="searchUser">查询</el-button>
+        <el-button class="create" @click="createUser">创建</el-button>
       </div>
     </div>
 </template>
@@ -28,21 +28,21 @@
     components: { BreadCrumb },
     props:['createmessage', 'createmessageprocess', 'usercreatesearch', 'accountcreatesearch'],
     methods:{
+      searchRole() {
+
+        this.$emit('searchRole', this.rolename)
+      },
+      createRole() {
+
+        this.$emit('createRole')
+      },
       searchUser() {
 
-        this.$emit('searchUser', this.username)
+
       },
       createUser() {
 
         this.$emit('createUser')
-      },
-      searchAccount() {
-
-
-      },
-      createAccount() {
-
-
       },
       createMessage() {
 
@@ -51,7 +51,7 @@
     },
     data() {
       return {
-        username:''
+        rolename:''
       }
     },
     watch:{

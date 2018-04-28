@@ -4,17 +4,15 @@
       <div class="left">
         <div>
           <li>人员编号</li>
-          <div class="specialinput">
-            <input/><el-button type="primary" plain size="mini" @click="selectaccount">请选择</el-button>
-          </div>
+          <el-input style="margin-top: 0.5rem" v-model="user.personCode"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <li>姓名</li>
-          <el-input style="margin-top: 0.5rem"></el-input>
+          <el-input style="margin-top: 0.5rem" v-model="user.name"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <li>账户</li>
-          <el-input style="margin-top: 0.5rem"></el-input>
+          <el-input style="margin-top: 0.5rem" v-model="user.userName"></el-input>
           <div style="margin-top: 10px">
             <span style="font-size: 0.8rem;color: #445577;">注:不能重名,登录时需同时输入@部分</span>
           </div>
@@ -23,18 +21,18 @@
       <div class="right">
         <div>
           <span>联系电话</span>
-          <el-input style="margin-top: 0.5rem"></el-input>
+          <el-input style="margin-top: 0.5rem" v-model="user.telephone"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <span>性别</span>
           <div style="margin-top: 0.5rem">
-            <el-radio v-model="sex" label="1">男</el-radio>
-            <el-radio v-model="sex" label="2">女</el-radio>
+            <el-radio v-model="user.sex" label="1">男</el-radio>
+            <el-radio v-model="user.sex" label="2">女</el-radio>
           </div>
         </div>
         <div style="margin-top: 3rem">
           <li>密码</li>
-          <el-input type="password" style="margin-top: 0.5rem"></el-input>
+          <el-input type="password" style="margin-top: 0.5rem">AAAAAA</el-input>
           <div style="margin-top: 10px">
             <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
           </div>
@@ -59,13 +57,26 @@
     components: { SelectAccount },
     data() {
       return {
-        sex:'',
+        user:{
+          sex:'',
+          personCode:'',
+          name:'',
+          telephone:'',
+          userName:'',
+        }
       }
+    },
+    created() {
+
+      console.log('created')
+
+      this.user = this.$route.params.user
     },
     methods:{
       setpermission() {
 
         let route = {
+
           name:'userpermission'
         }
 
