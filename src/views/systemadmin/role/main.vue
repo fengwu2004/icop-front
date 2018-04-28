@@ -36,7 +36,6 @@
           totalPage:0,
           pageIndex:1,
         },
-        searchResult:null,
       }
     },
     created() {
