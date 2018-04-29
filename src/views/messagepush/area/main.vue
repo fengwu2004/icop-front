@@ -47,7 +47,6 @@
   export default {
 
     components: { DateSelect, PageWidget },
-
     data() {
       return {
         tableData: [{
