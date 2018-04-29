@@ -1,6 +1,13 @@
 const usereditmanager = {
   state: {
-    currentUser: null,
+    currentUser: {
+      name:null,
+      personCode:' ',
+      userName:null,
+      telephone:null,
+      sex:'男',
+      pwd:null,
+    },
   },
   mutations: {
     SET_USER: (state, user) => {
@@ -12,6 +19,17 @@ const usereditmanager = {
     CLEAR_USER: (state) => {
       
       state.currentUser = null
+    },
+    RESET_USER: (state) => {
+      
+      state.currentUser = {
+        name:null,
+        personCode:' ',
+        userName:null,
+        telephone:null,
+        sex:'男',
+        pwd:null,
+      }
     },
   },
   actions: {
@@ -30,6 +48,15 @@ const usereditmanager = {
         
         commit('CLEAR_USER')
         
+        resolve()
+      })
+    },
+    resetUser({ commit, state }) {
+    
+      return new Promise((resolve) => {
+      
+        commit('RESET_USER')
+      
         resolve()
       })
     },

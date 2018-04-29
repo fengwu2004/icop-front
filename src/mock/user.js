@@ -53,6 +53,33 @@ function removeUser(roleId) {
   }
 }
 
+let personList = []
+
+for (let i = 0; i < 123; ++i) {
+  
+  let item = Mock.mock({
+    personId:'@increment',
+    userName: '@email',
+    personCode:'@integer(1, 300)',
+    name: '@cname',
+  })
+  
+  if (Math.random() % 2 === 0) {
+    
+    item.sex = "男"
+    
+    item.telephone = '18910000000'
+  }
+  else {
+    
+    item.sex = "女"
+    
+    item.telephone = '18910003450'
+  }
+  
+  personList.push(item)
+}
+
 export default {
   queryUserList: config => {
     
@@ -130,13 +157,13 @@ export default {
     
     const { pageIndex, pageSize } = param2Obj(config.url)
     
-    let mockList = userList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    let mockList = personList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
     
     const pageList = mockList
     
-    let pageTotal = userList.length / pageSize
+    let pageTotal = personList.length / pageSize
     
-    let totalCount = userList.length
+    let totalCount = personList.length
     
     return {
       pageIndex:pageIndex,

@@ -42,6 +42,8 @@
       },
       createUser() {
 
+        this.$store.dispatch('resetUser')
+
         this.$emit('createUser')
       },
       createMessage() {

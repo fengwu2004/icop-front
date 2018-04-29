@@ -61,7 +61,7 @@
     },
     mounted () {
 
-      this.value = this.pagesize
+      this.value = parseInt(this.pagesize)
     }
   }
 </script>

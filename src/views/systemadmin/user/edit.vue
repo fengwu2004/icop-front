@@ -44,7 +44,7 @@
       <el-button type="primary">保存</el-button>
       <el-button type="success" @click="setRole">继续分配角色</el-button>
     </div>
-    <select-account ref="sel"></select-account>
+    <select-user ref="sel"></select-user>
   </div>
 </template>
 
@@ -52,10 +52,10 @@
 
   import { mapGetters } from 'vuex'
   import { add } from '@/api/user'
-  import SelectAccount from '@/components/SelectAccount/index'
+  import SelectUser from '@/components/SelectUser/index'
 
   export default {
-    components: { SelectAccount },
+    components: { SelectUser },
     computed: {
       ...mapGetters([
         'currentEditUser'
