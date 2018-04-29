@@ -11,9 +11,9 @@ for (let i = 0; i < count; i++) {
     id: '@increment',
     msgSubject: '@title(3, 6)',
     planPushTime: '@datetime',
-    'type|1': ['SECURITY ', 'PROPERTY', 'ELEVATOR', 'VOTE', 'COUPONS'],
-    'pushChannel|1': ['APP ', 'SMS'],
-    'pushStatus|1': ['UNPUSH ', 'NOPUSH', 'SUCCESS', 'FAIL'],
+    'type|1': ['SECURITY', 'PROPERTY', 'ELEVATOR', 'VOTE', 'COUPONS'],
+    'pushChannel|1': ['APP', 'SMS'],
+    'pushStatus|1': ['UNPUSH', 'NOPUSH', 'SUCCESS', 'FAIL'],
     'strategy|1': ['IMMEDIATELY ', 'TIMING'],
     name:'@cname',
   })

@@ -10,17 +10,29 @@
       <div class="table">
         <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700">
           <el-table-column prop="msgSubject" label="内容主题" width="400"></el-table-column>
-          <el-table-column prop="type" label="消息类型" width="150"></el-table-column>
-          <el-table-column prop="pushChannel" label="发送方式" width="150"></el-table-column>
+          <el-table-column label="消息类型" width="150">
+            <template slot-scope="scope">
+              <span>{{ getMessageTypeStr(scope.row.type) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="发送方式" width="150">
+            <template slot-scope="scope">
+              <span>{{ getPushChannelStr(scope.row.pushChannel) }}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="pushStatus" label="发布状态" width="150"
                            :filters="pushStatusKeyList"
                            :filter-method="filterTag"
                            :filter-multiple="false">
             <template slot-scope="scope">
-              <el-tag :type="scope.row.pushStatus === '已发布' ? 'primary' : 'success'" close-transition>{{ getPushStatusStr(scope.row.pushStatus) }}</el-tag>
+              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="strategy" label="发送策略" width="150"></el-table-column>
+          <el-table-column prop="strategy" label="发送策略" width="150">
+            <template slot-scope="scope">
+              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="planPushTime" label="计划发送时间" width="250"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -44,11 +56,17 @@
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
 
+
+  const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
+  const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
+  const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
+  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATELY' }, { text: '定时生效', value: 'TIMING' }]
+
   export default {
     components: { PageWidget, DateSelect },
     data() {
       return {
-        pushStatusKeyList:[{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }],
+        pushStatusKeyList:pushStatusKeyList,
         listLoading:true,
         tableData: {
           totalCount:0,
@@ -64,6 +82,54 @@
       this.getList()
     },
     methods:{
+      getStrategyStr(strategy) {
+
+        for (let i = 0; i < strategyKeyList.length; ++i) {
+
+          let item = strategyKeyList[i]
+
+          if (item.value === strategy) {
+
+            return item.text
+          }
+        }
+
+        console.log(strategy)
+
+        return null
+      },
+      getPushChannelStr(pushChannel) {
+
+        for (let i = 0; i < pushChannelKeyList.length; ++i) {
+
+          let item = pushChannelKeyList[i]
+
+          if (item.value === pushChannel) {
+
+            return item.text
+          }
+        }
+
+        console.log(pushChannel)
+
+        return null
+      },
+      getMessageTypeStr(type) {
+
+        for (let i = 0; i < messageTypeKeyList.length; ++i) {
+
+          let item = messageTypeKeyList[i]
+
+          if (item.value === type) {
+
+            return item.text
+          }
+        }
+
+        console.log(type)
+
+        return null
+      },
       getPushStatusStr(pushStatus) {
 
         for (let i = 0; i < this.pushStatusKeyList.length; ++i) {
@@ -76,7 +142,9 @@
           }
         }
 
-        return ''
+        console.log(pushStatus)
+
+        return null
       },
       getList() {
 
