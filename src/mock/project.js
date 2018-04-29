@@ -12,6 +12,7 @@ for (let i = 0; i < count; i++) {
     projectCode:'@integer(1, 300)',
     projectName: '@cname',
     userName: '@email',
+    userId: '@integer(1000, 50000)',
   })
   
   if (Math.random() < 0.5) {
@@ -57,9 +58,9 @@ export default {
   },
   editPwd: config => {
     
-    const { userID } = param2Obj(config.url)
+    const { userId } = param2Obj(config.url)
     
-    console.log(userID)
+    console.log(userId)
     
     return {
     

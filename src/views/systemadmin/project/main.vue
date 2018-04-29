@@ -109,7 +109,7 @@
 
         let data = {
 
-          userName:project.userName
+          userId:project.userId
         }
 
         this.$confirm('此操作将重置账户密码为初始密码（6个8）, 是否继续?', '提示', {
@@ -124,17 +124,36 @@
             });
           })
           .then(() => {
-          editPwd(data).then(response => {
-            this.$message({
-              type: 'success',
-              message: '重置密码成功!'
-            });
+              editPwd(data)
+          })
+          .then(response => {
+          this.$message({
+            type: 'success',
+            message: '重置密码成功!'
           })
         })
       },
       handleSearch(name) {
 
+        console.log('search', name)
 
+        this.listLoading = true
+
+        let data = {
+          projectName:name,
+          projectCode:name,
+          pageIndex:0,
+          pageSize:this.tableData.pageSize,
+        }
+
+        queryProjectList(data).then(response => {
+
+          console.log(response)
+
+          Object.assign(this.tableData, response.data)
+
+          this.listLoading = false
+        })
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
