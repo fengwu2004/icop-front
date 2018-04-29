@@ -13,7 +13,7 @@
         <el-button class="create" @click="createRole">创建</el-button>
       </div>
       <div v-if="checkAccountMananger" class="createsearch">
-        <el-input class="input" placeholder="请输入人员编号、姓名"></el-input>
+        <el-input class="input" v-model="username" placeholder="请输入人员编号、姓名"></el-input>
         <el-button class="search" @click="searchUser">查询</el-button>
         <el-button class="create" @click="createUser">创建</el-button>
       </div>
@@ -38,7 +38,7 @@
       },
       searchUser() {
 
-
+        this.$emit('searchUser', this.username)
       },
       createUser() {
 
@@ -53,11 +53,11 @@
     },
     data() {
       return {
-        rolename:''
+        rolename:'',
+        username:'',
       }
     },
     watch:{
-
       username(newValue) {
 
         if (!newValue || newValue.length == 0) {

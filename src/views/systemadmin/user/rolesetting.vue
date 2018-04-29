@@ -27,7 +27,7 @@
 
 <script>
   import { queryRolePopedom } from '@/api/role'
-  import { queryRoleListByIds, edit } from '@/api/user'
+  import { queryRoleListByIds, edit, add } from '@/api/user'
   import { queryTotalPopedomTree } from '@/api/permissiontree'
 
   export default {
@@ -64,6 +64,16 @@
       },
       handleCreate() {
 
+        console.log('handleCreate')
+
+        let user = this.currentEditUser
+
+        add(user).then(response => {
+
+
+        })
+
+        this.$router.go(-2)
       },
       build(parentid, items) {
 

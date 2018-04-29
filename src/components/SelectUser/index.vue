@@ -8,11 +8,10 @@
           <el-button style="margin-left: 1rem" type="primary">查询</el-button>
         </div>
       </div>
-      <el-table :current-change="handleSelectChange" :data="tableData.data" v-loading="listLoading" max-height="400" highlight-current-row>
-        <el-table-column prop="userName" label="员工账号" width="250"></el-table-column>
-        <el-table-column prop="personCode" label="人员编号" width="150"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="150"></el-table-column>
-        <el-table-column prop="sex" label="性别" width="150"></el-table-column>
+      <el-table @current-change="handleSelectChange" :data="tableData.data" v-loading="listLoading" max-height="400" highlight-current-row>
+        <el-table-column prop="personCode" label="人员编号" width="200"></el-table-column>
+        <el-table-column prop="name" label="姓名" width="200"></el-table-column>
+        <el-table-column prop="sex" label="性别" width="200"></el-table-column>
         <el-table-column prop="telephone" label="联系电话"></el-table-column>
       </el-table>
     </div>
@@ -20,8 +19,8 @@
       <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
     </div>
     <div class="btns">
-      <el-button @click="dialogVisible = false">取消</el-button>
-      <el-button type="primary" @click="handleSelect">确定</el-button>
+      <el-button @click="() => hide()">取消</el-button>
+      <el-button type="primary" @click="handleConfirm">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -36,12 +35,15 @@
     methods:{
       handleSelectChange(currentRow, oldCurrentRow) {
 
-        console.log('选择改变')
+        this.selectedPerson = currentRow
 
         console.log(currentRow, oldCurrentRow)
       },
-      handleSelect() {
+      handleConfirm() {
 
+        this.$emit('selectPerson', this.selectedPerson)
+
+        this.hide()
       },
       handleSearch(name) {
 
@@ -103,9 +105,9 @@
 
         this.dialogVisible = true
       },
-      handleCurrentChange(val) {
+      hide() {
 
-        console.log(val)
+        this.dialogVisible = false
       }
     },
     created() {
@@ -114,6 +116,7 @@
     },
     data() {
       return {
+        selectedPersion:null,
         dialogVisible:false,
         listLoading:true,
         tableData: {

@@ -32,7 +32,7 @@
         </div>
         <div style="margin-top: 3rem">
           <li>密码</li>
-          <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.pwd"></el-input>
+          <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password"></el-input>
           <div style="margin-top: 10px">
             <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
           </div>

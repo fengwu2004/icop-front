@@ -102,7 +102,14 @@
 
         this.listLoading = true
 
-        queryRoleInfo({roleName:name}).then(response => {
+        let data = {
+          name:name,
+          personCode:name,
+          pageIndex:0,
+          pageSize:this.tableData.pageSize,
+        }
+
+        queryUserList(data).then(response => {
 
           console.log(response)
 

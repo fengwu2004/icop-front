@@ -1,12 +1,13 @@
 const usereditmanager = {
   state: {
     currentUser: {
+      personId:null,
       name:null,
       personCode:' ',
       userName:null,
       telephone:null,
       sex:'男',
-      pwd:null,
+      password:null,
     },
   },
   mutations: {
@@ -28,7 +29,7 @@ const usereditmanager = {
         userName:null,
         telephone:null,
         sex:'男',
-        pwd:null,
+        password:null,
       }
     },
   },

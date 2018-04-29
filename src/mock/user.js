@@ -59,7 +59,6 @@ for (let i = 0; i < 123; ++i) {
   
   let item = Mock.mock({
     personId:'@increment',
-    userName: '@email',
     personCode:'@integer(1, 300)',
     name: '@cname',
   })
@@ -209,9 +208,11 @@ export default {
   },
   add: config => {
     
-    const { roleName, remark, popedomIds } = param2Obj(config.url)
+    console.log('add')
     
-    console.log(popedomIds)
+    const { userName, password, personId, roleIds } = param2Obj(config.url)
+    
+    console.log(userName, password, personId, roleIds)
     
     return {
     

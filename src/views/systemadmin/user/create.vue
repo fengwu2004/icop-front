@@ -10,7 +10,7 @@
         </div>
         <div style="margin-top: 2rem">
           <li>姓名</li>
-          <el-input style="margin-top: 0.5rem" v-model="currentEditUser.name"></el-input>
+          <el-input style="margin-top: 0.5rem" :disabled="disabledChange" v-model="currentEditUser.name"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <li>账户</li>
@@ -23,18 +23,18 @@
       <div class="right">
         <div>
           <span>联系电话</span>
-          <el-input style="margin-top: 0.5rem" v-model="currentEditUser.telephone"></el-input>
+          <el-input style="margin-top: 0.5rem" :disabled="disabledChange" v-model="currentEditUser.telephone"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <span>性别</span>
           <div style="margin-top: 0.5rem">
-            <el-radio v-model="currentEditUser.sex" label="男">男</el-radio>
-            <el-radio v-model="currentEditUser.sex" label="女">女</el-radio>
+            <el-radio :disabled="disabledChange" v-model="currentEditUser.sex" label="男">男</el-radio>
+            <el-radio :disabled="disabledChange" v-model="currentEditUser.sex" label="女">女</el-radio>
           </div>
         </div>
         <div style="margin-top: 3rem">
           <li>密码</li>
-          <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.pwd"></el-input>
+          <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password"></el-input>
           <div style="margin-top: 10px">
             <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
           </div>
@@ -43,10 +43,10 @@
     </div>
     <div class="settings">
       <el-button @click="cancelEdit">取消</el-button>
-      <el-button type="primary">保存</el-button>
+      <el-button type="primary" @click="handleCreate">保存</el-button>
       <el-button type="success" @click="setRole">继续分配角色</el-button>
     </div>
-    <select-user ref="sel"></select-user>
+    <select-user ref="sel" @selectPerson="onSelectedPerson"></select-user>
   </div>
 </template>
 
@@ -58,12 +58,38 @@
 
   export default {
     components: { SelectUser },
+    data() {
+      return {
+        disabledChange:true
+      }
+    },
     computed: {
       ...mapGetters([
         'currentEditUser'
       ]),
     },
     methods:{
+      handleCreate() {
+
+        console.log('handleCreate')
+
+        let user = this.currentEditUser
+
+        add(user).then(response => {
+
+
+        })
+      },
+      onSelectedPerson(person) {
+
+        console.log(person)
+
+        let user = {}
+
+        Object.assign(user, this.currentEditUser, person)
+
+        this.$store.dispatch('setCurrentUser', user)
+      },
       cancelEdit() {
 
         this.$store.dispatch('clearUser')

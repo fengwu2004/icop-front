@@ -22,9 +22,11 @@
         accountcreatesearch:false,
       }
     },
-    mounted() {
+    computed:{
+      routerref:function() {
 
-      this.routerref = this.$refs.main.$refs.main
+        return this.$refs.main.$refs.main
+      }
     },
     methods:{
       createUser() {
@@ -35,7 +37,7 @@
       },
       searchUser(name) {
 
-
+        this.routerref.handleSearch(name)
       },
       searchRole(name) {
 
