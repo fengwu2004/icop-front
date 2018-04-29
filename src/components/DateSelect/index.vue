@@ -9,13 +9,12 @@
     </el-radio-group>
     <div class="intervalselect">
       <span>选择时间:</span>
-      <el-date-picker v-model="dayinterval" type="datetimerange" placeholder="选择时间范围"></el-date-picker>
+      <el-date-picker v-model="dayinterval" type="daterange" unlink-panels placeholder="选择时间范围"></el-date-picker>
     </div>
   </div>
 </template>
 
 <script>
-
   export default {
     data () {
       return {
