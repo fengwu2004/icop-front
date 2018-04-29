@@ -20,25 +20,12 @@ for (let i = 0; i < count; i++) {
     userName: '@email',
     personCode:'@integer(1, 300)',
     name: '@cname',
+    'sex|1': ['男', '女'],
+    'telephone|1': ['18910000000', '18910003450', '18910003112', '18910235112', '18910345612'],
   })
-  
-  if (Math.random() < 0.2) {
-  
-    item.sex = "男"
-    
-    item.telephone = '18910000000'
-  }
-  else {
-  
-    item.sex = "女"
-  
-    item.telephone = '18910003450'
-  }
   
   userList.push(item)
 }
-
-// console.log(userList)
 
 function removeUser(roleId) {
   

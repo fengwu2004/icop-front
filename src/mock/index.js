@@ -4,6 +4,7 @@ import permissiontree from './permissiontree'
 import roleAPI from './role'
 import userAPI from './user'
 import projectAPI from './project'
+import areamessageAPI from './areamessage'
 
 Mock.setup({
   timeout: '350-600'
@@ -39,6 +40,13 @@ Mock.mock(/\/jslife-icop-oms\/project\/editPwd/, 'post', projectAPI.editPwd)
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
+
+//社区信息
+Mock.mock(/\/jslife-icop-oms\/placard\/queryplacardList/, 'post', areamessageAPI.queryplacardList)
+Mock.mock(/\/jslife-icop-oms\/placard\/add/, 'post', areamessageAPI.add)
+Mock.mock(/\/jslife-icop-oms\/placard\/edit/, 'post', areamessageAPI.edit)
+Mock.mock(/\/jslife-icop-oms\/placard\/deletePlacard/, 'post', areamessageAPI.deletePlacard)
+Mock.mock(/\/jslife-icop-oms\/placard\/editPushStatus/, 'post', areamessageAPI.editPushStatus)
 
 
 export default Mock
