@@ -2,7 +2,7 @@
   <div class="content">
     <div class="createuser">
       <div class="permissiontree" style="padding: 20px">
-        <el-tree ref="roletree" :data="roletree" @check-change="roleCheckChange" show-checkbox node-key="treeId" :default-expanded-keys="[0]" :props="roleProps"></el-tree>
+        <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expanded-keys="[0]" :props="roleProps"></el-tree>
       </div>
       <div class="permissionctr">
         <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
@@ -18,21 +18,21 @@
       </div>
     </div>
     <div class="settings">
-      <el-button @click="preStep">上一步</el-button>
-      <el-button @click="cancelEdit">取消</el-button>
-      <el-button type="primary" @click="onFinishSetting">完成分配</el-button>
+      <el-button @click="handleToPreStep">上一步</el-button>
+      <el-button @click="handelCancel">取消</el-button>
+      <el-button type="primary" @click="handleCreate">完成分配</el-button>
     </div>
   </div>
 </template>
 
 <script>
   import { queryRolePopedom } from '@/api/role'
-  import { queryRoleListByIds } from '@/api/user'
+  import { queryRoleListByIds, edit } from '@/api/user'
   import { queryTotalPopedomTree } from '@/api/permissiontree'
 
   export default {
     methods:{
-      roleCheckChange(data, checked, indeterminate) {
+      handleRoleCheckChange(data, checked, indeterminate) {
 
         console.log(data, checked, indeterminate)
 
@@ -54,15 +54,15 @@
           this.$refs.icoptree.setCheckedKeys(permissons)
         })
       },
-      preStep() {
+      handleToPreStep() {
 
         this.$router.go(-1)
       },
-      cancelEdit() {
+      handelCancel() {
 
         this.$router.go(-2)
       },
-      onFinishSetting() {
+      handleCreate() {
 
       },
       build(parentid, items) {

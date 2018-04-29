@@ -4,7 +4,7 @@
       <div class="left">
         <div>
           <li>人员编号</li>
-          <el-input style="margin-top: 0.5rem" v-model="currentEditUser.personCode"></el-input>
+          <el-input style="margin-top: 0.5rem; border: none" v-model="currentEditUser.personCode"></el-input>
         </div>
         <div style="margin-top: 2rem">
           <li>姓名</li>
@@ -26,13 +26,13 @@
         <div style="margin-top: 2rem">
           <span>性别</span>
           <div style="margin-top: 0.5rem">
-            <el-radio v-model="currentEditUser.sex" label="1">男</el-radio>
-            <el-radio v-model="currentEditUser.sex" label="2">女</el-radio>
+            <el-radio v-model="currentEditUser.sex" label="男">男</el-radio>
+            <el-radio v-model="currentEditUser.sex" label="女">女</el-radio>
           </div>
         </div>
         <div style="margin-top: 3rem">
           <li>密码</li>
-          <el-input type="password" style="margin-top: 0.5rem">AAAAAA</el-input>
+          <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.pwd"></el-input>
           <div style="margin-top: 10px">
             <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
           </div>
@@ -56,17 +56,6 @@
 
   export default {
     components: { SelectAccount },
-    data() {
-      return {
-        user:{
-          sex:'',
-          personCode:'',
-          name:'',
-          telephone:'',
-          userName:'',
-        }
-      }
-    },
     computed: {
       ...mapGetters([
         'currentEditUser'
@@ -75,21 +64,6 @@
     created() {
 
       console.log('created')
-
-      if (this.$route.params.user != undefined) {
-
-        this.user = this.$route.params.user
-
-        this.$store.dispatch('setCurrentUser', this.user)
-      }
-      else {
-
-        console.log('zz')
-        console.log(this.$store.state.usereditmanager.currentUser)
-        console.log('zzz')
-
-        this.user = this.$store.state.usereditmanager.currentUser
-      }
     },
     methods:{
       cancelEdit() {
