@@ -63,15 +63,6 @@
 
           this.listLoading = false
         })
-
-        queryRoleList(this.getRequestData()).then(response => {
-
-          console.log(response)
-
-          Object.assign(this.tableData, response.data)
-
-          this.listLoading = false
-        })
       },
       pageSizeChange(pageSize){
 

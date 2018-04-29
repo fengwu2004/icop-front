@@ -3,6 +3,7 @@ import loginAPI from './login'
 import permissiontree from './permissiontree'
 import roleAPI from './role'
 import userAPI from './user'
+import projectAPI from './project'
 
 Mock.setup({
   timeout: '350-600'
@@ -29,6 +30,10 @@ Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', userAPI.editPwd)
 Mock.mock(/\/jslife-icop-oms\/user\/add/, 'post', userAPI.add)
 Mock.mock(/\/jslife-icop-oms\/user\/queryPersonList/, 'post', userAPI.queryPersonList)
 
+//项目账户配置
+Mock.mock(/\/jslife-icop-oms\/project\/queryProjectList/, 'post', projectAPI.queryProjectList)
+Mock.mock(/\/jslife-icop-oms\/project\/add/, 'post', projectAPI.add)
+Mock.mock(/\/jslife-icop-oms\/project\/editPwd/, 'post', projectAPI.editPwd)
 
 // 登录相关
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
