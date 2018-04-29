@@ -22,7 +22,7 @@ for (let i = 0; i < count; i++) {
     name: '@cname',
   })
   
-  if (Math.random() % 2 === 0) {
+  if (Math.random() < 0.2) {
   
     item.sex = "男"
     
@@ -64,7 +64,7 @@ for (let i = 0; i < 123; ++i) {
     name: '@cname',
   })
   
-  if (Math.random() % 2 === 0) {
+  if (Math.random() < 0.2) {
     
     item.sex = "男"
     
