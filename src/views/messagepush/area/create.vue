@@ -13,16 +13,22 @@
         <div class="messagetype">
           <div>消息类型</div>
           <el-select v-model="areamessage.type" placeholder="请选择">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            <el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>
           </el-select>
         </div>
         <div class="sendtype">
           <div>发送方式</div>
           <div class="sendtyperadio">
-            <el-radio v-model="areamessage.pushChannel" label="App推送">App推送</el-radio>
-            <el-radio v-model="areamessage.pushChannel" label="短信">短信</el-radio>
+            <el-radio v-model="areamessage.pushChannel" label="APP">App推送</el-radio>
+            <el-radio v-model="areamessage.pushChannel" label="SMS">短信</el-radio>
           </div>
         </div>
+      </div>
+      <div class="sendstrategy">
+        <div>发送策略</div>
+        <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
+        <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
+        <el-date-picker v-if="areamessage.strategy != 'IMMEDIATELY'" @change="handleChange" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
       </div>
       <div class="selectimg">
         <div>主题图片</div>
@@ -50,13 +56,7 @@
     components: { PageWidget, BreadCrumb },
     data() {
       return {
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }],
+        messageTypeKeyList:messageTypeKeyList,
         value:'',
         sendtype:'',
       }
@@ -71,11 +71,9 @@
 
         console.log('zz')
 
-        this.$router.push({name:'editormessage'})
-      },
-      handlePreview(file) {
+        let route = {name:'editormessage'}
 
-        console.log(file)
+        this.$router.push(route)
       },
     }
   }
