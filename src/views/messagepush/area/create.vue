@@ -3,31 +3,31 @@
     <div class="content">
       <div class="title">
         <div>主题<span>(限30个字)</span></div>
-        <el-input placeholder="请输入通知标题"></el-input>
+        <el-input placeholder="请输入通知标题" v-model="areamessage.msgSubject"></el-input>
       </div>
       <div class="summary">
         <div>摘要<span>(限60个字)</span></div>
-        <el-input style="margin-top: 1rem" type="textarea" maxlength="60" placeholder="请输入通知内容摘要"></el-input>
+        <el-input style="margin-top: 1rem" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="areamessage.summary"></el-input>
       </div>
       <div class="otherinfo">
         <div class="messagetype">
           <div>消息类型</div>
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="areamessage.type" placeholder="请选择">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </div>
         <div class="sendtype">
           <div>发送方式</div>
           <div class="sendtyperadio">
-            <el-radio v-model="sendtype" label="1">备选项</el-radio>
-            <el-radio v-model="sendtype" label="2">备选项</el-radio>
+            <el-radio v-model="areamessage.pushChannel" label="App推送">App推送</el-radio>
+            <el-radio v-model="areamessage.pushChannel" label="短信">短信</el-radio>
           </div>
         </div>
       </div>
       <div class="selectimg">
         <div>主题图片</div>
-        <div class="img-cropper"></div>
-        <div class="tip">为了更好的显示捷生活APP首页的信息卡片列表里面，图片尺寸为690*240px</div>
+        <div>
+        </div>
       </div>
       <div class="btns">
         <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
@@ -37,13 +37,17 @@
 </template>
 <script>
 
+  import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget/index'
   import BreadCrumb from '@/components/Breadcrumb/index'
 
+  const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
+  const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
+  const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
+  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATELY' }, { text: '定时生效', value: 'TIMING' }]
+
   export default {
-
     components: { PageWidget, BreadCrumb },
-
     data() {
       return {
         options: [{
@@ -57,12 +61,21 @@
         sendtype:'',
       }
     },
+    computed: {
+      ...mapGetters([
+        'areamessage'
+      ]),
+    },
     methods: {
       onEditorMessage() {
 
         console.log('zz')
 
         this.$router.push({name:'editormessage'})
+      },
+      handlePreview(file) {
+
+        console.log(file)
       },
     }
   }

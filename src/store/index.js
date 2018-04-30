@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import app from './modules/app'
 import permission from './modules/permission'
 import usereditmanager from './modules/usereditmanager'
+import currenteditmessage from './modules/currenteditmessage'
 import user from './modules/user'
 import getters from './getters'
 
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
     app,
     permission,
     user,
-    usereditmanager
+    usereditmanager,
+    currenteditmessage
   },
   getters
 })
