@@ -26,6 +26,10 @@
       }
     },
     methods: {
+      editorChange: function(html) {
+
+        this.content = html
+      },
       save() {
 
         console.log(this.content)
