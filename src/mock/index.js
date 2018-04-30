@@ -36,11 +36,6 @@ Mock.mock(/\/jslife-icop-oms\/project\/queryProjectList/, 'post', projectAPI.que
 Mock.mock(/\/jslife-icop-oms\/project\/add/, 'post', projectAPI.add)
 Mock.mock(/\/jslife-icop-oms\/project\/editPwd/, 'post', projectAPI.editPwd)
 
-// 登录相关
-Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
-Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
-
 //社区信息
 Mock.mock(/\/jslife-icop-oms\/placard\/queryplacardList/, 'post', areamessageAPI.queryplacardList)
 Mock.mock(/\/jslife-icop-oms\/placard\/add/, 'post', areamessageAPI.add)
@@ -48,5 +43,10 @@ Mock.mock(/\/jslife-icop-oms\/placard\/edit/, 'post', areamessageAPI.edit)
 Mock.mock(/\/jslife-icop-oms\/placard\/deletePlacard/, 'post', areamessageAPI.deletePlacard)
 Mock.mock(/\/jslife-icop-oms\/placard\/editPushStatus/, 'post', areamessageAPI.editPushStatus)
 
+// 登录相关
+Mock.mock(/\/jslife-icop-oms\/captcha/, 'post', loginAPI.captcha)
+Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
+Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
+Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
 
 export default Mock

@@ -19,6 +19,13 @@ export function logout() {
   })
 }
 
+export function captcha() {
+  return request({
+    url: '/jslife-icop-oms/captcha',
+    method: 'post'
+  })
+}
+
 export function editPwd(token) {
   return request({
     url: '/user/info',

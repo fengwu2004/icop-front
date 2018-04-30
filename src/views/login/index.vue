@@ -1,28 +1,28 @@
 <template>
   <div class="login">
     <div class="backgroundimg">
-      <img class="cloud1" :src="img1">
-      <img class="cloud2" :src="img2">
-      <img class="cloud3" :src="img3">
-      <img class="cloud4" :src="img4">
-      <img class="cloud5" :src="img5">
-      <img class="cloud6" :src="img6">
-      <img class="city" :src="logo">
+      <img class="cloud1" :src="images.img1">
+      <img class="cloud2" :src="images.img2">
+      <img class="cloud3" :src="images.img3">
+      <img class="cloud4" :src="images.img4">
+      <img class="cloud5" :src="images.img5">
+      <img class="cloud6" :src="images.img6">
+      <img class="city" :src="images.logo">
     </div>
     <div class="main">
       <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm">
         <div class="icon"/>
         <div class="title"/>
         <div class="inputgroup">
-          <input placeholder="请输入用户名"/>
+          <input placeholder="请输入用户名" v-model="loginForm.name"/>
         </div>
         <div class="inputgroup">
-          <input type="password"  placeholder="请输入密码"/>
+          <input type="password"  placeholder="请输入密码" v-model="loginForm.password"/>
         </div>
         <div class="inputgroup">
           <div class="inputcodegroup">
-            <input type="code" placeholder="请输入验证码" alt="验证码">
-            <img src="http://120.77.201.142:9507/jsis_3.4.1/randomimage.servlet?falg=1524540618134" class="codeimg">
+            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.Validate">
+            <img ref="captichaimg" class="codeimg" @click="updateCaptcha">
           </div>
         </div>
         <div class="confirm">
@@ -43,6 +43,7 @@
   import img6 from '@/assets/loginimg/cloud6.png'
   import logo from '@/assets/loginimg/logo.png'
 
+  import { login, captcha } from "@/api/login"
   import { isvalidUsername } from '@/utils/validate'
 
   const validateUsername = (rule, value, callback) => {
@@ -69,40 +70,93 @@
     }
   }
 
+  const validateCaptcha = (rule, value, callback) => {
+
+    if (value.length < 4) {
+
+      callback(new Error('The Validate can not be less than 4 digits'))
+    }
+    else {
+
+      callback()
+    }
+  }
+
   export default {
+    mounted(){
+
+      this.updateCaptcha()
+    },
     data() {
       return {
+        imageencode:'',
         isnull: false,
-        img1,
-        img2,
-        img3,
-        img4,
-        img5,
-        img6,
-        logo,
+        images: {
+          img1,
+          img2,
+          img3,
+          img4,
+          img5,
+          img6,
+          logo,
+        },
         loginForm: {
           username: 'admin',
-          password: '1111111'
+          password: '1111111',
+          Validate:'',
         },
         loginRules: {
           username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-          password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+          password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+          Validate: [{ required: true, trigger: 'blur', validator: validateCaptcha }]
         },
       }
     },
     methods: {
+      updateCaptcha() {
+
+        let base64image = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAUACgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD37cu/bn5sZxUMl5BFdw2ryYmn3eWuD82Bk89KHTfPjOCEyD+NYWsJcXGv6THBP9mnxMBJsD4+X0PXI/nUxleVmaQgpPU3pbuCCeGCSTbJNkRjB+bHX+dVtQ1nT9KimlvbjykhRXkOxm2gttHQHua5rW49RsdQ06W4v/tjKXdB5Kx7du0np1zj9KreK2F14J17UO08sSxk/wBxZEA/rSpycsVGg+rX3dfxOWU5Rrql31+Wv6r8TqNI8S6RrryJpt6s7xjLLsZSB64YDiisPQvta+Mrt9f8mPVXthHbC3UiGSEHc20nksD1B5A9qK6a9OMJ2jt/XXQ3krM7DAznAz601oYnlSVokaSPOxyoJXPXB7UUViISW3gmZWlhjkZQQpdQSARg4+opkljaTWhtJbWB7Y9YWjBQ85+70680UULR36hbW46W2gneJ5oI5GibfGzoCUb1GehoooouB//Z'
+        captcha().then(response => {
+
+          var blob = response.data.outputStream
+
+          if (window.URL.createObjectURL) {
+
+            console.log(window.URL.createObjectURL)
+          }
+
+          let src = window.URL.createObjectURL(blob)
+
+          this.$refs.captichaimg.src = src
+        })
+          .catch(res => {
+
+            console.log(res)
+          })
+      },
       handleLogin() {
+
         this.$refs.loginForm.validate(valid => {
+
           if (valid) {
+
             this.loading = true
-            this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+
+            this.$store.dispatch('LoginByUsername', this.loginForm)
+              .then(() => {
+
               this.loading = false
+
               this.$router.push({ path: '/messagepush' })
-            }).catch(() => {
+            })
+              .catch(() => {
+
               this.loading = false
             })
-          } else {
+          }
+          else {
             console.log('error submit!!')
+
             return false
           }
         })
