@@ -3,11 +3,11 @@
     <div class="content">
       <div>通知内容<span>(限2000个字)</span></div>
       <div class="richtextinput">
-        <tinymce :height="300" v-model="content"></tinymce>
+        <rich-text-editor :text="content" @editorChange="editorChange"></rich-text-editor>
       </div>
       <div class="btns">
         <el-button>上一步</el-button>
-        <el-button type="primary">保存</el-button>
+        <el-button type="primary" @click="save">保存</el-button>
         <el-button>取消</el-button>
       </div>
     </div>
@@ -16,20 +16,20 @@
 
 <script>
 
-  import BreadCrumb from '@/components/Breadcrumb/index'
-  import Tinymce from '@/components/Tinymce/index'
+  import richTextEditor from '@/components/richTextEditor'
 
   export default {
-
-    components: { Tinymce, BreadCrumb },
-
+    components: { richTextEditor },
     data() {
       return {
         content:'',
       }
     },
     methods: {
+      save() {
 
+        console.log(this.content)
+      },
     }
   }
 </script>
@@ -45,6 +45,7 @@
   .richtextinput {
 
     margin-top: 1rem;
+    height: 24rem;
   }
 
   .btns {

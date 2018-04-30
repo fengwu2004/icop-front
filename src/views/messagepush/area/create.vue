@@ -28,11 +28,15 @@
         <div>发送策略</div>
         <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
         <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
-        <el-date-picker v-if="areamessage.strategy != 'IMMEDIATELY'" @change="handleChange" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+        <el-date-picker v-if="areamessage.strategy != 'IMMEDIATELY'" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
       </div>
       <div class="selectimg">
         <div>主题图片</div>
         <div>
+          <croppa v-model="myCroppa" :remove-button-size="30"
+                  :placeholder-font-size="20"
+                  placeholder="点击/拖拽上传"
+                  :height="240" :width="690"></croppa>
         </div>
       </div>
       <div class="btns">
@@ -59,6 +63,7 @@
         messageTypeKeyList:messageTypeKeyList,
         value:'',
         sendtype:'',
+        myCroppa:{},
       }
     },
     computed: {

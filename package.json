@@ -14,6 +14,7 @@
     "test": "npm run lint"
   },
   "dependencies": {
+    "vue-quill-editor": "^3.0.6",
     "vue-croppa": "^1.3.6",
     "ajv": "^6.0.0",
     "axios": "0.17.1",
