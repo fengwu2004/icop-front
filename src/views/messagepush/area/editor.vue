@@ -6,9 +6,9 @@
         <rich-text-editor :text="content" @editorChange="editorChange"></rich-text-editor>
       </div>
       <div class="btns">
-        <el-button>上一步</el-button>
-        <el-button type="primary" @click="save">保存</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="handleToPreStep">上一步</el-button>
+        <el-button type="primary" @click="HandleSave">保存</el-button>
+        <el-button @click="handelCancel">取消</el-button>
       </div>
     </div>
   </transition>
@@ -26,13 +26,21 @@
       }
     },
     methods: {
-      editorChange: function(html) {
+      editorChange(html) {
 
         this.content = html
       },
-      save() {
+      HandleSave() {
 
         console.log(this.content)
+      },
+      handleToPreStep() {
+
+        this.$router.go(-1)
+      },
+      handelCancel() {
+
+        this.$router.go(-2)
       },
     }
   }

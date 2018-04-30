@@ -33,10 +33,7 @@
       <div class="selectimg">
         <div>主题图片</div>
         <div>
-          <croppa v-model="myCroppa" :remove-button-size="30"
-                  :placeholder-font-size="20"
-                  placeholder="点击/拖拽上传"
-                  :height="240" :width="690"></croppa>
+          <croppa v-model="myCroppa" :remove-button-size="30" :placeholder-font-size="20" placeholder="点击/拖拽上传" :height="240" :width="690"></croppa>
         </div>
       </div>
       <div class="btns">
