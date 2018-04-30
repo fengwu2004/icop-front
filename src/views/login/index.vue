@@ -14,7 +14,7 @@
         <div class="icon"/>
         <div class="title"/>
         <div class="inputgroup">
-          <input placeholder="请输入用户名" v-model="loginForm.name"/>
+          <input placeholder="请输入用户名" v-model="loginForm.userName"/>
         </div>
         <div class="inputgroup">
           <input type="password"  placeholder="请输入密码" v-model="loginForm.password"/>
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="confirm">
-          <el-button type="danger" @click.native.prevent="handleLogin">登 陆</el-button>
+          <el-button type="danger" :loading="loading" @click.native.prevent="handleLogin">登 陆</el-button>
         </div>
       </el-form>
     </div>
@@ -82,6 +82,17 @@
     }
   }
 
+  function dataURItoBlob(dataURI) {
+    var byteString = atob(dataURI.split(',')[1]);
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], {type: mimeString});
+  }
+
   export default {
     mounted(){
 
@@ -91,6 +102,7 @@
       return {
         imageencode:'',
         isnull: false,
+        loading: false,
         images: {
           img1,
           img2,
@@ -101,12 +113,12 @@
           logo,
         },
         loginForm: {
-          username: 'admin',
-          password: '1111111',
+          userName: '',
+          password: '',
           Validate:'',
         },
         loginRules: {
-          username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+          userName: [{ required: true, trigger: 'blur', validator: validateUsername }],
           password: [{ required: true, trigger: 'blur', validator: validatePassword }],
           Validate: [{ required: true, trigger: 'blur', validator: validateCaptcha }]
         },
@@ -115,19 +127,13 @@
     methods: {
       updateCaptcha() {
 
-        let base64image = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAUACgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD37cu/bn5sZxUMl5BFdw2ryYmn3eWuD82Bk89KHTfPjOCEyD+NYWsJcXGv6THBP9mnxMBJsD4+X0PXI/nUxleVmaQgpPU3pbuCCeGCSTbJNkRjB+bHX+dVtQ1nT9KimlvbjykhRXkOxm2gttHQHua5rW49RsdQ06W4v/tjKXdB5Kx7du0np1zj9KreK2F14J17UO08sSxk/wBxZEA/rSpycsVGg+rX3dfxOWU5Rrql31+Wv6r8TqNI8S6RrryJpt6s7xjLLsZSB64YDiisPQvta+Mrt9f8mPVXthHbC3UiGSEHc20nksD1B5A9qK6a9OMJ2jt/XXQ3krM7DAznAz601oYnlSVokaSPOxyoJXPXB7UUViISW3gmZWlhjkZQQpdQSARg4+opkljaTWhtJbWB7Y9YWjBQ85+70680UULR36hbW46W2gneJ5oI5GibfGzoCUb1GehoooouB//Z'
         captcha().then(response => {
 
-          var blob = response.data.outputStream
-
-          if (window.URL.createObjectURL) {
-
-            console.log(window.URL.createObjectURL)
-          }
+          let blob = dataURItoBlob(response.data.outputStream)
 
           let src = window.URL.createObjectURL(blob)
 
-          this.$refs.captichaimg.src = src
+          this.$refs.captichaimg.src = response.data.outputStream
         })
           .catch(res => {
 
@@ -145,14 +151,20 @@
             this.$store.dispatch('LoginByUsername', this.loginForm)
               .then(() => {
 
-              this.loading = false
+                console.log('登陆成功')
 
-              this.$router.push({ path: '/messagepush' })
-            })
+                this.loading = false
+
+                let route = {path:'/'}
+
+                this.$router.push(route)
+              })
               .catch(() => {
 
-              this.loading = false
-            })
+                console.log('登陆失败')
+
+                this.loading = false
+              })
           }
           else {
             console.log('error submit!!')
@@ -402,7 +414,7 @@
     top: 29%;
     left: 68%;
     animation: cloud4 5s infinite linear;
-   }
+  }
   @keyframes cloud4 {
     0% {
       transform: rotate(0deg);

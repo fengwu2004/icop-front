@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function login(username, password) {
+export function login(userName, password, Validate) {
   const data = {
-    username,
-    password
+    userName,
+    password,
+    Validate,
   }
   return request({
     url: '/jslife-icop-oms/login',
@@ -28,8 +29,8 @@ export function captcha() {
 
 export function editPwd(token) {
   return request({
-    url: '/user/info',
-    method: 'get',
+    url: '/jslife-icop-oms/user/editPwd',
+    method: 'post',
     params: { token }
   })
 }

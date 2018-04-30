@@ -32,8 +32,8 @@ const userMap = {
 
 export default {
   login: config => {
-    const { username } = JSON.parse(config.body)
-    return userMap[username]
+    const { userName } = JSON.parse(config.body)
+    return userMap[userName]
   },
   editPwd: config => {
     const { token } = param2Obj(config.url)
@@ -47,7 +47,7 @@ export default {
   captcha: () => {
     
     return {
-      outputStream:dataURItoBlob(base64image)
+      outputStream:base64image
     }
   },
 }
