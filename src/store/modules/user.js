@@ -8,17 +8,8 @@ const user = {
     userName: '',
     telephone:'',
     pepodomIds:'',
-    
-    status: '',
-    code: '',
-    avatar: '',
-    introduction: '',
-    roles: [],
-    setting: {
-      articlePlatform: []
-    }
   },
-
+  
   mutations: {
     SET_USER_ID: (state, userId) => {
       state.userId = userId
@@ -36,7 +27,7 @@ const user = {
       state.pepodomIds = pepodomIds
     },
   },
-
+  
   actions: {
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
@@ -49,14 +40,14 @@ const user = {
           const data = response.data
           
           commit('SET_USER_TOKEN', data.userToken)
-  
+          
           commit('SET_USER_ID', data.userId)
-  
+          
           commit('SET_USER_NAME', data.userName)
-  
+          
           commit('SET_USER_TELEPHONE', data.telephone)
-  
-          commit('SET_USER_PEPODOMIDS', data.pepodomIds)
+          
+          commit('SET_USER_PEPODOMIDS', data.pepodomIds.split(','))
           
           setToken(response.data.token)
           
@@ -68,7 +59,7 @@ const user = {
         })
       })
     },
-
+    
     // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
@@ -82,21 +73,22 @@ const user = {
       return new Promise((resolve, reject) => {
         logout(state.token)
           .then(() => {
-          
-          commit('SET_USER_TOKEN', '')
-          
-          commit('SET_USER_PEPODOMIDS', [])
-          
-          removeToken()
-          
-          resolve()
-        })
+            
+            commit('SET_USER_TOKEN', '')
+            
+            commit('SET_USER_PEPODOMIDS', [])
+            
+            removeToken()
+            
+            resolve()
+          })
           .catch(error => {
-          reject(error)
-        })
+            
+            reject(error)
+          })
       })
     },
-
+    
     // 前端 登出
     FedLogOut({ commit }) {
       return new Promise(resolve => {
@@ -105,20 +97,11 @@ const user = {
         resolve()
       })
     },
-
+    
     // 动态修改权限
     ChangeRoles({ commit }, role) {
       return new Promise(resolve => {
-        commit('SET_TOKEN', role)
-        setToken(role)
-        getUserInfo(role).then(response => {
-          const data = response.data
-          commit('SET_ROLES', data.roles)
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
-          resolve()
-        })
+        resolve()
       })
     }
   }
