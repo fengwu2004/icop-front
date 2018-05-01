@@ -3,18 +3,24 @@ import Cookies from 'js-cookie'
 const TokenKey = 'JSLIFE-ICOP-OMS-Token'
 const UserIdKey = 'JSLIFE-ICOP-OMS-UserIdKey'
 
-export function getTokenAndUserId() {
+export function getTokenAndId() {
   
-  
-  return Cookies.get(TokenKey)
+  return {loginUserId:Cookies.get(UserIdKey), userToken:Cookies.get(TokenKey)}
 }
 
-export function setToken(token) {
+export function checkValidTokenAndUserId() {
   
-  return Cookies.set(TokenKey, token)
+  let {loginUserId, userToken } = getTokenAndId()
+  
+  return loginUserId && userToken
+}
+
+export function setTokenAndId(token, userId) {
+  
+  return Cookies.set(TokenKey, token) && Cookies.set(UserIdKey, userId)
 }
 
 export function removeToken() {
   
-  return Cookies.remove(TokenKey)
+  return Cookies.remove(TokenKey) && Cookies.remove(UserIdKey)
 }

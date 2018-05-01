@@ -16,16 +16,29 @@
               {{$t('navbar.dashboard')}}
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>
-              {{$t('navbar.editpassword')}}
-            </el-dropdown-item>
-          </a>
+          <el-dropdown-item>
+            <span @click="dialogVisible = true" style="display:block;">{{$t('navbar.editpassword')}}</span>
+          </el-dropdown-item>
           <el-dropdown-item divided>
             <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <el-dialog title="修改密码" :visible.sync="dialogVisible" width="20%">
+        <div class="inputgroup">
+          <span>旧密码</span><el-input v-model="oldPwd" type="password"></el-input>
+        </div>
+        <div class="inputgroup">
+          <span>新密码</span><el-input v-model="newPwd1" type="password"></el-input>
+        </div>
+        <div class="inputgroup">
+          <span>请再次输入</span><el-input v-model="newPwd1" type="password"></el-input>
+        </div>
+        <div class="btns">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false" @click="editPassword">确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -40,6 +53,14 @@
     components: {
       Screenfull,
     },
+    data() {
+      return {
+        dialogVisible:false,
+        oldPwd:'',
+        newPwd1:'',
+        newPwd2:'',
+      }
+    },
     computed: {
       ...mapGetters([
         'sidebar',
@@ -48,7 +69,12 @@
       ])
     },
     methods: {
+      editPassword() {
+
+        this.dialogVisible = true
+      },
       toggleSideBar() {
+
         this.$store.dispatch('toggleSideBar')
       },
       logout() {
@@ -106,4 +132,32 @@
     justify-content: space-around;
     align-items: center;
   }
+
+  .inputgroup {
+
+    margin-top: 0.51rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+
+      display: inline-block;
+      width: 40%;
+      max-width: 5rem;
+    }
+
+    .el-input {
+
+      width: 50%;
+    }
+  }
+
+  .btns {
+
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
 </style>

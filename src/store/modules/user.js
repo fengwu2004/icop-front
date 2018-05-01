@@ -1,10 +1,12 @@
 import { login, logout, editPwd } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getTokenAndId, setTokenAndId, removeToken } from '@/utils/auth'
+
+let tokenAndId = getTokenAndId()
 
 const user = {
   state: {
-    userId: '',
-    userToken: getToken(),
+    userId: tokenAndId.loginUserId,
+    userToken: tokenAndId.userToken,
     userName: '',
     telephone:'',
     pepodomIds:'',
@@ -50,7 +52,7 @@ const user = {
           
           commit('SET_USER_PEPODOMIDS', data.pepodomIds.split(','))
           
-          setToken(response.data.token)
+          setTokenAndId(response.data.token, response.data.userId)
           
           resolve()
           
@@ -76,6 +78,8 @@ const user = {
           .then(() => {
             
             commit('SET_USER_TOKEN', '')
+  
+            commit('SET_USER_ID', '')
             
             commit('SET_USER_PEPODOMIDS', [])
             
@@ -92,9 +96,15 @@ const user = {
     
     // 前端 登出
     FedLogOut({ commit }) {
+      
       return new Promise(resolve => {
+        
         commit('SET_USER_TOKEN', '')
+        
+        commit('SET_USER_ID', '')
+        
         removeToken()
+        
         resolve()
       })
     },

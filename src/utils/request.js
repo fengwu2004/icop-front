@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getTokenAndId, checkValidTokenAndUserId } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -11,11 +11,16 @@ const service = axios.create({
 
 service.interceptors.request.use(config => {
   
-  config.params.userToken = store.getters.userToken
+  if (checkValidTokenAndUserId()) {
   
-  config.params.loginUserId = store.getters.userId
+    let tokenAndId = getTokenAndId()
   
-  console.log(config)
+    config.params.userToken = tokenAndId.userToken
+  
+    config.params.loginUserId = tokenAndId.loginUserId
+  }
+  
+  console.log(config.params)
   
   return config
   
