@@ -155,7 +155,7 @@
 
                 this.loading = false
 
-                let route = { path: '/messagepush' }
+                let route = { path: '/' }
 
                 this.$router.push(route)
               })

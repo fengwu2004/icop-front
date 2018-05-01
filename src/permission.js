@@ -24,9 +24,11 @@ function dynamicCreateRoutes(to, from, next) {
       
       router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
       
-      let item = { ...to, replace: true }
+      let replace = { ...to, replace: true }
       
-      next(item) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+      console.log(from.path + ' 替换为 ' + replace.path, )
+      
+      next(replace) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
     })
     .catch(res => {
       
@@ -44,7 +46,7 @@ router.beforeEach((to, from, next) => {
     
     if (to.path === '/login') {
       
-      next({ path: '/messagepush' })
+      next({ path: '/' })
       
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     }
