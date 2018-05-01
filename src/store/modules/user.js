@@ -3,11 +3,14 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
   state: {
-    user: '',
+    userId: '',
+    userToken: getToken(),
+    userName: '',
+    telephone:'',
+    pepodomIds:'',
+    
     status: '',
     code: '',
-    token: getToken(),
-    name: '',
     avatar: '',
     introduction: '',
     roles: [],
@@ -17,30 +20,21 @@ const user = {
   },
 
   mutations: {
-    SET_CODE: (state, code) => {
-      state.code = code
+    SET_USER_ID: (state, userId) => {
+      state.userId = userId
     },
-    SET_TOKEN: (state, token) => {
-      state.token = token
+    SET_USER_TOKEN: (state, token) => {
+      state.userToken = token
     },
-    SET_INTRODUCTION: (state, introduction) => {
-      state.introduction = introduction
+    SET_USER_NAME: (state, userName) => {
+      state.userName = userName
     },
-    SET_SETTING: (state, setting) => {
-      state.setting = setting
+    SET_USER_TELEPHONE: (state, telephone) => {
+      state.telephone = telephone
     },
-    SET_STATUS: (state, status) => {
-      state.status = status
+    SET_USER_PEPODOMIDS: (state, pepodomIds) => {
+      state.pepodomIds = pepodomIds
     },
-    SET_NAME: (state, name) => {
-      state.name = name
-    },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
-    },
-    SET_ROLES: (state, roles) => {
-      state.roles = roles
-    }
   },
 
   actions: {
@@ -48,14 +42,28 @@ const user = {
     LoginByUsername({ commit }, userInfo) {
       console.log(userInfo)
       const username = userInfo.userName.trim()
-      console.log('zzz')
+      
       return new Promise((resolve, reject) => {
         login(username, userInfo.password, userInfo.Validate).then(response => {
+          
           const data = response.data
-          commit('SET_TOKEN', data.token)
+          
+          commit('SET_USER_TOKEN', data.userToken)
+  
+          commit('SET_USER_ID', data.userId)
+  
+          commit('SET_USER_NAME', data.userName)
+  
+          commit('SET_USER_TELEPHONE', data.telephone)
+  
+          commit('SET_USER_PEPODOMIDS', data.pepodomIds)
+          
           setToken(response.data.token)
+          
           resolve()
+          
         }).catch(error => {
+          
           reject(error)
         })
       })
@@ -64,45 +72,26 @@ const user = {
     // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        // getUserInfo(state.token).then(response => {
-        //   if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
-        //     reject('error')
-        //   }
-        //   const data = response.data
-        //   commit('SET_ROLES', data.roles)
-        //   commit('SET_NAME', data.name)
-        //   commit('SET_AVATAR', data.avatar)
-        //   commit('SET_INTRODUCTION', data.introduction)
-        //   resolve(response)
-        // }).catch(error => {
-        //   reject(error)
-        // })
+        
+        resolve(state.pepodomIds)
       })
     },
-
-    // 第三方验证登录
-    // LoginByThirdparty({ commit, state }, code) {
-    //   return new Promise((resolve, reject) => {
-    //     commit('SET_CODE', code)
-    //     loginByThirdparty(state.status, state.email, state.code).then(response => {
-    //       commit('SET_TOKEN', response.data.token)
-    //       setToken(response.data.token)
-    //       resolve()
-    //     }).catch(error => {
-    //       reject(error)
-    //     })
-    //   })
-    // },
-
+    
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
+        logout(state.token)
+          .then(() => {
+          
+          commit('SET_USER_TOKEN', '')
+          
+          commit('SET_USER_PEPODOMIDS', [])
+          
           removeToken()
+          
           resolve()
-        }).catch(error => {
+        })
+          .catch(error => {
           reject(error)
         })
       })
@@ -111,7 +100,7 @@ const user = {
     // 前端 登出
     FedLogOut({ commit }) {
       return new Promise(resolve => {
-        commit('SET_TOKEN', '')
+        commit('SET_USER_TOKEN', '')
         removeToken()
         resolve()
       })

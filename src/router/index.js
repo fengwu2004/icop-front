@@ -27,18 +27,6 @@ import Layout from '../views/layout/Layout'
     noCache: true                if true ,the page will no be cached(default is false)
   }
  **/
-export const constantRouterMap = [
-  { path: '/login', component: _import('login/index'), hidden: true },
-  { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
-  { path: '/404', component: _import('errorPage/404'), hidden: true },
-  { path: '/401', component: _import('errorPage/401'), hidden: true },
-]
-
-export default new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
-})
 
 const main = { template: '<router-view ref="main"></router-view>' }
 
@@ -214,7 +202,7 @@ const area = {
 }
 
 const messagepush = {
-  path: '/messagepush',
+  path: '',
   component: Layout,
   redirect: '/messagepush/area/main',
   name: 'messagepush',
@@ -232,6 +220,19 @@ const error404 = {
   path: '*',
   redirect: '/404',
   hidden: true }
+
+export const constantRouterMap = [
+  { path: '/login', component: _import('login/index'), hidden: true },
+  { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
+  { path: '/404', component: _import('errorPage/404'), hidden: true },
+  { path: '/401', component: _import('errorPage/401'), hidden: true },
+]
+
+export default new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouterMap
+})
 
 export const asyncRouterMap = [
   messagepush,
