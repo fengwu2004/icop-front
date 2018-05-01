@@ -36,13 +36,15 @@ function dynamicCreateRoutes(to, from, next) {
 
 router.beforeEach((to, from, next) => {
   
+  console.log(to.path, from.path)
+  
   NProgress.start() // start progress bar
   
   if (getToken()) {
     
     if (to.path === '/login') {
       
-      next({ path: '/' })
+      next({ path: '/messagepush' })
       
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     }
