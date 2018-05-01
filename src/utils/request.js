@@ -9,21 +9,26 @@ const service = axios.create({
   timeout: 5000 // request timeout
 })
 
-// request interceptor
 service.interceptors.request.use(config => {
-  // Do something before request is sent
-  if (store.getters.token) {
-    config.headers['X-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-  }
+  
+  config.params.userToken = store.getters.userToken
+  
+  config.params.loginUserId = store.getters.userId
+  
+  console.log(config)
+  
   return config
+  
 }, error => {
-  // Do something with request error
-  console.log(error) // for debug
+  
+  console.log(error)
+  
   Promise.reject(error)
 })
 
 // respone interceptor
 service.interceptors.response.use(
+  
   response => response,
   /**
   * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页

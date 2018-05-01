@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
   
   NProgress.start() // start progress bar
   
-  if (getToken()) {
+  if (store.getters.userToken) {
     
     if (to.path === '/login') {
       

@@ -18,7 +18,7 @@
           </router-link>
           <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>
-              {{$t('navbar.github')}}
+              {{$t('navbar.editpassword')}}
             </el-dropdown-item>
           </a>
           <el-dropdown-item divided>

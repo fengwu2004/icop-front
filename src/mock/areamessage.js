@@ -37,7 +37,9 @@ function removeMessage(roleId) {
 export default {
   queryplacardList: config => {
   
-    const { pageIndex, pageSize } = param2Obj(config.url)
+    const { pageIndex, pageSize, userToken } = param2Obj(config.url)
+    
+    console.log(userToken)
   
     let mockList = messageList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
   

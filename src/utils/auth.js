@@ -1,15 +1,20 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'Admin-Token'
+const TokenKey = 'JSLIFE-ICOP-OMS-Token'
+const UserIdKey = 'JSLIFE-ICOP-OMS-UserIdKey'
 
-export function getToken() {
+export function getTokenAndUserId() {
+  
+  
   return Cookies.get(TokenKey)
 }
 
 export function setToken(token) {
+  
   return Cookies.set(TokenKey, token)
 }
 
 export function removeToken() {
+  
   return Cookies.remove(TokenKey)
 }
