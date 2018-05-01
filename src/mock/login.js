@@ -41,7 +41,7 @@ export default {
     
     console.log('登陆名' + userName)
     
-    return userMap[userName]
+    return userMap['admin']
   },
   editPwd: config => {
     const { token } = param2Obj(config.url)

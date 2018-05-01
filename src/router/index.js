@@ -202,7 +202,7 @@ const area = {
 }
 
 const messagepush = {
-  path: '',
+  path: '/messagepush',
   component: Layout,
   redirect: '/messagepush/area/main',
   name: 'messagepush',
