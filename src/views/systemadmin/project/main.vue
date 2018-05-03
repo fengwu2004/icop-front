@@ -1,20 +1,25 @@
 <template>
-  <div class="content">
-    <div class="table">
-      <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700" highlight-current-row>
-        <el-table-column prop="projectCode" label="项目编号" width="150"></el-table-column>
-        <el-table-column prop="projectName" label="项目名称" width="250"></el-table-column>
-        <el-table-column prop="userName" label="管理账号" width="600"></el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button size="mini" v-if="checkNotAdmin(scope.$index, scope.row)" @click="handleAddAdmin(scope.$index, scope.row)">生成管理账户</el-button>
-            <el-button size="mini" v-else @click="handleResetPws(scope.$index, scope.row)">重置密码</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+  <div>
+    <div class="navibar">
+      <bread-crumb class="breadcrumb"></bread-crumb>
     </div>
-    <div class="pagination">
-      <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
+    <div class="content">
+      <div class="table">
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700" highlight-current-row>
+          <el-table-column prop="projectCode" label="项目编号" width="150"></el-table-column>
+          <el-table-column prop="projectName" label="项目名称" width="250"></el-table-column>
+          <el-table-column prop="userName" label="管理账号" width="600"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini" v-if="checkNotAdmin(scope.$index, scope.row)" @click="handleAddAdmin(scope.$index, scope.row)">生成管理账户</el-button>
+              <el-button size="mini" v-else @click="handleResetPws(scope.$index, scope.row)">重置密码</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="pagination">
+        <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
+      </div>
     </div>
   </div>
 </template>
@@ -22,9 +27,10 @@
 <script>
   import { queryProjectList, add, editPwd  } from '@/api/project'
   import PageWidget from '@/components/PageWidget'
+  import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
-    components: { PageWidget },
+    components: { PageWidget, BreadCrumb },
     data() {
       return {
         listLoading:true,
@@ -178,6 +184,15 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+
+  .navibar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #D0D5E5;
+  }
 
   .content {
     width: 100%;

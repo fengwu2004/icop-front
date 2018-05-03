@@ -1,26 +1,31 @@
 <template>
-  <div class="content">
-    <div class="createuser">
-      <div class="permissiontree" style="padding: 20px">
-        <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expanded-keys="[0]" :props="roleProps"></el-tree>
-      </div>
-      <div class="permissionctr">
-        <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
-        <div class="permissiontree">
-          <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
-        </div>
-      </div>
-      <div class="permissionctr">
-        <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
-        <div class="permissiontree">
-          <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
-        </div>
-      </div>
+  <div>
+    <div class="navibar">
+      <bread-crumb class="breadcrumb"></bread-crumb>
     </div>
-    <div class="settings">
-      <el-button @click="handleToPreStep">上一步</el-button>
-      <el-button @click="handelCancel">取消</el-button>
-      <el-button type="primary" @click="handleCreate">完成分配</el-button>
+    <div class="content">
+      <div class="createuser">
+        <div class="permissiontree" style="padding: 20px">
+          <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expanded-keys="[0]" :props="roleProps"></el-tree>
+        </div>
+        <div class="permissionctr">
+          <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
+          <div class="permissiontree">
+            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
+          </div>
+        </div>
+        <div class="permissionctr">
+          <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
+          <div class="permissiontree">
+            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
+          </div>
+        </div>
+      </div>
+      <div class="settings">
+        <el-button @click="handleToPreStep">上一步</el-button>
+        <el-button @click="handelCancel">取消</el-button>
+        <el-button type="primary" @click="handleCreate">完成分配</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -29,8 +34,10 @@
   import { queryRolePopedom } from '@/api/role'
   import { queryRoleListByIds, edit, add } from '@/api/user'
   import { queryTotalPopedomTree } from '@/api/permissiontree'
+  import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
+    components: { BreadCrumb },
     methods:{
       handleRoleCheckChange(data, checked, indeterminate) {
 
@@ -151,6 +158,15 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+
+  .navibar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #D0D5E5;
+  }
 
   .content {
 
