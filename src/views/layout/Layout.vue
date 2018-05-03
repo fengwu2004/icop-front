@@ -78,9 +78,8 @@
 
   .appmain-container {
 
-    width: calc(100% - 180px);
     height: 100%;
-    background: green;
+    flex-grow: 1;
   }
 
 </style>
