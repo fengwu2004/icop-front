@@ -2,8 +2,12 @@
   <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
     <app-header-bar></app-header-bar>
     <div class="main-container">
-      <side-bar class="sidebar-container"></side-bar>
-      <app-main class="appmain-container"></app-main>
+      <div class="sidebar-container">
+        <side-bar></side-bar>
+      </div>
+      <div class="appmain-container">
+        <app-main></app-main>
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +46,7 @@
     z-index: 1001;
     width: 180px !important;
     height: 100%;
+    background-color: red !important;
 
     a {
       display: inline-block;
@@ -75,6 +80,7 @@
 
     width: calc(100% - 180px);
     height: 100%;
+    background: green;
   }
 
 </style>
