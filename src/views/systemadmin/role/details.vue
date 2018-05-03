@@ -1,27 +1,32 @@
 <template>
-  <div class="content">
-    <div class="createuser">
-      <div class="baseinfo">
-        <li>基本信息</li>
-        <div style="margin-top: 1rem; font-size: 0.8rem">角色名称</div>
-        <div style="margin-top: 0.5rem;width: 300px">
-          <el-input maxlength="20" v-model="role.roleName"></el-input>
+  <div>
+    <div class="navibar">
+      <bread-crumb class="breadcrumb"></bread-crumb>
+    </div>
+    <div class="content">
+      <div class="createuser">
+        <div class="baseinfo">
+          <li>基本信息</li>
+          <div style="margin-top: 1rem; font-size: 0.8rem">角色名称</div>
+          <div style="margin-top: 0.5rem;width: 300px">
+            <el-input maxlength="20" v-model="role.roleName"></el-input>
+          </div>
+          <div style="margin-top: 2rem;font-size:0.8rem">备注</div>
+          <div style="margin-top: 0.5rem;">
+            <el-input type="textarea" maxlength="50" rows="12" v-model="role.remark"></el-input>
+          </div>
         </div>
-        <div style="margin-top: 2rem;font-size:0.8rem">备注</div>
-        <div style="margin-top: 0.5rem;">
-          <el-input type="textarea" maxlength="50" rows="12" v-model="role.remark"></el-input>
+        <div class="permissionctr">
+          <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
+          <div class="permissiontree">
+            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
+          </div>
         </div>
-      </div>
-      <div class="permissionctr">
-        <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
-        <div class="permissiontree">
-          <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
-        </div>
-      </div>
-      <div class="permissionctr">
-        <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
-        <div class="permissiontree">
-          <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
+        <div class="permissionctr">
+          <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
+          <div class="permissiontree">
+            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
+          </div>
         </div>
       </div>
     </div>
@@ -33,8 +38,10 @@
   import { queryTotalPopedomTree } from '@/api/permissiontree'
   import { queryRolePopedom } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
+  import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
+    components: { BreadCrumb },
     methods:{
       build(parentid, items) {
 
@@ -107,6 +114,15 @@
 
     width: 90%;
     margin: 1rem auto;
+  }
+
+  .navibar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #D0D5E5;
   }
 
   .baseinfo {

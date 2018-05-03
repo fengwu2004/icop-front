@@ -1,7 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
     <div class="main">
-      <nav-bar @createNewMessage="createMessage" @createRole="createRole" @searchRole="searchRole" @createUser="createUser" @searchUser="searchUser"></nav-bar>
       <router-view class="router-view" ref="main"></router-view>
     </div>
   </transition>
@@ -49,12 +48,6 @@
 
         this.$router.push(route)
       },
-      createMessage() {
-
-        let route = {name:'createareamessage'}
-
-        this.$router.push(route)
-      }
     }
   }
 </script>

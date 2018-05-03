@@ -1,43 +1,53 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div class="content">
-      <div class="title">
-        <div>主题<span>(限30个字)</span></div>
-        <el-input placeholder="请输入通知标题" v-model="areamessage.msgSubject"></el-input>
-      </div>
-      <div class="summary">
-        <div>摘要<span>(限60个字)</span></div>
-        <el-input style="margin-top: 1rem" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="areamessage.summary"></el-input>
-      </div>
-      <div class="otherinfo">
-        <div class="messagetype">
-          <div>消息类型</div>
-          <el-select v-model="areamessage.type" placeholder="请选择">
-            <el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>
-          </el-select>
+    <div>
+      <div class="navibar">
+        <bread-crumb class="breadcrumb"></bread-crumb>
+        <div class="createmessageprocess">
+          <span>1 填写基本信息</span>
+          <span class="line"></span>
+          <span>2 填写通知内容</span>
         </div>
-        <div class="sendtype">
-          <div>发送方式</div>
-          <div class="sendtyperadio">
-            <el-radio v-model="areamessage.pushChannel" label="APP">App推送</el-radio>
-            <el-radio v-model="areamessage.pushChannel" label="SMS">短信</el-radio>
+      </div>
+      <div class="content">
+        <div class="title">
+          <div>主题<span>(限30个字)</span></div>
+          <el-input placeholder="请输入通知标题" v-model="areamessage.msgSubject"></el-input>
+        </div>
+        <div class="summary">
+          <div>摘要<span>(限60个字)</span></div>
+          <el-input style="margin-top: 1rem" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="areamessage.summary"></el-input>
+        </div>
+        <div class="otherinfo">
+          <div class="messagetype">
+            <div>消息类型</div>
+            <el-select v-model="areamessage.type" placeholder="请选择">
+              <el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </div>
+          <div class="sendtype">
+            <div>发送方式</div>
+            <div class="sendtyperadio">
+              <el-radio v-model="areamessage.pushChannel" label="APP">App推送</el-radio>
+              <el-radio v-model="areamessage.pushChannel" label="SMS">短信</el-radio>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="sendstrategy">
-        <div>发送策略</div>
-        <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
-        <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
-        <el-date-picker v-if="areamessage.strategy != 'IMMEDIATELY'" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
-      </div>
-      <div class="selectimg">
-        <div>主题图片</div>
-        <div>
-          <croppa v-model="myCroppa" :remove-button-size="30" :placeholder-font-size="20" placeholder="点击/拖拽上传" :height="240" :width="690"></croppa>
+        <div class="sendstrategy">
+          <div>发送策略</div>
+          <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
+          <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
+          <el-date-picker v-if="areamessage.strategy != 'IMMEDIATELY'" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
         </div>
-      </div>
-      <div class="btns">
-        <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
+        <div class="selectimg">
+          <div>主题图片</div>
+          <div>
+            <croppa v-model="myCroppa" :remove-button-size="30" :placeholder-font-size="20" placeholder="点击/拖拽上传" :height="240" :width="690"></croppa>
+          </div>
+        </div>
+        <div class="btns">
+          <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
+        </div>
       </div>
     </div>
   </transition>
@@ -89,13 +99,38 @@
     margin: 1rem auto;
   }
 
-  .navbar {
+  .navibar {
 
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background: red;
+    border-bottom: 1px solid #D0D5E5;
+  }
+
+  .createmessageprocess {
+
+    position: relative;
+    left: -25%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .line {
+
+      margin: 0 1rem;
+      width: 100px;
+      height: 1px;
+      background: grey;
+    }
+
+    span {
+
+      font-size: 0.6rem;
+      color: deepskyblue;
+    }
   }
 
   .title, .summary {

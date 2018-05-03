@@ -1,14 +1,24 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div class="content">
-      <div>通知内容<span>(限2000个字)</span></div>
-      <div class="richtextinput">
-        <rich-text-editor :text="content" @editorChange="editorChange"></rich-text-editor>
+    <div>
+      <div class="navibar">
+        <bread-crumb class="breadcrumb"></bread-crumb>
+        <div class="createmessageprocess">
+          <span>1 填写基本信息</span>
+          <span class="line"></span>
+          <span>2 填写通知内容</span>
+        </div>
       </div>
-      <div class="btns">
-        <el-button @click="handleToPreStep">上一步</el-button>
-        <el-button type="primary" @click="HandleSave">保存</el-button>
-        <el-button @click="handelCancel">取消</el-button>
+      <div class="content">
+        <div>通知内容<span>(限2000个字)</span></div>
+        <div class="richtextinput">
+          <rich-text-editor :text="content" @editorChange="editorChange"></rich-text-editor>
+        </div>
+        <div class="btns">
+          <el-button @click="handleToPreStep">上一步</el-button>
+          <el-button type="primary" @click="HandleSave">保存</el-button>
+          <el-button @click="handelCancel">取消</el-button>
+        </div>
       </div>
     </div>
   </transition>
@@ -16,10 +26,11 @@
 
 <script>
 
+  import BreadCrumb from '@/components/Breadcrumb/index'
   import richTextEditor from '@/components/richTextEditor'
 
   export default {
-    components: { richTextEditor },
+    components: { BreadCrumb, richTextEditor },
     data() {
       return {
         content:'',
@@ -47,6 +58,40 @@
 </script>
 
 <style scoped rel="stylesheet/scss" lang="scss">
+
+  .navibar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #D0D5E5;
+  }
+
+  .createmessageprocess {
+
+    position: relative;
+    left: -25%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .line {
+
+      margin: 0 1rem;
+      width: 100px;
+      height: 1px;
+      background: grey;
+    }
+
+    span {
+
+      font-size: 0.6rem;
+      color: deepskyblue;
+    }
+  }
 
   .content {
 

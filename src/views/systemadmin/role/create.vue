@@ -1,33 +1,38 @@
 <template>
-  <div class="content">
-    <div class="createuser">
-      <div class="baseinfo">
-        <li>基本信息</li>
-        <div style="margin-top: 1rem; font-size: 0.8rem">角色名称(不能重名)</div>
-        <div style="margin-top: 0.5rem;width: 300px">
-          <el-input maxlength="20" v-model="roleName"></el-input>
-        </div>
-        <div style="margin-top: 2rem;font-size:0.8rem">备注(限50字)</div>
-        <div style="margin-top: 0.5rem;">
-          <el-input type="textarea" maxlength="50" rows="12" v-model="remark"></el-input>
-        </div>
-      </div>
-      <div class="permissionctr">
-        <div style="font-size:0.8rem">请勾选可使用的捷物管APP功能</div>
-        <div class="permissiontree">
-          <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
-        </div>
-      </div>
-      <div class="permissionctr">
-        <div style="font-size:0.8rem">请勾选可使用的社区运营平台功能</div>
-        <div class="permissiontree">
-          <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" @check-change="appcheckchange" :props="defaultProps"></el-tree>
-        </div>
-      </div>
+  <div>
+    <div class="navibar">
+      <bread-crumb class="breadcrumb"></bread-crumb>
     </div>
-    <div class="settings">
-      <el-button>取消</el-button>
-      <el-button type="primary" @click="createRole">保存</el-button>
+    <div class="content">
+      <div class="createuser">
+        <div class="baseinfo">
+          <li>基本信息</li>
+          <div style="margin-top: 1rem; font-size: 0.8rem">角色名称(不能重名)</div>
+          <div style="margin-top: 0.5rem;width: 300px">
+            <el-input maxlength="20" v-model="roleName"></el-input>
+          </div>
+          <div style="margin-top: 2rem;font-size:0.8rem">备注(限50字)</div>
+          <div style="margin-top: 0.5rem;">
+            <el-input type="textarea" maxlength="50" rows="12" v-model="remark"></el-input>
+          </div>
+        </div>
+        <div class="permissionctr">
+          <div style="font-size:0.8rem">请勾选可使用的捷物管APP功能</div>
+          <div class="permissiontree">
+            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
+          </div>
+        </div>
+        <div class="permissionctr">
+          <div style="font-size:0.8rem">请勾选可使用的社区运营平台功能</div>
+          <div class="permissiontree">
+            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" @check-change="appcheckchange" :props="defaultProps"></el-tree>
+          </div>
+        </div>
+      </div>
+      <div class="settings">
+        <el-button>取消</el-button>
+        <el-button type="primary" @click="createRole">保存</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -36,9 +41,10 @@
 
   import { queryTotalPopedomTree } from '@/api/permissiontree'
   import { add } from '@/api/role'
-  import PageWidget from '@/components/PageWidget'
+  import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
+    components: { BreadCrumb },
     methods:{
       appcheckchange() {
 
@@ -127,6 +133,15 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+
+  .navibar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #D0D5E5;
+  }
 
   .content {
 
