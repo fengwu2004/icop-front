@@ -15,9 +15,12 @@ service.interceptors.request.use(config => {
   
     let tokenAndId = getTokenAndId()
   
-    config.params.userToken = tokenAndId.userToken
+    if (config.params) {
   
-    config.params.loginUserId = tokenAndId.loginUserId
+      config.params.userToken = tokenAndId.userToken
+  
+      config.params.loginUserId = tokenAndId.loginUserId
+    }
   }
   
   console.log(config.params)

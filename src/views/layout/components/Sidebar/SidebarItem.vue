@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-wrapper">
+  <div>
     <template v-for="item in routes" v-if="!item.hidden&&item.children">
       <el-submenu :index="item.name||item.path" :key="item.name">
         <template slot="title">

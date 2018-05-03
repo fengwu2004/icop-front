@@ -64,10 +64,10 @@
   .mainframe {
 
     position: relative;
-    height: 100%;
+    height: calc(100% - 50px);
     width: 98%;
     margin: 2px auto 0;
-    min-height: calc(100% - 2px);
+    min-height: calc(100% - 50px);
     position: relative;
   }
 
