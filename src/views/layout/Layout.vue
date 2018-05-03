@@ -61,16 +61,7 @@
     }
   }
 
-  @mixin clearfix {
-    &:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-  }
-
   .app-wrapper {
-    @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
@@ -79,7 +70,7 @@
   .appmain-container {
 
     height: 100%;
-    flex-grow: 1;
+    width: calc(100% - 180px);
   }
 
 </style>

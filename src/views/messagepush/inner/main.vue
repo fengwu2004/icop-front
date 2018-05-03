@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div>
+    <div class="content">
       <div class="header">
         <date-select></date-select>
         <div class="operatemenu">
@@ -8,20 +8,32 @@
         </div>
       </div>
       <div class="table">
-        <el-table :data="tableData" :header-cell-style="headercellstyle">
-          <el-table-column prop="title" label="内容主题" width="400"></el-table-column>
-          <el-table-column prop="type" label="消息类型" width="150"></el-table-column>
-          <el-table-column prop="send" label="发送方式" width="150"></el-table-column>
-          <el-table-column prop="tag" label="发布状态" width="150"
-                           :filters="[{ text: '已发布', value: '已发布' }, { text: '未发布', value: '未发布' }]"
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700">
+          <el-table-column prop="msgSubject" label="内容主题" width="400"></el-table-column>
+          <el-table-column label="消息类型" width="150">
+            <template slot-scope="scope">
+              <span>{{ getMessageTypeStr(scope.row.type) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="发送方式" width="150">
+            <template slot-scope="scope">
+              <span>{{ getPushChannelStr(scope.row.pushChannel) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="pushStatus" label="发布状态" width="150"
+                           :filters="pushStatusKeyList"
                            :filter-method="filterTag"
                            :filter-multiple="false">
             <template slot-scope="scope">
-              <el-tag :type="scope.row.tag === '已发布' ? 'primary' : 'success'" close-transition>{{ scope.row.tag }}</el-tag>
+              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="strategy" label="发送策略" width="150"></el-table-column>
-          <el-table-column prop="time" label="计划发起时间" width="250"></el-table-column>
+          <el-table-column prop="strategy" label="发送策略" width="150">
+            <template slot-scope="scope">
+              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="planPushTime" label="计划发送时间" width="250"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">发布</el-button>
@@ -32,61 +44,231 @@
         </el-table>
       </div>
       <div class="pagination">
-        <page-widget :total="100" :pagesizes="[10, 20, 40, 50]"></page-widget>
+        <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
-  import PageWidget from '@/components/PageWidget'
+
+  import { queryplacardList, deletePlacard, editPushStatus } from "@/api/areamessage"
   import DateSelect from '@/components/DateSelect'
+  import PageWidget from '@/components/PageWidget'
+
+  const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
+  const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
+  const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
+  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATELY' }, { text: '定时生效', value: 'TIMING' }]
 
   export default {
-
-    components: { DateSelect, PageWidget },
-
+    components: { PageWidget, DateSelect },
     data() {
       return {
-        tableData: [{
-          title:'物业管理月度业主投票统计',
-          type:'投票',
-          send:'后台',
-          status:'未发布',
-          strategy: '定时发送',
-          time: '2018-10-05 9:30',
-          tag:'未发布'
-        }],
+        pushStatusKeyList:pushStatusKeyList,
+        listLoading:true,
+        tableData: {
+          totalCount:0,
+          data:null,
+          pageSize:20,
+          totalPage:0,
+          pageIndex:1,
+        },
       }
     },
-    methods: {
-      headercellstyle({row, rowIndex, columnIndex}) {
+    created() {
 
-        return {textAlign: 'left', backgroundColor:'#d0d5e5'}
+      this.getList()
+    },
+    methods:{
+      getStrategyStr(strategy) {
+
+        for (let i = 0; i < strategyKeyList.length; ++i) {
+
+          let item = strategyKeyList[i]
+
+          if (item.value === strategy) {
+
+            return item.text
+          }
+        }
+
+        console.log(strategy)
+
+        return null
       },
-      handleDetail(index, row) {
+      getPushChannelStr(pushChannel) {
 
+        for (let i = 0; i < pushChannelKeyList.length; ++i) {
 
+          let item = pushChannelKeyList[i]
+
+          if (item.value === pushChannel) {
+
+            return item.text
+          }
+        }
+
+        console.log(pushChannel)
+
+        return null
       },
-      handleManager(index, row) {
+      getMessageTypeStr(type) {
 
+        for (let i = 0; i < messageTypeKeyList.length; ++i) {
 
+          let item = messageTypeKeyList[i]
+
+          if (item.value === type) {
+
+            return item.text
+          }
+        }
+
+        console.log(type)
+
+        return null
       },
-      handleDelete(index, row) {
+      getPushStatusStr(pushStatus) {
 
+        for (let i = 0; i < this.pushStatusKeyList.length; ++i) {
 
+          let item = this.pushStatusKeyList[i]
+
+          if (item.value === pushStatus) {
+
+            return item.text
+          }
+        }
+
+        console.log(pushStatus)
+
+        return null
+      },
+      getList() {
+
+        console.log('getList')
+
+        this.listLoading = true
+
+        let data = {
+          pageIndex:this.tableData.pageIndex,
+          pageSize:this.tableData.pageSize,
+        }
+
+        queryplacardList(data).then(response => {
+
+          console.log(response)
+
+          Object.assign(this.tableData, response.data)
+
+          this.listLoading = false
+        })
+      },
+      pageSizeChange(pageSize){
+
+        if (pageSize == this.tableData.pageSize) {
+
+          return
+        }
+
+        this.tableData.pageSize = pageSize
+
+        this.tableData.pageIndex = 1
+
+        this.getList()
+      },
+      pageChange(pageIndex) {
+
+        this.tableData.pageIndex = pageIndex
+
+        this.getList()
       },
       filterTag(value, row) {
 
-        console.log('zz')
+        console.log(value, row)
 
-        return row.tag === value;
+        return row.pushStatus === value;
+      },
+      handleDelete(index, row) {
+
+        let role = this.tableData.data[index]
+
+        let data = {roleId:role.roleId}
+
+        deletePlacard(data).then(response => {
+
+          this.getList()
+        })
+      },
+      handleSearch(name) {
+
+        console.log('search', name)
+
+        this.listLoading = true
+
+        let data = {
+          msgSubject:name,
+          pageIndex:0,
+          pageSize:this.tableData.pageSize,
+        }
+
+        queryplacardList(data).then(response => {
+
+          console.log(response)
+
+          Object.assign(this.tableData, response.data)
+
+          this.listLoading = false
+        })
+      },
+      handleEdit(index, row) {
+
+        let user = this.tableData.data[index]
+
+        this.$store.dispatch('setCurrentUser', user)
+
+        let router = {name:'edituser'}
+
+        this.$router.push(router)
+      },
+      handleChangePwd(index, row) {
+
+        let role = this.tableData.data[index]
+
+        let router = {name:'editroledetails', params:{role:role}}
+
+        this.$router.push(router)
+      },
+      headercellstyle({row, rowIndex, columnIndex}){
+
+        if (columnIndex == 5) {
+
+          return {textAlign:'center'}
+        }
+
+        return {textAlign:'left'}
+      },
+      cellstyle({row, rowIndex, columnIndex}) {
+
+        if (columnIndex == 5) {
+
+          return {textAlign:'center'}
+        }
+
+        return {textAlign:'left'}
       },
     }
   }
 </script>
 
 <style scoped rel="stylesheet/scss" lang="scss">
+
+  .content {
+
+    margin-top: 1rem;
+    width: 100%;
+  }
 
   .header {
 

@@ -267,6 +267,7 @@
   .content {
 
     margin-top: 1rem;
+    width: 100%;
   }
 
   .header {
