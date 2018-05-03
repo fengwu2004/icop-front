@@ -61,8 +61,10 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
-  .mainframe {
+  .main {
 
+    width: 98%;
+    margin-top: auto;
     position: relative;
   }
 

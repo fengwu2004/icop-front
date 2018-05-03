@@ -38,6 +38,8 @@
   }
 
   .sidebar-container {
+
+    z-index: 1001;
     width: 180px !important;
     height: 100%;
 
