@@ -36,7 +36,7 @@
         </div>
         <div class="btns">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false" @click="editPassword">确 定</el-button>
+          <el-button type="primary" @click="editPassword">确 定</el-button>
         </div>
       </el-dialog>
     </div>
