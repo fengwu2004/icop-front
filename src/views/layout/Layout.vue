@@ -1,21 +1,21 @@
 <template>
   <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
     <app-header-bar></app-header-bar>
-    <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
-      <app-main></app-main>
+      <side-bar class="sidebar-container"></side-bar>
+      <app-main class="appmain-container"></app-main>
     </div>
   </div>
 </template>
 
 <script>
 
-  import { Sidebar, AppMain, AppHeaderBar } from "@/views/layout/components"
+  import { SideBar, AppMain, AppHeaderBar } from "@/views/layout/components"
 
   export default {
     name: 'layout',
     components: {
-      Sidebar,
+      SideBar,
       AppMain,
       AppHeaderBar
     },
@@ -29,13 +29,50 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
-  @import "src/styles/mixin.scss";
+  .main-container {
+    position: relative;
+    height: calc(100% - 50px);
+    transition: margin-left .28s;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sidebar-container {
+    width: 180px !important;
+    height: 100%;
+
+    a {
+      display: inline-block;
+      width: 100%;
+    }
+    .svg-icon {
+      margin-right: 16px;
+    }
+    .el-menu {
+      border: none;
+      width: 100% !important;
+    }
+  }
+
+  @mixin clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
 
   .app-wrapper {
     @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
+  }
+
+  .appmain-container {
+
+    width: calc(100% - 180px);
+    height: 100%;
   }
 
 </style>

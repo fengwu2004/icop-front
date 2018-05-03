@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div class="mainframe">
+    <div class="main">
       <nav-bar @createNewMessage="createMessage" @createRole="createRole" @searchRole="searchRole" @createUser="createUser" @searchUser="searchUser"></nav-bar>
       <router-view class="router-view" ref="main"></router-view>
     </div>
@@ -63,11 +63,6 @@
 
   .mainframe {
 
-    position: relative;
-    height: calc(100% - 50px);
-    width: 98%;
-    margin: 2px auto 0;
-    min-height: calc(100% - 50px);
     position: relative;
   }
 
