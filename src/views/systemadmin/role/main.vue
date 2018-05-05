@@ -57,19 +57,18 @@
     methods:{
       searchRole() {},
       createRole() {},
-      getRequestData() {
-        return {
-          pageIndex:this.tableData.pageIndex,
-          pageSize:this.tableData.pageSize,
-        }
-      },
       getList() {
 
         console.log('getList')
 
         this.listLoading = true
 
-        queryRoleList(this.getRequestData()).then(response => {
+        let data = {
+          pageIndex:this.tableData.pageIndex,
+          pageSize:this.tableData.pageSize,
+        }
+
+        queryRoleList(data).then(response => {
 
           console.log(response)
 
@@ -194,7 +193,7 @@
   }
 
   .table {
-    width: 100%;
+    /*width: 100%;*/
     background: green;
   }
 
