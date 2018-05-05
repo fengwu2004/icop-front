@@ -148,4 +148,11 @@
 
   @import "createrole";
 
+  .settings {
+
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
 </style>
