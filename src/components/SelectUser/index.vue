@@ -131,7 +131,7 @@
   };
 </script>
 
-<style scoped>
+<style scoped rel="stylesheet/scss" lang="scss">
 
   .table {
 
@@ -142,11 +142,6 @@
   .pagination {
 
     margin-top: 1rem;
-  }
-
-  .el-table >>> th {
-
-    background: #d0d5e5;
   }
 
   .header {
