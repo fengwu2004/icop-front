@@ -40,6 +40,8 @@ export default {
     userpermission:'设置权限',
     usermanagermain:'usermanagermain',
     usermanagermain:'accountmanagermain',
+    roledetails:'角色详情',
+    editroledetails:'修改角色',
     inlineEditTable: 'Table内编辑',
     complexTable: '综合Table',
     treeTable: '树形表格',

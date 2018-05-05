@@ -156,7 +156,7 @@
   .content {
 
     width: 90%;
-    margin: 1rem auto;
+    margin: 2rem auto;
   }
 
   .baseinfo {

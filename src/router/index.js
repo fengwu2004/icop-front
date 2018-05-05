@@ -93,7 +93,7 @@ const role = {
       path: 'details',
       component: _import('systemadmin/role/details'),
       name: 'roledetails',
-      meta: { title: 'details', icon: 'table' },
+      meta: { title: 'roledetails', icon: 'table' },
       hidden:true
     },
     {

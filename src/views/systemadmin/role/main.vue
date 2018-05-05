@@ -3,7 +3,7 @@
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
       <div class="createsearch">
-        <el-input class="input" v-model="rolename" placeholder="请输入角色名称查询"></el-input>
+        <el-input class="input" clearable v-model="rolename" placeholder="请输入角色名称查询"></el-input>
         <el-button class="search" @click="searchRole">查询</el-button>
         <el-button class="create" @click="createRole">创建</el-button>
       </div>
@@ -41,6 +41,7 @@
       return {
         maxheight:window.innerHeight - 200,
         rolename:'',
+        searching:false,
         listLoading:true,
         tableData: {
           totalCount:0,
@@ -56,7 +57,10 @@
       this.getList()
     },
     methods:{
-      searchRole() {},
+      searchRole() {
+
+        this.handleSearch(this.rolename)
+      },
       createRole() {
 
         let route = {name:'createrole'}
@@ -161,6 +165,8 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = true
         })
       },
       headercellstyle({row, rowIndex, columnIndex}){
@@ -181,7 +187,23 @@
 
         return {textAlign:'left', color:'#16325C'}
       },
-    }
+    },
+    watch:{
+      rolename(newValue) {
+
+        if (!this.searching) {
+
+          return
+        }
+
+        if (!newValue || newValue.length == 0) {
+
+          this.getList()
+
+          this.searching = false
+        }
+      }
+    },
   }
 </script>
 
