@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display: flex;flex-direction: column; justify-content: space-between">
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
       <div class="createsearch">
@@ -10,7 +10,7 @@
     </div>
     <div class="content">
       <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700" highlight-current-row>
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" height="calc(100%)" highlight-current-row>
           <el-table-column prop="roleId" label="" width="150"></el-table-column>
           <el-table-column prop="roleName" label="角色名称" width="250"></el-table-column>
           <el-table-column prop="remark" label="备注" width="600"></el-table-column>
@@ -189,17 +189,25 @@
   }
 
   .content {
+
     width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
   }
 
   .table {
-    /*width: 100%;*/
+
     background: green;
+    width: 100%;
+    height: calc(100% - 4rem);
   }
 
   .pagination {
 
     margin: 1rem auto;
+    width: 100%;
   }
 
 </style>

@@ -57,6 +57,7 @@
   .main {
 
     width: 98%;
+    height: 100%;
     margin: auto;
     position: relative;
   }

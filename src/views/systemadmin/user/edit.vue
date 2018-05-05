@@ -103,6 +103,7 @@
     align-items: center;
     width: 100%;
     border-bottom: 1px solid #D0D5E5;
+    flex-grow: 1;
   }
 
   .left, .right {
