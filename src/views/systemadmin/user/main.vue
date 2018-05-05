@@ -34,7 +34,7 @@
 
 <script>
 
-  import { queryUserList } from '@/api/user'
+  import { queryUserList, deleteUser, editPwd } from '@/api/user'
   import BreadCrumb from '@/components/Breadcrumb'
   import { default as PageWidget } from '@/components/PageWidget'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
@@ -111,13 +111,30 @@
       },
       handleDelete(index, row) {
 
-        let role = this.tableData.data[index]
+        let user = this.tableData.data[index]
 
-        let data = {roleId:role.roleId}
+        let data = {userId:user.userId}
 
-        deleteRole(data).then(response => {
+        this.$confirm('此操作将永久删除账户信息，是否继续？','警告', {
 
-          this.getList()
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+
+        }).then(() => {
+
+          deleteUser(data).then(response => {
+
+            this.getList()
+
+            this.$message({
+              type: 'success',
+              message: '注销成功!'
+            });
+          })
+        }).catch (() => {
+
+
         })
       },
       handleSearch(name) {
@@ -146,19 +163,41 @@
 
         let user = this.tableData.data[index]
 
-        this.$store.dispatch('setCurrentUser', user)
+        this.$store.dispatch('setCurrentUser', user).then(() => {
 
-        let router = {name:'edituser'}
+          let router = {name:'edituser'}
 
-        this.$router.push(router)
+          this.$router.push(router)
+        })
       },
       handleChangePwd(index, row) {
 
-        let role = this.tableData.data[index]
+        let user = this.tableData.data[index]
 
-        let router = {name:'editroledetails', params:{role:role}}
+        let data = {
+          userId:user.userId
+        }
 
-        this.$router.push(router)
+        this.$confirm('此操作将重置账户初始密码为888888，是否继续？','警告', {
+
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+
+        }).then(() => {
+
+          editPwd(data).then((res) => {
+
+            this.$message({
+              type: 'success',
+              message: '重置成功!'
+            });
+          })
+
+        }).catch (() => {
+
+
+        })
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
@@ -199,12 +238,18 @@
   }
 
   .content {
+
     width: 100%;
+    height: calc(100% - 51px);
+    position: relative;
   }
 
   .table {
-    width: 100%;
+
     background: green;
+    width: 100%;
+    overflow-y: scroll;
+    max-height: calc(100% - 4rem);
   }
 
   .pagination {

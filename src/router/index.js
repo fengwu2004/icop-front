@@ -55,7 +55,7 @@ const user = {
       path: 'edit',
       component: _import('systemadmin/user/edit'),
       name: 'edituser',
-      meta: { title: 'editcreate', icon: 'table' },
+      meta: { title: 'edituser', icon: 'table' },
       hidden:true
     },
     {

@@ -42,6 +42,7 @@ export default {
     usermanagermain:'accountmanagermain',
     roledetails:'角色详情',
     editroledetails:'修改角色',
+    edituser:'修改账户',
     inlineEditTable: 'Table内编辑',
     complexTable: '综合Table',
     treeTable: '树形表格',

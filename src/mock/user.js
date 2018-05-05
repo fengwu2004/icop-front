@@ -171,11 +171,11 @@ export default {
   },
   deleteUser: config => {
     
-    const { roleId } = param2Obj(config.url)
+    const { userId } = param2Obj(config.url)
     
-    console.log('删除的roleId是' + roleId)
+    console.log('删除的userId是' + userId)
     
-    removeRole(roleId)
+    removeUser(userId)
     
     return {
     
@@ -183,11 +183,11 @@ export default {
   },
   editPwd: config => {
     
-    const { roleId } = param2Obj(config.url)
+    const { userId } = param2Obj(config.url)
     
-    console.log('删除的roleId是' + roleId)
-    
-    removeRole(roleId)
+    console.log('删除的userId是' + userId)
+  
+    removeUser(userId)
     
     return {
     
