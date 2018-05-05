@@ -37,6 +37,7 @@
   import { queryUserList } from '@/api/user'
   import BreadCrumb from '@/components/Breadcrumb'
   import { default as PageWidget } from '@/components/PageWidget'
+  import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
 
   export default {
     components: { PageWidget, BreadCrumb },
@@ -161,21 +162,11 @@
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
-        if (columnIndex == 5) {
-
-          return {textAlign:'center', backgroundColor:'#F4F6F9', color:'#445577'}
-        }
-
-        return {textAlign:'left', backgroundColor:'#F4F6F9',color:'#445577'}
+        return columnIndex == 5 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        if (columnIndex == 5) {
-
-          return {textAlign:'center', color:'#16325C'}
-        }
-
-        return {textAlign:'left', color:'#16325C'}
+        return columnIndex == 5 ? normalcellcenter : normalcell
       },
     }
   }
