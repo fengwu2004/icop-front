@@ -10,13 +10,13 @@
     </div>
     <div class="content">
       <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700">
-          <el-table-column prop="userName" label="员工账号" width="200"></el-table-column>
-          <el-table-column prop="personCode" label="人员编号" width="200"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="200"></el-table-column>
-          <el-table-column prop="sex" label="性别" width="200"></el-table-column>
-          <el-table-column prop="telephone" label="联系电话" width="200"></el-table-column>
-          <el-table-column label="操作">
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
+          <el-table-column prop="userName" label="员工账号" min-width="200"></el-table-column>
+          <el-table-column prop="personCode" label="人员编号" min-width="200"></el-table-column>
+          <el-table-column prop="name" label="姓名" min-width="150"></el-table-column>
+          <el-table-column prop="sex" label="性别" min-width="150"></el-table-column>
+          <el-table-column prop="telephone" label="联系电话" min-width="200"></el-table-column>
+          <el-table-column label="操作" min-width="300">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
               <el-button size="mini" @click="handleChangePwd(scope.$index, scope.row)">重置密码</el-button>
@@ -42,6 +42,7 @@
     components: { PageWidget, BreadCrumb },
     data() {
       return {
+        maxheight:window.innerHeight - 200,
         username:'',
         listLoading:true,
         tableData: {
@@ -162,19 +163,19 @@
 
         if (columnIndex == 5) {
 
-          return {textAlign:'center'}
+          return {textAlign:'center', backgroundColor:'#F4F6F9', color:'#445577'}
         }
 
-        return {textAlign:'left'}
+        return {textAlign:'left', backgroundColor:'#F4F6F9',color:'#445577'}
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
         if (columnIndex == 5) {
 
-          return {textAlign:'center'}
+          return {textAlign:'center', color:'#16325C'}
         }
 
-        return {textAlign:'left'}
+        return {textAlign:'left', color:'#16325C'}
       },
     }
   }

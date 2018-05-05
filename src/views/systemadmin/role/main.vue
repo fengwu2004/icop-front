@@ -11,10 +11,10 @@
     <div class="content">
       <div class="table">
         <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight" highlight-current-row>
-          <el-table-column prop="roleId" label="" width="150"></el-table-column>
-          <el-table-column prop="roleName" label="角色名称" width="250"></el-table-column>
-          <el-table-column prop="remark" label="备注" width="400"></el-table-column>
-          <el-table-column label="操作">
+          <el-table-column prop="roleId" label="" min-width="150"></el-table-column>
+          <el-table-column prop="roleName" label="角色名称" min-width="250"></el-table-column>
+          <el-table-column prop="remark" label="备注" min-width="400"></el-table-column>
+          <el-table-column label="操作" min-width="300">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">详细</el-button>
               <el-button size="mini" @click="handleManager(scope.$index, scope.row)">管理账户</el-button>
