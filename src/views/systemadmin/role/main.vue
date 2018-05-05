@@ -10,7 +10,7 @@
     </div>
     <div class="content">
       <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="calc(10%)" highlight-current-row>
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" highlight-current-row>
           <el-table-column prop="roleId" label="" width="150"></el-table-column>
           <el-table-column prop="roleName" label="角色名称" width="250"></el-table-column>
           <el-table-column prop="remark" label="备注" width="600"></el-table-column>
@@ -199,7 +199,6 @@
 
     background: green;
     width: 100%;
-    position: relative;
     overflow-y: scroll;
     max-height: calc(100% - 4rem);
   }
