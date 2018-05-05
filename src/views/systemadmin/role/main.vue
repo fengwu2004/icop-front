@@ -55,6 +55,8 @@
       this.getList()
     },
     methods:{
+      searchRole() {},
+      createRole() {},
       getRequestData() {
         return {
           pageIndex:this.tableData.pageIndex,

@@ -79,6 +79,10 @@
       ]),
     },
     methods: {
+      uploadImg() {
+
+
+      },
       onEditorMessage() {
 
         console.log('zz')
