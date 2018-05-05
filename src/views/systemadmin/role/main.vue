@@ -126,9 +126,26 @@
 
         let data = {roleId:role.roleId}
 
-        deleteRole(data).then(response => {
+        this.$confirm('此操作将永久删除角色，是否继续？','警告', {
 
-          this.getList()
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+
+        }).then(() => {
+
+          deleteRole(data).then(response => {
+
+            this.getList()
+
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          })
+        }).catch (() => {
+
+
         })
       },
       handleSearch(name) {

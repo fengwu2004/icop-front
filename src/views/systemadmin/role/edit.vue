@@ -6,14 +6,18 @@
     <div class="content">
       <div class="createuser">
         <div class="baseinfo">
-          <li>基本信息</li>
-          <div style="margin-top: 1rem; font-size: 0.8rem">角色名称(不能重名)</div>
-          <div style="margin-top: 0.5rem;width: 300px">
-            <el-input maxlength="20" v-model="roleName"></el-input>
+          <div>
+            <li class="baseinfotitle">基本信息</li>
+            <div class="rolename">角色名称(不能重名):</div>
+            <div style="margin-top: 0.5rem;width: 300px">
+              <el-input maxlength="20" v-model="roleName"></el-input>
+            </div>
           </div>
-          <div style="margin-top: 2rem;font-size:0.8rem">备注(限50字)</div>
-          <div style="margin-top: 0.5rem;">
-            <el-input type="textarea" maxlength="50" rows="12" v-model="remark"></el-input>
+          <div>
+            <div style="font-size:0.8rem">备注(限50字)</div>
+            <div style="margin-top: 0.5rem;">
+              <el-input type="textarea" maxlength="50" rows="12" v-model="remark"></el-input>
+            </div>
           </div>
         </div>
         <div class="permissionctr">
@@ -142,6 +146,12 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
+  $fontcolor:#16325C;
+
+  * {
+    color: $fontcolor;
+  }
+
   .navibar {
 
     display: flex;
@@ -158,6 +168,10 @@
   }
 
   .baseinfo {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .nameinput {
 
@@ -187,7 +201,29 @@
       margin-top: 0.5rem;
       border: 1px solid #e0e5ee;
       padding: 10px;
+      overflow-y: scroll;
     }
+  }
+
+  .rolename {
+
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: $fontcolor;
+  }
+
+  .doselectapp {
+
+    font-size:0.8rem;
+    color: #445577;
+  }
+
+  .baseinfotitle {
+
+    position: relative;
+    left: -1.4rem;
+    color:#061C3F;
+    font-weight: bold;
   }
 
 </style>
