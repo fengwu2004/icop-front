@@ -72,43 +72,30 @@ export default {
     }
   },
   queryRoleList: config => {
+  
+    let { pageIndex, pageSize, roleName } = param2Obj(config.url)
+  
+    pageIndex = parseInt(pageIndex)
+  
+    pageSize = parseInt(pageSize)
     
-    const { pageIndex, pageSize } = param2Obj(config.url)
-
-    let mockList = roleList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    let mockList = null
     
+    if (roleName) {
+  
+      mockList = roleList.filter((item, index) => item.roleName.indexOf(roleName) !== -1)
+    }
+    else {
+  
+      mockList = roleList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    }
+  
     const pageList = mockList
     
-    let pageTotal = roleList.length / pageSize
-    
-    let totalCount = roleList.length
-
-    return {
-      pageIndex:pageIndex,
-      pageSize:pageSize,
-      pageTotal:pageTotal,
-      totalCount:totalCount,
-      data: pageList,
-    }
-  },
-  queryRoleInfo: config => {
-    
-    console.log('queryRoleInfo')
-    
-    const { roleName } = param2Obj(config.url)
-    
-    let mockList = roleList.filter((item, index) => item.roleName.indexOf(roleName) !== -1)
-  
-    let pageIndex = 1
-  
-    let pageSize = 20
-    
-    const pageList = mockList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
-    
-    let pageTotal = mockList.length / pageSize
+    let pageTotal = Math.ceil(mockList.length / pageSize)
     
     let totalCount = mockList.length
-    
+
     return {
       pageIndex:pageIndex,
       pageSize:pageSize,

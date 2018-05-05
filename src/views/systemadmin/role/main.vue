@@ -79,6 +79,11 @@
           pageSize:this.tableData.pageSize,
         }
 
+        if (this.searching && this.roleName && this.roleName.length > 0) {
+
+          data.roleName = this.roleName
+        }
+
         queryRoleList(data).then(response => {
 
           console.log(response)
@@ -159,7 +164,7 @@
 
         this.listLoading = true
 
-        queryRoleInfo({roleName:name}).then(response => {
+        queryRoleList({roleName:name}).then(response => {
 
           console.log(response)
 

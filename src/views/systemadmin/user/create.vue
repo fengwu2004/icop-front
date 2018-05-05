@@ -47,7 +47,7 @@
       </div>
       <div class="settings">
         <el-button @click="cancelEdit">取消</el-button>
-        <el-button type="primary" @click="handleCreate">保存</el-button>
+        <el-button type="primary" @click="handleCreate" style="margin-right: 2rem;margin-left: 2rem;">保存</el-button>
         <el-button type="success" @click="setRole">继续分配角色</el-button>
       </div>
       <select-user ref="sel" @selectPerson="onSelectedPerson"></select-user>
@@ -98,9 +98,11 @@
       },
       cancelEdit() {
 
-        this.$store.dispatch('clearUser')
+        this.$store.dispatch('resetUser').then(() => {
 
-        this.$router.back()
+          this.$router.back()
+        })
+
       },
       setRole() {
 
@@ -192,5 +194,27 @@
     justify-content: center;
   }
 
+  .redstar {
+
+    color: #FF6050;
+    position: relative;
+    left: -1rem;
+    line-height: 1rem;
+    height: 1rem;
+  }
+
+  $fontcolor:#16325C;
+
+  span {
+
+    color: $fontcolor;
+    font-size: 0.8rem;
+  }
+
+  .sumtitle {
+
+    position: relative;
+    left: -0.2rem;
+  }
 
 </style>

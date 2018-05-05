@@ -69,15 +69,37 @@ for (let i = 0; i < 123; ++i) {
 export default {
   queryUserList: config => {
     
-    const { pageIndex, pageSize } = param2Obj(config.url)
-
-    let mockList = userList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    let { pageIndex, pageSize, queryParam } = param2Obj(config.url)
+  
+    pageIndex = parseInt(pageIndex)
+  
+    pageSize = parseInt(pageSize)
+  
+    let mockList = null
+    
+    if (queryParam) {
+      
+      let personCode = parseInt(queryParam)
+      
+      if (personCode) {
+  
+        mockList = userList.filter((item, index) => item.personCode === personCode)
+      }
+      else {
+  
+        mockList = userList.filter((item, index) => item.name.indexOf(queryParam) !== -1)
+      }
+    }
+    else {
+  
+      mockList = userList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    }
     
     const pageList = mockList
     
-    let pageTotal = userList.length / pageSize
+    let pageTotal = Math.ceil(mockList.length / pageSize)
     
-    let totalCount = userList.length
+    let totalCount = mockList.length
 
     return {
       pageIndex:pageIndex,

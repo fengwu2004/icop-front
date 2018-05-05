@@ -3,7 +3,7 @@
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
       <div class="createsearch">
-        <el-input class="input" v-model="username" placeholder="请输入人员编号、姓名"></el-input>
+        <el-input class="input" v-model="queryParam" placeholder="请输入人员编号、姓名"></el-input>
         <el-button class="search" @click="searchUser">查询</el-button>
         <el-button class="create" @click="createUser">创建</el-button>
       </div>
@@ -44,8 +44,9 @@
     data() {
       return {
         maxheight:window.innerHeight - 200,
-        username:'',
+        queryParam:'',
         listLoading:true,
+        searching:false,
         tableData: {
           totalCount:0,
           data:null,
@@ -62,13 +63,16 @@
     methods:{
       searchUser() {
 
-        this.handleSearch(this.username)
+        this.handleSearch(this.queryParam)
       },
       createUser() {
 
-        let route = {name:'usercreate'}
+        this.$store.dispatch('resetUser').then(() => {
 
-        this.$router.push(route)
+          let route = {name:'usercreate'}
+
+          this.$router.push(route)
+        })
       },
       getList() {
 
@@ -79,6 +83,11 @@
         let data = {
           pageIndex:this.tableData.pageIndex,
           pageSize:this.tableData.pageSize,
+        }
+
+        if (this.searching && this.queryParam && this.queryParam.length > 0) {
+
+          data.queryParam = this.queryParam
         }
 
         queryUserList(data).then(response => {
@@ -137,16 +146,15 @@
 
         })
       },
-      handleSearch(name) {
+      handleSearch(queryParam) {
 
-        console.log('search', name)
+        console.log('search', queryParam)
 
         this.listLoading = true
 
         let data = {
-          name:name,
-          personCode:name,
-          pageIndex:0,
+          queryParam:queryParam,
+          pageIndex:1,
           pageSize:this.tableData.pageSize,
         }
 
@@ -157,6 +165,8 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = true
         })
       },
       handleEdit(index, row) {
@@ -207,7 +217,23 @@
 
         return columnIndex == 5 ? normalcellcenter : normalcell
       },
-    }
+    },
+    watch:{
+      queryParam(newValue) {
+
+        if (!this.searching) {
+
+          return
+        }
+
+        if (!newValue || newValue.length == 0) {
+
+          this.getList()
+
+          this.searching = false
+        }
+      }
+    },
   }
 </script>
 

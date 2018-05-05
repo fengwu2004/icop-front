@@ -7,15 +7,15 @@
       <div class="createaccount">
         <div class="left">
           <div>
-            <li>人员编号</li>
+            <span class="redstar">*</span><span class="sumtitle">人员编号</span>
             <el-input style="margin-top: 0.5rem; border: none" v-model="currentEditUser.personCode"></el-input>
           </div>
           <div style="margin-top: 2rem">
-            <li>姓名</li>
+            <span>姓名</span>
             <el-input style="margin-top: 0.5rem" v-model="currentEditUser.name"></el-input>
           </div>
           <div style="margin-top: 2rem">
-            <li>账户</li>
+            <span class="redstar">*</span><span class="sumtitle">账户</span>
             <el-input style="margin-top: 0.5rem" v-model="currentEditUser.userName"></el-input>
             <div style="margin-top: 10px">
               <span style="font-size: 0.8rem;color: #445577;">注:不能重名,登录时需同时输入@部分</span>
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div style="margin-top: 3rem">
-            <li>密码</li>
+            <span class="redstar">*</span><span class="sumtitle">密码</span>
             <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password"></el-input>
             <div style="margin-top: 10px">
               <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
@@ -45,7 +45,7 @@
       </div>
       <div class="settings">
         <el-button @click="cancelEdit">取消</el-button>
-        <el-button type="primary">保存</el-button>
+        <el-button type="primary" style="margin-right: 2rem;margin-left: 2rem;">保存</el-button>
         <el-button type="success" @click="setRole">继续分配角色</el-button>
       </div>
       <select-user ref="sel"></select-user>
@@ -74,9 +74,10 @@
     methods:{
       cancelEdit() {
 
-        this.$store.dispatch('clearUser')
+        this.$store.dispatch('resetUser').then(() => {
 
-        this.$router.back()
+          this.$router.back()
+        })
       },
       setRole() {
 
@@ -169,5 +170,27 @@
     justify-content: center;
   }
 
+  .redstar {
+
+    color: #FF6050;
+    position: relative;
+    left: -1rem;
+    line-height: 1rem;
+    height: 1rem;
+  }
+
+  $fontcolor:#16325C;
+
+  span {
+
+    color: $fontcolor;
+    font-size: 0.8rem;
+  }
+
+  .sumtitle {
+
+    position: relative;
+    left: -0.2rem;
+  }
 
 </style>
