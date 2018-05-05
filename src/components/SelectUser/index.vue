@@ -34,6 +34,16 @@
   export default {
     components: { PageWidget },
     methods:{
+      refresh() {
+
+        this.searching = false
+
+        this.pageIndex = 1
+
+        this.pageSize = 10
+
+        this.getList()
+      },
       handleSelectChange(currentRow, oldCurrentRow) {
 
         this.selectedPerson = currentRow
@@ -115,6 +125,8 @@
         console.log('show')
 
         this.dialogVisible = true
+
+        this.refresh()
       },
       hide() {
 
@@ -128,10 +140,6 @@
 
         return columnIndex == 3 ? normalcellcenter : normalcell
       },
-    },
-    created() {
-
-      this.getList()
     },
     data() {
       return {
