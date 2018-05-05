@@ -23,7 +23,7 @@
       </div>
       <div class="settings">
         <el-button @click="handleToPreStep">上一步</el-button>
-        <el-button @click="handelCancel">取消</el-button>
+        <el-button @click="handelCancel" style="margin-left: 1rem;margin-right: 1rem">取消</el-button>
         <el-button type="primary" @click="handleCreate">完成分配</el-button>
       </div>
     </div>
@@ -159,6 +159,12 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
+  $fontcolor:#16325C;
+
+  * {
+    color: $fontcolor;
+  }
+
   .navibar {
 
     display: flex;
@@ -171,7 +177,7 @@
   .content {
 
     width: 90%;
-    margin: 1rem auto;
+    margin: 2rem auto;
   }
 
   .baseinfo {
@@ -204,6 +210,7 @@
       margin-top: 0.5rem;
       border: 1px solid #e0e5ee;
       padding: 10px;
+      overflow-y: scroll;
     }
   }
 

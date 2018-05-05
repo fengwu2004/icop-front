@@ -5,7 +5,7 @@
         <span style="font-size: 1.2rem;">人员选择</span>
         <div style="display: flex; align-items: center; justify-content: center;">
           <el-input style="margin-right: 1rem;" clearable placeholder="按人员编号/姓名" v-model="queryParam"></el-input>
-          <el-button style="margin-left: 1rem" type="primary" @click="handleSearch(queryParam)">查询</el-button>
+          <el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;" type="primary" @click="handleSearch(queryParam)">查询</el-button>
         </div>
       </div>
       <el-table @current-change="handleSelectChange" :cell-style="cellstyle" :header-cell-style="headercellstyle" :data="tableData.data" v-loading="listLoading" height="400" highlight-current-row>
