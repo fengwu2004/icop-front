@@ -8,7 +8,7 @@
           <el-button style="margin-left: 1rem" type="primary" @click="handleSearch(queryParam)">查询</el-button>
         </div>
       </div>
-      <el-table @current-change="handleSelectChange" :cell-style="cellstyle" :header-cell-style="headercellstyle" :data="tableData.data" v-loading="listLoading" max-height="400" highlight-current-row>
+      <el-table @current-change="handleSelectChange" :cell-style="cellstyle" :header-cell-style="headercellstyle" :data="tableData.data" v-loading="listLoading" height="400" highlight-current-row>
         <el-table-column prop="personCode" label="人员编号" min-width="100"></el-table-column>
         <el-table-column prop="name" label="姓名" min-width="200"></el-table-column>
         <el-table-column prop="sex" label="性别" min-width="100"></el-table-column>
@@ -63,17 +63,24 @@
           return
         }
 
+        let data = {
+          queryParam:queryParam,
+          pageIndex:1,
+          pageSize:this.tableData.pageSize,
+        }
         console.log('search', queryParam)
 
         this.listLoading = true
 
-        queryPersonList({queryParam:queryParam}).then(response => {
+        queryPersonList(data).then(response => {
 
           console.log(response)
 
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = true
         })
       },
       pageSizeChange(pageSize){
