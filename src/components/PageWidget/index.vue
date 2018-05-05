@@ -80,6 +80,7 @@
   .pagewidget > .left > .pageinfo {
 
     font-size: 0.8rem;
+    color: #54698D;
   }
 
   .el-select >>> .el-input {

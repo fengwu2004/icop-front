@@ -10,10 +10,10 @@
     </div>
     <div class="content">
       <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" highlight-current-row>
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight" highlight-current-row>
           <el-table-column prop="roleId" label="" width="150"></el-table-column>
           <el-table-column prop="roleName" label="角色名称" width="250"></el-table-column>
-          <el-table-column prop="remark" label="备注" width="600"></el-table-column>
+          <el-table-column prop="remark" label="备注" width="400"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">详细</el-button>
@@ -39,12 +39,13 @@
     components: { PageWidget, BreadCrumb },
     data() {
       return {
+        maxheight:window.innerHeight - 200,
         rolename:'',
         listLoading:true,
         tableData: {
           totalCount:0,
           data:null,
-          pageSize:20,
+          pageSize:30,
           totalPage:0,
           pageIndex:1,
         },
@@ -56,7 +57,12 @@
     },
     methods:{
       searchRole() {},
-      createRole() {},
+      createRole() {
+
+        let route = {name:'createrole'}
+
+        this.$router.push(route)
+      },
       getList() {
 
         console.log('getList')
@@ -144,19 +150,19 @@
 
         if (columnIndex == 3) {
 
-          return {textAlign:'center'}
+          return {textAlign:'center', backgroundColor:'#F4F6F9', color:'#445577'}
         }
 
-        return {textAlign:'left'}
+        return {textAlign:'left', backgroundColor:'#F4F6F9',color:'#445577'}
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
         if (columnIndex == 3) {
 
-          return {textAlign:'center'}
+          return {textAlign:'center', color:'#16325C'}
         }
 
-        return {textAlign:'left'}
+        return {textAlign:'left', color:'#16325C'}
       },
     }
   }
@@ -214,4 +220,5 @@
     height: 100%;
     position: relative;
   }
+
 </style>
