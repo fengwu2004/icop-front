@@ -49,22 +49,7 @@
         </div>
         <div class="selectimg">
           <span>主题图片</span>
-          <div style="display: flex;width: 100%;justify-content: center">
-            <el-button @click="outputImg">确定</el-button>
-            <el-button @click="cancelImg">取消</el-button>
-          </div>
-          <div class="imagecroppaouter">
-            <div style="border: 1px solid cornflowerblue">
-              <croppa
-                canvas-color="#E0E5EE"
-                v-model="myCroppa"
-                :show-remove-button="false"
-                :placeholder-font-size="20"
-                placeholder="点击/拖拽上传"
-                :height="160" :width="460">
-              </croppa>
-            </div>
-          </div>
+          <image-cropper></image-cropper>
           <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
         </div>
         <div class="btns">
@@ -79,6 +64,7 @@
   import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget/index'
   import BreadCrumb from '@/components/Breadcrumb/index'
+  import ImageCropper from '@/components/ImageCropper/index'
 
   const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
   const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
@@ -86,7 +72,7 @@
   const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATELY' }, { text: '定时生效', value: 'TIMING' }]
 
   export default {
-    components: { PageWidget, BreadCrumb },
+    components: { PageWidget, BreadCrumb, ImageCropper },
     data() {
       return {
         messageTypeKeyList:messageTypeKeyList,

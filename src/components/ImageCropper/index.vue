@@ -1,8 +1,8 @@
 <template>
   <div>
     <div style="display: flex;width: 100%;justify-content: center">
-      <el-button @click="outputImg">确定</el-button>
-      <el-button @click="cancelImg">取消</el-button>
+      <el-button @click="outputImg" size="mini">确定</el-button>
+      <el-button @click="cancelImg" size="mini">取消</el-button>
     </div>
     <div class="imagecroppaouter">
       <div style="border: 1px solid #D0D5EF">
