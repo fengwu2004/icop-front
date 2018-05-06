@@ -8,6 +8,7 @@
       background-color="#e0e5ee"
       text-color="#bfcbd9"
       active-text-color="#409EFF"
+      :default-openeds="defaultactiveindex"
     >
       <sidebar-item :routes="permission_routers"></sidebar-item>
     </el-menu>
@@ -29,6 +30,11 @@ export default {
     isCollapse() {
       return !this.sidebar.opened
     }
-  }
+  },
+  data() {
+    return {
+      defaultactiveindex:['messagepush', 'systemadmin']
+    }
+  },
 }
 </script>

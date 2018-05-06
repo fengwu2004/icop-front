@@ -1,7 +1,7 @@
 <template>
   <div>
-    <template v-for="item in routes" v-if="!item.hidden&&item.children" :default-openeds="[1, 2, 3]">
-      <el-submenu :index="item.name||item.path" :key="item.name">
+    <template v-for="item in routes" v-if="!item.hidden&&item.children">
+      <el-submenu :index="getMenuIndex(item)" :key="item.name">
         <template slot="title">
           <svg-icon v-if="item.meta&&item.meta.icon" :icon-class="item.meta.icon"></svg-icon>
           <span v-if="item.meta&&item.meta.title" slot="title">{{ generateTitle(item.meta.title) }}</span>
@@ -9,7 +9,7 @@
         <template v-for="(child, index) in item.children" v-if="!child.hidden">
           <sidebar-item :is-nest="true" class="nest-menu" v-if=" child.children && child.children.length > 0 && hasOneShowingChildren(child.children)" :routes="[child]" :key="child.path"></sidebar-item>
           <router-link v-else :to="composePath(item, child)" :key="child.name">
-            <el-menu-item :index="item.path+'/'+child.path">
+            <el-menu-item :index="composePath(item, child)">
               <svg-icon v-if="child.meta&&child.meta.icon" :icon-class="child.meta.icon"></svg-icon>
               <span v-if="child.meta&&child.meta.title" slot="title">{{ generateTitle(child.meta.title) }}</span>
             </el-menu-item>
@@ -26,7 +26,6 @@ import { generateTitle } from '@/utils/i18n'
 export default {
   mounted:function() {
 
-    // console.log(this.routes)
   },
   name: 'SidebarItem',
   props: {
@@ -39,11 +38,21 @@ export default {
     }
   },
   methods: {
+    getMenuIndex(item) {
+
+      const mIndex = item.name||item.path
+
+      console.log('aaaaa')
+
+      console.log(mIndex)
+
+      console.log('zzzzs')
+
+      return mIndex
+    },
     composePath(item, child) {
 
       let value = item.path+'/'+child.path
-
-      // console.log(value)
 
       return value
     },
