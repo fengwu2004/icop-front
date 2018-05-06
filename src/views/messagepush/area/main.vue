@@ -58,6 +58,7 @@
 
 <script>
 
+  import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
   import { queryplacardList, deletePlacard, editPushStatus } from "@/api/areamessage"
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
@@ -255,21 +256,11 @@
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
-        if (columnIndex == 5) {
-
-          return {textAlign:'center'}
-        }
-
-        return {textAlign:'left'}
+        return columnIndex == 5 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        if (columnIndex == 5) {
-
-          return {textAlign:'center'}
-        }
-
-        return {textAlign:'left'}
+        return columnIndex == 5 ? normalcellcenter : normalcell
       },
     }
   }
