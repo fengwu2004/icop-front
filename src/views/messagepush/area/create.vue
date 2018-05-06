@@ -46,9 +46,7 @@
           </div>
         </div>
         <div class="selectimg">
-          <span>主题图片</span>
           <image-cropper @imagecroppersuccess="onImageSelected"></image-cropper>
-          <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
         </div>
         <div class="btns">
           <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
