@@ -35,6 +35,8 @@
       refresh() {
 
         this.dayinterval = this.getDateRange(this.days)
+
+        this.$emit('daterangechange', this.dayinterval)
       },
       getDateRange(value) {
 

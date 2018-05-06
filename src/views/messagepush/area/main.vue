@@ -7,12 +7,12 @@
       </div>
       <div class="content">
         <div class="header">
-          <date-select ref="daterange"></date-select>
+          <date-select ref="daterange" @daterangechange="onDateRangeChange"></date-select>
           <div class="operatemenu">
             <el-input clearable placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
         </div>
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" @filter-change="onFilterChange" :max-height="maxheight">
           <el-table-column prop="msgSubject" label="内容主题" min-width="250"></el-table-column>
           <el-table-column label="消息类型" min-width="150">
             <template slot-scope="scope">
@@ -27,7 +27,8 @@
           <el-table-column prop="pushStatus" label="发布状态" min-width="150"
                            :filters="pushStatusKeyList"
                            :filter-method="filterTag"
-                           :filter-multiple="false">
+                           :filter-multiple="false"
+                           column-key="pushStatus">
             <template slot-scope="scope">
               <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
             </template>
@@ -75,6 +76,7 @@
         maxheight:window.innerHeight - 250,
         pushStatusKeyList:pushStatusKeyList,
         listLoading:true,
+        pushStatus:null,
         tableData: {
           totalCount:0,
           data:null,
@@ -89,6 +91,22 @@
       this.getList()
     },
     methods:{
+      onFilterChange(filters) {
+
+        let pushstatus = filters.pushStatus
+
+        this.pushStatus = pushstatus[0]
+
+        this.pageIndex = 1
+
+        this.getList()
+      },
+      onDateRangeChange() {
+
+        this.pageIndex = 1
+
+        this.getList()
+      },
       createMessage() {
 
         let route = {name:'createareamessage'}
@@ -180,6 +198,11 @@
           data.queryParam = this.queryParam
         }
 
+        if (this.pushStatus) {
+
+          data.pushStatus = this.pushStatus
+        }
+
         console.log('getList', data)
 
         queryAnnouncementList(data).then(response => {
@@ -213,8 +236,6 @@
         this.getList()
       },
       filterTag(value, row) {
-
-        console.log(value, row)
 
         return row.pushStatus === value;
       },
