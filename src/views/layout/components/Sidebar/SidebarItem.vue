@@ -42,12 +42,6 @@ export default {
 
       const mIndex = item.name||item.path
 
-      console.log('aaaaa')
-
-      console.log(mIndex)
-
-      console.log('zzzzs')
-
       return mIndex
     },
     composePath(item, child) {
