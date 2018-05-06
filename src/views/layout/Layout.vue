@@ -34,19 +34,14 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
 
   .main-container {
-    position: relative;
-    height: calc(100% - 50px);
     transition: margin-left .28s;
     display: flex;
-    justify-content: center;
   }
 
   .sidebar-container {
 
     z-index: 1001;
     width: 180px !important;
-    height: 100%;
-    background-color: red !important;
 
     a {
       display: inline-block;
@@ -62,14 +57,14 @@
   }
 
   .app-wrapper {
-    position: relative;
-    height: 100%;
-    width: 100%;
+
+    display: flex;
+    flex-direction: column;
   }
 
   .appmain-container {
 
-    height: 100%;
+    /*height: 100%;*/
     width: calc(100% - 180px);
   }
 
