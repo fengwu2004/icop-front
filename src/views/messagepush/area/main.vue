@@ -9,7 +9,7 @@
         <div class="header">
           <date-select></date-select>
           <div class="operatemenu">
-            <el-input placeholder="输入主题查询"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary">查询</el-button>
+            <el-input placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
         </div>
         <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
@@ -57,7 +57,7 @@
 <script>
 
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
-  import { queryplacardList, deletePlacard, editPushStatus } from "@/api/areamessage"
+  import { queryAnnouncementList, deleteAnnouncement, editPushStatus } from "@/api/areamessage"
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
@@ -71,6 +71,7 @@
     components: { PageWidget, DateSelect, BreadCrumb },
     data() {
       return {
+        queryParam:'',
         maxheight:window.innerHeight - 250,
         pushStatusKeyList:pushStatusKeyList,
         listLoading:true,
@@ -105,8 +106,6 @@
             return item.text
           }
         }
-
-        console.log(strategy)
 
         return null
       },
@@ -169,13 +168,20 @@
           pageSize:this.tableData.pageSize,
         }
 
-        queryplacardList(data).then(response => {
+        if (this.searching && this.queryParam && this.queryParam.length > 0) {
+
+          data.queryParam = this.queryParam
+        }
+
+        queryAnnouncementList(data).then(response => {
 
           console.log(response)
 
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = false
         })
       },
       pageSizeChange(pageSize){
@@ -209,22 +215,27 @@
 
         let data = {roleId:role.roleId}
 
-        deletePlacard(data).then(response => {
+        deleteAnnouncement(data).then(response => {
 
           this.getList()
         })
       },
-      handleSearch(name) {
+      handleSearch(queryParam) {
 
-        console.log('search', name)
+        if (!queryParam || queryParam.length == 0) {
+
+          return
+        }
 
         this.listLoading = true
 
         let data = {
-          msgSubject:name,
-          pageIndex:0,
+          msgSubject:queryParam,
+          pageIndex:1,
           pageSize:this.tableData.pageSize,
         }
+
+        console.log('search', data)
 
         queryplacardList(data).then(response => {
 
@@ -233,6 +244,8 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = true
         })
       },
       handleEdit(index, row) {
@@ -261,7 +274,23 @@
 
         return columnIndex == 6 ? normalcellcenter : normalcell
       },
-    }
+    },
+    watch:{
+      queryParam(newValue) {
+
+        if (!this.searching) {
+
+          return
+        }
+
+        if (!newValue || newValue.length == 0) {
+
+          this.getList()
+
+          this.searching = false
+        }
+      }
+    },
   }
 </script>
 

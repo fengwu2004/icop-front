@@ -3,51 +3,49 @@
     <div>
       <div class="navibar">
         <bread-crumb class="breadcrumb"></bread-crumb>
-        <el-button @click="createMessage" type="primary"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
+        <el-button @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
       </div>
       <div class="content">
         <div class="header">
           <date-select></date-select>
           <div class="operatemenu">
-            <el-input placeholder="输入主题查询"></el-input><el-button type="primary">查询</el-button>
+            <el-input placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
         </div>
-        <div class="table">
-          <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700">
-            <el-table-column prop="msgSubject" label="内容主题" width="400"></el-table-column>
-            <el-table-column label="消息类型" width="150">
-              <template slot-scope="scope">
-                <span>{{ getMessageTypeStr(scope.row.type) }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="发送方式" width="150">
-              <template slot-scope="scope">
-                <span>{{ getPushChannelStr(scope.row.pushChannel) }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="pushStatus" label="发布状态" width="150"
-                             :filters="pushStatusKeyList"
-                             :filter-method="filterTag"
-                             :filter-multiple="false">
-              <template slot-scope="scope">
-                <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="strategy" label="发送策略" width="150">
-              <template slot-scope="scope">
-                <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="planPushTime" label="计划发送时间" width="250"></el-table-column>
-            <el-table-column label="操作">
-              <template slot-scope="scope">
-                <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">发布</el-button>
-                <el-button size="mini" @click="handleManager(scope.$index, scope.row)">修改</el-button>
-                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
+          <el-table-column prop="msgSubject" label="内容主题" min-width="400"></el-table-column>
+          <el-table-column label="消息类型" min-width="150">
+            <template slot-scope="scope">
+              <span>{{ getMessageTypeStr(scope.row.type) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="发送方式" min-width="150">
+            <template slot-scope="scope">
+              <span>{{ getPushChannelStr(scope.row.pushChannel) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="pushStatus" label="发布状态" min-width="150"
+                           :filters="pushStatusKeyList"
+                           :filter-method="filterTag"
+                           :filter-multiple="false">
+            <template slot-scope="scope">
+              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="strategy" label="发送策略" min-width="150">
+            <template slot-scope="scope">
+              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="planPushTime" label="计划发送时间" min-width="200"></el-table-column>
+          <el-table-column label="操作" min-width="300">
+            <template slot-scope="scope">
+              <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">发布</el-button>
+              <el-button size="mini" @click="handleManager(scope.$index, scope.row)">修改</el-button>
+              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
         <div class="pagination">
           <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
         </div>
@@ -58,7 +56,8 @@
 
 <script>
 
-  import { queryplacardList, deletePlacard, editPushStatus } from "@/api/areamessage"
+  import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
+  import { queryAnnouncementList, deleteAnnouncement, editPushStatus } from "@/api/areamessage"
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
@@ -72,6 +71,8 @@
     components: { PageWidget, DateSelect, BreadCrumb },
     data() {
       return {
+        queryParam:'',
+        maxheight:window.innerHeight - 250,
         pushStatusKeyList:pushStatusKeyList,
         listLoading:true,
         tableData: {
@@ -88,6 +89,12 @@
       this.getList()
     },
     methods:{
+      createMessage() {
+
+        let route = {name:'createareamessage'}
+
+        this.$router.push(route)
+      },
       getStrategyStr(strategy) {
 
         for (let i = 0; i < strategyKeyList.length; ++i) {
@@ -99,8 +106,6 @@
             return item.text
           }
         }
-
-        console.log(strategy)
 
         return null
       },
@@ -163,13 +168,20 @@
           pageSize:this.tableData.pageSize,
         }
 
-        queryplacardList(data).then(response => {
+        if (this.searching && this.queryParam && this.queryParam.length > 0) {
+
+          data.queryParam = this.queryParam
+        }
+
+        queryAnnouncementList(data).then(response => {
 
           console.log(response)
 
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = false
         })
       },
       pageSizeChange(pageSize){
@@ -203,22 +215,27 @@
 
         let data = {roleId:role.roleId}
 
-        deletePlacard(data).then(response => {
+        deleteAnnouncement(data).then(response => {
 
           this.getList()
         })
       },
-      handleSearch(name) {
+      handleSearch(queryParam) {
 
-        console.log('search', name)
+        if (!queryParam || queryParam.length == 0) {
+
+          return
+        }
 
         this.listLoading = true
 
         let data = {
-          msgSubject:name,
-          pageIndex:0,
+          msgSubject:queryParam,
+          pageIndex:1,
           pageSize:this.tableData.pageSize,
         }
+
+        console.log('search', data)
 
         queryplacardList(data).then(response => {
 
@@ -227,6 +244,8 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = true
         })
       },
       handleEdit(index, row) {
@@ -249,23 +268,29 @@
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
-        if (columnIndex == 5) {
-
-          return {textAlign:'center'}
-        }
-
-        return {textAlign:'left'}
+        return columnIndex == 6 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        if (columnIndex == 5) {
+        return columnIndex == 6 ? normalcellcenter : normalcell
+      },
+    },
+    watch:{
+      queryParam(newValue) {
 
-          return {textAlign:'center'}
+        if (!this.searching) {
+
+          return
         }
 
-        return {textAlign:'left'}
-      },
-    }
+        if (!newValue || newValue.length == 0) {
+
+          this.getList()
+
+          this.searching = false
+        }
+      }
+    },
   }
 </script>
 
@@ -284,11 +309,14 @@
 
     margin-top: 1rem;
     width: 100%;
+    height: calc(100% - 51px);
+    position: relative;
   }
 
   .header {
 
     display: flex;
+    margin-bottom: 1rem;
     justify-content: space-between;
 
     .dateselect {
@@ -308,16 +336,6 @@
 
       margin-left: 1rem;
     }
-  }
-
-  .table {
-
-    margin-top: 1rem;
-  }
-
-  .headerrowclass {
-
-    background-color: red !important;
   }
 
   .pagination {

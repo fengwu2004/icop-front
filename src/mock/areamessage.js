@@ -9,7 +9,7 @@ for (let i = 0; i < count; i++) {
   
   let item = Mock.mock({
     id: '@increment',
-    msgSubject: '@title(3, 6)',
+    msgSubject: '@ctitle(4, 10)',
     planPushTime: '@datetime',
     'type|1': ['SECURITY', 'PROPERTY', 'ELEVATOR', 'VOTE', 'COUPONS'],
     'pushChannel|1': ['APP', 'SMS'],
@@ -35,7 +35,7 @@ function removeMessage(roleId) {
 }
 
 export default {
-  queryplacardList: config => {
+  queryAnnouncementList: config => {
   
     const { pageIndex, pageSize, userToken } = param2Obj(config.url)
     
@@ -79,7 +79,7 @@ export default {
     
     }
   },
-  deletePlacard: config => {
+  deleteAnnouncement: config => {
     
     const { roleId } = param2Obj(config.url)
     

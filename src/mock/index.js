@@ -36,11 +36,11 @@ Mock.mock(/\/jslife-icop-oms\/project\/add/, 'post', projectAPI.add)
 Mock.mock(/\/jslife-icop-oms\/project\/editPwd/, 'post', projectAPI.editPwd)
 
 //社区信息
-Mock.mock(/\/jslife-icop-oms\/placard\/queryplacardList/, 'post', areamessageAPI.queryplacardList)
-Mock.mock(/\/jslife-icop-oms\/placard\/add/, 'post', areamessageAPI.add)
-Mock.mock(/\/jslife-icop-oms\/placard\/edit/, 'post', areamessageAPI.edit)
-Mock.mock(/\/jslife-icop-oms\/placard\/deletePlacard/, 'post', areamessageAPI.deletePlacard)
-Mock.mock(/\/jslife-icop-oms\/placard\/editPushStatus/, 'post', areamessageAPI.editPushStatus)
+Mock.mock(/\/jslife-icop-oms\/announcement\/queryAnnouncementList/, 'post', areamessageAPI.queryAnnouncementList)
+Mock.mock(/\/jslife-icop-oms\/announcement\/add/, 'post', areamessageAPI.add)
+Mock.mock(/\/jslife-icop-oms\/announcement\/edit/, 'post', areamessageAPI.edit)
+Mock.mock(/\/jslife-icop-oms\/announcement\/delete/, 'post', areamessageAPI.deleteAnnouncement)
+Mock.mock(/\/jslife-icop-oms\/announcement\/editPushStatus/, 'post', areamessageAPI.editPushStatus)
 
 // 登录相关
 Mock.mock(/\/jslife-icop-oms\/captcha/, 'post', loginAPI.captcha)
