@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="table">
-          <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700">
+          <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
             <el-table-column prop="msgSubject" label="内容主题" width="400"></el-table-column>
             <el-table-column label="消息类型" width="150">
               <template slot-scope="scope">
@@ -73,6 +73,7 @@
     components: { PageWidget, DateSelect, BreadCrumb },
     data() {
       return {
+        maxheight:window.innerHeight - 250,
         pushStatusKeyList:pushStatusKeyList,
         listLoading:true,
         tableData: {
