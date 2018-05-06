@@ -12,7 +12,7 @@
       <div class="content">
         <span class="redstar">*</span><span>通知内容</span><span class="subtitle">(限2000个字)</span>
         <div class="richtextinput">
-          <rich-text-editor :text="areamessage.msgContent" @editorChange="editorChange"></rich-text-editor>
+          <rich-text-editor :text="content" @editorChange="editorChange"></rich-text-editor>
         </div>
         <div class="btns">
           <el-button @click="handleToPreStep">上一步</el-button>
@@ -54,13 +54,18 @@
       },
       HandleSave() {
 
-        console.log(this.areamessage)
+        this.$store.dispatch('setAreaMessageContent',this.content).then(() => {
 
-        add(this.areamessage).then(res => {
+          alert(JSON.stringify(this.areamessage))
 
-          console.log(res)
+          console.log(this.areamessage)
 
-          this.$router.go(-2)
+          add(this.areamessage).then(res => {
+
+            console.log(res)
+
+            this.$router.go(-2)
+          })
         })
       },
       handleToPreStep() {

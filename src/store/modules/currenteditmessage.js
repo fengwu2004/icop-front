@@ -21,7 +21,7 @@ const currentEditMessage = {
     },
     SET_AREA_MESSAGE_NOTICECONTENT:(state, msgContent) => {
       
-      state.msgContent = msgContent
+      state.areamessage.msgContent = msgContent
     },
     RESET_AREA_MESSAGE: (state) => {
       
