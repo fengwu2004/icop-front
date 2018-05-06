@@ -175,9 +175,7 @@
 
         return null
       },
-      getList() {
-
-        this.listLoading = true
+      getQueryParams() {
 
         let data = {
           pageIndex:this.tableData.pageIndex,
@@ -195,13 +193,21 @@
 
         if (this.searching && this.queryParam && this.queryParam.length > 0) {
 
-          data.queryParam = this.queryParam
+          data.msgSubject = this.queryParam
         }
 
         if (this.pushStatus) {
 
           data.pushStatus = this.pushStatus
         }
+
+        return data
+      },
+      getList() {
+
+        this.listLoading = true
+
+        const data = this.getQueryParams()
 
         console.log('getList', data)
 
@@ -212,8 +218,6 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
-
-          this.searching = false
         })
       },
       pageSizeChange(pageSize){
@@ -259,11 +263,11 @@
 
         this.listLoading = true
 
-        let data = {
-          msgSubject:queryParam,
-          pageIndex:1,
-          pageSize:this.tableData.pageSize,
-        }
+        this.pageIndex = 1
+
+        this.searching = true
+
+        const data = this.getQueryParams()
 
         console.log('search', data)
 
@@ -274,8 +278,6 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
-
-          this.searching = true
         })
       },
       handleEdit(index, row) {
@@ -314,6 +316,8 @@
         }
 
         if (!newValue || newValue.length == 0) {
+
+          this.pageIndex = 1
 
           this.getList()
 

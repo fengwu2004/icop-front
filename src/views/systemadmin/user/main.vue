@@ -97,8 +97,6 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
-
-          this.searching = false
         })
       },
       pageSizeChange(pageSize){
@@ -234,6 +232,8 @@
         }
 
         if (!newValue || newValue.length == 0) {
+
+          this.pageIndex = 1
 
           this.getList()
 

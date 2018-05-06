@@ -91,8 +91,6 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
-
-          this.searching = false
         })
       },
       pageSizeChange(pageSize){
