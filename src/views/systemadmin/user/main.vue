@@ -3,7 +3,7 @@
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
       <div class="createsearch">
-        <el-input class="input" v-model="queryParam" placeholder="请输入人员编号、姓名"></el-input>
+        <el-input class="input" clearable v-model="queryParam" placeholder="请输入人员编号、姓名"></el-input>
         <el-button class="search" @click="searchUser">查询</el-button>
         <el-button class="create" @click="createUser">创建</el-button>
       </div>

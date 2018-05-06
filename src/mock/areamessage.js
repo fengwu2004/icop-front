@@ -37,18 +37,21 @@ function removeMessage(roleId) {
 export default {
   queryAnnouncementList: config => {
   
-    const { pageIndex, pageSize, userToken } = param2Obj(config.url)
+    const { pageIndex, pageSize, msgSubject } = param2Obj(config.url)
+  
+    let totalList = messageList
+  
+    if (msgSubject) {
     
-    console.log(userToken)
+      totalList = messageList.filter((item, index) => item.msgSubject.indexOf(msgSubject) !== -1)
+    }
   
-    let mockList = messageList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    const pageList = totalList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
   
-    const pageList = mockList
+    let pageTotal = Math.ceil(totalList.length / pageSize)
   
-    let pageTotal = messageList.length / pageSize
-  
-    let totalCount = messageList.length
-  
+    let totalCount = totalList.length
+    
     return {
       pageIndex:pageIndex,
       pageSize:pageSize,
