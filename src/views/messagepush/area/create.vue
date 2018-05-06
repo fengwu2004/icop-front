@@ -38,9 +38,7 @@
           </div>
         </div>
         <div class="sendstrategy">
-          <div>
-            <span class="redstar">*</span><span>发送策略</span>
-          </div>
+          <span class="redstar">*</span><span>发送策略</span>
           <div style="margin-top: 1rem">
             <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
             <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
@@ -49,7 +47,7 @@
         </div>
         <div class="selectimg">
           <span>主题图片</span>
-          <image-cropper></image-cropper>
+          <image-cropper @imagecroppersuccess="onImageSelected"></image-cropper>
           <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
         </div>
         <div class="btns">
@@ -87,6 +85,10 @@
       ]),
     },
     methods: {
+      onImageSelected(value) {
+
+
+      },
       uploadImg() {
 
 
