@@ -6,7 +6,7 @@
         <div class="createmessageprocess">
           <span>1 填写基本信息</span>
           <span class="line"></span>
-          <span>2 填写通知内容</span>
+          <span style="color: #AAB6CC;">2 填写通知内容</span>
         </div>
       </div>
       <div class="content">
@@ -44,13 +44,16 @@
           <div style="margin-top: 1rem">
             <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
             <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
-            <el-date-picker :style="{visibility:areamessage.strategy == 'IMMEDIATELY' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+            <el-date-picker style="margin-left: 1rem" :style="{visibility:areamessage.strategy == 'IMMEDIATELY' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
           </div>
         </div>
         <div class="selectimg">
           <span>主题图片</span>
-          <div style="margin-top: 1rem">
-            <croppa v-model="myCroppa" :remove-button-size="30" :placeholder-font-size="20" placeholder="点击/拖拽上传" :height="240" :width="690"></croppa>
+          <div class="imagecroppaouter">
+            <div>
+              <croppa
+                v-model="myCroppa" :remove-button-size="30" :placeholder-font-size="20" placeholder="点击/拖拽上传" :height="160" :width="460"></croppa>
+            </div>
           </div>
           <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
         </div>
@@ -110,6 +113,7 @@
 
     width: 40%;
     max-width: 700px;
+    min-width: 500px;
     margin: 2rem auto;
   }
 
@@ -134,15 +138,15 @@
 
     .line {
 
-      margin: 0 1rem;
-      width: 100px;
+      margin: 0 2rem;
+      width: 50px;
       height: 1px;
-      background: grey;
+      background: #D0D5E5;
     }
 
     span {
 
-      font-size: 0.6rem;
+      font-size: 0.8rem;
       color: deepskyblue;
     }
   }
@@ -258,6 +262,19 @@
     color: black;
     font-size: 0.7rem;
     font-weight: normal;
+  }
+
+  .imagecroppaouter {
+
+    background: rgba(224,229,238,0.40);
+    border: 1px solid #D0D5E5;
+    border: 1px ;
+    margin-top: 1rem;
+    width: 100%;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
 </style>
