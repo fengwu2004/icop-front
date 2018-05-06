@@ -7,7 +7,7 @@
       :collapse="isCollapse"
       background-color="#e0e5ee"
       text-color="#bfcbd9"
-      active-text-color="#409EFF"
+      active-text-color="red"
       :default-openeds="defaultactiveindex"
     >
       <sidebar-item :routes="permission_routers"></sidebar-item>

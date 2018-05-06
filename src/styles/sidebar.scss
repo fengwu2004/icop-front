@@ -36,6 +36,15 @@
     &:hover {
       background-color: $menuHover !important;
     }
+
+    &:focus {
+      background-color: white !important;
+    }
+
+    .is-active {
+
+      background-color: white !important;
+    }
   }
   .el-menu--collapse .el-menu .el-submenu {
     min-width: 180px !important;
