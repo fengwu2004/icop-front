@@ -3,6 +3,10 @@
     <div class="scroll-wrapper" ref="scrollWrapper" :style="{top: top + 'px'}">
       <slot></slot>
     </div>
+    <div style="bottom: 100px;position: absolute;text-align: center;color: #626266;width: 100%">
+      <div>{{telephone}}</div>
+      <div style="margin-top: 0.6rem;font-size: 0.8rem">捷顺科技提供技术支持</div>
+    </div>
   </div>
 </template>
 
@@ -13,7 +17,8 @@ export default {
   name: 'scrollBar',
   data() {
     return {
-      top: 0
+      top: 0,
+      telephone:'400-700-5305'
     }
   },
   methods: {
