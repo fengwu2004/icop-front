@@ -9,12 +9,20 @@ function dateRangeUtil() {
   };
   
   this.getCurrentDay = function () {
-  
+    
+    var currentDate = this.getCurrentDate();
+    
+    var month = currentDate.getMonth();
+    
+    var year = currentDate.getFullYear();
+    
+    var day = currentDate.getDate();
+    
     var startStop = new Array();
-  
-    startStop.push(new Date())
-  
-    startStop.push(new Date())
+    
+    startStop.push(new Date(year, month, day, 0, 0, 0))
+    
+    startStop.push(new Date(year, month, day, 23, 59, 59))
     
     return startStop;
   };
