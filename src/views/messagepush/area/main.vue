@@ -13,7 +13,7 @@
           </div>
         </div>
         <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
-          <el-table-column prop="msgSubject" label="内容主题" min-width="400"></el-table-column>
+          <el-table-column prop="msgSubject" label="内容主题" min-width="250"></el-table-column>
           <el-table-column label="消息类型" min-width="150">
             <template slot-scope="scope">
               <span>{{ getMessageTypeStr(scope.row.type) }}</span>
@@ -38,7 +38,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="planPushTime" label="计划发送时间" min-width="200"></el-table-column>
-          <el-table-column label="操作" min-width="300">
+          <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">发布</el-button>
               <el-button size="mini" @click="handleManager(scope.$index, scope.row)">修改</el-button>
