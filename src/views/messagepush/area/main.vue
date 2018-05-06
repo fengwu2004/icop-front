@@ -343,7 +343,7 @@
 
     margin-top: 1rem;
     width: 100%;
-    height: calc(100% - 51px);
+    /*height: calc(100% - 51px);*/
     position: relative;
   }
 

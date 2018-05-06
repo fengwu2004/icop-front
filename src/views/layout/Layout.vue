@@ -34,25 +34,28 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
 
   .main-container {
+
     transition: margin-left .28s;
     display: flex;
   }
 
   .sidebar-container {
 
-    z-index: 1001;
-    width: 180px !important;
+    width: 180px;
 
     a {
+
       display: inline-block;
-      width: 100%;
     }
+
     .svg-icon {
+
       margin-right: 16px;
     }
+
     .el-menu {
+
       border: none;
-      width: 100% !important;
     }
   }
 
@@ -64,7 +67,6 @@
 
   .appmain-container {
 
-    /*height: 100%;*/
     width: calc(100% - 180px);
   }
 
