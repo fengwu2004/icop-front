@@ -44,7 +44,7 @@
           <div style="margin-top: 1rem">
             <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
             <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
-            <el-date-picker style="visibility:hidden" v-show="areamessage.strategy != 'IMMEDIATELY'" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+            <el-date-picker :style="{visibility:areamessage.strategy == 'IMMEDIATELY' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
           </div>
         </div>
         <div class="selectimg">
