@@ -203,4 +203,13 @@
     justify-content: center;
   }
 
+  .redstar {
+
+    color: #FF6050;
+    position: relative;
+    left: -1rem;
+    line-height: 1rem;
+    height: 1rem;
+  }
+
 </style>
