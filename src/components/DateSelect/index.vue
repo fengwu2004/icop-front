@@ -8,7 +8,7 @@
       <el-radio-button label="本年"></el-radio-button>
     </el-radio-group>
     <div class="intervalselect">
-      <span>选择时间:</span>
+      <span class="title">选择时间:</span>
       <el-date-picker v-model="dayinterval" type="daterange" unlink-panels placeholder="选择时间范围"></el-date-picker>
     </div>
   </div>
@@ -36,6 +36,8 @@
     .title {
 
       margin-right: 1rem;
+      color: #54698D;
+      font-size: 0.8rem;
     }
 
     .intervalselect {

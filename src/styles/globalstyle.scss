@@ -7,12 +7,29 @@ body {
   bottom: 0;
 }
 
+.el-radio-button__orig-radio:checked+.el-radio-button__inner {
+
+  background-color: #FF955B !important;
+  border-color:#FF955B !important;
+  box-shadow: -1px 0 0 0 #FF955B !important;
+}
+
 .el-button {
 
   color:#16325C !important;
 }
 
 .el-select-dropdown__item {
+
+  color:#54698D !important;
+}
+
+.el-radio-button__inner {
+
+  font-size: 0.8rem !important;
+}
+
+.el-date-editor .el-range-input {
 
   color:#54698D !important;
 }
