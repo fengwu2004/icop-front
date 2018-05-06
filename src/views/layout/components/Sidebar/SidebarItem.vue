@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="item in routes" v-if="!item.hidden&&item.children">
+    <template v-for="item in routes" v-if="!item.hidden&&item.children" :default-openeds="[1, 2, 3]">
       <el-submenu :index="item.name||item.path" :key="item.name">
         <template slot="title">
           <svg-icon v-if="item.meta&&item.meta.icon" :icon-class="item.meta.icon"></svg-icon>
