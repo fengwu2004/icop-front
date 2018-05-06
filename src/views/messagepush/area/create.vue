@@ -11,33 +11,41 @@
       </div>
       <div class="content">
         <div class="title">
-          <div>主题<span>(限30个字)</span></div>
+          <span class="redstar">*</span><span>主题</span><span class="subtitle">(限30个字)</span>
           <el-input placeholder="请输入通知标题" v-model="areamessage.msgSubject"></el-input>
         </div>
         <div class="summary">
-          <div>摘要<span>(限60个字)</span></div>
+          <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>
           <el-input style="margin-top: 1rem" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="areamessage.summary"></el-input>
         </div>
         <div class="otherinfo">
           <div class="messagetype">
-            <div>消息类型</div>
+            <div>
+              <span class="redstar">*</span><span>消息类型</span>
+            </div>
             <el-select v-model="areamessage.type" placeholder="请选择">
               <el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </div>
           <div class="sendtype">
-            <div>发送方式</div>
+            <div>
+              <span>发送方式</span>
+            </div>
             <div class="sendtyperadio">
-              <el-radio v-model="areamessage.pushChannel" label="APP">App推送</el-radio>
+              <el-radio v-model="areamessage.pushChannel" label="APP">App</el-radio>
               <el-radio v-model="areamessage.pushChannel" label="SMS">短信</el-radio>
             </div>
           </div>
         </div>
         <div class="sendstrategy">
-          <div>发送策略</div>
-          <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
-          <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
-          <el-date-picker v-if="areamessage.strategy != 'IMMEDIATELY'" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+          <div>
+            <span class="redstar">*</span><span>发送策略</span>
+          </div>
+          <div style="margin-top: 1rem">
+            <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
+            <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
+            <el-date-picker style="visibility:hidden" v-show="areamessage.strategy != 'IMMEDIATELY'" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+          </div>
         </div>
         <div class="selectimg">
           <div>主题图片</div>
@@ -99,8 +107,9 @@
 
   .content {
 
-    width: 50%;
-    margin: 1rem auto;
+    width: 60%;
+    max-width: 700px;
+    margin: 2rem auto;
   }
 
   .navibar {
@@ -143,11 +152,6 @@
 
       margin-top: 1rem;
     }
-
-    span {
-
-      color:red;
-    }
   }
 
   .summary {
@@ -172,9 +176,13 @@
 
   .sendtype {
 
+    width: 40%;
+
     .sendtyperadio {
 
       margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
     }
   }
 
@@ -210,6 +218,30 @@
     left: -1rem;
     line-height: 1rem;
     height: 1rem;
+  }
+
+  $fontcolor:#16325C;
+
+  span {
+
+    color: $fontcolor;
+    font-size: 0.9rem;
+    font-weight: bold;
+    position: relative;
+    left: -0.2rem;
+  }
+
+  .subtitle {
+
+    color: #AAB6CC;
+    font-size: 0.8rem;
+    font-weight: normal;
+    margin-left: 1rem;
+  }
+
+  .sendstrategy {
+
+    margin-top: 2rem;
   }
 
 </style>
