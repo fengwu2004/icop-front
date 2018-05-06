@@ -48,10 +48,11 @@
           </div>
         </div>
         <div class="selectimg">
-          <div>主题图片</div>
-          <div>
+          <span>主题图片</span>
+          <div style="margin-top: 1rem">
             <croppa v-model="myCroppa" :remove-button-size="30" :placeholder-font-size="20" placeholder="点击/拖拽上传" :height="240" :width="690"></croppa>
           </div>
+          <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
         </div>
         <div class="btns">
           <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
@@ -107,7 +108,7 @@
 
   .content {
 
-    width: 60%;
+    width: 40%;
     max-width: 700px;
     margin: 2rem auto;
   }
@@ -242,6 +243,21 @@
   .sendstrategy {
 
     margin-top: 2rem;
+  }
+
+  .helpertip {
+
+    color: #445577;
+    font-size: 0.7rem;
+    font-weight: normal;
+    margin-top: 1rem;
+  }
+
+  .focustip {
+
+    color: black;
+    font-size: 0.7rem;
+    font-weight: normal;
   }
 
 </style>
