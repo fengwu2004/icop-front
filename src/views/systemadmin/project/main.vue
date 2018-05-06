@@ -9,7 +9,7 @@
     </div>
     <div class="content">
       <div class="tip">注：账号初始密码为6个8</div>
-      <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
+      <el-table :data="tableData.list" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
         <el-table-column prop="projectCode" label="项目编号" min-width="150"></el-table-column>
         <el-table-column prop="projectName" label="项目名称" min-width="250"></el-table-column>
         <el-table-column prop="userName" label="管理账号" min-width="200"></el-table-column>
@@ -40,9 +40,10 @@
         maxheight:window.innerHeight - 250,
         queryParam:'',
         listLoading:true,
+        searching:false,
         tableData: {
           totalCount:0,
-          data:null,
+          list:null,
           pageSize:20,
           totalPage:0,
           pageIndex:1,
@@ -66,7 +67,7 @@
 
         console.log(project)
 
-        let project = this.tableData.data[index]
+        let project = this.tableData.list[index]
 
         return !project || project.userName == null || project.userName.length == 0
       },
@@ -82,13 +83,25 @@
 
         this.listLoading = true
 
-        queryProjectList(this.getRequestData()).then(response => {
+        let data = {
+          pageIndex:this.tableData.pageIndex,
+          pageSize:this.tableData.pageSize,
+        }
+
+        if (this.searching && this.queryParam && this.queryParam.length > 0) {
+
+          data.queryParam = this.queryParam
+        }
+
+        queryProjectList(data).then(response => {
 
           console.log(response)
 
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = false
         })
       },
       pageSizeChange(pageSize){
@@ -112,7 +125,7 @@
       },
       handleAddAdmin(index, row) {
 
-        let project = this.tableData.data[index]
+        let project = this.tableData.list[index]
 
         let data = {
           ProjectCode:project.ProjectCode
@@ -125,7 +138,7 @@
       },
       handleResetPws(index, row) {
 
-        let project = this.tableData.data[index]
+        let project = this.tableData.list[index]
 
         let data = {
 
@@ -153,29 +166,49 @@
           })
         })
       },
-      handleSearch(name) {
+      handleSearch(queryParam) {
 
-        console.log('search', name)
+        if (!queryParam || queryParam.length == 0) {
+
+          return
+        }
 
         this.listLoading = true
 
         let data = {
-          projectName:name,
-          projectCode:name,
-          pageIndex:0,
+          queryParam:queryParam,
+          pageIndex:1,
           pageSize:this.tableData.pageSize,
         }
 
-        queryProjectList(data).then(response => {
+        console.log('search', data)
 
-          console.log(response)
+        queryProjectList(data).then(response => {
 
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = true
         })
       },
-    }
+    },
+    watch:{
+      queryParam(newValue) {
+
+        if (!this.searching) {
+
+          return
+        }
+
+        if (!newValue || newValue.length == 0) {
+
+          this.getList()
+
+          this.searching = false
+        }
+      }
+    },
   }
 </script>
 

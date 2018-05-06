@@ -70,8 +70,6 @@
       },
       getList() {
 
-        console.log('getList')
-
         this.listLoading = true
 
         let data = {
@@ -84,6 +82,8 @@
           data.roleName = this.roleName
         }
 
+        console.log('getList', data)
+
         queryRoleList(data).then(response => {
 
           console.log(response)
@@ -91,6 +91,8 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = false
         })
       },
       pageSizeChange(pageSize){
@@ -160,13 +162,22 @@
       },
       handleSearch(name) {
 
-        console.log('search', name)
+        if (!name || name.length == 0) {
+
+          return
+        }
 
         this.listLoading = true
 
-        queryRoleList({roleName:name}).then(response => {
+        let data = {
+          roleName:name,
+          pageIndex:1,
+          pageSize:this.tableData.pageSize,
+        }
 
-          console.log(response)
+        console.log('search', data)
+
+        queryRoleList(data).then(response => {
 
           Object.assign(this.tableData, response.data)
 

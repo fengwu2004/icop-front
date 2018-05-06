@@ -74,27 +74,19 @@ export default {
   queryRoleList: config => {
   
     let { pageIndex, pageSize, roleName } = param2Obj(config.url)
-  
-    pageIndex = parseInt(pageIndex)
-  
-    pageSize = parseInt(pageSize)
     
-    let mockList = null
+    let totalList = roleList
     
     if (roleName) {
   
-      mockList = roleList.filter((item, index) => item.roleName.indexOf(roleName) !== -1)
+      totalList = roleList.filter((item, index) => item.roleName.indexOf(roleName) !== -1)
     }
-    else {
-  
-      mockList = roleList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
-    }
-  
-    const pageList = mockList
     
-    let pageTotal = Math.ceil(mockList.length / pageSize)
+    const pageList = totalList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
     
-    let totalCount = mockList.length
+    let pageTotal = Math.ceil(totalList.length / pageSize)
+    
+    let totalCount = totalList.length
 
     return {
       pageIndex:pageIndex,

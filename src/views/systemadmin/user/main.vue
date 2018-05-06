@@ -97,6 +97,8 @@
           Object.assign(this.tableData, response.data)
 
           this.listLoading = false
+
+          this.searching = false
         })
       },
       pageSizeChange(pageSize){
@@ -147,6 +149,11 @@
         })
       },
       handleSearch(queryParam) {
+
+        if (!queryParam || queryParam.length == 0) {
+
+          return
+        }
 
         console.log('search', queryParam)
 
