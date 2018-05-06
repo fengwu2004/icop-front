@@ -19,6 +19,10 @@ const currentEditMessage = {
       
       state.areamessage = message
     },
+    SET_AREA_MESSAGE_NOTICECONTENT:(state, msgContent) => {
+      
+      state.msgContent = msgContent
+    },
     RESET_AREA_MESSAGE: (state) => {
       
       state.areamessage = {
@@ -41,6 +45,17 @@ const currentEditMessage = {
   
         commit('SET_AREA_MESSAGE', message)
   
+        resolve()
+      })
+    },
+    setAreaMessageContent({ commit }, msgContent) {
+  
+      console.log('setAreaMessageContent')
+      
+      return new Promise(resolve => {
+    
+        commit('SET_AREA_MESSAGE_NOTICECONTENT', msgContent)
+    
         resolve()
       })
     },

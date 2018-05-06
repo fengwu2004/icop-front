@@ -12,7 +12,7 @@
       <div class="content">
         <span class="redstar">*</span><span>通知内容</span><span class="subtitle">(限2000个字)</span>
         <div class="richtextinput">
-          <rich-text-editor :text="content" @editorChange="editorChange"></rich-text-editor>
+          <rich-text-editor :text="areamessage.msgContent" @editorChange="editorChange"></rich-text-editor>
         </div>
         <div class="btns">
           <el-button @click="handleToPreStep">上一步</el-button>
@@ -28,6 +28,8 @@
 
   import BreadCrumb from '@/components/Breadcrumb/index'
   import richTextEditor from '@/components/richTextEditor'
+  import { add } from '@/api/areamessage'
+  import { mapGetters } from 'vuex'
 
   export default {
     components: { BreadCrumb, richTextEditor },
@@ -36,14 +38,30 @@
         content:'',
       }
     },
+    computed: {
+      ...mapGetters([
+        'areamessage'
+      ]),
+    },
     methods: {
       editorChange(html) {
 
         this.content = html
+
+        console.log(html)
+
+        this.$store.dispatch('setAreaMessageContent',this.content)
       },
       HandleSave() {
 
-        console.log(this.content)
+        console.log(this.areamessage)
+
+        add(this.areamessage).then(res => {
+
+          console.log(res)
+
+          this.$router.go(-2)
+        })
       },
       handleToPreStep() {
 
@@ -80,15 +98,15 @@
 
     .line {
 
-      margin: 0 1rem;
-      width: 100px;
+      margin: 0 2rem;
+      width: 50px;
       height: 1px;
-      background: grey;
+      background: #D0D5E5;
     }
 
     span {
 
-      font-size: 0.6rem;
+      font-size: 0.8rem;
       color: deepskyblue;
     }
   }

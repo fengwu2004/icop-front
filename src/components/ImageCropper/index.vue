@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div>
+    <div style="min-width: 500px">
       <span>主题图片</span>
       <div class="imagecroppaouter">
         <div style="display: flex;width: 100%;justify-content: center;margin-top: 0.5rem" :style="{visibility:imageAttacted ? 'visible' : 'hidden'}">

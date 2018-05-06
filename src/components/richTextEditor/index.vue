@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+  import { picFile } from "@/api/fileupload";
   import { quillEditor } from 'vue-quill-editor'
   import Quill from 'quill'
   import { ImageImport } from './modules/ImageImport.js'
@@ -69,7 +70,7 @@
       uploadImg: async function(id) {
 
         var vm = this
-        
+
         console.log(id)
 
         vm.imageLoading = true
@@ -117,53 +118,63 @@
         vm.imageLoading = false
       },
       uploadImgReq (formData) {
-        
+
         console.log(formData)
-        
+
         return new Promise((resolve, reject) => {
-          
-          if (true) {
-            
-            resolve("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514179021485&di=fae56d93e493b0a50f550ed16a8c5f9d&imgtype=0&src=http%3A%2F%2Fpic.92to.com%2F201612%2F11%2Faceb0f89128a4554a33d5a735e165ca9_th.jpg")
-          }
-          else {
-            
-            reject({message: '图片上传失败'})
-          }
+
+          picFile(formData).then(res => {
+
+            console.log(res)
+
+            resolve(res)
+          })
         })
+
+        // return new Promise((resolve, reject) => {
+        //
+        //   if (true) {
+        //
+        //     resolve("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514179021485&di=fae56d93e493b0a50f550ed16a8c5f9d&imgtype=0&src=http%3A%2F%2Fpic.92to.com%2F201612%2F11%2Faceb0f89128a4554a33d5a735e165ca9_th.jpg")
+        //   }
+        //   else {
+        //
+        //     reject({message: '图片上传失败'})
+        //   }
+        // })
       },
     },
     created: function () {
-      
+
       var vm = this
-      
+
       vm.imgPercent = 0
-      
+
       vm.editorContent = vm.text
-      
+
       vm.uniqueId = vm.editorId?vm.editorId:'inputImg'
     },
     watch:{
       text: function () {
-        
+
         var vm = this
-        
+
         vm.editorContent = vm.text
       }
     },
     mounted() {
-      
+
       var vm = this
       // you can use current editor object to do something(quill methods)
 
       var imgHandler = async function(image) {
-        
+
         vm.addImgRange = vm.$refs.editor.quill.getSelection()
-        
+
         if (image) {
-          
+
           var fileInput = document.getElementById(vm.uniqueId) //隐藏的file文本ID
-          
+
           fileInput.click() //加一个触发事件
         }
       }

@@ -12,7 +12,7 @@
       <div class="content">
         <div class="title">
           <span class="redstar">*</span><span>主题</span><span class="subtitle">(限30个字)</span>
-          <el-input placeholder="请输入通知标题" v-model="areamessage.msgSubject"></el-input>
+          <el-input maxlength="30" placeholder="请输入通知标题" v-model="areamessage.msgSubject"></el-input>
         </div>
         <div class="summary">
           <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>

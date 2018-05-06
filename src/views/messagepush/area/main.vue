@@ -109,9 +109,12 @@
       },
       createMessage() {
 
-        let route = {name:'createareamessage'}
+        this.$store.dispatch('resetAreaMessage').then(() => {
 
-        this.$router.push(route)
+          let route = {name:'createareamessage'}
+
+          this.$router.push(route)
+        })
       },
       getStrategyStr(strategy) {
 
