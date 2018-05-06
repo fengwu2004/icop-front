@@ -41,8 +41,8 @@
           <el-table-column prop="planPushTime" label="计划发送时间" min-width="200"></el-table-column>
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">发布</el-button>
-              <el-button size="mini" @click="handleManager(scope.$index, scope.row)">修改</el-button>
+              <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
+              <el-button size="mini" @click="handleEditor(scope.$index, scope.row)">修改</el-button>
               <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
@@ -246,15 +246,58 @@
 
         return row.pushStatus === value;
       },
+      handleEditor(index, row) {
+
+        let message = this.tableData.data[index]
+
+        this.$store.dispatch('setAreaMessage', message).then(() => {
+
+          let route = {name:'createareamessage'}
+
+          this.$router.push(route)
+        })
+      },
+      handlePush(index, row) {
+
+        let message = this.tableData.data[index]
+
+        let data = {messageId:message.id}
+
+        editPushStatus(data).then(() => {
+
+          this.$message({
+            type: 'success',
+            message: '发布成功!'
+          });
+        })
+      },
       handleDelete(index, row) {
 
-        let role = this.tableData.data[index]
+        let message = this.tableData.data[index]
 
-        let data = {roleId:role.roleId}
+        let data = {messageId:message.id}
 
-        deleteAnnouncement(data).then(response => {
+        this.$confirm('此操作将永久删除此通知，是否继续？','警告', {
 
-          this.getList()
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+
+        }).then(() => {
+
+          deleteAnnouncement(data).then(response => {
+
+            this.getList()
+
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          })
+
+        }).catch (() => {
+
+
         })
       },
       handleSearch(queryParam) {
