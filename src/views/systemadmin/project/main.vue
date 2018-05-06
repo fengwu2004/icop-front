@@ -2,6 +2,10 @@
   <div>
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
+      <div class="createsearch">
+        <el-input class="input" v-model="queryParam" placeholder="项目编号、项目名称"></el-input>
+        <el-button class="search" style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;" @click="handleSearch(queryParam)">查询</el-button>
+      </div>
     </div>
     <div class="content">
       <div class="tip">注：账号初始密码为6个8</div>
@@ -35,7 +39,8 @@
     components: { PageWidget, BreadCrumb },
     data() {
       return {
-        maxheight:window.innerHeight - 200,
+        maxheight:window.innerHeight - 250,
+        queryParam:'',
         listLoading:true,
         tableData: {
           totalCount:0,
@@ -187,13 +192,6 @@
     border-bottom: 1px solid #D0D5E5;
   }
 
-  .content {
-
-    width: 100%;
-    height: calc(100% - 100px);
-    position: relative;
-  }
-
   .createsearch {
 
     display: flex;
@@ -201,7 +199,9 @@
     align-items: center;
 
     .input {
+
       margin-right: 10px;
+      width: 300px;
     }
 
     .create {
@@ -209,11 +209,18 @@
     }
   }
 
+  .content {
+
+    width: 100%;
+    height: calc(100% - 100px);
+    position: relative;
+  }
+
   .table {
 
     width: 100%;
     overflow-y: scroll;
-    max-height: calc(100% - 5rem);
+    max-height: calc(100% - 4rem);
   }
 
   .pagination {

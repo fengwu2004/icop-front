@@ -238,7 +238,6 @@
 
   .table {
 
-    background: green;
     width: 100%;
     overflow-y: scroll;
     max-height: calc(100% - 4rem);
