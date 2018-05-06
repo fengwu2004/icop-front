@@ -52,7 +52,13 @@
           <div class="imagecroppaouter">
             <div>
               <croppa
-                v-model="myCroppa" :remove-button-size="30" :placeholder-font-size="20" placeholder="点击/拖拽上传" :height="160" :width="460"></croppa>
+                canvas-color="#E0E5EE"
+                v-model="myCroppa"
+                :remove-button-size="30"
+                :placeholder-font-size="20"
+                placeholder="点击/拖拽上传"
+                :height="160" :width="460">
+              </croppa>
             </div>
           </div>
           <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
@@ -266,9 +272,8 @@
 
   .imagecroppaouter {
 
-    background: rgba(224,229,238,0.40);
+    background: #E0E5EE;
     border: 1px solid #D0D5E5;
-    border: 1px ;
     margin-top: 1rem;
     width: 100%;
     height: 240px;
