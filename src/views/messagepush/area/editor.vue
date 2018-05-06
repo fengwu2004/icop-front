@@ -4,13 +4,13 @@
       <div class="navibar">
         <bread-crumb class="breadcrumb"></bread-crumb>
         <div class="createmessageprocess">
-          <span>1 填写基本信息</span>
+          <span style="color: #AAB6CC;">1 填写基本信息</span>
           <span class="line"></span>
           <span>2 填写通知内容</span>
         </div>
       </div>
       <div class="content">
-        <div>通知内容<span>(限2000个字)</span></div>
+        <span class="redstar">*</span><span>通知内容</span><span class="subtitle">(限2000个字)</span>
         <div class="richtextinput">
           <rich-text-editor :text="content" @editorChange="editorChange"></rich-text-editor>
         </div>
@@ -110,6 +110,34 @@
     margin-top: 2rem;
     display: flex;
     justify-content: center;
+  }
+
+  .redstar {
+
+    color: #FF6050;
+    position: relative;
+    left: -1rem;
+    line-height: 1rem;
+    height: 1rem;
+  }
+
+  .subtitle {
+
+    color: #AAB6CC;
+    font-size: 0.8rem;
+    font-weight: normal;
+    margin-left: 1rem;
+  }
+
+  $fontcolor:#16325C;
+
+  span {
+
+    color: $fontcolor;
+    font-size: 0.9rem;
+    font-weight: bold;
+    position: relative;
+    left: -0.2rem;
   }
 
 </style>
