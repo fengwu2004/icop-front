@@ -9,19 +9,17 @@
     </div>
     <div class="content">
       <div class="tip">注：账号初始密码为6个8</div>
-      <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
-          <el-table-column prop="projectCode" label="项目编号" min-width="150"></el-table-column>
-          <el-table-column prop="projectName" label="项目名称" min-width="250"></el-table-column>
-          <el-table-column prop="userName" label="管理账号" min-width="200"></el-table-column>
-          <el-table-column label="操作" min-width="300">
-            <template slot-scope="scope">
-              <el-button size="mini" v-if="checkNotAdmin(scope.$index, scope.row)" @click="handleAddAdmin(scope.$index, scope.row)">生成管理账户</el-button>
-              <el-button size="mini" v-else @click="handleResetPws(scope.$index, scope.row)">重置密码</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+      <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
+        <el-table-column prop="projectCode" label="项目编号" min-width="150"></el-table-column>
+        <el-table-column prop="projectName" label="项目名称" min-width="250"></el-table-column>
+        <el-table-column prop="userName" label="管理账号" min-width="200"></el-table-column>
+        <el-table-column label="操作" min-width="300">
+          <template slot-scope="scope">
+            <el-button size="mini" v-if="checkNotAdmin(scope.$index, scope.row)" @click="handleAddAdmin(scope.$index, scope.row)">生成管理账户</el-button>
+            <el-button size="mini" v-else @click="handleResetPws(scope.$index, scope.row)">重置密码</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
       <div class="pagination">
         <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
       </div>
@@ -214,13 +212,6 @@
     width: 100%;
     height: calc(100% - 100px);
     position: relative;
-  }
-
-  .table {
-
-    width: 100%;
-    overflow-y: scroll;
-    max-height: calc(100% - 4rem);
   }
 
   .pagination {
