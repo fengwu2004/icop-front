@@ -16,7 +16,7 @@
         </div>
         <div class="summary">
           <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>
-          <el-input style="margin-top: 1rem" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="areamessage.summary"></el-input>
+          <el-input style="margin-top: 1rem;" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="areamessage.summary"></el-input>
         </div>
         <div class="otherinfo">
           <div class="messagetype">
@@ -49,12 +49,16 @@
         </div>
         <div class="selectimg">
           <span>主题图片</span>
+          <div style="display: flex;width: 100%;justify-content: center">
+            <el-button @click="outputImg">确定</el-button>
+            <el-button @click="cancelImg">取消</el-button>
+          </div>
           <div class="imagecroppaouter">
-            <div>
+            <div style="border: 1px solid cornflowerblue">
               <croppa
                 canvas-color="#E0E5EE"
                 v-model="myCroppa"
-                :remove-button-size="30"
+                :show-remove-button="false"
                 :placeholder-font-size="20"
                 placeholder="点击/拖拽上传"
                 :height="160" :width="460">
