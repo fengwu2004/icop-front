@@ -7,7 +7,7 @@
       </div>
       <div class="content">
         <div class="header">
-          <date-select></date-select>
+          <date-select rel="daterange"></date-select>
           <div class="operatemenu">
             <el-input clearable placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
