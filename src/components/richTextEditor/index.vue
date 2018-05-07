@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+
   import { picFile } from "@/api/fileupload";
   import { quillEditor } from 'vue-quill-editor'
   import Quill from 'quill'
@@ -131,6 +132,17 @@
           })
         })
       },
+      imageHandler(state) {
+
+        this.addImgRange = this.$refs.editor.quill.getSelection()
+
+        if (state) {
+
+          let fileInput = document.getElementById(this.uniqueId)
+
+          fileInput.click()
+        }
+      }
     },
     created: function () {
 
@@ -155,19 +167,7 @@
       var vm = this
       // you can use current editor object to do something(quill methods)
 
-      var imgHandler = async function(image) {
-
-        vm.addImgRange = vm.$refs.editor.quill.getSelection()
-
-        if (image) {
-
-          var fileInput = document.getElementById(vm.uniqueId) //隐藏的file文本ID
-
-          fileInput.click() //加一个触发事件
-        }
-      }
-
-      vm.$refs.editor.quill.getModule("toolbar").addHandler("image", imgHandler)
+      vm.$refs.editor.quill.getModule("toolbar").addHandler("image", this.imageHandler)
     }
 
   }

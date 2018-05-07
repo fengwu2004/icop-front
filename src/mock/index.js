@@ -5,6 +5,7 @@ import roleAPI from './role'
 import userAPI from './user'
 import projectAPI from './project'
 import areamessageAPI from './areamessage'
+import uploadAPI from './upload'
 
 Mock.setup({
   timeout: '350-600'
@@ -59,5 +60,7 @@ Mock.mock(/\/jslife-icop-oms\/captcha/, 'post', loginAPI.captcha)
 Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
 Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
+
+Mock.mock(/\/upload\/picFile/, 'post', uploadAPI.picFile)
 
 export default Mock
