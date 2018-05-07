@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import { queryRoleList, queryRoleInfo, deleteRole } from '@/api/role'
+  import { queryRoleList, deleteRole } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
@@ -139,6 +139,8 @@
         let role = this.tableData.list[index]
 
         let data = {roleId:role.roleId}
+
+        console.log('handleDelete')
 
         this.$confirm('此操作将永久删除角色，是否继续？','警告', {
 

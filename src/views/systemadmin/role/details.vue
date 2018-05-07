@@ -40,7 +40,7 @@
 <script>
 
   import { queryTotalPopedomTree } from '@/api/permissiontree'
-  import { queryRolePopedom } from '@/api/role'
+  import { queryPopedomListByIds } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
 
@@ -112,13 +112,13 @@
         roleIds:this.role.roleId
       }
 
-      queryRolePopedom(data).then(response => {
+      queryPopedomListByIds(data).then(response => {
 
-        console.log(response.data.popedomIds)
+        console.log(response)
 
-        this.apppermissions = response.data.popedomIds.split(',')
+        this.apppermissions = response.data.respData.split(',')
 
-        this.icoppermission = response.data.popedomIds.split(',')
+        this.icoppermission = response.data.respData.split(',')
       })
     },
     data() {

@@ -39,7 +39,7 @@ function removeRole(roleId) {
 }
 
 export default {
-  queryRolePopedom: config => {
+  queryPopedomListByIds: config => {
     
     const { roleIds } = param2Obj(config.url)
     

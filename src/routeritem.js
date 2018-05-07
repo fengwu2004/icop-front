@@ -3,6 +3,7 @@ let routers = [router, router, router]
 let router = {
   
   name:'role',
-  action:['add', 'edit', 'search'],
+  title:'角色管理',
+  action:['add', 'edit', 'search', 'delete'],
   children:[router, router, router]
 }

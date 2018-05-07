@@ -17,7 +17,7 @@ let mock_role = false
 if (mock_role) {
   
   Mock.mock(/\/jslife-icop-oms\/role\/queryRoleList/, 'post', roleAPI.queryRoleList)
-  Mock.mock(/\/jslife-icop-oms\/popedom\/queryRolePopedom/, 'post', roleAPI.queryRolePopedom)
+  Mock.mock(/\/jslife-icop-oms\/role\/queryPopedomListByIds/, 'post', roleAPI.queryPopedomListByIds)
   Mock.mock(/\/jslife-icop-oms\/role\/add/, 'post', roleAPI.add)
   Mock.mock(/\/jslife-icop-oms\/role\/edit/, 'post', roleAPI.edit)
   Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)

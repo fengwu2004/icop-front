@@ -8,9 +8,9 @@ export function queryRoleList(query) {
   })
 }
 
-export function queryRolePopedom(query) {
+export function queryPopedomListByIds(query) {
   return request({
-    url: '/jslife-icop-oms/popedom/queryRolePopedom',
+    url: '/jslife-icop-oms/role/queryPopedomListByIds',
     method: 'post',
     params: query
   })
