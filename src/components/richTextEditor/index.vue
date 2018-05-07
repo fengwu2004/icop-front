@@ -79,8 +79,6 @@
 
         var formData = new FormData(formelement)
 
-        console.log('uploadImg')
-
         try {
 
           const url = await vm.uploadImgReq(formData)
@@ -119,8 +117,6 @@
       },
       uploadImgReq (formData) {
 
-        console.log(formData)
-
         return new Promise((resolve, reject) => {
 
           picFile(formData).then(res => {
@@ -128,20 +124,12 @@
             console.log(res)
 
             resolve(res)
+
+          }).catch(res => {
+
+            reject({message: '图片上传失败'})
           })
         })
-
-        // return new Promise((resolve, reject) => {
-        //
-        //   if (true) {
-        //
-        //     resolve("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514179021485&di=fae56d93e493b0a50f550ed16a8c5f9d&imgtype=0&src=http%3A%2F%2Fpic.92to.com%2F201612%2F11%2Faceb0f89128a4554a33d5a735e165ca9_th.jpg")
-        //   }
-        //   else {
-        //
-        //     reject({message: '图片上传失败'})
-        //   }
-        // })
       },
     },
     created: function () {

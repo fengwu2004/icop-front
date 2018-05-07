@@ -12,6 +12,7 @@ Mock.setup({
 
 let mock_role = false
 let mock_user = false
+let mock_project = false
 
 //角色相关
 
@@ -24,12 +25,10 @@ if (mock_role) {
   Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
 }
 
+//权限树相关 & 用户相关
 if (mock_user) {
-
-//权限树相关
+  
   Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomTree/, 'post', permissiontree.queryTotalRolePopedomTree)
-
-// //用户相关
   Mock.mock(/\/jslife-icop-oms\/user\/queryUserList/, 'post', userAPI.queryUserList)
   Mock.mock(/\/jslife-icop-oms\/user\/userInfo/, 'post', userAPI.userInfo)
   Mock.mock(/\/jslife-icop-oms\/user\/queryRoleListByIds/, 'post', userAPI.queryRoleListByIds)
@@ -41,9 +40,12 @@ if (mock_user) {
 }
 
 //项目账户配置
-Mock.mock(/\/jslife-icop-oms\/project\/queryProjectList/, 'post', projectAPI.queryProjectList)
-Mock.mock(/\/jslife-icop-oms\/project\/add/, 'post', projectAPI.add)
-Mock.mock(/\/jslife-icop-oms\/project\/editPwd/, 'post', projectAPI.editPwd)
+if (mock_project) {
+  
+  Mock.mock(/\/jslife-icop-oms\/project\/queryProjectList/, 'post', projectAPI.queryProjectList)
+  Mock.mock(/\/jslife-icop-oms\/project\/add/, 'post', projectAPI.add)
+  Mock.mock(/\/jslife-icop-oms\/project\/editPwd/, 'post', projectAPI.editPwd)
+}
 
 //社区信息
 Mock.mock(/\/jslife-icop-oms\/announcement\/queryAnnouncementList/, 'post', areamessageAPI.queryAnnouncementList)

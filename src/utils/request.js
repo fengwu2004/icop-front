@@ -23,6 +23,8 @@ service.interceptors.request.use(config => {
     }
   }
   
+  console.log(config)
+  
   console.log(config.params)
   
   return config
