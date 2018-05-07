@@ -14,6 +14,7 @@ export default {
     splitPane: 'Splitpane',
     avatarUpload: '头像上传',
     dropzone: 'Dropzone',
+    rolesetting:'角色设置',
     sticky: 'Sticky',
     countTo: 'CountTo',
     componentMixin: '小组件',

@@ -115,14 +115,25 @@
 
       queryTotalPopedomTree({}).then(response => {
 
-        this.app = this.build(null, response.data.app)
+        console.log(response)
 
-        this.icop = this.build(null, response.data.icop)
+        let respData = response.data.respData
+
+        this.app = this.build(null, respData.app)
+
+        this.icop = this.build(null, respData.icop)
       })
 
-      let roleIds = [this.currentEditUser.user]
+      let data = {
 
-      queryRoleListByIds({}).then(response => {
+        userIds:this.currentEditUser.id
+      }
+
+      console.log(JSON.stringify(data))
+
+      queryRoleListByIds(data).then(response => {
+
+        let respData = response.data.respData
 
         console.log(response)
 
@@ -130,15 +141,20 @@
 
         let list = [parent]
 
-        for (let i = 0; i < response.data.data.length; ++i) {
+        if (respData.length > 0) {
 
-          let role = response.data.data[i]
+          let roleIds = respData.split(',')
 
-          role.parentId = 0
+          for (let i = 0; i < roleIds.length; ++i) {
 
-          role.treeId = role.roleId
+            let role = roleIds[i]
 
-          list.push(role)
+            role.parentId = 0
+
+            role.treeId = role.roleId
+
+            list.push(role)
+          }
         }
 
         this.roletree = this.build(null, list)

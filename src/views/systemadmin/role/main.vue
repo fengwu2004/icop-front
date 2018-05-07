@@ -92,10 +92,22 @@
 
           console.log(response)
 
-          Object.assign(this.tableData, response.data.respData)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
         })
+      },
+      getResponseTableData(respData) {
+
+        let tableData = {
+
+          totalCount:respData.total,
+          list:respData.list,
+          pageSize:respData.pageSize,
+          pageIndex:respData.pageNum
+        }
+
+        return tableData
       },
       pageSizeChange(pageSize){
 
@@ -183,7 +195,7 @@
 
         queryRoleList(data).then(response => {
 
-          Object.assign(this.tableData, response.data.respData)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
 
