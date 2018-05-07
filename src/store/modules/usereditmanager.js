@@ -8,9 +8,14 @@ const usereditmanager = {
       telephone:null,
       sex:'男',
       password:null,
+      roleIds:null
     },
   },
   mutations: {
+    SET_ROLEIDS: (state, roleIdsList) => {
+      
+      state.currentUser.roleIds = roleIdsList.join(',')
+    },
     SET_USER: (state, user) => {
       
       console.log('ok')
@@ -30,6 +35,7 @@ const usereditmanager = {
         telephone:null,
         sex:'男',
         password:null,
+        roleIds:null
       }
     },
   },
@@ -40,6 +46,15 @@ const usereditmanager = {
   
         commit('SET_USER', user)
   
+        resolve()
+      })
+    },
+    setUserRoles({ commit }, roleIdsList) {
+    
+      return new Promise(resolve => {
+      
+        commit('SET_ROLEIDS', roleIdsList)
+      
         resolve()
       })
     },

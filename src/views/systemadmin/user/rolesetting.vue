@@ -54,17 +54,24 @@
           return
         }
 
+        this.refreshTreeChecked()
+      },
+      refreshTreeChecked() {
+
         let roleIds = this.$refs.roletree.getCheckedKeys()
 
         let reqeustdata = {roleIds:roleIds.join(',')}
 
-        queryPopedomListByIds(reqeustdata).then(response => {
+        this.$store.dispatch('setUserRoles', roleIds).then(() => {
 
-          let permissons = response.data.respData.split(',')
+          queryPopedomListByIds(reqeustdata).then(response => {
 
-          this.$refs.apptree.setCheckedKeys(permissons)
+            let permissons = response.data.respData.split(',')
 
-          this.$refs.icoptree.setCheckedKeys(permissons)
+            this.$refs.apptree.setCheckedKeys(permissons)
+
+            this.$refs.icoptree.setCheckedKeys(permissons)
+          })
         })
       },
       handleToPreStep() {
@@ -81,7 +88,7 @@
 
         let user = this.currentEditUser
 
-        add(user).then(response => {
+        edit(user).then(response => {
 
 
         })
@@ -145,46 +152,42 @@
           this.roletree = this.build(null, list)
         })
       },
+      getUserRoles() {
+
+        let data = {
+
+          userIds:this.currentEditUser.id
+        }
+
+        queryRoleListByIds(data).then(response => {
+
+          let respData = response.data.respData
+
+          console.log(response)
+
+          if (respData) {
+
+            let roleIds = respData.split(',')
+
+            this.$refs.roletree.setCheckedKeys(roleIds)
+
+            this.refreshTreeChecked()
+          }
+        })
+      }
     },
     created() {
 
       console.log('aa')
 
-      this.createTotalPermissionTree()
+      this.$nextTick(() => {
 
-      this.createRoleTree()
+        this.createTotalPermissionTree()
 
-      let data = {
+        this.createRoleTree()
 
-        userIds:this.currentEditUser.id
-      }
-
-      console.log(JSON.stringify(data))
-
-      // queryRoleListByIds(data).then(response => {
-      //
-      //   let respData = response.data.respData
-      //
-      //   console.log(response)
-      //
-      //   if (respData.length > 0) {
-      //
-      //     let roleIds = respData.split(',')
-      //
-      //     for (let i = 0; i < roleIds.length; ++i) {
-      //
-      //       let role = roleIds[i]
-      //
-      //       role.parentId = 0
-      //
-      //       role.treeId = role.roleId
-      //
-      //       list.push(role)
-      //     }
-      //   }
-      //
-      //   this.roletree = this.build(null, list)
-      // })
+        this.getUserRoles()
+      })
     },
     data() {
       return {
