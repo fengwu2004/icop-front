@@ -135,6 +135,32 @@ export default {
       data: pageList,
     }
   },
+  queryRoleList: config => {
+  
+    let role0 = {
+      roleId:'10',
+      roleName:'收费员',
+      remark:'收费员使用',
+    }
+  
+    let role1 = {
+      roleId:'11',
+      roleName:'管理员',
+      remark:'管理员使用',
+    }
+  
+    let role2 = {
+      roleId:'12',
+      roleName:'保洁',
+      remark:'保洁使用',
+    }
+  
+    const pageList = [role0, role1, role2]
+  
+    return {
+      respData: pageList,
+    }
+  },
   queryRoleListByIds: config => {
     
     let role0 = {

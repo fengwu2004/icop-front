@@ -64,4 +64,20 @@ export function editPwd(query) {
   })
 }
 
+export function checkExistUserName(query) {
+  return request({
+    url: '/jslife-icop-oms/user/checkExistUserName',
+    method: 'post',
+    params: query
+  })
+}
+
+export function queryRoleList(query) {
+  return request({
+    url: '/jslife-icop-oms/user/queryRoleList',
+    method: 'post',
+    params: query
+  })
+}
+
 

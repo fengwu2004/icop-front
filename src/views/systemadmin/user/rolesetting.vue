@@ -33,7 +33,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { queryPopedomListByIds } from '@/api/role'
-  import { queryRoleListByIds, edit, add } from '@/api/user'
+  import { queryRoleListByIds, edit, add, queryRoleList } from '@/api/user'
   import { queryTotalPopedomTree } from '@/api/permissiontree'
   import BreadCrumb from '@/components/Breadcrumb'
 
@@ -108,21 +108,51 @@
 
         return _array;
       },
+      createTotalPermissionTree() {
+
+        queryTotalPopedomTree({}).then(response => {
+
+          console.log(response)
+
+          let respData = response.data.respData
+
+          this.app = this.build(null, respData.app)
+
+          this.icop = this.build(null, respData.icop)
+        })
+      },
+      createRoleTree() {
+
+        queryRoleList({}).then(res => {
+
+          let respData = res.data.respData
+
+          let parent = {roleName:'全选', treeId:0, parentId:null}
+
+          let list = [parent]
+
+          for (let i = 0; i < respData.length; ++i) {
+
+            let role = respData[i]
+
+            role.parentId = 0
+
+            role.treeId = role.roleId
+
+            list.push(role)
+          }
+
+          this.roletree = this.build(null, list)
+        })
+      },
     },
     created() {
 
       console.log('aa')
 
-      queryTotalPopedomTree({}).then(response => {
+      this.createTotalPermissionTree()
 
-        console.log(response)
-
-        let respData = response.data.respData
-
-        this.app = this.build(null, respData.app)
-
-        this.icop = this.build(null, respData.icop)
-      })
+      this.createRoleTree()
 
       let data = {
 
@@ -131,34 +161,30 @@
 
       console.log(JSON.stringify(data))
 
-      queryRoleListByIds(data).then(response => {
-
-        let respData = response.data.respData
-
-        console.log(response)
-
-        let parent = {roleName:'全选', treeId:0, parentId:null}
-
-        let list = [parent]
-
-        if (respData.length > 0) {
-
-          let roleIds = respData.split(',')
-
-          for (let i = 0; i < roleIds.length; ++i) {
-
-            let role = roleIds[i]
-
-            role.parentId = 0
-
-            role.treeId = role.roleId
-
-            list.push(role)
-          }
-        }
-
-        this.roletree = this.build(null, list)
-      })
+      // queryRoleListByIds(data).then(response => {
+      //
+      //   let respData = response.data.respData
+      //
+      //   console.log(response)
+      //
+      //   if (respData.length > 0) {
+      //
+      //     let roleIds = respData.split(',')
+      //
+      //     for (let i = 0; i < roleIds.length; ++i) {
+      //
+      //       let role = roleIds[i]
+      //
+      //       role.parentId = 0
+      //
+      //       role.treeId = role.roleId
+      //
+      //       list.push(role)
+      //     }
+      //   }
+      //
+      //   this.roletree = this.build(null, list)
+      // })
     },
     data() {
       return {
