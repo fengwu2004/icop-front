@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" :modal-append-to-body="false" :lock-scroll="false" :append-to-body="false">
+  <el-dialog :visible.sync="dialogVisible" :modal-append-to-body="false" :lock-scroll="true" :append-to-body="false">
     <div class="table">
       <div class="header">
         <span style="font-size: 1.2rem;">人员选择</span>
