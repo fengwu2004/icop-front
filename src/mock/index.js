@@ -11,6 +11,7 @@ Mock.setup({
 })
 
 let mock_role = false
+let mock_user = false
 
 //角色相关
 
@@ -23,19 +24,21 @@ if (mock_role) {
   Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
 }
 
+if (mock_user) {
 
 //权限树相关
-Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomTree/, 'post', permissiontree.queryTotalRolePopedomTree)
+  Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomTree/, 'post', permissiontree.queryTotalRolePopedomTree)
 
 // //用户相关
-Mock.mock(/\/jslife-icop-oms\/user\/queryUserList/, 'post', userAPI.queryUserList)
-Mock.mock(/\/jslife-icop-oms\/user\/userInfo/, 'post', userAPI.userInfo)
-Mock.mock(/\/jslife-icop-oms\/user\/queryRoleListByIds/, 'post', userAPI.queryRoleListByIds)
-Mock.mock(/\/jslife-icop-oms\/user\/edit/, 'post', userAPI.edit)
-Mock.mock(/\/jslife-icop-oms\/user\/delete/, 'post', userAPI.deleteUser)
-Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', userAPI.editPwd)
-Mock.mock(/\/jslife-icop-oms\/user\/add/, 'post', userAPI.add)
-Mock.mock(/\/jslife-icop-oms\/user\/queryPersonList/, 'post', userAPI.queryPersonList)
+  Mock.mock(/\/jslife-icop-oms\/user\/queryUserList/, 'post', userAPI.queryUserList)
+  Mock.mock(/\/jslife-icop-oms\/user\/userInfo/, 'post', userAPI.userInfo)
+  Mock.mock(/\/jslife-icop-oms\/user\/queryRoleListByIds/, 'post', userAPI.queryRoleListByIds)
+  Mock.mock(/\/jslife-icop-oms\/user\/edit/, 'post', userAPI.edit)
+  Mock.mock(/\/jslife-icop-oms\/user\/delete/, 'post', userAPI.deleteUser)
+  Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', userAPI.editPwd)
+  Mock.mock(/\/jslife-icop-oms\/user\/add/, 'post', userAPI.add)
+  Mock.mock(/\/jslife-icop-oms\/user\/queryPersonList/, 'post', userAPI.queryPersonList)
+}
 
 //项目账户配置
 Mock.mock(/\/jslife-icop-oms\/project\/queryProjectList/, 'post', projectAPI.queryProjectList)

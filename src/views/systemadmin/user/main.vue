@@ -10,7 +10,7 @@
     </div>
     <div class="content">
       <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
+        <el-table :data="tableData.list" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
           <el-table-column prop="userName" label="员工账号" min-width="200"></el-table-column>
           <el-table-column prop="personCode" label="人员编号" min-width="200"></el-table-column>
           <el-table-column prop="name" label="姓名" min-width="150"></el-table-column>
@@ -49,9 +49,8 @@
         searching:false,
         tableData: {
           totalCount:0,
-          data:null,
+          list:null,
           pageSize:20,
-          totalPage:0,
           pageIndex:1,
         },
       }
@@ -74,9 +73,19 @@
           this.$router.push(route)
         })
       },
-      getList() {
+      getResponseTableData(respData) {
 
-        console.log('getList')
+        let tableData = {
+
+          totalCount:respData.total,
+          list:respData.list,
+          pageSize:respData.pageSize,
+          pageIndex:respData.pageNum
+        }
+
+        return tableData
+      },
+      getList() {
 
         this.listLoading = true
 
@@ -90,11 +99,13 @@
           data.queryParam = this.queryParam
         }
 
+        console.log(data)
+
         queryUserList(data).then(response => {
 
           console.log(response)
 
-          Object.assign(this.tableData, response.data)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
         })
@@ -167,7 +178,7 @@
 
           console.log(response)
 
-          Object.assign(this.tableData, response.data)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
 
@@ -176,7 +187,7 @@
       },
       handleEdit(index, row) {
 
-        let user = this.tableData.data[index]
+        let user = this.tableData.list[index]
 
         this.$store.dispatch('setCurrentUser', user).then(() => {
 
@@ -187,7 +198,7 @@
       },
       handleChangePwd(index, row) {
 
-        let user = this.tableData.data[index]
+        let user = this.tableData.list[index]
 
         let data = {
           userId:user.userId
