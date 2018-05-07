@@ -11,7 +11,11 @@
     <div class="content">
       <div class="table">
         <el-table :data="tableData.list" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight" highlight-current-row>
-          <el-table-column prop="index" label="" min-width="150"></el-table-column>
+          <el-table-column min-width="150">
+            <template slot-scope="scope">
+              <span>{{scope.$index + (tableData.pageIndex - 1) * tableData.pageSize + 1}}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="roleName" label="角色名称" min-width="250"></el-table-column>
           <el-table-column prop="remark" label="备注" min-width="400"></el-table-column>
           <el-table-column label="操作" min-width="300">
