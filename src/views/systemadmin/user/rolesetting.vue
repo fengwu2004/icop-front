@@ -31,13 +31,18 @@
 </template>
 
 <script>
-  import { queryRolePopedom } from '@/api/role'
+  import { queryPopedomListByIds } from '@/api/role'
   import { queryRoleListByIds, edit, add } from '@/api/user'
   import { queryTotalPopedomTree } from '@/api/permissiontree'
   import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
     components: { BreadCrumb },
+    computed: {
+      ...mapGetters([
+        'currentEditUser'
+      ]),
+    },
     methods:{
       handleRoleCheckChange(data, checked, indeterminate) {
 
@@ -52,9 +57,9 @@
 
         let reqeustdata = {roleIds:roleIds.join(',')}
 
-        queryRolePopedom(reqeustdata).then(response => {
+        queryPopedomListByIds(reqeustdata).then(response => {
 
-          let permissons = response.data.popedomIds.split(',')
+          let permissons = response.data.respData.split(',')
 
           this.$refs.apptree.setCheckedKeys(permissons)
 
@@ -107,8 +112,6 @@
 
       console.log('aa')
 
-      this.user = this.$route.params.user
-
       queryTotalPopedomTree({}).then(response => {
 
         this.app = this.build(null, response.data.app)
@@ -116,9 +119,11 @@
         this.icop = this.build(null, response.data.icop)
       })
 
+      let roleIds = [this.currentEditUser.user]
+
       queryRoleListByIds({}).then(response => {
 
-        console.log(response.data.data)
+        console.log(response)
 
         let parent = {roleName:'全选', treeId:0, parentId:null}
 
