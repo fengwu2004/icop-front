@@ -31,6 +31,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import { queryPopedomListByIds } from '@/api/role'
   import { queryRoleListByIds, edit, add } from '@/api/user'
   import { queryTotalPopedomTree } from '@/api/permissiontree'
