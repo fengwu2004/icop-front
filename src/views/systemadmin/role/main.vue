@@ -10,8 +10,8 @@
     </div>
     <div class="content">
       <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight" highlight-current-row>
-          <el-table-column prop="roleId" label="" min-width="150"></el-table-column>
+        <el-table :data="tableData.list" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight" highlight-current-row>
+          <el-table-column prop="index" label="" min-width="150"></el-table-column>
           <el-table-column prop="roleName" label="角色名称" min-width="250"></el-table-column>
           <el-table-column prop="remark" label="备注" min-width="400"></el-table-column>
           <el-table-column label="操作" min-width="300">
@@ -46,7 +46,7 @@
         listLoading:true,
         tableData: {
           totalCount:0,
-          data:null,
+          list:null,
           pageSize:30,
           totalPage:0,
           pageIndex:1,
@@ -88,7 +88,7 @@
 
           console.log(response)
 
-          Object.assign(this.tableData, response.data)
+          Object.assign(this.tableData, response.data.respData)
 
           this.listLoading = false
         })
@@ -116,7 +116,7 @@
 
         console.log('handleDetail')
 
-        let role = this.tableData.data[index]
+        let role = this.tableData.list[index]
 
         let router = {name:'roledetails', params:{role:role}}
 
@@ -124,7 +124,7 @@
       },
       handleManager(index, row) {
 
-        let role = this.tableData.data[index]
+        let role = this.tableData.list[index]
 
         let router = {name:'editroledetails', params:{role:role}}
 
@@ -132,7 +132,7 @@
       },
       handleDelete(index, row) {
 
-        let role = this.tableData.data[index]
+        let role = this.tableData.list[index]
 
         let data = {roleId:role.roleId}
 
@@ -177,7 +177,7 @@
 
         queryRoleList(data).then(response => {
 
-          Object.assign(this.tableData, response.data)
+          Object.assign(this.tableData, response.data.respData)
 
           this.listLoading = false
 

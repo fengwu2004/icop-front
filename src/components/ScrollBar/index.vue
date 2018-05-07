@@ -3,7 +3,7 @@
     <div class="scroll-wrapper" ref="scrollWrapper" :style="{top: top + 'px'}">
       <slot></slot>
     </div>
-    <div style="top: 600px;position: absolute;text-align: center;color: #626266;width: 100%">
+    <div style="top: 550px;position: absolute;text-align: center;color: #626266;width: 100%">
       <div>{{telephone}}</div>
       <div style="margin-top: 0.6rem;font-size: 0.8rem">捷顺科技提供技术支持</div>
     </div>

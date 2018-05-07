@@ -10,12 +10,19 @@ Mock.setup({
   timeout: '350-600'
 })
 
+let mock_role = false
+
 //角色相关
-Mock.mock(/\/jslife-icop-oms\/role\/queryRoleList/, 'post', roleAPI.queryRoleList)
-Mock.mock(/\/jslife-icop-oms\/popedom\/queryRolePopedom/, 'post', roleAPI.queryRolePopedom)
-Mock.mock(/\/jslife-icop-oms\/role\/add/, 'post', roleAPI.add)
-Mock.mock(/\/jslife-icop-oms\/role\/edit/, 'post', roleAPI.edit)
-Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
+
+if (mock_role) {
+  
+  Mock.mock(/\/jslife-icop-oms\/role\/queryRoleList/, 'post', roleAPI.queryRoleList)
+  Mock.mock(/\/jslife-icop-oms\/popedom\/queryRolePopedom/, 'post', roleAPI.queryRolePopedom)
+  Mock.mock(/\/jslife-icop-oms\/role\/add/, 'post', roleAPI.add)
+  Mock.mock(/\/jslife-icop-oms\/role\/edit/, 'post', roleAPI.edit)
+  Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
+}
+
 
 //权限树相关
 Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomTree/, 'post', permissiontree.queryTotalRolePopedomTree)
