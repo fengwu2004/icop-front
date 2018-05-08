@@ -14,6 +14,7 @@ Mock.setup({
 let mock_role = false
 let mock_user = false
 let mock_project = false
+let mock_message_area = false
 
 //角色相关
 
@@ -26,7 +27,7 @@ if (mock_role) {
   Mock.mock(/\/jslife-icop-oms\/role\/delete/, 'post', roleAPI.deleteRole)
 }
 
-//权限树相关 & 用户相关
+//用户相关
 if (mock_user) {
   
   Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomTree/, 'post', permissiontree.queryTotalRolePopedomTree)
@@ -49,11 +50,14 @@ if (mock_project) {
 }
 
 //社区信息
-Mock.mock(/\/jslife-icop-oms\/announcement\/queryAnnouncementList/, 'post', areamessageAPI.queryAnnouncementList)
-Mock.mock(/\/jslife-icop-oms\/announcement\/add/, 'post', areamessageAPI.add)
-Mock.mock(/\/jslife-icop-oms\/announcement\/edit/, 'post', areamessageAPI.edit)
-Mock.mock(/\/jslife-icop-oms\/announcement\/delete/, 'post', areamessageAPI.deleteAnnouncement)
-Mock.mock(/\/jslife-icop-oms\/announcement\/editPushStatus/, 'post', areamessageAPI.editPushStatus)
+if (mock_message_area) {
+  
+  Mock.mock(/\/jslife-icop-oms\/announcement\/queryAnnouncementList/, 'post', areamessageAPI.queryAnnouncementList)
+  Mock.mock(/\/jslife-icop-oms\/announcement\/add/, 'post', areamessageAPI.add)
+  Mock.mock(/\/jslife-icop-oms\/announcement\/edit/, 'post', areamessageAPI.edit)
+  Mock.mock(/\/jslife-icop-oms\/announcement\/delete/, 'post', areamessageAPI.deleteAnnouncement)
+  Mock.mock(/\/jslife-icop-oms\/announcement\/editPushStatus/, 'post', areamessageAPI.editPushStatus)
+}
 
 // 登录相关
 Mock.mock(/\/jslife-icop-oms\/captcha/, 'post', loginAPI.captcha)
@@ -61,6 +65,6 @@ Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
 Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
 
-// Mock.mock(/\/upload\/picFile/, 'post', uploadAPI.picFile)
+
 
 export default Mock

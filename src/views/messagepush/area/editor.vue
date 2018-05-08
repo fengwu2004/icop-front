@@ -56,8 +56,6 @@
 
         this.$store.dispatch('setAreaMessageContent',this.content).then(() => {
 
-          alert(JSON.stringify(this.areamessage))
-
           console.log(this.areamessage)
 
           add(this.areamessage).then(res => {
