@@ -65,9 +65,9 @@
       },
       checkNotAdmin(index, row) {
 
-        console.log(project)
-
         let project = this.tableData.data[index]
+
+        console.log(project)
 
         return !project || project.userName == null || project.userName.length == 0
       },
@@ -151,6 +151,10 @@
             message: '生成管理账户成功',
             type: 'success'
           });
+
+          this.tableData.pageIndex = 1
+
+          this.getList()
         })
       },
       handleResetPws(index, row) {
