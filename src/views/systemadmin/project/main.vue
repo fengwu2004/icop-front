@@ -28,7 +28,8 @@
 </template>
 
 <script>
-  import { queryProjectList, add, editPwd  } from '@/api/project'
+  import { queryProjectList, initProjectUser } from '@/api/project'
+  import { editPwd } from "@/api/user";
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
@@ -139,12 +140,17 @@
         let project = this.tableData.data[index]
 
         let data = {
-          ProjectCode:project.ProjectCode
+          projectCode:project.projectCode
         }
 
-        add(data).then(response => {
+        console.log('请求', data)
 
+        initProjectUser(data).then(response => {
 
+          this.$message({
+            message: '生成管理账户成功',
+            type: 'success'
+          });
         })
       },
       handleResetPws(index, row) {

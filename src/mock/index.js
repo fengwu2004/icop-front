@@ -43,7 +43,7 @@ if (mock_user) {
 //项目账户配置
 if (mock_project) {
   
-  Mock.mock(/\/jslife-icop-oms\/project\/queryProjectList/, 'post', projectAPI.queryProjectList)
+  Mock.mock(/\/jslife-icop-oms\/user\/queryProjectList/, 'post', projectAPI.queryProjectList)
   Mock.mock(/\/jslife-icop-oms\/project\/add/, 'post', projectAPI.add)
   Mock.mock(/\/jslife-icop-oms\/project\/editPwd/, 'post', projectAPI.editPwd)
 }
