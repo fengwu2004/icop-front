@@ -88,7 +88,10 @@
     },
     mounted() {
 
-      this.getList()
+      this.$nextTick(() => {
+
+        this.getList()
+      })
     },
     methods:{
       onFilterChange(filters) {
@@ -216,7 +219,7 @@
 
         queryAnnouncementList(data).then(response => {
 
-          this.tableData = this.getResponseTableData(response.data, respData)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
         })
