@@ -224,10 +224,15 @@
       },
       getResponseTableData(respData) {
 
+        let msgList = respData.list.map(msg => {
+
+          return Object.assign({}, msg, {messageId:msg.id})
+        })
+
         let tableData = {
 
           totalCount:respData.total,
-          data:respData.list,
+          data:msgList,
           pageSize:respData.pageSize,
           pageIndex:respData.pageNum
         }

@@ -31,7 +31,7 @@
   import 'quill/dist/quill.bubble.css'
   import BreadCrumb from '@/components/Breadcrumb/index'
   import richTextEditor from '@/components/richTextEditor'
-  import { add } from '@/api/areamessage'
+  import { add, edit } from '@/api/innermessage'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -59,9 +59,9 @@
 
         this.$store.dispatch('setMessageContent',this.content).then(() => {
 
-          console.log(this.message)
+          console.log('修改消息', JSON.stringify(this.message))
 
-          add(this.message).then(res => {
+          edit(this.message).then(res => {
 
             console.log(res)
 
