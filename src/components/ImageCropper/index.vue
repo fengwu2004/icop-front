@@ -3,14 +3,10 @@
     <div style="min-width: 500px">
       <span>主题图片</span>
       <div class="imagecroppaouter">
-        <div style="display: flex;width: 100%;justify-content: center;margin-top: 0.5rem" :style="{visibility:imageAttacted ? 'visible' : 'hidden'}">
-          <el-button @click="outputImg" size="mini">确定</el-button>
-          <el-button @click="cancelImg" size="mini">取消</el-button>
-        </div>
         <div class="croppabound">
-          <div style="border: 1px solid #D0D5EF;margin-top: 1rem;">
+          <div style="border: 1px dashed #D0D5EF;margin-top: 2rem;background-color: white;height: 160px">
             <croppa
-              canvas-color="#E0E5EE"
+              canvas-color="#FFFFFF"
               v-model="croppa"
               :show-remove-button="false"
               :placeholder-font-size="20"
@@ -20,6 +16,10 @@
               :height="160" :width="460">
             </croppa>
           </div>
+        </div>
+        <div style="display: flex;width: 100%;justify-content: center;margin-top: 1rem" :style="{visibility:imageAttacted ? 'visible' : 'hidden'}">
+          <el-button @click="outputImg" size="mini">确定</el-button>
+          <el-button @click="cancelImg" size="mini">取消</el-button>
         </div>
       </div>
       <div style="margin-top: 1rem;">
