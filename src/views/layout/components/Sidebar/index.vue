@@ -1,15 +1,7 @@
 <template>
   <scroll-bar>
-    <el-menu
-      mode="vertical"
-      :show-timeout="200"
-      :default-active="$route.path"
-      :collapse="isCollapse"
-      background-color="#e0e5ee"
-      text-color="#bfcbd9"
-      active-text-color="red"
-      :default-openeds="defaultactiveindex"
-    >
+    <el-menu mode="vertical" :show-timeout="200" :default-active="$route.path"
+      :collapse="isCollapse" background-color="#e0e5ee" text-color="#bfcbd9" active-text-color="#FFFFFF" :default-openeds="defaultactiveindex">
       <sidebar-item :routes="permission_routers"></sidebar-item>
     </el-menu>
   </scroll-bar>
