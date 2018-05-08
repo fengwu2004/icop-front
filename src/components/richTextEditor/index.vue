@@ -1,6 +1,6 @@
 <template>
   <div>
-    <quill-editor ref="editor" :options="newOption" style="height: 20rem; margin-bottom: 54px" v-model="editorContent" @change="editorChange"></quill-editor>
+    <quill-editor ref="editor" :options="newOption" style="height: 20rem; margin-bottom: 54px" v-model="editorContent" @change="editorChange" max-length="2000"></quill-editor>
     <form action="" method="post" enctype="multipart/form-data" id="uploadFormMulti">
       <input style="display: none" :id="uniqueId" type="file" name="avator" multiple accept="image/jpg,image/jpeg,image/png,image/gif" @change="uploadImg()">
     </form>

@@ -50,8 +50,6 @@ const currentEditMessage = {
     },
     setAreaMessageContent({ commit }, msgContent) {
   
-      console.log('setAreaMessageContent')
-      
       return new Promise(resolve => {
     
         commit('SET_AREA_MESSAGE_NOTICECONTENT', msgContent)
