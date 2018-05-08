@@ -3,7 +3,7 @@
     <el-menu mode="vertical"
              :select="selectChange"
              :show-timeout="200"
-             :default-active="$route.name"
+             :default-active="$route.path"
              :collapse="isCollapse"
              background-color="#e0e5ee"
              text-color="#16325C"
@@ -34,6 +34,10 @@ export default {
 
       console.log(value)
     },
+  },
+  mounted() {
+
+    console.log('当前路由', this.$route.path)
   },
   data() {
     return {
