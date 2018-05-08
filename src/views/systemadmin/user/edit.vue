@@ -47,10 +47,10 @@
       </div>
       <div class="settings">
         <el-button @click="cancelEdit">取消</el-button>
-        <el-button type="primary" style="margin-right: 2rem;margin-left: 2rem;">保存</el-button>
+        <el-button type="primary" @click="handleCreate" style="margin-right: 2rem;margin-left: 2rem;">保存</el-button>
         <el-button type="success" @click="setRole">继续分配角色</el-button>
       </div>
-      <select-user ref="sel"></select-user>
+      <select-user ref="sel" @selectPerson="onSelectedPerson"></select-user>
     </div>
   </div>
 </template>
@@ -58,37 +58,56 @@
 <script>
 
   import { mapGetters } from 'vuex'
-  import { add } from '@/api/user'
+  import { edit } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
   import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
     components: { SelectUser, BreadCrumb },
-    computed: {
-      ...mapGetters([
-        'currentEditUser'
-      ]),
-    },
     data() {
       return {
         justEnableSelect:true
       }
     },
-    created() {
-
-      console.log('created')
+    computed: {
+      ...mapGetters([
+        'currentEditUser'
+      ]),
     },
     methods:{
+      handleCreate() {
+
+        console.log('handleCreate')
+
+        let user = this.currentEditUser
+
+        edit(user).then(response => {
+
+
+        })
+      },
+      onSelectedPerson(person) {
+
+        console.log(person)
+
+        let user = {}
+
+        Object.assign(user, this.currentEditUser, person)
+
+        this.$store.dispatch('setCurrentUser', user)
+      },
       cancelEdit() {
 
         this.$store.dispatch('resetUser').then(() => {
 
           this.$router.back()
         })
+
       },
       setRole() {
 
         let route = {
+
           name:'rolesetting'
         }
 
@@ -111,7 +130,6 @@
     align-items: center;
     width: 100%;
     border-bottom: 1px solid #D0D5E5;
-    flex-grow: 1;
   }
 
   .left, .right {

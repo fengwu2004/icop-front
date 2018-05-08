@@ -88,6 +88,8 @@
 
         let user = this.currentEditUser
 
+        console.log(user)
+
         edit(user).then(response => {
 
 
