@@ -72,11 +72,13 @@
 
         if (url != null && url.length > 0) {
 
+          console.log('insertimg', url)
+
           var value = url
 
           value = value.indexOf('http') != -1 ? value : 'http:' + value //返回图片网址中如果没有http自动拼接
 
-          let index = vm.addImgRange != null ? this.addImgRange.index:0 // 获取插入时的位置索引，如果获取失败，则插入到最前面
+          let index = this.addImgRange != null ? this.addImgRange.index:0 // 获取插入时的位置索引，如果获取失败，则插入到最前面
 
           this.$refs.editor.quill.insertEmbed(index , 'image', value, Quill.sources.USER)
 
@@ -103,15 +105,15 @@
 
         formData.append('file', document.getElementById(this.uniqueId).files[0])
 
-        formData.append('picType', 'JSLIFEMAINPAGECARD')
-
-        formData.append('productCode', 'ICOP')
-
-        formData.append('imgType', '.jpg')
+        let params = {
+          picType:'JSLIFEMESSAGE',
+          productCode:'ICOP',
+          imgType:'.jpg'
+        }
 
         try {
 
-          const url = await self.uploadImgReq(formData)
+          const url = await self.uploadImgReq(formData, params)
 
           console.log(url)
 
@@ -124,15 +126,13 @@
 
         self.imageLoading = false
       },
-      uploadImgReq (formData) {
+      uploadImgReq (data, params) {
 
         return new Promise((resolve, reject) => {
 
-          picFile(formData).then(res => {
+          picFile(data, params).then(res => {
 
-            console.log(res)
-
-            resolve(res)
+            resolve(res.data.respData.url)
 
           }).catch(res => {
 
@@ -154,13 +154,11 @@
     },
     created: function () {
 
-      var vm = this
+      this.imgPercent = 0
 
-      vm.imgPercent = 0
+      this.editorContent = this.text
 
-      vm.editorContent = vm.text
-
-      vm.uniqueId = vm.editorId?vm.editorId:'inputImg'
+      this.uniqueId = this.editorId ? this.editorId:'inputImg'
     },
     watch:{
       text: function () {
@@ -172,10 +170,7 @@
     },
     mounted() {
 
-      var vm = this
-      // you can use current editor object to do something(quill methods)
-
-      vm.$refs.editor.quill.getModule("toolbar").addHandler("image", this.imageHandler)
+      this.$refs.editor.quill.getModule("toolbar").addHandler("image", this.imageHandler)
     }
 
   }

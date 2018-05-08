@@ -62,7 +62,14 @@
 
             console.log(res)
 
-            this.dataUrl = res.url
+            this.$message({
+              type: 'success',
+              message: '裁剪上传成功!'
+            });
+
+            let respData = res.data.respData
+
+            this.dataUrl = respData.url
           })
         })
       },

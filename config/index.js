@@ -11,18 +11,18 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api-dev': {
-        target: 'http://10.101.90.151:8080/', // 接口的域名,
+      '/jslife-icop-oms': {
+        target: 'http://10.101.90.151:8080/jslife-icop-oms', // 接口的域名,
         changeOrigin:true,
         pathRewrite: {
-          '^/api-dev': ''
+          '^/jslife-icop-oms': ''
         }
       },
-      '/file-up-load': {
-        target: 'http://10.101.90.152:8080/', // 接口的域名,
+      '/jslife-file-service': {
+        target: 'http://10.101.90.152:8080/jslife-file-service', // 接口的域名,
         changeOrigin:true,
         pathRewrite: {
-          '^/file-up-load': ''
+          '^/jslife-file-service': ''
         }
       }
     },
