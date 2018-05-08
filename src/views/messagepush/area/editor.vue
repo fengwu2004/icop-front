@@ -26,6 +26,9 @@
 
 <script>
 
+  import 'quill/dist/quill.core.css'
+  import 'quill/dist/quill.snow.css'
+  import 'quill/dist/quill.bubble.css'
   import BreadCrumb from '@/components/Breadcrumb/index'
   import richTextEditor from '@/components/richTextEditor'
   import { add } from '@/api/areamessage'
