@@ -61,6 +61,6 @@ Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
 Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
 
-Mock.mock(/\/upload\/picFile/, 'post', uploadAPI.picFile)
+// Mock.mock(/\/upload\/picFile/, 'post', uploadAPI.picFile)
 
 export default Mock

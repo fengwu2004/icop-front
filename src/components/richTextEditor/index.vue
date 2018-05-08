@@ -2,7 +2,7 @@
   <div>
     <quill-editor ref="editor" :options="newOption" style="height: 20rem; margin-bottom: 54px" v-model="editorContent" @change="editorChange"></quill-editor>
     <form action="" method="post" enctype="multipart/form-data" id="uploadFormMulti">
-      <input style="display: none" :id="uniqueId" type="file" name="avator" multiple accept="image/jpg,image/jpeg,image/png,image/gif" @change="uploadImg('uploadFormMulti')"><!--style="display: none"-->
+      <input style="display: none" :id="uniqueId" type="file" name="avator" multiple accept="image/jpg,image/jpeg,image/png,image/gif" @change="uploadImg()">
     </form>
   </div>
 </template>
@@ -68,53 +68,61 @@
 
         vm.$emit('editorChange', html)
       },
-      uploadImg: async function(id) {
+      insertImgUrl(url) {
 
-        var vm = this
+        if (url != null && url.length > 0) {
 
-        console.log(id)
+          var value = url
 
-        vm.imageLoading = true
+          value = value.indexOf('http') != -1 ? value : 'http:' + value //返回图片网址中如果没有http自动拼接
 
-        let formelement = document.getElementById(id)[0]
+          let index = vm.addImgRange != null ? this.addImgRange.index:0 // 获取插入时的位置索引，如果获取失败，则插入到最前面
 
-        var formData = new FormData(formelement)
+          this.$refs.editor.quill.insertEmbed(index , 'image', value, Quill.sources.USER)
+
+          var img = new Image()
+
+          img.src = value
+
+          this.$refs.editor.quill.formatText(index, index + 1, 'width', 400 + 'px');
+        }
+        else {
+
+        }
+
+        document.getElementById(this.uniqueId).value = ''
+
+      },
+      uploadImg: async function() {
+
+        var self = this
+
+        self.imageLoading = true
+
+        var formData = new FormData()
+
+        formData.append('file', document.getElementById(this.uniqueId).files[0])
+
+        formData.append('picType', 'JSLIFEMAINPAGECARD')
+
+        formData.append('productCode', 'ICOP')
+
+        formData.append('imgType', '.jpg')
 
         try {
 
-          const url = await vm.uploadImgReq(formData)
+          const url = await self.uploadImgReq(formData)
 
           console.log(url)
 
-          if (url != null && url.length > 0) {
-
-            var value = url
-
-            value = value.indexOf('http') != -1 ? value : 'http:' + value //返回图片网址中如果没有http自动拼接
-
-            let index = vm.addImgRange != null?vm.addImgRange.index:0 // 获取插入时的位置索引，如果获取失败，则插入到最前面
-
-            vm.$refs.editor.quill.insertEmbed(index , 'image', value, Quill.sources.USER)
-
-            var img = new Image()
-
-            img.src = value
-
-            vm.$refs.editor.quill.formatText(index, index + 1, 'width', 400 + 'px');
-          }
-          else {
-
-          }
-
-          document.getElementById(vm.uniqueId).value=''
-
+          self.insertImgUrl(url)
         }
         catch ({message: msg}) {
 
-          document.getElementById(vm.uniqueId).value=''
+          document.getElementById(self.uniqueId).value = ''
         }
 
-        vm.imageLoading = false
+        self.imageLoading = false
       },
       uploadImgReq (formData) {
 

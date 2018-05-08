@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function picFile(query) {
+export function picFile(data, params) {
   return request({
-    url: '/upload/picFile',
+    url: '/jslife-file-service/upload/picFile',
     method: 'post',
-    params: query
+    data:data,
+    params:params
   })
 }

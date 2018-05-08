@@ -17,6 +17,13 @@ module.exports = {
         pathRewrite: {
           '^/api-dev': ''
         }
+      },
+      '/file-up-load': {
+        target: 'http://10.101.90.152:8080/', // 接口的域名,
+        changeOrigin:true,
+        pathRewrite: {
+          '^/file-up-load': ''
+        }
       }
     },
 

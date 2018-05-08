@@ -39,25 +39,32 @@
 </template>
 
 <script>
+
+  import { picFile } from "@/api/fileupload";
+
   export default {
     methods:{
-      uploadCroppedImage() {
-        this.croppa.generateBlob(
-          blob => {
-            console.log(blob)
-            // write code to upload the cropped image file (a file is a blob)
-          },
-          'image/jpeg',
-          0.8
-        ); // 80% compressed jpeg file
-      },
       outputImg() {
 
-        let dataUrl = this.croppa.generateDataUrl()
+        this.croppa.generateBlob(blob => {
 
-        this.dataUrl = dataUrl
+          let formData = new FormData()
 
-        this.$emit('imagecroppersuccess', this.dataUrl)
+          formData.append('file', blob)
+
+          let params = {
+            picType:'JSLIFEMAINPAGECARD',
+            productCode:'ICOP',
+            imgType:'.jpg'
+          }
+
+          picFile(formData, params).then(res => {
+
+            console.log(res)
+
+            this.dataUrl = res.url
+          })
+        })
       },
       cancelImg() {
 
