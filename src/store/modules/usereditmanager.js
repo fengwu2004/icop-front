@@ -8,7 +8,8 @@ const usereditmanager = {
       telephone:null,
       sex:'男',
       password:null,
-      roleIds:null
+      roleIds:null,
+      userId:null
     },
   },
   mutations: {

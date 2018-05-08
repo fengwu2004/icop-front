@@ -9,7 +9,7 @@
     </div>
     <div class="content">
       <div class="tip">注：账号初始密码为6个8</div>
-      <el-table :data="tableData.list" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
+      <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
         <el-table-column prop="projectCode" label="项目编号" min-width="150"></el-table-column>
         <el-table-column prop="projectName" label="项目名称" min-width="250"></el-table-column>
         <el-table-column prop="userName" label="管理账号" min-width="200"></el-table-column>
@@ -43,9 +43,8 @@
         searching:false,
         tableData: {
           totalCount:0,
-          list:null,
+          data:[],
           pageSize:20,
-          totalPage:0,
           pageIndex:1,
         },
       }
@@ -67,7 +66,7 @@
 
         console.log(project)
 
-        let project = this.tableData.list[index]
+        let project = this.tableData.data[index]
 
         return !project || project.userName == null || project.userName.length == 0
       },
@@ -76,6 +75,18 @@
           pageIndex:this.tableData.pageIndex,
           pageSize:this.tableData.pageSize,
         }
+      },
+      getResponseTableData(respData) {
+
+        let tableData = {
+
+          totalCount:respData.total,
+          data:respData.list,
+          pageSize:respData.pageSize,
+          pageIndex:respData.pageNum
+        }
+
+        return tableData
       },
       getList() {
 
@@ -97,7 +108,7 @@
 
           console.log(response)
 
-          Object.assign(this.tableData, response.data)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
 
@@ -125,7 +136,7 @@
       },
       handleAddAdmin(index, row) {
 
-        let project = this.tableData.list[index]
+        let project = this.tableData.data[index]
 
         let data = {
           ProjectCode:project.ProjectCode
@@ -138,7 +149,7 @@
       },
       handleResetPws(index, row) {
 
-        let project = this.tableData.list[index]
+        let project = this.tableData.data[index]
 
         let data = {
 
@@ -185,7 +196,7 @@
 
         queryProjectList(data).then(response => {
 
-          Object.assign(this.tableData, response.data)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
 

@@ -7,13 +7,13 @@
       </div>
       <div class="content">
         <div class="header">
-          <date-select></date-select>
+          <date-select ref="daterange" @daterangechange="onDateRangeChange"></date-select>
           <div class="operatemenu">
-            <el-input placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
+            <el-input clearable placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
         </div>
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
-          <el-table-column prop="msgSubject" label="内容主题" min-width="400"></el-table-column>
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" @filter-change="onFilterChange" :max-height="maxheight">
+          <el-table-column prop="msgSubject" label="内容主题" min-width="250"></el-table-column>
           <el-table-column label="消息类型" min-width="150">
             <template slot-scope="scope">
               <span>{{ getMessageTypeStr(scope.row.type) }}</span>
@@ -27,7 +27,8 @@
           <el-table-column prop="pushStatus" label="发布状态" min-width="150"
                            :filters="pushStatusKeyList"
                            :filter-method="filterTag"
-                           :filter-multiple="false">
+                           :filter-multiple="false"
+                           column-key="pushStatus">
             <template slot-scope="scope">
               <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
             </template>
@@ -38,10 +39,10 @@
             </template>
           </el-table-column>
           <el-table-column prop="planPushTime" label="计划发送时间" min-width="200"></el-table-column>
-          <el-table-column label="操作" min-width="300">
+          <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">发布</el-button>
-              <el-button size="mini" @click="handleManager(scope.$index, scope.row)">修改</el-button>
+              <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
+              <el-button size="mini" @click="handleEditor(scope.$index, scope.row)">修改</el-button>
               <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
@@ -56,8 +57,8 @@
 
 <script>
 
+  import { queryNoticeList, deleteNotice, sendNotice} from "@/api/innermessage";
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
-  import { queryAnnouncementList, deleteAnnouncement, editPushStatus } from "@/api/areamessage"
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
@@ -75,6 +76,7 @@
         maxheight:window.innerHeight - 250,
         pushStatusKeyList:pushStatusKeyList,
         listLoading:true,
+        pushStatus:null,
         tableData: {
           totalCount:0,
           data:null,
@@ -84,16 +86,38 @@
         },
       }
     },
-    created() {
+    mounted() {
 
-      this.getList()
+      this.$nextTick(() => {
+
+        this.getList()
+      })
     },
     methods:{
+      onFilterChange(filters) {
+
+        let pushstatus = filters.pushStatus
+
+        this.pushStatus = pushstatus[0]
+
+        this.pageIndex = 1
+
+        this.getList()
+      },
+      onDateRangeChange() {
+
+        this.pageIndex = 1
+
+        this.getList()
+      },
       createMessage() {
 
-        let route = {name:'createareamessage'}
+        this.$store.dispatch('resetAreaMessage').then(() => {
 
-        this.$router.push(route)
+          let route = {name:'createareamessage'}
+
+          this.$router.push(route)
+        })
       },
       getStrategyStr(strategy) {
 
@@ -153,36 +177,62 @@
           }
         }
 
-        console.log(pushStatus)
-
         return null
       },
-      getList() {
-
-        console.log('getList')
-
-        this.listLoading = true
+      getQueryParams() {
 
         let data = {
           pageIndex:this.tableData.pageIndex,
           pageSize:this.tableData.pageSize,
         }
 
-        if (this.searching && this.queryParam && this.queryParam.length > 0) {
+        let daterange = this.$refs.daterange.dayinterval
 
-          data.queryParam = this.queryParam
+        if (daterange && daterange.length == 2) {
+
+          data.beginTime = daterange[0].getTime()
+
+          data.endTime = daterange[1].getTime()
         }
 
-        queryAnnouncementList(data).then(response => {
+        if (this.searching && this.queryParam && this.queryParam.length > 0) {
 
-          console.log(response)
+          data.msgSubject = this.queryParam
+        }
 
-          Object.assign(this.tableData, response.data)
+        if (this.pushStatus) {
+
+          data.pushStatus = this.pushStatus
+        }
+
+        return data
+      },
+      getList() {
+
+        this.listLoading = true
+
+        const data = this.getQueryParams()
+
+        console.log('getList', data)
+
+        queryNoticeList(data).then(response => {
+
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
-
-          this.searching = false
         })
+      },
+      getResponseTableData(respData) {
+
+        let tableData = {
+
+          totalCount:respData.total,
+          data:respData.list,
+          pageSize:respData.pageSize,
+          pageIndex:respData.pageNum
+        }
+
+        return tableData
       },
       pageSizeChange(pageSize){
 
@@ -205,19 +255,60 @@
       },
       filterTag(value, row) {
 
-        console.log(value, row)
-
         return row.pushStatus === value;
+      },
+      handleEditor(index, row) {
+
+        let message = this.tableData.data[index]
+
+        this.$store.dispatch('setAreaMessage', message).then(() => {
+
+          let route = {name:'createareamessage'}
+
+          this.$router.push(route)
+        })
+      },
+      handlePush(index, row) {
+
+        let message = this.tableData.data[index]
+
+        let data = {messageId:message.id}
+
+        sendNotice(data).then(() => {
+
+          this.$message({
+            type: 'success',
+            message: '发布成功!'
+          });
+        })
       },
       handleDelete(index, row) {
 
-        let role = this.tableData.data[index]
+        let message = this.tableData.data[index]
 
-        let data = {roleId:role.roleId}
+        let data = {messageId:message.id}
 
-        deleteAnnouncement(data).then(response => {
+        this.$confirm('此操作将永久删除此通知，是否继续？','警告', {
 
-          this.getList()
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+
+        }).then(() => {
+
+          deleteNotice(data).then(response => {
+
+            this.getList()
+
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          })
+
+        }).catch (() => {
+
+
         })
       },
       handleSearch(queryParam) {
@@ -229,23 +320,19 @@
 
         this.listLoading = true
 
-        let data = {
-          msgSubject:queryParam,
-          pageIndex:1,
-          pageSize:this.tableData.pageSize,
-        }
+        this.pageIndex = 1
+
+        this.searching = true
+
+        const data = this.getQueryParams()
 
         console.log('search', data)
 
-        queryplacardList(data).then(response => {
+        queryAnnouncementList(data).then(response => {
 
-          console.log(response)
-
-          Object.assign(this.tableData, response.data)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
-
-          this.searching = true
         })
       },
       handleEdit(index, row) {
@@ -285,6 +372,8 @@
 
         if (!newValue || newValue.length == 0) {
 
+          this.pageIndex = 1
+
           this.getList()
 
           this.searching = false
@@ -309,7 +398,7 @@
 
     margin-top: 1rem;
     width: 100%;
-    height: calc(100% - 51px);
+    /*height: calc(100% - 51px);*/
     position: relative;
   }
 

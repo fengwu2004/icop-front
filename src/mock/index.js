@@ -17,7 +17,6 @@ let mock_project = false
 let mock_message_area = false
 
 //角色相关
-
 if (mock_role) {
   
   Mock.mock(/\/jslife-icop-oms\/role\/queryRoleList/, 'post', roleAPI.queryRoleList)
@@ -64,7 +63,5 @@ Mock.mock(/\/jslife-icop-oms\/captcha/, 'post', loginAPI.captcha)
 Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
 Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
-
-
 
 export default Mock
