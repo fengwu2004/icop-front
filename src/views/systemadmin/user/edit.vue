@@ -83,6 +83,10 @@
 
         edit(user).then(response => {
 
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          });
 
         })
       },
@@ -94,7 +98,10 @@
 
         Object.assign(user, this.currentEditUser, person)
 
-        this.$store.dispatch('setCurrentUser', user)
+        this.$store.dispatch('setCurrentUser', user).then(() => {
+
+          console.log(this.currentEditUser)
+        })
       },
       cancelEdit() {
 

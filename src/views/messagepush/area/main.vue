@@ -177,8 +177,6 @@
           }
         }
 
-        console.log(pushStatus)
-
         return null
       },
       getQueryParams() {

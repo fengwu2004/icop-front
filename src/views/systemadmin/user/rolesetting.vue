@@ -92,7 +92,13 @@
 
         edit(user).then(response => {
 
+          this.$message({
+            type: 'success',
+            message: '分配成功!'
+          });
+        }).catch(() => {
 
+          this.$message.error('额，分配角色错误失败');
         })
 
         this.$router.go(-2)

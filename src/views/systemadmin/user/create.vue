@@ -77,7 +77,7 @@
     methods:{
       handleCreate() {
 
-        console.log('handleCreate')
+        LogInfo('handleCreate')
 
         let user = this.currentEditUser
 
@@ -88,11 +88,13 @@
       },
       onSelectedPerson(person) {
 
-        console.log(person)
+        LogInfo(person)
 
         let user = {}
 
         Object.assign(user, this.currentEditUser, person)
+
+        LogInfo(this.currentEditUser)
 
         this.$store.dispatch('setCurrentUser', user)
       },

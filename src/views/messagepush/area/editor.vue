@@ -62,6 +62,11 @@
 
             console.log(res)
 
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            });
+
             this.$router.go(-2)
           })
         })
