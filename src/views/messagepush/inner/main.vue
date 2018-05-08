@@ -38,7 +38,7 @@
               <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="planPushTime" label="计划发送时间" min-width="200"></el-table-column>
+          <el-table-column prop="planPushTime" label="发送时间" min-width="200"></el-table-column>
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
               <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
@@ -341,22 +341,14 @@
       },
       handleEdit(index, row) {
 
-        let user = this.tableData.data[index]
+        let message = this.tableData.data[index]
 
-        this.$store.dispatch('setCurrentUser', user).then(() => {
+        this.$store.dispatch('setMessage', message).then(() => {
 
-          let router = {name:'edituser'}
+          let router = {name:'innercreatemessage'}
 
           this.$router.push(router)
         })
-      },
-      handleChangePwd(index, row) {
-
-        let role = this.tableData.data[index]
-
-        let router = {name:'editroledetails', params:{role:role}}
-
-        this.$router.push(router)
       },
       headercellstyle({row, rowIndex, columnIndex}){
 

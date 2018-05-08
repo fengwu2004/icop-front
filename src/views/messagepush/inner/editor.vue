@@ -40,7 +40,7 @@
     },
     computed: {
       ...mapGetters([
-        'areamessage'
+        'message'
       ]),
     },
     methods: {
@@ -50,15 +50,15 @@
 
         console.log(html)
 
-        this.$store.dispatch('setAreaMessageContent',this.content)
+        this.$store.dispatch('setMessageContent',this.content)
       },
       HandleSave() {
 
-        this.$store.dispatch('setAreaMessageContent',this.content).then(() => {
+        this.$store.dispatch('setMessageContent',this.content).then(() => {
 
-          console.log(this.areamessage)
+          console.log(this.message)
 
-          add(this.areamessage).then(res => {
+          add(this.message).then(res => {
 
             console.log(res)
 

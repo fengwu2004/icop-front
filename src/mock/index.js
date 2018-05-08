@@ -15,6 +15,7 @@ let mock_role = false
 let mock_user = false
 let mock_project = false
 let mock_message_area = false
+let mock_login = false
 
 //角色相关
 if (mock_role) {
@@ -40,6 +41,7 @@ if (mock_user) {
   Mock.mock(/\/jslife-icop-oms\/user\/queryRoleListByIds/, 'post', userAPI.queryRoleListByIds)
 }
 
+
 //项目账户配置
 if (mock_project) {
   
@@ -59,9 +61,12 @@ if (mock_message_area) {
 }
 
 // 登录相关
-Mock.mock(/\/jslife-icop-oms\/captcha/, 'post', loginAPI.captcha)
-Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
-Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
-Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
+if (mock_login) {
+  
+  Mock.mock(/\/jslife-icop-oms\/captcha/, 'post', loginAPI.captcha)
+  Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
+  Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
+  Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
+}
 
 export default Mock
