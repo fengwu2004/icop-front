@@ -112,9 +112,9 @@
       },
       createMessage() {
 
-        this.$store.dispatch('resetAreaMessage').then(() => {
+        this.$store.dispatch('resetMessage').then(() => {
 
-          let route = {name:'createareamessage'}
+          let route = {name:'innercreatemessage'}
 
           this.$router.push(route)
         })
@@ -261,9 +261,9 @@
 
         let message = this.tableData.data[index]
 
-        this.$store.dispatch('setAreaMessage', message).then(() => {
+        this.$store.dispatch('setMessage', message).then(() => {
 
-          let route = {name:'createareamessage'}
+          let route = {name:'innercreatemessage'}
 
           this.$router.push(route)
         })
@@ -332,7 +332,7 @@
 
         console.log('search', data)
 
-        queryAnnouncementList(data).then(response => {
+        queryNoticeList(data).then(response => {
 
           this.tableData = this.getResponseTableData(response.data.respData)
 
@@ -343,11 +343,12 @@
 
         let user = this.tableData.data[index]
 
-        this.$store.dispatch('setCurrentUser', user)
+        this.$store.dispatch('setCurrentUser', user).then(() => {
 
-        let router = {name:'edituser'}
+          let router = {name:'edituser'}
 
-        this.$router.push(router)
+          this.$router.push(router)
+        })
       },
       handleChangePwd(index, row) {
 
