@@ -274,12 +274,16 @@
 
         let data = {messageId:message.id}
 
+        console.log('发送', data)
+
         sendNotice(data).then(() => {
 
           this.$message({
             type: 'success',
             message: '发布成功!'
           });
+
+          this.getList()
         })
       },
       handleDelete(index, row) {

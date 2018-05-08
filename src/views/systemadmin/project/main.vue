@@ -152,8 +152,6 @@
             type: 'success'
           });
 
-          this.tableData.pageIndex = 1
-
           this.getList()
         })
       },
