@@ -1,5 +1,6 @@
 import { login, logout, editPwd } from '@/api/login'
 import { getTokenAndId, setTokenAndId, removeToken } from '@/utils/auth'
+import md5 from 'blueimp-md5'
 
 let tokenAndId = getTokenAndId()
 
