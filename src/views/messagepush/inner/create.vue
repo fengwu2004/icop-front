@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="selectimg">
-          <image-cropper></image-cropper>
+          <image-cropper :initImageUrl="message.imageUrl"></image-cropper>
         </div>
         <div class="btns">
           <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
@@ -100,8 +100,7 @@
   .content {
 
     width: 40%;
-    max-width: 700px;
-    min-width: 500px;
+    max-width: 500px;
     margin: 2rem auto;
   }
 

@@ -7,7 +7,7 @@ const currentEditMessage = {
       pushChannel:null,
       strategy:null,
       planPushTime:null,
-      imgUrl:null,
+      imageUrl:null,
       msgContent:null,
       recipient:null,
     },
@@ -23,6 +23,10 @@ const currentEditMessage = {
       
       state.message.msgContent = msgContent
     },
+    SET_MESSAGE_IMAGEURL:(state, imageUrl) => {
+    
+      state.message.imageUrl = imageUrl
+    },
     RESET_MESSAGE: (state) => {
       
       state.message = {
@@ -32,7 +36,7 @@ const currentEditMessage = {
         pushChannel:null,
         strategy:null,
         planPushTime:null,
-        imgUrl:null,
+        imageUrl:null,
         msgContent:null,
         recipient:null,
       }
@@ -54,6 +58,15 @@ const currentEditMessage = {
     
         commit('SET_MESSAGE_NOTICECONTENT', msgContent)
     
+        resolve()
+      })
+    },
+    setMessageImageUrl({ commit }, imageUrl) {
+    
+      return new Promise(resolve => {
+      
+        commit('SET_MESSAGE_IMAGEURL', imageUrl)
+      
         resolve()
       })
     },

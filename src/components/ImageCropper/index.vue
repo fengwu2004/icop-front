@@ -10,6 +10,7 @@
               v-model="croppa"
               :show-remove-button="false"
               :placeholder-font-size="20"
+              :initial-image="initialImage"
               placeholder="点击/拖拽上传"
               @new-image="onImageAttatched"
               @image-remove="onImageRemoved"
@@ -43,6 +44,7 @@
   import { picFile } from "@/api/fileupload";
 
   export default {
+    props:['initImageUrl'],
     methods:{
       outputImg() {
 
@@ -62,14 +64,17 @@
 
             console.log(res)
 
-            this.$message({
-              type: 'success',
-              message: '裁剪上传成功!'
-            });
-
             let respData = res.data.respData
 
             this.dataUrl = respData.url
+
+            this.$store.dispatch('setMessageImageUrl', this.dataUrl).then(() => {
+
+              this.$message({
+                type: 'success',
+                message: '裁剪上传成功!'
+              });
+            })
           })
         })
       },
@@ -93,7 +98,25 @@
         croppa:{},
         dataUrl:null,
         imageAttacted:false,
+        initialImage:null
       }
+    },
+    mounted() {
+
+      if (!this.initImageUrl) {
+
+        return
+      }
+
+      let image = new Image()
+
+      image.src = this.initImageUrl
+
+      image.setAttribute('crossorigin', 'anonymous')
+
+      this.initialImage = image
+
+      this.croppa.refresh()
     },
   }
 </script>
