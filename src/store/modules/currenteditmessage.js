@@ -1,6 +1,6 @@
 const currentEditMessage = {
   state: {
-    areamessage: {
+    message: {
       msgSubject:null,
       summary:null,
       type:null,
@@ -13,19 +13,19 @@ const currentEditMessage = {
     },
   },
   mutations: {
-    SET_AREA_MESSAGE: (state, message) => {
+    SET_MESSAGE: (state, message) => {
       
       console.log('ok')
       
-      state.areamessage = message
+      state.message = message
     },
-    SET_AREA_MESSAGE_NOTICECONTENT:(state, msgContent) => {
+    SET_MESSAGE_NOTICECONTENT:(state, msgContent) => {
       
-      state.areamessage.msgContent = msgContent
+      state.message.msgContent = msgContent
     },
-    RESET_AREA_MESSAGE: (state) => {
+    RESET_MESSAGE: (state) => {
       
-      state.areamessage = {
+      state.message = {
         msgSubject:null,
         summary:null,
         type:null,
@@ -39,29 +39,29 @@ const currentEditMessage = {
     },
   },
   actions: {
-    setAreaMessage({ commit }, message) {
+    setMessage({ commit }, message) {
       
       return new Promise(resolve => {
   
-        commit('SET_AREA_MESSAGE', message)
+        commit('SET_MESSAGE', message)
   
         resolve()
       })
     },
-    setAreaMessageContent({ commit }, msgContent) {
+    setMessageContent({ commit }, msgContent) {
   
       return new Promise(resolve => {
     
-        commit('SET_AREA_MESSAGE_NOTICECONTENT', msgContent)
+        commit('SET_MESSAGE_NOTICECONTENT', msgContent)
     
         resolve()
       })
     },
-    resetAreaMessage({ commit, state }) {
+    resetMessage({ commit, state }) {
     
       return new Promise((resolve) => {
       
-        commit('RESET_AREA_MESSAGE')
+        commit('RESET_MESSAGE')
       
         resolve()
       })
