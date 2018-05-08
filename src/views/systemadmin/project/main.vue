@@ -14,9 +14,9 @@
         <el-table-column prop="projectName" label="项目名称" min-width="250"></el-table-column>
         <el-table-column prop="userName" label="管理账号" min-width="200"></el-table-column>
         <el-table-column label="操作" min-width="300">
-          <template slot-scope="scope">
-            <el-button size="mini" v-if="checkNotAdmin(scope.$index, scope.row)" @click="handleAddAdmin(scope.$index, scope.row)">生成管理账户</el-button>
-            <el-button size="mini" v-else @click="handleResetPws(scope.$index, scope.row)">重置密码</el-button>
+          <template slot-scope="scope" v-if="checkNotAdmin(scope.$index, scope.row)">
+            <el-button size="mini" @click="handleAddAdmin(scope.$index, scope.row)">生成管理账户</el-button>
+            <el-button size="mini" @click="handleResetPws(scope.$index, scope.row)">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,11 +57,11 @@
     methods:{
       headercellstyle({row, rowIndex, columnIndex}){
 
-        return headercell
+        return columnIndex == 3 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        return normalcell
+        return columnIndex == 3 ? normalcellcenter: normalcell
       },
       checkNotAdmin(index, row) {
 
