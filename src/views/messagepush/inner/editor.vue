@@ -82,7 +82,14 @@
 
         this.$router.go(-2)
       },
-    }
+    },
+    mounted() {
+
+      this.$nextTick(() => {
+
+        this.content = this.message.msgContent
+      })
+    },
   }
 </script>
 

@@ -226,7 +226,7 @@
 
         let msgList = respData.list.map(msg => {
 
-          return Object.assign({}, msg, {messageId:msg.id})
+          return Object.assign({}, msg, {messageId:msg.id, strategy:'IMMEDIATELY', 'msgMainType':'SECURITY'})
         })
 
         let tableData = {

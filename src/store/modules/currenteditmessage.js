@@ -3,7 +3,7 @@ const currentEditMessage = {
     message: {
       msgSubject:null,
       summary:null,
-      type:null,
+      msgMainType:null,
       pushChannel:null,
       strategy:null,
       planPushTime:null,
