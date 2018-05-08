@@ -36,7 +36,7 @@ const user = {
   redirect: '/systemadmin/user/main',
   name: 'usermanager',
   component:main,
-  meta: { title: 'usermanager', icon: 'table' },
+  meta: { title: 'usermanager', icon: 'usermanager' },
   children: [
     {
       path: 'main',
@@ -74,7 +74,7 @@ const role = {
   redirect: '/systemadmin/role/main',
   name: 'rolemanager',
   component:main,
-  meta: { title: 'rolemanager', icon: 'table' },
+  meta: { title: 'rolemanager', icon: 'rolemanager' },
   children: [
     {
       path: 'main',
@@ -112,7 +112,7 @@ const project = {
   redirect: '/systemadmin/project/main',
   name: 'projectsetting',
   component:main,
-  meta: { title: 'projectsetting', icon: 'table' },
+  meta: { title: 'projectsetting', icon: 'projectsetting' },
   children: [
     {
       path: 'main',
@@ -145,7 +145,7 @@ const inner = {
   redirect: '/messagepush/inner/main',
   name: 'innerpush',
   component:main,
-  meta: { title: 'innerpush', icon: 'table' },
+  meta: { title: 'innerpush', icon: 'innerpush' },
   children: [
     {
       path: 'main',
@@ -176,7 +176,7 @@ const area = {
   redirect: '/messagepush/area/main',
   name: 'areapush',
   component:main,
-  meta: { title: 'areapush', icon: 'table' },
+  meta: { title: 'areapush', icon: 'areapush' },
   children: [
     {
       path: 'main',

@@ -1,12 +1,13 @@
 <template>
   <scroll-bar>
     <el-menu mode="vertical"
+             :select="selectChange"
              :show-timeout="200"
-             :default-active="$route.path"
+             :default-active="$route.name"
              :collapse="isCollapse"
              background-color="#e0e5ee"
              text-color="#16325C"
-             active-text-color="#FFFFFF" :default-openeds="defaultactiveindex">
+             active-text-color="#FFFFFF" :default-openeds="defaultOpeneds">
       <sidebar-item :routes="permission_routers"></sidebar-item>
     </el-menu>
   </scroll-bar>
@@ -28,9 +29,16 @@ export default {
       return !this.sidebar.opened
     }
   },
+  methods:{
+    selectChange(value) {
+
+      console.log(value)
+    },
+  },
   data() {
     return {
-      defaultactiveindex:['messagepush', 'systemadmin']
+      defaultActive:'messagepush',
+      defaultOpeneds:['messagepush', 'systemadmin']
     }
   },
 }

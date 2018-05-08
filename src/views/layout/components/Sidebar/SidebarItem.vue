@@ -39,13 +39,13 @@ export default {
   methods: {
     getMenuIndex(item) {
 
-      const mIndex = item.name||item.path
+      const mIndex = item.name || item.path
 
       return mIndex
     },
     composePath(item, child) {
 
-      let value = item.path+'/'+child.path
+      let value = item.path + '/' + child.path
 
       return value
     },
