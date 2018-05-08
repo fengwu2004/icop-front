@@ -216,12 +216,22 @@
 
         queryAnnouncementList(data).then(response => {
 
-          console.log(response)
-
-          Object.assign(this.tableData, response.data)
+          this.tableData = this.getResponseTableData(response.data, respData)
 
           this.listLoading = false
         })
+      },
+      getResponseTableData(respData) {
+
+        let tableData = {
+
+          totalCount:respData.total,
+          data:respData.list,
+          pageSize:respData.pageSize,
+          pageIndex:respData.pageNum
+        }
+
+        return tableData
       },
       pageSizeChange(pageSize){
 
@@ -319,9 +329,7 @@
 
         queryAnnouncementList(data).then(response => {
 
-          console.log(response)
-
-          Object.assign(this.tableData, response.data)
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
         })
