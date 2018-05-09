@@ -30,7 +30,7 @@
           </el-table-column>
           <el-table-column prop="strategy" label="发送策略" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getStrategyStr(scope.row.strategy) }}</span>
+              <span>{{ getStrategyStr(scope.row.sendStrategy) }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="planPushTime" label="发送时间" min-width="200"></el-table-column>
@@ -61,7 +61,7 @@
   const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
   const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
   const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
-  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATELY' }, { text: '定时生效', value: 'TIMING' }]
+  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATE' }, { text: '定时生效', value: 'TIMES' }]
 
   export default {
     components: { PageWidget, DateSelect, BreadCrumb },
