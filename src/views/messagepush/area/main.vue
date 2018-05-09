@@ -41,9 +41,11 @@
           <el-table-column prop="planSendTime" label="发送时间" min-width="200"></el-table-column>
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
-              <el-button size="mini" @click="handleEditor(scope.$index, scope.row)">修改</el-button>
-              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              <div v-show="checkEnableOperator(scope.$index, scope.row)">
+                <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
+                <el-button size="mini" @click="handleEditor(scope.$index, scope.row)">修改</el-button>
+                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -90,6 +92,12 @@
       })
     },
     methods:{
+      checkEnableOperator(index, message) {
+
+        console.log('checkEnableOperator')
+
+        return message.sendStatus == '0'
+      },
       onFilterChange(filters) {
 
         let pushstatus = filters.pushStatus
