@@ -5,35 +5,37 @@
     </div>
     <div class="content">
       <div class="createaccount">
-        <div class="left">
+        <div class="itemrow">
           <div>
             <span class="redstar">*</span><span class="sumtitle">人员编号</span>
             <div class="specialinput">
               <input v-model="currentEditUser.personCode" :disabled="justEnableSelect"/><el-button v-show="justEnableSelect" type="primary" plain size="mini" @click="selectaccount">请选择</el-button>
             </div>
           </div>
-          <div style="margin-top: 2rem">
-            <span>姓名</span>
-            <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="currentEditUser.name"></el-input>
-          </div>
-          <div style="margin-top: 2rem">
-            <span class="redstar">*</span><span class="sumtitle">账户</span>
-            <el-input style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur"></el-input>
-            <div style="margin-top: 10px">
-              <span style="font-size: 0.8rem;color: #445577;">注:不能重名,登录时需同时输入@部分</span>
-            </div>
-          </div>
-        </div>
-        <div class="right">
           <div>
             <span>联系电话</span>
             <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="currentEditUser.telephone"></el-input>
+          </div>
+        </div>
+        <div class="itemrow">
+          <div style="margin-top: 2rem">
+            <span>姓名</span>
+            <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="currentEditUser.name"></el-input>
           </div>
           <div style="margin-top: 2rem">
             <span>性别</span>
             <div style="margin-top: 0.5rem">
               <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="MALE">男</el-radio>
               <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="FEMALE">女</el-radio>
+            </div>
+          </div>
+        </div>
+        <div class="itemrow">
+          <div style="margin-top: 2rem">
+            <span class="redstar">*</span><span class="sumtitle">账户</span>
+            <el-input style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur"></el-input>
+            <div style="margin-top: 10px">
+              <span style="font-size: 0.8rem;color: #445577;">注:不能重名,登录时需同时输入@部分</span>
             </div>
           </div>
           <div style="margin-top: 3rem">
@@ -223,8 +225,14 @@
 
   .createaccount {
 
-    display: flex;
     justify-content: space-around;
+  }
+
+  .itemrow {
+
+    display: flex;
+    justify-content: space-between;
+    
   }
 
   .specialinput {
