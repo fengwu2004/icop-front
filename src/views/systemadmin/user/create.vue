@@ -18,7 +18,7 @@
           </div>
           <div style="margin-top: 2rem">
             <span class="redstar">*</span><span class="sumtitle">账户</span>
-            <el-input style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur"></el-input>
+            <el-input style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur" maxlength="32" clearable></el-input>
             <div style="margin-top: 10px">
               <span style="font-size: 0.8rem;color: #445577;">注:不能重名,登录时需同时输入@部分</span>
             </div>
@@ -38,7 +38,7 @@
           </div>
           <div style="margin-top: 3rem">
             <span class="redstar">*</span><span class="sumtitle">密码</span>
-            <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password"></el-input>
+            <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password" clearable maxlength="16"></el-input>
             <div style="margin-top: 10px">
               <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
             </div>
