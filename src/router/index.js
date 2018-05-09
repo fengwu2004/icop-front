@@ -41,28 +41,28 @@ const user = {
     {
       path: 'main',
       component:_import('systemadmin/user/main'),
-      meta: { title: 'usermanagermain', icon: 'table' },
+      meta: { title: 'usermanagermain'},
       hidden:true
     },
     {
       path: 'create',
       component: _import('systemadmin/user/create'),
       name: 'usercreate',
-      meta: { title: 'usercreate', icon: 'table' },
+      meta: { title: 'usercreate'},
       hidden:true
     },
     {
       path: 'edit',
       component: _import('systemadmin/user/edit'),
       name: 'edituser',
-      meta: { title: 'edituser', icon: 'table' },
+      meta: { title: 'edituser'},
       hidden:true
     },
     {
       path: 'rolesetting',
       component: _import('systemadmin/user/rolesetting'),
       name: 'rolesetting',
-      meta: {title: 'rolesetting', icon: 'table'},
+      meta: {title: 'rolesetting'},
       hidden: true,
     }
   ]
