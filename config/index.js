@@ -19,7 +19,7 @@ module.exports = {
         }
       },
       '/jslife-file-service': {
-        target: 'http://10.101.90.152:8080/jslife-file-service', // 接口的域名,
+        target: 'http://10.101.90.151:8080/jslife-file-service', // 接口的域名,
         changeOrigin:true,
         pathRewrite: {
           '^/jslife-file-service': ''

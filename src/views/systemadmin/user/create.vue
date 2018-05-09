@@ -57,6 +57,7 @@
 
 <script>
 
+  import { validateEmail } from "@/utils/validate";
   import { mapGetters } from 'vuex'
   import { add, checkExistUserName } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
@@ -75,6 +76,14 @@
       ]),
     },
     methods:{
+      checkUserNameValid(user) {
+
+        return user.userName && user.userName.length > 0 && validateEmail(user.userName)
+      },
+      checkUserPersonId(user) {
+
+        return user.personId != null
+      },
       onUserNameBlur() {
 
         let data = {userName:this.currentEditUser.userName}
@@ -93,6 +102,26 @@
       handleCreate() {
 
         let user = this.currentEditUser
+
+        if (!this.checkUserPersonId(user)) {
+
+          this.$message({
+            message: '警告，人员编号不能为空',
+            type: 'warning'
+          });
+
+          return
+        }
+
+        if (this.checkUserNameValid(user)) {
+
+          this.$message({
+            message: '警告，账户名格式错误',
+            type: 'warning'
+          });
+
+          return
+        }
 
         add(user).then(response => {
 
