@@ -345,11 +345,11 @@
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
-        return columnIndex == 5 ? headercellcenter: headercell
+        return columnIndex == 6 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        return columnIndex == 5 ? normalcellcenter : normalcell
+        return columnIndex == 6 ? normalcellcenter : normalcell
       },
     },
     watch:{
