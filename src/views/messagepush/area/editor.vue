@@ -31,7 +31,7 @@
   import 'quill/dist/quill.bubble.css'
   import BreadCrumb from '@/components/Breadcrumb/index'
   import richTextEditor from '@/components/richTextEditor'
-  import { add, edit } from '@/api/innermessage'
+  import { add, edit } from '@/api/areamessage'
   import { mapGetters } from 'vuex'
 
   export default {

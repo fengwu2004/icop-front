@@ -23,7 +23,7 @@
             <div>
               <span class="redstar">*</span><span>消息类型</span>
             </div>
-            <el-select v-model="message.msgMainType" placeholder="请选择">
+            <el-select v-model="message.msgType" placeholder="请选择">
               <el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </div>

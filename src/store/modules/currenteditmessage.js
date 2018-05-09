@@ -9,7 +9,7 @@ const currentEditMessage = {
       planSendTime:null,
       imageUrl:null,
       msgContent:null,
-      msgMainType:null,
+      msgType:null,
     },
   },
   mutations: {
@@ -38,7 +38,7 @@ const currentEditMessage = {
         planSendTime:null,
         imageUrl:null,
         msgContent:null,
-        msgMainType:null,
+        msgType:null,
       }
     },
   },

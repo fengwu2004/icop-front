@@ -16,7 +16,7 @@
           <el-table-column prop="msgSubject" label="内容主题" min-width="250"></el-table-column>
           <el-table-column label="消息类型" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getMessageTypeStr(scope.row.type) }}</span>
+              <span>{{ getMessageTypeStr(scope.row.msgType) }}</span>
             </template>
           </el-table-column>
           <el-table-column label="发送方式" min-width="150">
