@@ -79,28 +79,28 @@ const role = {
     {
       path: 'main',
       component:_import('systemadmin/role/main'),
-      meta: { title: 'rolemanager', icon: 'table'},
+      meta: { title: 'rolemanager', actions:['search', 'create', 'edit', 'reset', 'delete']},
       hidden:true
     },
     {
       path: 'create',
       component: _import('systemadmin/role/create'),
       name: 'createrole',
-      meta: { title: 'createrole', icon: 'table' },
+      meta: { title: 'createrole'},
       hidden:true
     },
     {
       path: 'details',
       component: _import('systemadmin/role/details'),
       name: 'roledetails',
-      meta: { title: 'roledetails', icon: 'table' },
+      meta: { title: 'roledetails'},
       hidden:true
     },
     {
       path: 'edit',
       component: _import('systemadmin/role/edit'),
       name: 'editroledetails',
-      meta: { title: 'editroledetails', icon: 'table' },
+      meta: { title: 'editroledetails'},
       hidden:true
     }
   ]
@@ -117,7 +117,7 @@ const project = {
     {
       path: 'main',
       component:_import('systemadmin/project/main'),
-      meta: { title: 'projectsetting', icon: 'table' },
+      meta: { title: 'projectsetting'},
       hidden:true
     }
   ]
@@ -150,21 +150,21 @@ const inner = {
     {
       path: 'main',
       component:_import('messagepush/inner/main'),
-      meta: { title: 'areapush', icon: 'table' },
+      meta: { title: 'areapush'},
       hidden:true
     },
     {
       path: 'editor',
       component: _import('messagepush/inner/editor'),
       name: 'innereditormessage',
-      meta: { title: 'editormessage', icon: 'table' },
+      meta: { title: 'editormessage'},
       hidden:true
     },
     {
       path: 'create',
       component: _import('messagepush/inner/create'),
       name: 'innercreatemessage',
-      meta: {title: 'createareamessage', icon: 'table'},
+      meta: {title: 'createareamessage'},
       hidden: true,
     }
   ]
@@ -181,21 +181,21 @@ const area = {
     {
       path: 'main',
       component:_import('messagepush/area/main'),
-      meta: { title: 'areapush', icon: 'table' },
+      meta: { title: 'areapush'},
       hidden:true
     },
     {
       path: 'editor',
       component: _import('messagepush/area/editor'),
       name: 'editormessage',
-      meta: { title: 'editormessage', icon: 'table' },
+      meta: { title: 'editormessage'},
       hidden:true
     },
     {
       path: 'create',
       component: _import('messagepush/area/create'),
       name: 'createareamessage',
-      meta: {title: 'createareamessage', icon: 'table'},
+      meta: {title: 'createareamessage'},
       hidden: true,
     }
   ]

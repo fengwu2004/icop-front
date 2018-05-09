@@ -60,6 +60,8 @@
     created() {
 
       this.getList()
+
+      console.log(this.$route)
     },
     methods:{
       searchRole() {
