@@ -24,7 +24,7 @@
           </div>
           <div>
             <span>性别</span>
-            <div style="margin-top: 0.5rem">
+            <div style="margin-top: 1rem">
               <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="MALE">男</el-radio>
               <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="FEMALE">女</el-radio>
             </div>
@@ -245,7 +245,7 @@
 
     margin-top: 0.5rem;
     border-radius: 2px;
-    width: 300px;
+    width: 100%;
     border: 1px solid #d0d5e5;
     height: 2.4rem;
     display: flex;
