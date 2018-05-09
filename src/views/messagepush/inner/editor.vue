@@ -61,17 +61,34 @@
 
           console.log('修改消息', JSON.stringify(this.message))
 
-          edit(this.message).then(res => {
+          if (this.message.messageId) {
 
-            console.log(res)
+            edit(this.message).then(res => {
 
-            this.$message({
-              message: '修改成功',
-              type: 'success'
-            });
+              console.log(res)
 
-            this.$router.go(-2)
-          })
+              this.$message({
+                message: '修改成功',
+                type: 'success'
+              });
+
+              this.$router.go(-2)
+            })
+          }
+          else {
+
+            add(this.message).then(res => {
+
+              console.log(res)
+
+              this.$message({
+                message: '修改成功',
+                type: 'success'
+              });
+
+              this.$router.go(-2)
+            })
+          }
         })
       },
       handleToPreStep() {
