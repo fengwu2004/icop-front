@@ -35,7 +35,7 @@
           </el-table-column>
           <el-table-column prop="strategy" label="发送策略" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+              <span>{{ getStrategyStr(scope.row.strategy) }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="planPushTime" label="发送时间" min-width="200"></el-table-column>
