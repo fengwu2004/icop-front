@@ -166,10 +166,10 @@
 
         if (sendStatus === '0') {
 
-          return '未发送'
+          return '未发布'
         }
 
-        return '已发送'
+        return '已发布'
       },
       getQueryParams() {
 
