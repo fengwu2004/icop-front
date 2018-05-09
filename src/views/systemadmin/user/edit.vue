@@ -78,6 +78,11 @@
     methods:{
       onUserNameBlur() {
 
+        if (!this.currentEditUser.userName || this.currentEditUser.userName.length == 0) {
+
+          return
+        }
+        
         let data = {userName:this.currentEditUser.userName}
 
         checkExistUserName(data).then(res => {
