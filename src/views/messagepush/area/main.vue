@@ -57,7 +57,7 @@
 
 <script>
 
-  import { queryAnnouncementList, deleteAnnouncement, send} from "@/api/areamessage";
+  import { queryAnnouncementList, deleteAnnouncement, sendAnnouncement} from "@/api/areamessage";
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
@@ -269,7 +269,7 @@
 
         console.log('发送', data)
 
-        send(data).then(() => {
+        sendAnnouncement(data).then(() => {
 
           this.$message({
             type: 'success',

@@ -32,9 +32,9 @@ export function deleteAnnouncement(query) {
   })
 }
 
-export function send(query) {
+export function sendAnnouncement(query) {
   return request({
-    url: '/jslife-icop-oms/announcement/send',
+    url: '/jslife-icop-oms/announcement/sendAnnouncement',
     method: 'post',
     params: query
   })
