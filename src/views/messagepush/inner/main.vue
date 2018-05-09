@@ -14,14 +14,9 @@
         </div>
         <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" @filter-change="onFilterChange" :max-height="maxheight">
           <el-table-column prop="msgSubject" label="内容主题" min-width="250"></el-table-column>
-          <el-table-column label="消息类型" min-width="150">
-            <template slot-scope="scope">
-              <span>{{ getMessageTypeStr(scope.row.type) }}</span>
-            </template>
-          </el-table-column>
           <el-table-column label="发送方式" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getPushChannelStr(scope.row.pushChannel) }}</span>
+              <span>{{ getPushChannelStr(scope.row.sendType) }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="pushStatus" label="发布状态" min-width="150"

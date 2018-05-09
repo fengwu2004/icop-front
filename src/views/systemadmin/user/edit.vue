@@ -82,7 +82,7 @@
 
           return
         }
-        
+
         let data = {userName:this.currentEditUser.userName}
 
         checkExistUserName(data).then(res => {
