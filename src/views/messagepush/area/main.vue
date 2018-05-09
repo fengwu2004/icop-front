@@ -21,7 +21,7 @@
           </el-table-column>
           <el-table-column label="发送方式" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getPushChannelStr(scope.row.pushChannel) }}</span>
+              <span>{{ getPushChannelStr(scope.row.sendType) }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="pushStatus" label="发布状态" min-width="150"
@@ -30,15 +30,15 @@
                            :filter-multiple="false"
                            column-key="pushStatus">
             <template slot-scope="scope">
-              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+              <span>{{ getPushStatusStr(scope.row.sendStatus) }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="strategy" label="发送策略" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+              <span>{{ getStrategyStr(scope.row.sendStrategy) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="planPushTime" label="计划发送时间" min-width="200"></el-table-column>
+          <el-table-column prop="planSendTime" label="发送时间" min-width="200"></el-table-column>
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
               <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
@@ -57,8 +57,8 @@
 
 <script>
 
+  import { queryAnnouncementList, deleteAnnouncement, send} from "@/api/areamessage";
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
-  import { queryAnnouncementList, deleteAnnouncement, editPushStatus } from "@/api/areamessage"
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
@@ -66,7 +66,7 @@
   const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
   const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
   const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
-  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATELY' }, { text: '定时生效', value: 'TIMING' }]
+  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATE' }, { text: '定时生效', value: 'TIMES' }]
 
   export default {
     components: { PageWidget, DateSelect, BreadCrumb },
@@ -112,14 +112,16 @@
       },
       createMessage() {
 
-        this.$store.dispatch('resetAreaMessage').then(() => {
+        this.$store.dispatch('resetMessage').then(() => {
 
-          let route = {name:'createareamessage'}
+          let route = {name:'innercreatemessage'}
 
           this.$router.push(route)
         })
       },
       getStrategyStr(strategy) {
+
+        console.log('getStrategyStr')
 
         for (let i = 0; i < strategyKeyList.length; ++i) {
 
@@ -165,19 +167,14 @@
 
         return null
       },
-      getPushStatusStr(pushStatus) {
+      getPushStatusStr(sendStatus) {
 
-        for (let i = 0; i < this.pushStatusKeyList.length; ++i) {
+        if (sendStatus === '0') {
 
-          let item = this.pushStatusKeyList[i]
-
-          if (item.value === pushStatus) {
-
-            return item.text
-          }
+          return '未发送'
         }
 
-        return null
+        return '已发送'
       },
       getQueryParams() {
 
@@ -213,8 +210,6 @@
 
         const data = this.getQueryParams()
 
-        console.log('getList', data)
-
         queryAnnouncementList(data).then(response => {
 
           this.tableData = this.getResponseTableData(response.data.respData)
@@ -224,10 +219,12 @@
       },
       getResponseTableData(respData) {
 
+        let msgList = respData.list
+
         let tableData = {
 
           totalCount:respData.total,
-          data:respData.list,
+          data:msgList,
           pageSize:respData.pageSize,
           pageIndex:respData.pageNum
         }
@@ -261,9 +258,9 @@
 
         let message = this.tableData.data[index]
 
-        this.$store.dispatch('setAreaMessage', message).then(() => {
+        this.$store.dispatch('setMessage', message).then(() => {
 
-          let route = {name:'createareamessage'}
+          let route = {name:'innercreatemessage'}
 
           this.$router.push(route)
         })
@@ -274,19 +271,23 @@
 
         let data = {messageId:message.id}
 
-        editPushStatus(data).then(() => {
+        console.log('发送', data)
+
+        send(data).then(() => {
 
           this.$message({
             type: 'success',
             message: '发布成功!'
           });
+
+          this.getList()
         })
       },
       handleDelete(index, row) {
 
         let message = this.tableData.data[index]
 
-        let data = {messageId:message.id}
+        let data = {messageId:message.messageId}
 
         this.$confirm('此操作将永久删除此通知，是否继续？','警告', {
 
@@ -328,7 +329,7 @@
 
         console.log('search', data)
 
-        queryAnnouncementList(data).then(response => {
+        queryNoticeList(data).then(response => {
 
           this.tableData = this.getResponseTableData(response.data.respData)
 
@@ -337,29 +338,22 @@
       },
       handleEdit(index, row) {
 
-        let user = this.tableData.data[index]
+        let message = this.tableData.data[index]
 
-        this.$store.dispatch('setCurrentUser', user)
+        this.$store.dispatch('setMessage', message).then(() => {
 
-        let router = {name:'edituser'}
+          let router = {name:'innercreatemessage'}
 
-        this.$router.push(router)
-      },
-      handleChangePwd(index, row) {
-
-        let role = this.tableData.data[index]
-
-        let router = {name:'editroledetails', params:{role:role}}
-
-        this.$router.push(router)
+          this.$router.push(router)
+        })
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
-        return columnIndex == 6 ? headercellcenter: headercell
+        return columnIndex == 5 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        return columnIndex == 6 ? normalcellcenter : normalcell
+        return columnIndex == 5 ? normalcellcenter : normalcell
       },
     },
     watch:{

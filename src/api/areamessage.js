@@ -32,9 +32,9 @@ export function deleteAnnouncement(query) {
   })
 }
 
-export function editPushStatus(query) {
+export function send(query) {
   return request({
-    url: '/jslife-icop-oms/announcement/editPushStatus',
+    url: '/jslife-icop-oms/announcement/send',
     method: 'post',
     params: query
   })

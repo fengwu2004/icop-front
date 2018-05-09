@@ -12,18 +12,18 @@
       <div class="content">
         <div class="title">
           <span class="redstar">*</span><span>主题</span><span class="subtitle">(限30个字)</span>
-          <el-input maxlength="30" placeholder="请输入通知标题" v-model="areamessage.msgSubject"></el-input>
+          <el-input maxlength="30" placeholder="请输入通知标题" v-model="message.msgSubject"></el-input>
         </div>
         <div class="summary">
           <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>
-          <el-input style="margin-top: 1rem;" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="areamessage.summary"></el-input>
+          <el-input style="margin-top: 1rem;" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="message.summary"></el-input>
         </div>
         <div class="otherinfo">
           <div class="messagetype">
             <div>
               <span class="redstar">*</span><span>消息类型</span>
             </div>
-            <el-select v-model="areamessage.type" placeholder="请选择">
+            <el-select v-model="message.msgMainType" placeholder="请选择">
               <el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </div>
@@ -32,21 +32,21 @@
               <span>发送方式</span>
             </div>
             <div class="sendtyperadio">
-              <el-radio v-model="areamessage.pushChannel" label="APP">App</el-radio>
-              <el-radio v-model="areamessage.pushChannel" label="SMS">短信</el-radio>
+              <el-radio v-model="message.sendType" label="APP">App</el-radio>
+              <el-radio v-model="message.sendType" label="SMS">短信</el-radio>
             </div>
           </div>
         </div>
         <div class="sendstrategy">
           <span class="redstar">*</span><span>发送策略</span>
           <div style="margin-top: 1rem">
-            <el-radio v-model="areamessage.strategy" label="IMMEDIATELY">立即发送</el-radio>
-            <el-radio v-model="areamessage.strategy" label="TIMING">定时发送</el-radio>
-            <el-date-picker style="margin-left: 1rem" :style="{visibility:areamessage.strategy == 'IMMEDIATELY' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="areamessage.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+            <el-radio v-model="message.sendStrategy" label="IMMEDIATE">立即发送</el-radio>
+            <el-radio v-model="message.sendStrategy" label="TIMES">定时发送</el-radio>
+            <el-date-picker style="margin-left: 1rem" :style="{visibility:message.sendStrategy == 'IMMEDIATE' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="message.planSendTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
           </div>
         </div>
         <div class="selectimg">
-          <image-cropper @imagecroppersuccess="onImageSelected"></image-cropper>
+          <image-cropper :initImageUrl="message.imageUrl"></image-cropper>
         </div>
         <div class="btns">
           <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
@@ -65,7 +65,7 @@
   const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
   const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
   const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
-  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATELY' }, { text: '定时生效', value: 'TIMING' }]
+  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATE' }, { text: '定时生效', value: 'TIMES' }]
 
   export default {
     components: { PageWidget, BreadCrumb, ImageCropper },
@@ -79,23 +79,15 @@
     },
     computed: {
       ...mapGetters([
-        'areamessage'
+        'message'
       ]),
     },
     methods: {
-      onImageSelected(value) {
-
-
-      },
-      uploadImg() {
-
-
-      },
       onEditorMessage() {
 
         console.log('zz')
 
-        let route = {name:'editormessage'}
+        let route = {name:'innereditormessage'}
 
         this.$router.push(route)
       },
@@ -108,8 +100,7 @@
   .content {
 
     width: 40%;
-    max-width: 700px;
-    min-width: 500px;
+    max-width: 500px;
     margin: 2rem auto;
   }
 

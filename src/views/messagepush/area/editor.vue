@@ -31,7 +31,7 @@
   import 'quill/dist/quill.bubble.css'
   import BreadCrumb from '@/components/Breadcrumb/index'
   import richTextEditor from '@/components/richTextEditor'
-  import { add } from '@/api/areamessage'
+  import { add, edit } from '@/api/innermessage'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -43,7 +43,7 @@
     },
     computed: {
       ...mapGetters([
-        'areamessage'
+        'message'
       ]),
     },
     methods: {
@@ -53,25 +53,42 @@
 
         console.log(html)
 
-        this.$store.dispatch('setAreaMessageContent',this.content)
+        this.$store.dispatch('setMessageContent',this.content)
       },
       HandleSave() {
 
-        this.$store.dispatch('setAreaMessageContent',this.content).then(() => {
+        this.$store.dispatch('setMessageContent',this.content).then(() => {
 
-          console.log(this.areamessage)
+          alert(JSON.stringify(this.message))
 
-          add(this.areamessage).then(res => {
+          if (this.message.messageId) {
 
-            console.log(res)
+            edit(this.message).then(res => {
 
-            this.$message({
-              message: '修改成功',
-              type: 'success'
-            });
+              console.log(res)
 
-            this.$router.go(-2)
-          })
+              this.$message({
+                message: '修改成功',
+                type: 'success'
+              });
+
+              this.$router.go(-2)
+            })
+          }
+          else {
+
+            add(this.message).then(res => {
+
+              console.log(res)
+
+              this.$message({
+                message: '新增成功',
+                type: 'success'
+              });
+
+              this.$router.go(-2)
+            })
+          }
         })
       },
       handleToPreStep() {
@@ -82,7 +99,14 @@
 
         this.$router.go(-2)
       },
-    }
+    },
+    mounted() {
+
+      this.$nextTick(() => {
+
+        this.content = this.message.msgContent
+      })
+    },
   }
 </script>
 
