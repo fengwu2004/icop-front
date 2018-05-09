@@ -38,7 +38,8 @@
           </div>
           <div style="margin-top: 3rem">
             <span class="redstar">*</span><span class="sumtitle">密码</span>
-            <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password"></el-input>
+            <input style="display:none" name="txtpwd">
+            <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password" name="txtpwd"></el-input>
             <div style="margin-top: 10px">
               <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
             </div>

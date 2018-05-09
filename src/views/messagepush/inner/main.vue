@@ -116,6 +116,8 @@
       },
       getStrategyStr(strategy) {
 
+        console.log('getStrategyStr')
+
         for (let i = 0; i < strategyKeyList.length; ++i) {
 
           let item = strategyKeyList[i]
@@ -214,10 +216,7 @@
       },
       getResponseTableData(respData) {
 
-        let msgList = respData.list.map(msg => {
-
-          return Object.assign({}, msg, {messageId:msg.id, strategy:'IMMEDIATELY', 'msgMainType':'SECURITY'})
-        })
+        let msgList = respData.list
 
         let tableData = {
 
@@ -347,11 +346,11 @@
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
-        return columnIndex == 6 ? headercellcenter: headercell
+        return columnIndex == 5 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        return columnIndex == 6 ? normalcellcenter : normalcell
+        return columnIndex == 5 ? normalcellcenter : normalcell
       },
     },
     watch:{
