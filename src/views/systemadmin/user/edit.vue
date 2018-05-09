@@ -32,8 +32,8 @@
           <div style="margin-top: 2rem">
             <span>性别</span>
             <div style="margin-top: 0.5rem">
-              <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="男">男</el-radio>
-              <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="女">女</el-radio>
+              <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="MALE">男</el-radio>
+              <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="FEMALE">女</el-radio>
             </div>
           </div>
           <div style="margin-top: 3rem">
@@ -82,7 +82,7 @@
 
         checkExistUserName(data).then(res => {
 
-          if (res.respData) {
+          if (res.data.respData) {
 
             this.$message({
               message: '警告，账户名重复',

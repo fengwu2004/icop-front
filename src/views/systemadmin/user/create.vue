@@ -96,7 +96,7 @@
           return false
         }
 
-        if (this.checkUserNameValid(user)) {
+        if (!this.checkUserNameValid(user)) {
 
           this.$message({
             message: '警告，账户名格式错误',
@@ -112,9 +112,11 @@
 
         let data = {userName:this.currentEditUser.userName}
 
+        alert(JSON.stringify(data))
+
         checkExistUserName(data).then(res => {
 
-          if (res.respData) {
+          if (res.data.respData) {
 
             this.$message({
               message: '警告，账户名重复',
@@ -126,6 +128,8 @@
       handleCreate() {
 
         let user = this.currentEditUser
+
+        alert(JSON.stringify(user))
 
         if (this.checkUserValid(user)) {
 

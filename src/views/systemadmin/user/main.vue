@@ -133,7 +133,7 @@
 
         let user = this.tableData.data[index]
 
-        let data = {userId:user.id}
+        let data = {userId:user.userId}
 
         this.$confirm('此操作将永久删除账户信息，是否继续？','警告', {
 
