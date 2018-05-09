@@ -90,7 +90,9 @@
 
         edit(data).then(response => {
 
-          this.$router.push({name:'rolemanager'})
+          let route = {name:'rolemanager'}
+
+          this.$router.push(route)
         })
       }
     },
@@ -105,6 +107,8 @@
       this.remark = this.role.remark
 
       queryTotalPopedomTree({}).then(response => {
+
+        console.log(response)
 
         this.app = this.build(null, response.data.app)
 
