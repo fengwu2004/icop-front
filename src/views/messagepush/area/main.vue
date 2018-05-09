@@ -16,7 +16,7 @@
           <el-table-column prop="msgSubject" label="内容主题" min-width="250"></el-table-column>
           <el-table-column label="消息类型" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getMessageTypeStr(scope.row.msgType) }}</span>
+              <span>{{ getNoticeTypeStr(scope.row.noticeType) }}</span>
             </template>
           </el-table-column>
           <el-table-column label="发送方式" min-width="150">
@@ -62,11 +62,7 @@
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
-
-  const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
-  const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
-  const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
-  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATE' }, { text: '定时生效', value: 'TIMES' }]
+  import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList } from "@/utils/constvalues";
 
   export default {
     components: { PageWidget, DateSelect, BreadCrumb },
@@ -114,7 +110,7 @@
 
         this.$store.dispatch('resetMessage').then(() => {
 
-          let route = {name:'innercreatemessage'}
+          let route = {name:'createareamessage'}
 
           this.$router.push(route)
         })
@@ -151,11 +147,11 @@
 
         return null
       },
-      getMessageTypeStr(type) {
+      getNoticeTypeStr(type) {
 
-        for (let i = 0; i < messageTypeKeyList.length; ++i) {
+        for (let i = 0; i < noticeTypeKeyList.length; ++i) {
 
-          let item = messageTypeKeyList[i]
+          let item = noticeTypeKeyList[i]
 
           if (item.value === type) {
 
@@ -260,7 +256,7 @@
 
         this.$store.dispatch('setMessage', message).then(() => {
 
-          let route = {name:'innercreatemessage'}
+          let route = {name:'createareamessage'}
 
           this.$router.push(route)
         })
