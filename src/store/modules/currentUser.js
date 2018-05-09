@@ -1,4 +1,4 @@
-const usereditmanager = {
+const currentuser = {
   state: {
     currentUser: {
       personId:null,
@@ -80,4 +80,4 @@ const usereditmanager = {
   }
 }
 
-export default usereditmanager
+export default currentuser

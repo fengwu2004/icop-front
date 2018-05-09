@@ -2,7 +2,7 @@
 const getters = {
   sidebar: state => state.app.sidebar,
   language: state => state.app.language,
-  currentEditUser: state => state.usereditmanager.currentUser,
+  currentEditUser: state => state.currentedituser.currentUser,
   message: state => state.currenteditmessage.message,
   userToken: state => state.user.userToken,
   userId: state => state.user.userId,
