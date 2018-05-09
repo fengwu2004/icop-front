@@ -57,7 +57,7 @@
 
 <script>
 
-  import { validateEmail } from "@/utils/validate";
+  import { validateName } from "@/utils/validate";
   import { mapGetters } from 'vuex'
   import { add, checkExistUserName } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
@@ -78,7 +78,7 @@
     methods:{
       checkUserNameValid(user) {
 
-        return user.userName && user.userName.length > 0 && validateEmail(user.userName)
+        return user.userName && user.userName.length > 0 && validateName(user.userName)
       },
       checkUserPersonId(user) {
 

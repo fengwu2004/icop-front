@@ -80,4 +80,11 @@ export function checkExistUserName(query) {
   })
 }
 
+export function queryUserInfo(query) {
+  return request({
+    url: '/jslife-icop-oms/user/queryUserInfo',
+    method: 'post',
+    params: query
+  })
+}
 

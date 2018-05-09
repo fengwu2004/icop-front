@@ -84,22 +84,36 @@
       },
       handleCreate() {
 
-        console.log('handleCreate')
-
         let user = this.currentEditUser
 
-        console.log(user)
+        alert(JSON.stringify(user))
 
-        edit(user).then(response => {
+        if (user.userId) {
 
-          this.$message({
-            type: 'success',
-            message: '分配成功!'
-          });
-        }).catch(() => {
+          edit(user).then(response => {
 
-          this.$message.error('额，分配角色错误失败');
-        })
+            this.$message({
+              type: 'success',
+              message: '分配成功!'
+            });
+          }).catch(() => {
+
+            this.$message.error('额，分配角色错误失败');
+          })
+        }
+        else {
+
+          add(user).then(response => {
+
+            this.$message({
+              type: 'success',
+              message: '分配成功!'
+            });
+          }).catch(() => {
+
+            this.$message.error('额，创建用户出错，请确认信息无误后再次尝试');
+          })
+        }
 
         this.$router.go(-2)
       },
@@ -164,7 +178,7 @@
 
         let data = {
 
-          userIds:this.currentEditUser.id
+          userIds:this.currentEditUser.userId
         }
 
         queryRoleListByIds(data).then(response => {

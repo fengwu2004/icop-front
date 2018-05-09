@@ -57,8 +57,9 @@
 
 <script>
 
+  import { validateName } from "@/utils/validate";
   import { mapGetters } from 'vuex'
-  import { edit } from '@/api/user'
+  import { edit, checkExistUserName, queryUserInfo } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
   import BreadCrumb from '@/components/Breadcrumb'
 
@@ -124,11 +125,38 @@
 
           this.$router.back()
         })
-
       },
-      checkPersonAndUserNameValid() {
+      checkUserNameValid(user) {
 
+        return user.userName && user.userName.length > 0 && validateName(user.userName)
+      },
+      checkUserPersonId(user) {
 
+        return user.personId != null
+      },
+      checkUserValid(user) {
+
+        if (!this.checkUserPersonId(user)) {
+
+          this.$message({
+            message: '警告，人员编号不能为空',
+            type: 'warning'
+          });
+
+          return false
+        }
+
+        if (this.checkUserNameValid(user)) {
+
+          this.$message({
+            message: '警告，账户名格式错误',
+            type: 'warning'
+          });
+
+          return false
+        }
+
+        return true
       },
       setRole() {
 
