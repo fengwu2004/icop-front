@@ -25,7 +25,7 @@
                            :filter-multiple="false"
                            column-key="pushStatus">
             <template slot-scope="scope">
-              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+              <span>{{ getPushStatusStr(scope.row.sendStatus) }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="strategy" label="发送策略" min-width="150">
@@ -160,19 +160,14 @@
 
         return null
       },
-      getPushStatusStr(pushStatus) {
+      getPushStatusStr(sendStatus) {
 
-        for (let i = 0; i < this.pushStatusKeyList.length; ++i) {
+        if (sendStatus === '0') {
 
-          let item = this.pushStatusKeyList[i]
-
-          if (item.value === pushStatus) {
-
-            return item.text
-          }
+          return '未发送'
         }
 
-        return null
+        return '已发送'
       },
       getQueryParams() {
 
