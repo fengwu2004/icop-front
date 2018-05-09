@@ -88,11 +88,11 @@
 
         console.log('getList', data)
 
-        queryRoleList(data).then(response => {
+        queryRoleList(data).then(respData => {
 
-          console.log(response)
+          console.log(respData)
 
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
         })
@@ -193,9 +193,9 @@
 
         console.log('search', data)
 
-        queryRoleList(data).then(response => {
+        queryRoleList(data).then(respData => {
 
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
 
