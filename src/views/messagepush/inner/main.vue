@@ -205,8 +205,6 @@
 
         const data = this.getQueryParams()
 
-        console.log('getList', data)
-
         queryNoticeList(data).then(response => {
 
           this.tableData = this.getResponseTableData(response.data.respData)
@@ -284,7 +282,7 @@
 
         let message = this.tableData.data[index]
 
-        let data = {messageId:message.id}
+        let data = {messageId:message.messageId}
 
         this.$confirm('此操作将永久删除此通知，是否继续？','警告', {
 

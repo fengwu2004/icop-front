@@ -42,7 +42,7 @@
           <div style="margin-top: 1rem">
             <el-radio v-model="message.sendStrategy" label="IMMEDIATE">立即发送</el-radio>
             <el-radio v-model="message.sendStrategy" label="TIMES">定时发送</el-radio>
-            <el-date-picker style="margin-left: 1rem" :style="{visibility:message.sendStrategy == 'IMMEDIATELY' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="message.planSendTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+            <el-date-picker style="margin-left: 1rem" :style="{visibility:message.sendStrategy == 'IMMEDIATE' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="message.planSendTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
           </div>
         </div>
         <div class="selectimg">

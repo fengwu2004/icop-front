@@ -1,6 +1,7 @@
 const currentEditMessage = {
   state: {
     message: {
+      messageId:null,
       msgSubject:null,
       summary:null,
       sendType:null,
@@ -29,6 +30,7 @@ const currentEditMessage = {
     RESET_MESSAGE: (state) => {
       
       state.message = {
+        messageId:null,
         msgSubject:null,
         summary:null,
         sendType:null,

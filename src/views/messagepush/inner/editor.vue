@@ -82,7 +82,7 @@
               console.log(res)
 
               this.$message({
-                message: '修改成功',
+                message: '新增成功',
                 type: 'success'
               });
 
