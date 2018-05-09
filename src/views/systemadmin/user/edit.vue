@@ -126,6 +126,10 @@
         })
 
       },
+      checkPersonAndUserNameValid() {
+
+
+      },
       setRole() {
 
         let route = {
