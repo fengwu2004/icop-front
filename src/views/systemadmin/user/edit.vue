@@ -59,7 +59,7 @@
 
   import { validateName } from "@/utils/validate";
   import { mapGetters } from 'vuex'
-  import { edit, checkExistUserName, queryUserInfo } from '@/api/user'
+  import { edit, checkExistUserName, add } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
   import BreadCrumb from '@/components/Breadcrumb'
 
@@ -97,14 +97,28 @@
 
         let user = this.currentEditUser
 
-        edit(user).then(response => {
+        if (user.userId) {
 
-          this.$message({
-            message: '保存成功',
-            type: 'success'
-          });
+          edit(user).then(response => {
 
-        })
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            });
+
+          })
+        }
+        else {
+
+          add(user).then(response => {
+
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            });
+
+          })
+        }
       },
       onSelectedPerson(person) {
 
@@ -171,7 +185,11 @@
 
         this.$refs.sel.show()
       }
-    }
+    },
+    created() {
+
+      this.$route.meta.title = this.$route.params.title
+    },
   }
 </script>
 
