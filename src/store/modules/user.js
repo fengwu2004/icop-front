@@ -1,5 +1,6 @@
 import { login, logout, editPwd } from '@/api/login'
 import { getTokenAndId, setTokenAndId, removeToken } from '@/utils/auth'
+import md5 from 'blueimp-md5'
 
 let tokenAndId = getTokenAndId()
 
@@ -34,11 +35,16 @@ const user = {
   actions: {
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
-      console.log(userInfo)
+      
+      console.log('登陆', userInfo)
+      
+      let passwordhash = md5(userInfo.password)
+      
       const username = userInfo.userName.trim()
       
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password, userInfo.Validate).then(response => {
+        
+        login(username, passwordhash, userInfo.Validate).then(response => {
           
           const data = response.data
           

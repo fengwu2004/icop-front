@@ -26,22 +26,36 @@ for (let i = 0; i < count; i++) {
 export default {
   queryProjectList: config => {
     
-    const { pageIndex, pageSize } = param2Obj(config.url)
+    const { pageIndex, pageSize, queryParam } = param2Obj(config.url)
     
-    let mockList = projectList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    let totalList = projectList
     
-    const pageList = mockList
+    if (queryParam) {
+  
+      let list = projectList.filter((item, index) => item.projectCode === queryParam)
+      
+      if (list && list.length > 0) {
+        
+        totalList = list
+      }
+      else {
+  
+        totalList = projectList.filter((item, index) => item.projectName.indexOf(queryParam) !== -1)
+      }
+    }
     
-    let pageTotal = projectList.length / pageSize
+    let pageList = totalList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
     
-    let totalCount = projectList.length
+    let pageTotal = totalList.length / pageSize
+    
+    let totalCount = totalList.length
     
     return {
       pageIndex:pageIndex,
       pageSize:pageSize,
       pageTotal:pageTotal,
       totalCount:totalCount,
-      data: pageList,
+      list: pageList,
     }
   },
   add: config => {

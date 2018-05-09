@@ -31,6 +31,14 @@ export function validateAlphabets(str) {
   return reg.test(str)
 }
 
+/*中文，数字，字母，下划线，不以下划线开头结尾*/
+export function validateName(str) {
+  
+  const reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/
+  
+  return reg.test(str)
+}
+
 /**
  * validate email
  * @param email

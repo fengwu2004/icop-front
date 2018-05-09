@@ -69,15 +69,37 @@ for (let i = 0; i < 123; ++i) {
 export default {
   queryUserList: config => {
     
-    const { pageIndex, pageSize } = param2Obj(config.url)
-
-    let mockList = userList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    let { pageIndex, pageSize, queryParam } = param2Obj(config.url)
+  
+    pageIndex = parseInt(pageIndex)
+  
+    pageSize = parseInt(pageSize)
+  
+    let mockList = null
+    
+    if (queryParam) {
+      
+      let personCode = parseInt(queryParam)
+      
+      if (personCode) {
+  
+        mockList = userList.filter((item, index) => item.personCode === personCode)
+      }
+      else {
+  
+        mockList = userList.filter((item, index) => item.name.indexOf(queryParam) !== -1)
+      }
+    }
+    else {
+  
+      mockList = userList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    }
     
     const pageList = mockList
     
-    let pageTotal = userList.length / pageSize
+    let pageTotal = Math.ceil(mockList.length / pageSize)
     
-    let totalCount = userList.length
+    let totalCount = mockList.length
 
     return {
       pageIndex:pageIndex,
@@ -113,6 +135,32 @@ export default {
       data: pageList,
     }
   },
+  queryRoleList: config => {
+  
+    let role0 = {
+      roleId:'10',
+      roleName:'收费员',
+      remark:'收费员使用',
+    }
+  
+    let role1 = {
+      roleId:'11',
+      roleName:'管理员',
+      remark:'管理员使用',
+    }
+  
+    let role2 = {
+      roleId:'12',
+      roleName:'保洁',
+      remark:'保洁使用',
+    }
+  
+    const pageList = [role0, role1, role2]
+  
+    return {
+      respData: pageList,
+    }
+  },
   queryRoleListByIds: config => {
     
     let role0 = {
@@ -136,27 +184,41 @@ export default {
     const pageList = [role0, role1, role2]
     
     return {
-      data: pageList,
+      respData: pageList,
     }
   },
   queryPersonList: config => {
     
-    const { pageIndex, pageSize } = param2Obj(config.url)
+    const { pageIndex, pageSize, queryParam } = param2Obj(config.url)
+  
+    let totallist = personList
     
-    let mockList = personList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    if (queryParam) {
     
-    const pageList = mockList
+      let personCode = parseInt(queryParam)
     
-    let pageTotal = personList.length / pageSize
+      if (personCode) {
+  
+        totallist = personList.filter((item, index) => item.personCode === personCode)
+      }
+      else {
+  
+        totallist = personList.filter((item, index) => item.name.indexOf(queryParam) !== -1)
+      }
+    }
+  
+    let currpagelist = totallist.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
     
-    let totalCount = personList.length
+    let pageTotal = Math.ceil(totallist.length / pageSize)
+    
+    let totalCount = totallist.length
     
     return {
       pageIndex:pageIndex,
       pageSize:pageSize,
       pageTotal:pageTotal,
       totalCount:totalCount,
-      data: pageList,
+      data: currpagelist,
     }
   },
   edit: config => {
@@ -171,11 +233,11 @@ export default {
   },
   deleteUser: config => {
     
-    const { roleId } = param2Obj(config.url)
+    const { userId } = param2Obj(config.url)
     
-    console.log('删除的roleId是' + roleId)
+    console.log('删除的userId是' + userId)
     
-    removeRole(roleId)
+    removeUser(userId)
     
     return {
     
@@ -183,11 +245,11 @@ export default {
   },
   editPwd: config => {
     
-    const { roleId } = param2Obj(config.url)
+    const { userId } = param2Obj(config.url)
     
-    console.log('删除的roleId是' + roleId)
-    
-    removeRole(roleId)
+    console.log('删除的userId是' + userId)
+  
+    removeUser(userId)
     
     return {
     

@@ -1,54 +1,80 @@
 const currentEditMessage = {
   state: {
-    areamessage: {
+    message: {
+      messageId:null,
       msgSubject:null,
       summary:null,
-      type:null,
-      pushChannel:null,
-      strategy:null,
-      planPushTime:null,
-      imgUrl:null,
+      sendType:null,
+      sendStrategy:null,
+      planSendTime:null,
+      imageUrl:null,
       msgContent:null,
-      recipient:null,
+      noticeType:null,
     },
   },
   mutations: {
-    SET_AREA_MESSAGE: (state, message) => {
+    SET_MESSAGE: (state, message) => {
       
       console.log('ok')
       
-      state.areamessage = message
+      state.message = message
     },
-    RESET_AREA_MESSAGE: (state) => {
+    SET_MESSAGE_NOTICECONTENT:(state, msgContent) => {
       
-      state.areamessage = {
+      state.message.msgContent = msgContent
+    },
+    SET_MESSAGE_IMAGEURL:(state, imageUrl) => {
+    
+      state.message.imageUrl = imageUrl
+    },
+    RESET_MESSAGE: (state) => {
+      
+      state.message = {
+        messageId:null,
         msgSubject:null,
         summary:null,
-        type:null,
-        pushChannel:null,
-        strategy:null,
-        planPushTime:null,
-        imgUrl:null,
+        sendType:null,
+        sendStrategy:null,
+        planSendTime:null,
+        imageUrl:null,
         msgContent:null,
-        recipient:null,
+        noticeType:null,
       }
     },
   },
   actions: {
-    setAreaMessage({ commit }, message) {
+    setMessage({ commit }, message) {
       
       return new Promise(resolve => {
   
-        commit('SET_AREA_MESSAGE', message)
+        commit('SET_MESSAGE', message)
   
         resolve()
       })
     },
-    resetAreaMessage({ commit, state }) {
+    setMessageContent({ commit }, msgContent) {
+  
+      return new Promise(resolve => {
+    
+        commit('SET_MESSAGE_NOTICECONTENT', msgContent)
+    
+        resolve()
+      })
+    },
+    setMessageImageUrl({ commit }, imageUrl) {
+    
+      return new Promise(resolve => {
+      
+        commit('SET_MESSAGE_IMAGEURL', imageUrl)
+      
+        resolve()
+      })
+    },
+    resetMessage({ commit, state }) {
     
       return new Promise((resolve) => {
       
-        commit('RESET_AREA_MESSAGE')
+        commit('RESET_MESSAGE')
       
         resolve()
       })

@@ -1,50 +1,55 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div class="content">
-      <div class="header">
-        <date-select></date-select>
-        <div class="operatemenu">
-          <el-input placeholder="输入主题查询"></el-input><el-button type="primary">查询</el-button>
-        </div>
+    <div>
+      <div class="navibar">
+        <bread-crumb class="breadcrumb"></bread-crumb>
+        <el-button @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
       </div>
-      <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" max-height="700">
-          <el-table-column prop="msgSubject" label="内容主题" width="400"></el-table-column>
-          <el-table-column label="消息类型" width="150">
+      <div class="content">
+        <div class="header">
+          <date-select ref="daterange" @daterangechange="onDateRangeChange"></date-select>
+          <div class="operatemenu">
+            <el-input clearable placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
+          </div>
+        </div>
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" @filter-change="onFilterChange" :max-height="maxheight">
+          <el-table-column prop="msgSubject" label="内容主题" min-width="250"></el-table-column>
+          <el-table-column label="消息类型" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getMessageTypeStr(scope.row.type) }}</span>
+              <span>{{ getNoticeTypeStr(scope.row.noticeType) }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="发送方式" width="150">
+          <el-table-column label="发送方式" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getPushChannelStr(scope.row.pushChannel) }}</span>
+              <span>{{ getPushChannelStr(scope.row.sendType) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="pushStatus" label="发布状态" width="150"
+          <el-table-column prop="pushStatus" label="发布状态" min-width="150"
                            :filters="pushStatusKeyList"
                            :filter-method="filterTag"
-                           :filter-multiple="false">
+                           :filter-multiple="false"
+                           column-key="pushStatus">
             <template slot-scope="scope">
-              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+              <span>{{ getPushStatusStr(scope.row.sendStatus) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="strategy" label="发送策略" width="150">
+          <el-table-column prop="strategy" label="发送策略" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getPushStatusStr(scope.row.pushStatus) }}</span>
+              <span>{{ getStrategyStr(scope.row.sendStrategy) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="planPushTime" label="计划发送时间" width="250"></el-table-column>
-          <el-table-column label="操作">
+          <el-table-column prop="planSendTime" label="发送时间" min-width="200"></el-table-column>
+          <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">发布</el-button>
-              <el-button size="mini" @click="handleManager(scope.$index, scope.row)">修改</el-button>
+              <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
+              <el-button size="mini" @click="handleEditor(scope.$index, scope.row)">修改</el-button>
               <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
-      </div>
-      <div class="pagination">
-        <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
+        <div class="pagination">
+          <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
+        </div>
       </div>
     </div>
   </transition>
@@ -52,21 +57,22 @@
 
 <script>
 
-  import { queryplacardList, deletePlacard, editPushStatus } from "@/api/areamessage"
+  import { queryAnnouncementList, deleteAnnouncement, sendAnnouncement} from "@/api/areamessage";
+  import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
-
-  const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
-  const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
-  const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
-  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATELY' }, { text: '定时生效', value: 'TIMING' }]
+  import BreadCrumb from '@/components/Breadcrumb'
+  import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList } from "@/utils/constvalues";
 
   export default {
-    components: { PageWidget, DateSelect },
+    components: { PageWidget, DateSelect, BreadCrumb },
     data() {
       return {
+        queryParam:'',
+        maxheight:window.innerHeight - 250,
         pushStatusKeyList:pushStatusKeyList,
         listLoading:true,
+        pushStatus:null,
         tableData: {
           totalCount:0,
           data:null,
@@ -76,12 +82,42 @@
         },
       }
     },
-    created() {
+    mounted() {
 
-      this.getList()
+      this.$nextTick(() => {
+
+        this.getList()
+      })
     },
     methods:{
+      onFilterChange(filters) {
+
+        let pushstatus = filters.pushStatus
+
+        this.pushStatus = pushstatus[0]
+
+        this.pageIndex = 1
+
+        this.getList()
+      },
+      onDateRangeChange() {
+
+        this.pageIndex = 1
+
+        this.getList()
+      },
+      createMessage() {
+
+        this.$store.dispatch('resetMessage').then(() => {
+
+          let route = {name:'createareamessage'}
+
+          this.$router.push(route)
+        })
+      },
       getStrategyStr(strategy) {
+
+        console.log('getStrategyStr')
 
         for (let i = 0; i < strategyKeyList.length; ++i) {
 
@@ -92,8 +128,6 @@
             return item.text
           }
         }
-
-        console.log(strategy)
 
         return null
       },
@@ -113,11 +147,11 @@
 
         return null
       },
-      getMessageTypeStr(type) {
+      getNoticeTypeStr(type) {
 
-        for (let i = 0; i < messageTypeKeyList.length; ++i) {
+        for (let i = 0; i < noticeTypeKeyList.length; ++i) {
 
-          let item = messageTypeKeyList[i]
+          let item = noticeTypeKeyList[i]
 
           if (item.value === type) {
 
@@ -129,41 +163,69 @@
 
         return null
       },
-      getPushStatusStr(pushStatus) {
+      getPushStatusStr(sendStatus) {
 
-        for (let i = 0; i < this.pushStatusKeyList.length; ++i) {
+        if (sendStatus === '0') {
 
-          let item = this.pushStatusKeyList[i]
-
-          if (item.value === pushStatus) {
-
-            return item.text
-          }
+          return '未发送'
         }
 
-        console.log(pushStatus)
-
-        return null
+        return '已发送'
       },
-      getList() {
-
-        console.log('getList')
-
-        this.listLoading = true
+      getQueryParams() {
 
         let data = {
           pageIndex:this.tableData.pageIndex,
           pageSize:this.tableData.pageSize,
         }
 
-        queryplacardList(data).then(response => {
+        let daterange = this.$refs.daterange.dayinterval
 
-          console.log(response)
+        if (daterange && daterange.length == 2) {
 
-          Object.assign(this.tableData, response.data)
+          data.beginTime = daterange[0].getTime()
+
+          data.endTime = daterange[1].getTime()
+        }
+
+        if (this.searching && this.queryParam && this.queryParam.length > 0) {
+
+          data.msgSubject = this.queryParam
+        }
+
+        if (this.pushStatus) {
+
+          data.pushStatus = this.pushStatus
+        }
+
+        return data
+      },
+      getList() {
+
+        this.listLoading = true
+
+        const data = this.getQueryParams()
+
+        queryAnnouncementList(data).then(response => {
+
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
         })
+      },
+      getResponseTableData(respData) {
+
+        let msgList = respData.list
+
+        let tableData = {
+
+          totalCount:respData.total,
+          data:msgList,
+          pageSize:respData.pageSize,
+          pageIndex:respData.pageNum
+        }
+
+        return tableData
       },
       pageSizeChange(pageSize){
 
@@ -186,92 +248,154 @@
       },
       filterTag(value, row) {
 
-        console.log(value, row)
-
         return row.pushStatus === value;
       },
-      handleDelete(index, row) {
+      handleEditor(index, row) {
 
-        let role = this.tableData.data[index]
+        let message = this.tableData.data[index]
 
-        let data = {roleId:role.roleId}
+        this.$store.dispatch('setMessage', message).then(() => {
 
-        deletePlacard(data).then(response => {
+          let route = {name:'createareamessage'}
+
+          this.$router.push(route)
+        })
+      },
+      handlePush(index, row) {
+
+        let message = this.tableData.data[index]
+
+        let data = {messageId:message.id}
+
+        console.log('发送', data)
+
+        sendAnnouncement(data).then(() => {
+
+          this.$message({
+            type: 'success',
+            message: '发布成功!'
+          });
 
           this.getList()
         })
       },
-      handleSearch(name) {
+      handleDelete(index, row) {
 
-        console.log('search', name)
+        let message = this.tableData.data[index]
+
+        let data = {messageId:message.messageId}
+
+        this.$confirm('此操作将永久删除此通知，是否继续？','警告', {
+
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+
+        }).then(() => {
+
+          deleteAnnouncement(data).then(response => {
+
+            this.getList()
+
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          })
+
+        }).catch (() => {
+
+
+        })
+      },
+      handleSearch(queryParam) {
+
+        if (!queryParam || queryParam.length == 0) {
+
+          return
+        }
 
         this.listLoading = true
 
-        let data = {
-          msgSubject:name,
-          pageIndex:0,
-          pageSize:this.tableData.pageSize,
-        }
+        this.pageIndex = 1
 
-        queryplacardList(data).then(response => {
+        this.searching = true
 
-          console.log(response)
+        const data = this.getQueryParams()
 
-          Object.assign(this.tableData, response.data)
+        console.log('search', data)
+
+        queryNoticeList(data).then(response => {
+
+          this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
         })
       },
       handleEdit(index, row) {
 
-        let user = this.tableData.data[index]
+        let message = this.tableData.data[index]
 
-        this.$store.dispatch('setCurrentUser', user)
+        this.$store.dispatch('setMessage', message).then(() => {
 
-        let router = {name:'edituser'}
+          let router = {name:'innercreatemessage'}
 
-        this.$router.push(router)
-      },
-      handleChangePwd(index, row) {
-
-        let role = this.tableData.data[index]
-
-        let router = {name:'editroledetails', params:{role:role}}
-
-        this.$router.push(router)
+          this.$router.push(router)
+        })
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
-        if (columnIndex == 5) {
-
-          return {textAlign:'center'}
-        }
-
-        return {textAlign:'left'}
+        return columnIndex == 5 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        if (columnIndex == 5) {
+        return columnIndex == 5 ? normalcellcenter : normalcell
+      },
+    },
+    watch:{
+      queryParam(newValue) {
 
-          return {textAlign:'center'}
+        if (!this.searching) {
+
+          return
         }
 
-        return {textAlign:'left'}
-      },
-    }
+        if (!newValue || newValue.length == 0) {
+
+          this.pageIndex = 1
+
+          this.getList()
+
+          this.searching = false
+        }
+      }
+    },
   }
 </script>
 
 <style scoped rel="stylesheet/scss" lang="scss">
 
+  .navibar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #D0D5E5;
+  }
+
   .content {
 
     margin-top: 1rem;
+    width: 100%;
+    /*height: calc(100% - 51px);*/
+    position: relative;
   }
 
   .header {
 
     display: flex;
+    margin-bottom: 1rem;
     justify-content: space-between;
 
     .dateselect {
@@ -291,16 +415,6 @@
 
       margin-left: 1rem;
     }
-  }
-
-  .table {
-
-    margin-top: 1rem;
-  }
-
-  .headerrowclass {
-
-    background-color: red !important;
   }
 
   .pagination {

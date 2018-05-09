@@ -3,12 +3,9 @@
   // 侧边栏
 
   .hideSidebar {
-    .sidebar-container {
-      width: 36px !important;
-    }
-    .main-container {
-      margin-left: 36px;
-    }
+    //.sidebar-container {
+    //  width: 36px !important;
+    //}
     .submenu-title-noDropdown {
       padding-left: 10px !important;
       position: relative;
@@ -38,6 +35,15 @@
     background-color: $subMenuBg !important;
     &:hover {
       background-color: $menuHover !important;
+    }
+
+    &:focus {
+      background-color: white !important;
+    }
+
+    .is-active {
+
+      background-color: white !important;
     }
   }
   .el-menu--collapse .el-menu .el-submenu {

@@ -1,27 +1,36 @@
 <template>
-  <div class="content">
-    <div class="createuser">
-      <div class="baseinfo">
-        <li>基本信息</li>
-        <div style="margin-top: 1rem; font-size: 0.8rem">角色名称</div>
-        <div style="margin-top: 0.5rem;width: 300px">
-          <el-input maxlength="20" v-model="role.roleName"></el-input>
+  <div>
+    <div class="navibar">
+      <bread-crumb class="breadcrumb"></bread-crumb>
+    </div>
+    <div class="content">
+      <div class="createuser">
+        <div class="baseinfo">
+          <div>
+            <li class="baseinfotitle">基本信息</li>
+            <div class="rolename">角色名称(不能重名):</div>
+            <div style="margin-top: 0.5rem;width: 300px">
+              <el-input maxlength="20" v-model="roleName" :disabled="true"></el-input>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.8rem">备注(限50字)</div>
+            <div style="margin-top: 0.5rem;">
+              <el-input type="textarea" maxlength="50" rows="12" v-model="remark" :disabled="true"></el-input>
+            </div>
+          </div>
         </div>
-        <div style="margin-top: 2rem;font-size:0.8rem">备注</div>
-        <div style="margin-top: 0.5rem;">
-          <el-input type="textarea" maxlength="50" rows="12" v-model="role.remark"></el-input>
+        <div class="permissionctr">
+          <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
+          <div class="permissiontree">
+            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
+          </div>
         </div>
-      </div>
-      <div class="permissionctr">
-        <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
-        <div class="permissiontree">
-          <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
-        </div>
-      </div>
-      <div class="permissionctr">
-        <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
-        <div class="permissiontree">
-          <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
+        <div class="permissionctr">
+          <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
+          <div class="permissiontree">
+            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
+          </div>
         </div>
       </div>
     </div>
@@ -31,10 +40,12 @@
 <script>
 
   import { queryTotalPopedomTree } from '@/api/permissiontree'
-  import { queryRolePopedom } from '@/api/role'
+  import { queryPopedomListByIds } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
+  import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
+    components: { BreadCrumb },
     methods:{
       build(parentid, items) {
 
@@ -56,6 +67,30 @@
 
         return _array;
       },
+      createRole() {
+
+        let apppermissions = this.$refs.apptree.getCheckedKeys()
+
+        let icoppermissions = this.$refs.icoptree.getCheckedKeys()
+
+        let permissons = apppermissions.concat(icoppermissions)
+
+        let strpermissions = permissons.join(',')
+
+        let data = {
+          roleId:this.role.roleId,
+          roleName:this.roleName,
+          remark:this.remark,
+          popedomIds:strpermissions
+        }
+
+        edit(data).then(response => {
+
+          let route = {name:'rolemanager'}
+
+          this.$router.push(route)
+        })
+      }
     },
     created() {
 
@@ -63,11 +98,19 @@
 
       this.role = this.$route.params.role
 
+      this.roleName = this.role.roleName
+
+      this.remark = this.role.remark
+
       queryTotalPopedomTree({}).then(response => {
 
-        this.app = this.build(null, response.data.app)
+        console.log(response)
 
-        this.icop = this.build(null, response.data.icop)
+        let respData = response.data.respData
+
+        this.app = this.build(null, respData.app)
+
+        this.icop = this.build(null, respData.icop)
       })
 
       let data = {
@@ -75,13 +118,15 @@
         roleIds:this.role.roleId
       }
 
-      queryRolePopedom(data).then(response => {
+      queryPopedomListByIds(data).then(response => {
 
-        console.log(response.data.popedomIds)
+        console.log(response)
 
-        this.apppermissions = response.data.popedomIds.split(',')
+        let respData = response.data.respData
 
-        this.icoppermission = response.data.popedomIds.split(',')
+        this.apppermissions = respData.split(',')
+
+        this.icoppermission = respData.split(',')
       })
     },
     data() {
@@ -103,43 +148,6 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
-  .content {
-
-    width: 90%;
-    margin: 1rem auto;
-  }
-
-  .baseinfo {
-
-    .nameinput {
-
-      width: 300px;
-    }
-  }
-
-  .createuser {
-
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .settings {
-
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-  }
-
-  .permissionctr {
-
-    .permissiontree {
-
-      height: 400px;
-      width: 300px;
-      margin-top: 0.5rem;
-      border: 1px solid #e0e5ee;
-      padding: 10px;
-    }
-  }
+  @import "createrole";
 
 </style>

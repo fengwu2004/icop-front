@@ -39,7 +39,7 @@ function removeRole(roleId) {
 }
 
 export default {
-  queryRolePopedom: config => {
+  queryPopedomListByIds: config => {
     
     const { roleIds } = param2Obj(config.url)
     
@@ -72,43 +72,22 @@ export default {
     }
   },
   queryRoleList: config => {
+  
+    let { pageIndex, pageSize, roleName } = param2Obj(config.url)
     
-    const { pageIndex, pageSize } = param2Obj(config.url)
-
-    let mockList = roleList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
+    let totalList = roleList
     
-    const pageList = mockList
-    
-    let pageTotal = roleList.length / pageSize
-    
-    let totalCount = roleList.length
-
-    return {
-      pageIndex:pageIndex,
-      pageSize:pageSize,
-      pageTotal:pageTotal,
-      totalCount:totalCount,
-      data: pageList,
+    if (roleName) {
+  
+      totalList = roleList.filter((item, index) => item.roleName.indexOf(roleName) !== -1)
     }
-  },
-  queryRoleInfo: config => {
     
-    console.log('queryRoleInfo')
+    const pageList = totalList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
     
-    const { roleName } = param2Obj(config.url)
+    let pageTotal = Math.ceil(totalList.length / pageSize)
     
-    let mockList = roleList.filter((item, index) => item.roleName.indexOf(roleName) !== -1)
-  
-    let pageIndex = 1
-  
-    let pageSize = 20
-    
-    const pageList = mockList.filter((item, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1))
-    
-    let pageTotal = mockList.length / pageSize
-    
-    let totalCount = mockList.length
-    
+    let totalCount = totalList.length
+
     return {
       pageIndex:pageIndex,
       pageSize:pageSize,

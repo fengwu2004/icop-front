@@ -1,12 +1,14 @@
 <template>
   <div>
-    <quill-editor ref="editor" :options="newOption" style="height: 20rem; margin-bottom: 54px" v-model="editorContent" @change="editorChange"></quill-editor>
+    <quill-editor ref="editor" :options="newOption" style="height: 20rem; margin-bottom: 54px" v-model="editorContent" @change="editorChange" max-length="2000"></quill-editor>
     <form action="" method="post" enctype="multipart/form-data" id="uploadFormMulti">
-      <input style="display: none" :id="uniqueId" type="file" name="avator" multiple accept="image/jpg,image/jpeg,image/png,image/gif" @change="uploadImg('uploadFormMulti')"><!--style="display: none"-->
+      <input style="display: none" :id="uniqueId" type="file" name="avator" multiple accept="image/jpg,image/jpeg,image/png,image/gif" @change="uploadImg()">
     </form>
   </div>
 </template>
 <script>
+
+  import { picFile } from "@/api/fileupload";
   import { quillEditor } from 'vue-quill-editor'
   import Quill from 'quill'
   import { ImageImport } from './modules/ImageImport.js'
@@ -66,109 +68,109 @@
 
         vm.$emit('editorChange', html)
       },
-      uploadImg: async function(id) {
+      insertImgUrl(url) {
 
-        var vm = this
-        
-        console.log(id)
+        if (url != null && url.length > 0) {
 
-        vm.imageLoading = true
+          console.log('insertimg', url)
 
-        let formelement = document.getElementById(id)[0]
+          var value = url
 
-        var formData = new FormData(formelement)
+          value = value.indexOf('http') != -1 ? value : 'http:' + value //返回图片网址中如果没有http自动拼接
 
-        console.log('uploadImg')
+          let index = this.addImgRange != null ? this.addImgRange.index:0 // 获取插入时的位置索引，如果获取失败，则插入到最前面
+
+          this.$refs.editor.quill.insertEmbed(index , 'image', value, Quill.sources.USER)
+
+          var img = new Image()
+
+          img.src = value
+
+          this.$refs.editor.quill.formatText(index, index + 1, 'width', 400 + 'px');
+        }
+        else {
+
+        }
+
+        document.getElementById(this.uniqueId).value = ''
+
+      },
+      uploadImg: async function() {
+
+        var self = this
+
+        self.imageLoading = true
+
+        var formData = new FormData()
+
+        formData.append('file', document.getElementById(this.uniqueId).files[0])
+
+        let params = {
+          picType:'JSLIFEMESSAGE',
+          productCode:'ICOP',
+          imgType:'.jpg'
+        }
 
         try {
 
-          const url = await vm.uploadImgReq(formData)
+          const url = await self.uploadImgReq(formData, params)
 
           console.log(url)
 
-          if (url != null && url.length > 0) {
-
-            var value = url
-
-            value = value.indexOf('http') != -1 ? value : 'http:' + value //返回图片网址中如果没有http自动拼接
-
-            let index = vm.addImgRange != null?vm.addImgRange.index:0 // 获取插入时的位置索引，如果获取失败，则插入到最前面
-
-            vm.$refs.editor.quill.insertEmbed(index , 'image', value, Quill.sources.USER)
-
-            var img = new Image()
-
-            img.src = value
-
-            vm.$refs.editor.quill.formatText(index, index + 1, 'width', 400 + 'px');
-          }
-          else {
-
-          }
-
-          document.getElementById(vm.uniqueId).value=''
-
+          self.insertImgUrl(url)
         }
         catch ({message: msg}) {
 
-          document.getElementById(vm.uniqueId).value=''
+          document.getElementById(self.uniqueId).value = ''
         }
 
-        vm.imageLoading = false
+        self.imageLoading = false
       },
-      uploadImgReq (formData) {
-        
-        console.log(formData)
-        
+      uploadImgReq (data, params) {
+
         return new Promise((resolve, reject) => {
-          
-          if (true) {
-            
-            resolve("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514179021485&di=fae56d93e493b0a50f550ed16a8c5f9d&imgtype=0&src=http%3A%2F%2Fpic.92to.com%2F201612%2F11%2Faceb0f89128a4554a33d5a735e165ca9_th.jpg")
-          }
-          else {
-            
+
+          picFile(data, params).then(res => {
+
+            resolve(res.data.respData.url)
+
+          }).catch(res => {
+
             reject({message: '图片上传失败'})
-          }
+          })
         })
       },
+      imageHandler(state) {
+
+        this.addImgRange = this.$refs.editor.quill.getSelection()
+
+        if (state) {
+
+          let fileInput = document.getElementById(this.uniqueId)
+
+          fileInput.click()
+        }
+      }
     },
     created: function () {
-      
-      var vm = this
-      
-      vm.imgPercent = 0
-      
-      vm.editorContent = vm.text
-      
-      vm.uniqueId = vm.editorId?vm.editorId:'inputImg'
+
+      this.imgPercent = 0
+
+      this.editorContent = this.text
+
+      this.uniqueId = this.editorId ? this.editorId:'inputImg'
     },
     watch:{
       text: function () {
-        
+
         var vm = this
-        
+
         vm.editorContent = vm.text
       }
     },
     mounted() {
-      
-      var vm = this
-      // you can use current editor object to do something(quill methods)
 
-      var imgHandler = async function(image) {
-        
-        vm.addImgRange = vm.$refs.editor.quill.getSelection()
-        
-        if (image) {
-          
-          var fileInput = document.getElementById(vm.uniqueId) //隐藏的file文本ID
-          
-          fileInput.click() //加一个触发事件
-        }
-      }
-
-      vm.$refs.editor.quill.getModule("toolbar").addHandler("image", imgHandler)
+      this.$refs.editor.quill.getModule("toolbar").addHandler("image", this.imageHandler)
     }
 
   }

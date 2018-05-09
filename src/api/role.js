@@ -8,17 +8,9 @@ export function queryRoleList(query) {
   })
 }
 
-export function queryRoleInfo(query) {
+export function queryPopedomListByIds(query) {
   return request({
-    url: '/jslife-icop-oms/role/queryRoleInfo',
-    method: 'post',
-    params: query
-  })
-}
-
-export function queryRolePopedom(query) {
-  return request({
-    url: '/jslife-icop-oms/popedom/queryRolePopedom',
+    url: '/jslife-icop-oms/role/queryPopedomListByIds',
     method: 'post',
     params: query
   })
@@ -43,6 +35,14 @@ export function edit(query) {
 export function deleteRole(query) {
   return request({
     url: '/jslife-icop-oms/role/delete',
+    method: 'post',
+    params: query
+  })
+}
+
+export function checkExistRoleName(query) {
+  return request({
+    url: '/jslife-icop-oms/role/checkExistRoleName',
     method: 'post',
     params: query
   })

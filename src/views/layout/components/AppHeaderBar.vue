@@ -1,6 +1,9 @@
 <template>
   <div class="main">
-    <div class="title">智慧社区运营平台</div>
+    <div class="title">
+      <img :src="jsListIcon" height="30" width="30"/>
+      <span>智慧社区运营平台</span>
+    </div>
     <div class="rightmenu">
       <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
         <screenfull class="screenfull right-menu-item"></screenfull>
@@ -44,6 +47,8 @@
 </template>
 
 <script>
+  import jsListIcon from '@/assets/jlife_icon.png'
+
   import { mapGetters } from 'vuex'
   import Screenfull from '@/components/Screenfull'
 
@@ -59,6 +64,7 @@
         oldPwd:'',
         newPwd1:'',
         newPwd2:'',
+        jsListIcon:jsListIcon,
       }
     },
     computed: {
@@ -112,11 +118,19 @@
   .title {
 
     font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+
+    img {
+
+      margin-right: 1rem;
+    }
   }
 
   .main {
 
-    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
+    background: #FFFFFF;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.10);
     padding: 0 2rem;
     width: 100%;
     height: 50px;

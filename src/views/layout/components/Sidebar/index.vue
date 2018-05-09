@@ -1,14 +1,13 @@
 <template>
   <scroll-bar>
-    <el-menu
-      mode="vertical"
-      :show-timeout="200"
-      :default-active="$route.path"
-      :collapse="isCollapse"
-      background-color="#e0e5ee"
-      text-color="#bfcbd9"
-      active-text-color="#409EFF"
-    >
+    <el-menu mode="vertical"
+             :select="selectChange"
+             :show-timeout="200"
+             :default-active="$route.path"
+             :collapse="isCollapse"
+             background-color="#e0e5ee"
+             text-color="#16325C"
+             active-text-color="#FFFFFF" :default-openeds="defaultOpeneds">
       <sidebar-item :routes="permission_routers"></sidebar-item>
     </el-menu>
   </scroll-bar>
@@ -29,6 +28,22 @@ export default {
     isCollapse() {
       return !this.sidebar.opened
     }
-  }
+  },
+  methods:{
+    selectChange(value) {
+
+      console.log(value)
+    },
+  },
+  mounted() {
+
+    console.log('当前路由', this.$route.path)
+  },
+  data() {
+    return {
+      defaultActive:'messagepush',
+      defaultOpeneds:['messagepush', 'systemadmin']
+    }
+  },
 }
 </script>

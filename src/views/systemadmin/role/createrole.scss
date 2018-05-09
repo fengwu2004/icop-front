@@ -1,0 +1,72 @@
+$fontcolor:#16325C;
+
+* {
+  color: $fontcolor;
+}
+
+.navibar {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #D0D5E5;
+}
+
+.content {
+
+  width: 90%;
+  margin: 2rem auto;
+}
+
+.baseinfo {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .nameinput {
+
+    width: 300px;
+  }
+}
+
+.createuser {
+
+  display: flex;
+  justify-content: space-around;
+}
+
+.permissionctr {
+
+  .permissiontree {
+
+    height: 400px;
+    width: 300px;
+    margin-top: 0.5rem;
+    border: 1px solid #e0e5ee;
+    padding: 10px;
+    overflow-y: scroll;
+  }
+}
+
+.rolename {
+
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: $fontcolor;
+}
+
+.doselectapp {
+
+  font-size:0.8rem;
+  color: #445577;
+}
+
+.baseinfotitle {
+
+  position: relative;
+  left: -1.4rem;
+  color:#061C3F;
+  font-weight: bold;
+}
