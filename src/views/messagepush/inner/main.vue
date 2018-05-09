@@ -264,7 +264,7 @@
 
         let message = this.tableData.data[index]
 
-        let data = {messageId:message.id}
+        let data = {messageId:message.messageId}
 
         console.log('发送', data)
 
