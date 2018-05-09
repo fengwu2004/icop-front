@@ -140,6 +140,7 @@
         let project = this.tableData.data[index]
 
         let data = {
+          areaId:project.areaId,
           projectCode:project.projectCode
         }
 
