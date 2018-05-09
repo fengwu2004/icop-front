@@ -110,9 +110,11 @@
 
         console.log(response)
 
-        this.app = this.build(null, response.data.app)
+        let respData = response.data.respData
 
-        this.icop = this.build(null, response.data.icop)
+        this.app = this.build(null, respData.app)
+
+        this.icop = this.build(null, respData.icop)
       })
 
       let data = {
@@ -124,9 +126,11 @@
 
         console.log(response)
 
-        this.apppermissions = response.data.respData.split(',')
+        let respData = response.data.respData
 
-        this.icoppermission = response.data.respData.split(',')
+        this.apppermissions = respData.split(',')
+
+        this.icoppermission = respData.split(',')
       })
     },
     data() {
