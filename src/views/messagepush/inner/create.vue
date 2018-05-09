@@ -19,30 +19,30 @@
           <el-input style="margin-top: 1rem;" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="message.summary"></el-input>
         </div>
         <div class="otherinfo">
-          <div class="messagetype">
-            <div>
-              <span class="redstar">*</span><span>消息类型</span>
-            </div>
-            <el-select v-model="message.msgMainType" placeholder="请选择">
-              <el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>
-            </el-select>
-          </div>
+          <!--<div class="messagetype">-->
+            <!--<div>-->
+              <!--<span class="redstar">*</span><span>消息类型</span>-->
+            <!--</div>-->
+            <!--<el-select v-model="message.msgMainType" placeholder="请选择">-->
+              <!--<el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>-->
+            <!--</el-select>-->
+          <!--</div>-->
           <div class="sendtype">
             <div>
               <span>发送方式</span>
             </div>
             <div class="sendtyperadio">
-              <el-radio v-model="message.pushChannel" label="APP">App</el-radio>
-              <el-radio v-model="message.pushChannel" label="SMS">短信</el-radio>
+              <el-radio v-model="message.sendType" label="APP">App</el-radio>
+              <el-radio v-model="message.sendType" label="SMS">短信</el-radio>
             </div>
           </div>
         </div>
         <div class="sendstrategy">
           <span class="redstar">*</span><span>发送策略</span>
           <div style="margin-top: 1rem">
-            <el-radio v-model="message.strategy" label="IMMEDIATELY">立即发送</el-radio>
-            <el-radio v-model="message.strategy" label="TIMING">定时发送</el-radio>
-            <el-date-picker style="margin-left: 1rem" :style="{visibility:message.strategy == 'IMMEDIATELY' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="message.planPushTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+            <el-radio v-model="message.sendStrategy" label="IMMEDIATE">立即发送</el-radio>
+            <el-radio v-model="message.sendStrategy" label="TIMES">定时发送</el-radio>
+            <el-date-picker style="margin-left: 1rem" :style="{visibility:message.sendStrategy == 'IMMEDIATELY' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="message.planSendTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
           </div>
         </div>
         <div class="selectimg">

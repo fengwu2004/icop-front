@@ -33,7 +33,7 @@
               <span>{{ getStrategyStr(scope.row.sendStrategy) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="planPushTime" label="发送时间" min-width="200"></el-table-column>
+          <el-table-column prop="planSendTime" label="发送时间" min-width="200"></el-table-column>
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
               <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>

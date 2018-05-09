@@ -59,7 +59,7 @@
 
         this.$store.dispatch('setMessageContent',this.content).then(() => {
 
-          console.log('修改消息', JSON.stringify(this.message))
+          alert(JSON.stringify(this.message))
 
           if (this.message.messageId) {
 
