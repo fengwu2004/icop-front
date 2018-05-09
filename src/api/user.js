@@ -80,4 +80,12 @@ export function queryRoleList(query) {
   })
 }
 
+export function checkExistUserName(query) {
+  return request({
+    url: '/jslife-icop-oms/user/checkExistUserName',
+    method: 'post',
+    params: query
+  })
+}
+
 

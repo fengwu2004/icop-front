@@ -39,3 +39,11 @@ export function deleteRole(query) {
     params: query
   })
 }
+
+export function checkExistRoleName(query) {
+  return request({
+    url: '/jslife-icop-oms/role/checkExistRoleName',
+    method: 'post',
+    params: query
+  })
+}

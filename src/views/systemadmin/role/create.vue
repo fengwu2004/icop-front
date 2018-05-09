@@ -10,7 +10,7 @@
             <li class="baseinfotitle">基本信息</li>
             <div class="rolename">角色名称(不能重名):</div>
             <div style="margin-top: 0.5rem;width: 300px">
-              <el-input maxlength="20" v-model="roleName"></el-input>
+              <el-input maxlength="20" v-model="roleName" @blur="onRoleNameBlur"></el-input>
             </div>
           </div>
           <div>
@@ -44,12 +44,27 @@
 <script>
 
   import { queryTotalPopedomTree } from '@/api/permissiontree'
-  import { add } from '@/api/role'
+  import { add, checkExistRoleName } from '@/api/role'
   import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
     components: { BreadCrumb },
     methods:{
+      onRoleNameBlur() {
+
+        let data = {roleName:this.roleName}
+
+        checkExistRoleName(data).then(res => {
+
+          if (res.respData) {
+
+            this.$message({
+              message: '警告，角色名重复',
+              type: 'warning'
+            });
+          }
+        })
+      },
       appcheckchange() {
 
         let apppermissions = this.$refs.icoptree.getCheckedKeys()
