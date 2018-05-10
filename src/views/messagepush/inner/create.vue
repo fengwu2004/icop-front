@@ -12,11 +12,15 @@
       <div class="content">
         <div class="title">
           <span class="redstar">*</span><span>主题</span><span class="subtitle">(限30个字)</span>
-          <el-input maxlength="30" placeholder="请输入通知标题" v-model="message.msgSubject"></el-input>
+          <div style="margin-top: 1rem">
+            <el-input maxlength="30" placeholder="请输入通知标题" v-model="message.msgSubject"></el-input>
+          </div>
         </div>
         <div class="summary">
           <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>
-          <el-input style="margin-top: 1rem;" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="message.summary"></el-input>
+          <div style="margin-top: 1rem;">
+            <el-input type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="message.summary"></el-input>
+          </div>
         </div>
         <div class="sendtype">
           <div>
@@ -125,14 +129,6 @@
 
       font-size: 0.8rem;
       color: deepskyblue;
-    }
-  }
-
-  .title, .summary {
-
-    .el-input {
-
-      margin-top: 1rem;
     }
   }
 
