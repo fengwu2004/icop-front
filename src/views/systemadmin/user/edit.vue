@@ -41,7 +41,13 @@
           <div>
             <span class="redstar">*</span><span class="sumtitle">密码</span>
             <input style="display:none" name="txtpwd">
-            <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password" name="txtpwd"></el-input>
+            <el-popover
+              placement="right"
+              width="200"
+              trigger="focus">
+              <span style="font-size: 0.6rem">密码长度6-18位,字母，数组，标点符号，不允许空格</span>
+              <el-input slot="reference" type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password" name="txtpwd"></el-input>
+            </el-popover>
             <div style="margin-top: 10px">
               <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
             </div>

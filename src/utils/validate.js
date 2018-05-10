@@ -39,8 +39,7 @@ export function validateName(str) {
   return reg.test(str)
 }
 
-export function isMobil(s)
-{
+export function isMobil(s) {
   const patrn = /^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/;
   
   return patrn.test(s)
