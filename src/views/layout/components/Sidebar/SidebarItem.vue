@@ -1,14 +1,14 @@
 <template>
   <div>
-    <template v-for="item in routes" v-if="!item.hidden && item.children">
-      <el-submenu :index="getMenuIndex(item)" :key="item.name">
+    <template v-for="route in routes" v-if="showRoute(route)">
+      <el-submenu :index="getMenuIndex(route)" :key="route.name">
         <template slot="title">
-          <span v-if="item.meta && item.meta.title" slot="title" style="color:#445577">{{ generateTitle(item.meta.title) }}</span>
+          <span v-if="route.meta && route.meta.title" style="color:#445577">{{ generateTitle(route.meta.title) }}</span>
         </template>
-        <template v-for="(child, index) in item.children" v-if="!child.hidden">
+        <template v-for="(child, index) in route.children" v-if="!route.meta || !child.meta.hidden">
           <sidebar-item :is-nest="true" class="nest-menu" v-if=" child.children && child.children.length > 0 && hasOneShowingChildren(child.children)" :routes="[child]" :key="child.path"></sidebar-item>
-          <router-link v-else :to="composePath(item, child)" :key="child.name">
-            <el-menu-item :index="composePath(item, child)">
+          <router-link v-else :to="composePath(route, child, false)" :key="child.name">
+            <el-menu-item :index="composePath(route, child, true)">
               <svg-icon v-if="child.meta && child.meta.icon" :icon-class="child.meta.icon" style="margin-right: 0.5rem"></svg-icon>
               <span v-if="child.meta && child.meta.title" slot="title">{{ generateTitle(child.meta.title) }}</span>
             </el-menu-item>
@@ -37,17 +37,24 @@ export default {
     }
   },
   methods: {
+    showRoute(route) {
+
+      return  (!route.meta || !route.meta.hidden) && route.children
+    },
     getMenuIndex(item) {
 
       const mIndex = item.name || item.path
 
       return mIndex
     },
-    composePath(item, child) {
+    composePath(item, child, log) {
 
       let value = item.path + '/' + child.path
 
-      console.log('menu index', value)
+      if (log) {
+
+        console.log('menu index', value)
+      }
 
       return value
     },
@@ -55,7 +62,17 @@ export default {
 
       const showingChildren = children.filter(item => {
 
-        return !item.hidden
+        if (!item.meta) {
+
+          return true
+        }
+
+        if (!item.meta.hidden) {
+
+          return true
+        }
+
+        return false
       })
 
       if (showingChildren.length >= 1) {

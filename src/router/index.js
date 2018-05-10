@@ -41,22 +41,19 @@ const user = {
     {
       path: 'main',
       component:_import('systemadmin/user/main'),
-      meta: { title: 'systemadmin_user_main'},
-      hidden:true
+      meta: { title: 'systemadmin_user_main', hidden:true},
     },
     {
       path: 'edit',
       component: _import('systemadmin/user/edit'),
       name: 'systemadmin_user_edit',
-      meta: { title: 'systemadmin_user_edit'},
-      hidden:true
+      meta: { title: 'systemadmin_user_edit', hidden:true},
     },
     {
       path: 'rolesetting',
       component: _import('systemadmin/user/rolesetting'),
       name: 'systemadmin_user_rolesetting',
-      meta: {title: 'systemadmin_user_rolesetting'},
-      hidden: true,
+      meta: {title: 'systemadmin_user_rolesetting', hidden:true},
     }
   ]
 }
@@ -72,29 +69,25 @@ const role = {
     {
       path: 'main',
       component:_import('systemadmin/role/main'),
-      meta: { title: 'systemadmin_role', actions:['search', 'create', 'edit', 'reset', 'delete']},
-      hidden:true
+      meta: { title: 'systemadmin_role', actions:['search', 'create', 'edit', 'reset', 'delete'], hidden:true},
     },
     {
       path: 'create',
       component: _import('systemadmin/role/create'),
       name: 'systemadmin_role_create',
-      meta: { title: 'systemadmin_role_create'},
-      hidden:true
+      meta: { title: 'systemadmin_role_create', hidden:true},
     },
     {
       path: 'detail',
       component: _import('systemadmin/role/detail'),
       name: 'systemadmin_role_detail',
-      meta: { title: 'systemadmin_role_detail'},
-      hidden:true
+      meta: { title: 'systemadmin_role_detail', hidden:true},
     },
     {
       path: 'edit',
       component: _import('systemadmin/role/edit'),
       name: 'systemadmin_role_edit',
-      meta: { title: 'systemadmin_role_edit'},
-      hidden:true
+      meta: { title: 'systemadmin_role_edit', hidden:true},
     }
   ]
 }
@@ -110,8 +103,7 @@ const project = {
     {
       path: 'main',
       component:_import('systemadmin/project/main'),
-      meta: { title: 'projectsetting'},
-      hidden:true
+      meta: { title: 'projectsetting', hidden:true},
     }
   ]
 }
@@ -140,22 +132,19 @@ const inner = {
     {
       path: 'main',
       component:_import('messagepush/inner/main'),
-      meta: { title: 'messagepush_inner'},
-      hidden:true
+      meta: { title: 'messagepush_inner', hidden:true},
     },
     {
       path: 'edit',
       component: _import('messagepush/inner/editor'),
       name: 'messagepush_inner_edit',
-      meta: { title: 'messagepush_inner_edit'},
-      hidden:true
+      meta: { title: 'messagepush_inner_edit', hidden:true},
     },
     {
       path: 'create',
       component: _import('messagepush/inner/create'),
       name: 'messagepush_inner_create',
-      meta: {title: 'messagepush_inner_create'},
-      hidden: true,
+      meta: {title: 'messagepush_inner_create', hidden:true},
     }
   ]
 }
@@ -171,22 +160,19 @@ const area = {
     {
       path: 'main',
       component:_import('messagepush/area/main'),
-      meta: { title: 'messagepush_area'},
-      hidden:true
+      meta: { title: 'messagepush_area', hidden:true},
     },
     {
       path: 'edit',
       component: _import('messagepush/area/editor'),
       name: 'messagepush_area_edit',
-      meta: { title: 'messagepush_area_edit'},
-      hidden:true
+      meta: { title: 'messagepush_area_edit', hidden:true},
     },
     {
       path: 'create',
       component: _import('messagepush/area/create'),
       name: 'messagepush_area_create',
-      meta: {title: 'messagepush_area_create'},
-      hidden: true,
+      meta: {title: 'messagepush_area_create', hidden:true},
     }
   ]
 }
@@ -206,13 +192,14 @@ const messagepush = {
 const error404 = {
   path: '*',
   redirect: '/404',
-  hidden: true }
+  meta: { hidden:true }
+}
 
 export const constantRouterMap = [
-  { path: '/login', component: _import('login/index'), hidden: true },
-  { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
-  { path: '/404', component: _import('errorPage/404'), hidden: true },
-  { path: '/401', component: _import('errorPage/401'), hidden: true },
+  { path: '/login', component: _import('login/index'), meta:{hidden: true} },
+  { path: '/authredirect', component: _import('login/authredirect'), meta:{hidden: true} },
+  { path: '/404', component: _import('errorPage/404'), meta:{hidden: true} },
+  { path: '/401', component: _import('errorPage/401'), meta:{hidden: true} },
   { path: '', redirect:'/messagepush'}
 ]
 
