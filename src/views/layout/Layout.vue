@@ -3,8 +3,8 @@
     <div style="position: absolute;z-index: 0;width: 180px;background: #E0E5EE;height: 100%;left: 0;top: 0"></div>
     <div style="z-index: 1">
       <app-header-bar></app-header-bar>
-      <div class="main-container">
-        <div class="sidebar-container">
+      <div style="display: flex">
+        <div class="sidebar-container" :style="{minHeight:minHeight}">
           <side-bar></side-bar>
         </div>
         <div class="appmain-container">
@@ -29,6 +29,11 @@
     computed: {
       sidebar() {
         return this.$store.state.app.sidebar
+      }
+    },
+    data() {
+      return {
+        minHeight:window.innerHeight - 50,
       }
     }
   }
