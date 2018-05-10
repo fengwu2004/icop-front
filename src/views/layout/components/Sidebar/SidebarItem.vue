@@ -3,7 +3,7 @@
     <template v-for="route in routes" v-if="showRoute(route)">
       <el-submenu :index="getMenuIndex(route)" :key="route.name">
         <template slot="title">
-          <span v-if="route.meta && route.meta.title" style="color:#445577">{{ generateTitle(route.meta.title) }}</span>
+          <span v-if="route.meta && route.meta.title" slot="title" style="color:#445577">{{ generateTitle(route.meta.title) }}</span>
         </template>
         <template v-for="(child, index) in route.children" v-if="!route.meta || !child.meta.hidden">
           <sidebar-item :is-nest="true" class="nest-menu" v-if=" child.children && child.children.length > 0 && hasOneShowingChildren(child.children)" :routes="[child]" :key="child.path"></sidebar-item>
