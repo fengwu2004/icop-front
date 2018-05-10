@@ -31,19 +31,31 @@ export function validateAlphabets(str) {
   return reg.test(str)
 }
 
-/*中文，数字，字母，下划线，不以下划线开头结尾*/
+/*数字，字母，下划线，不以下划线开头结尾, 长度6-30*/
 export function validateName(str) {
   
-  const reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/
+  const reg = /^[a-zA-Z][a-zA-Z0-9_]{5,29}$/
   
   return reg.test(str)
 }
 
-function isMobil(s)
+export function isMobil(s)
 {
   const patrn = /^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/;
   
   return patrn.test(s)
+}
+
+export function trim(str){
+  
+  return str.replace(/(^\s*)|(\s*$)/g, "")
+}
+
+export function validatePassword(str) {
+  
+  const reg = /^[a-zA-Z]\w{5,17}$/
+  
+  return reg.test(str)
 }
 
 /**

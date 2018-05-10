@@ -105,6 +105,11 @@
 
         let user = this.currentEditUser
 
+        if (!this.checkUserValid(user)) {
+
+          return
+        }
+
         if (user.userId) {
 
           edit(user).then(response => {
