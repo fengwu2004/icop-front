@@ -27,20 +27,32 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-dialog title="修改密码" :visible.sync="dialogVisible" width="500px" :modal-append-to-body="false" :lock-scroll="true" :append-to-body="false">
-        <div class="inputgroup">
-          <span>旧密码</span><el-input v-model="oldPwd" type="password"></el-input>
-        </div>
-        <div class="inputgroup">
-          <span>新密码</span><el-input v-model="newPwd1" type="password"></el-input>
-        </div>
-        <div class="inputgroup">
-          <span>请再次输入</span><el-input v-model="newPwd2" type="password"></el-input>
-        </div>
-        <div class="btns">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="editPassword">确 定</el-button>
-        </div>
+      <el-dialog title="修改密码" :visible.sync="dialogVisible" width="515px" :modal-append-to-body="false" :lock-scroll="true" :append-to-body="false">
+        <el-form auto-complete="off">
+          <div class="inputgroup">
+            <span>旧密码</span>
+            <input style="display:none" name="txtpwd">
+            <el-input v-model="oldPwd" type="password" name="txtpwd" auto-complete="off"></el-input>
+          </div>
+          <div class="inputgroup">
+            <span>新密码</span>
+            <el-popover
+              placement="right"
+              width="150"
+              trigger="focus">
+              <span style="font-size: 0.6rem">密码长度6-18位,字母，数组，标点符号，不允许空格</span>
+              <el-input style="width: 200px;" v-model="newPwd1" slot="reference" type="password" auto-complete="off"></el-input>
+            </el-popover>
+          </div>
+          <div class="inputgroup">
+            <span>请再次输入</span>
+            <el-input v-model="newPwd2" type="password" auto-complete="off"></el-input>
+          </div>
+          <div class="btns">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="editPassword">确 定</el-button>
+          </div>
+        </el-form>
       </el-dialog>
     </div>
   </div>
@@ -168,19 +180,20 @@
 
     margin-top: 2rem;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: 3rem;
     align-items: center;
 
     span {
 
       display: inline-block;
-      width: 40%;
+      width: 80px;
       max-width: 5rem;
     }
 
     .el-input {
 
-      width: 50%;
+      width: 200px;
     }
   }
 
