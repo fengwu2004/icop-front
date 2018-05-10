@@ -118,7 +118,7 @@
 
         this.$store.dispatch('resetMessage').then(() => {
 
-          let route = {name:'createareamessage'}
+          let route = {name:'messagepush_area_create'}
 
           this.$router.push(route)
         })
@@ -264,7 +264,7 @@
 
         this.$store.dispatch('setMessage', message).then(() => {
 
-          let route = {name:'createareamessage'}
+          let route = {name:'messagepush_area_create'}
 
           this.$router.push(route)
         })

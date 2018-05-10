@@ -7,45 +7,8 @@
 </template>
 
 <script>
-
   export default {
-    data() {
 
-      return {
-        createmessage:false,
-        createmessageprocess:false,
-        usercreatesearch:false,
-        accountcreatesearch:false,
-      }
-    },
-    computed:{
-      routerref:function() {
-
-        return this.$refs.main.$refs.main
-      }
-    },
-    methods:{
-      createUser() {
-
-        let route = {name:'usercreate'}
-
-        this.$router.push(route)
-      },
-      searchUser(name) {
-
-        this.routerref.handleSearch(name)
-      },
-      searchRole(name) {
-
-        this.routerref.handleSearch(name)
-      },
-      createRole() {
-
-        let route = {name:'systemadmin_role_create'}
-
-        this.$router.push(route)
-      },
-    }
   }
 </script>
 

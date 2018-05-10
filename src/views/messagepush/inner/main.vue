@@ -117,7 +117,7 @@
 
         this.$store.dispatch('resetMessage').then(() => {
 
-          let route = {name:'innercreatemessage'}
+          let route = {name:'messagepush_inner_create'}
 
           this.$router.push(route)
         })

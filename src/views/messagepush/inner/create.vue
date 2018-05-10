@@ -77,7 +77,7 @@
 
         console.log('zz')
 
-        let route = {name:'innereditormessage'}
+        let route = {name:'messagepush_inner_edit'}
 
         this.$router.push(route)
       },

@@ -136,28 +136,28 @@ const inner = {
   
   path: 'inner',
   redirect: '/messagepush/inner/main',
-  name: 'innerpush',
+  name: 'messagepush_inner',
   component:main,
-  meta: { title: 'innerpush', icon: 'innerpush' },
+  meta: { title: 'messagepush_inner', icon: 'innerpush' },
   children: [
     {
       path: 'main',
       component:_import('messagepush/inner/main'),
-      meta: { title: 'areapush'},
+      meta: { title: 'messagepush_inner'},
       hidden:true
     },
     {
-      path: 'editor',
+      path: 'edit',
       component: _import('messagepush/inner/editor'),
-      name: 'innereditormessage',
-      meta: { title: 'editormessage'},
+      name: 'messagepush_inner_edit',
+      meta: { title: 'messagepush_inner_edit'},
       hidden:true
     },
     {
       path: 'create',
       component: _import('messagepush/inner/create'),
-      name: 'innercreatemessage',
-      meta: {title: 'createareamessage'},
+      name: 'messagepush_inner_create',
+      meta: {title: 'messagepush_inner_create'},
       hidden: true,
     }
   ]
@@ -167,28 +167,28 @@ const area = {
   
   path: 'area',
   redirect: '/messagepush/area/main',
-  name: 'areapush',
+  name: 'messagepush_area',
   component:main,
-  meta: { title: 'areapush', icon: 'areapush' },
+  meta: { title: 'messagepush_area', icon: 'areapush' },
   children: [
     {
       path: 'main',
       component:_import('messagepush/area/main'),
-      meta: { title: 'areapush'},
+      meta: { title: 'messagepush_area'},
       hidden:true
     },
     {
-      path: 'editor',
+      path: 'edit',
       component: _import('messagepush/area/editor'),
-      name: 'editormessage',
-      meta: { title: 'editormessage'},
+      name: 'messagepush_area_edit',
+      meta: { title: 'messagepush_area_edit'},
       hidden:true
     },
     {
       path: 'create',
       component: _import('messagepush/area/create'),
-      name: 'createareamessage',
-      meta: {title: 'createareamessage'},
+      name: 'messagepush_area_create',
+      meta: {title: 'messagepush_area_create'},
       hidden: true,
     }
   ]

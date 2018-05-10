@@ -81,9 +81,7 @@
     methods: {
       onEditorMessage() {
 
-        console.log('zz')
-
-        let route = {name:'editormessage'}
+        let route = {name:'messagepush_area_edit'}
 
         this.$router.push(route)
       },
