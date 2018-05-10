@@ -1,6 +1,7 @@
 import { login, logout, editPwd } from '@/api/login'
 import { getTokenAndId, setTokenAndId, removeToken } from '@/utils/auth'
 import md5 from 'blueimp-md5'
+import { module } from "@/store/modules/enableroutes";
 
 let tokenAndId = getTokenAndId()
 
@@ -12,6 +13,7 @@ const user = {
     telephone:'',
     pepodomIds:'',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    routes:module
   },
   
   mutations: {

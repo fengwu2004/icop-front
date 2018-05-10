@@ -17,16 +17,16 @@ const whiteList = ['/login', '/authredirect']// no redirect whitelist
 
 function dynamicCreateRoutes(to, from, next) {
   
-  let permissions = store.getters.permissions
+  let routes = store.getters.routes
   
-  store.dispatch('GenerateRoutes', { permissions })
-    .then(() => { // 根据roles权限生成可访问的路由表
+  store.dispatch('GenerateRoutes', routes)
+    .then(() => {
       
       router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
       
       let replace = { ...to, replace: true }
       
-      console.log(from.path + ' 替换为 ' + replace.path, )
+      console.log(from.path + ' 替换为 ' + replace.path)
       
       next(replace) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
     })
