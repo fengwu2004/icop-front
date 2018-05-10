@@ -47,6 +47,8 @@ export default {
 
       let value = item.path + '/' + child.path
 
+      console.log('menu index', value)
+
       return value
     },
     hasOneShowingChildren(children) {
