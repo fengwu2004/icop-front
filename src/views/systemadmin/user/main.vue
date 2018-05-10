@@ -69,7 +69,7 @@
 
         this.$store.dispatch('resetUser').then(() => {
 
-          let route = {name:'edituser', params:{title:'创建账户'}}
+          let route = {name:'systemadmin_user_edit', params:{title:'创建账户'}}
 
           this.$router.push(route)
         })
@@ -194,7 +194,7 @@
 
         this.$store.dispatch('setCurrentUser', user).then(() => {
 
-          let route = {name:'edituser', params:{title:'修改账户'}}
+          let route = {name:'systemadmin_user_edit', params:{title:'修改账户'}}
 
           this.$router.push(route)
         })

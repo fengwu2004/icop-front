@@ -34,28 +34,28 @@ const user = {
   
   path: 'user',
   redirect: '/systemadmin/user/main',
-  name: 'usermanager',
+  name: 'systemadmin_user',
   component:main,
-  meta: { title: 'usermanager', icon: 'usermanager' },
+  meta: { title: 'systemadmin_user', icon: 'systemadmin_user' },
   children: [
     {
       path: 'main',
       component:_import('systemadmin/user/main'),
-      meta: { title: 'usermanagermain'},
+      meta: { title: 'systemadmin_user_main'},
       hidden:true
     },
     {
       path: 'edit',
       component: _import('systemadmin/user/edit'),
-      name: 'edituser',
-      meta: { title: 'edituser'},
+      name: 'systemadmin_user_edit',
+      meta: { title: 'systemadmin_user_edit'},
       hidden:true
     },
     {
       path: 'rolesetting',
       component: _import('systemadmin/user/rolesetting'),
-      name: 'rolesetting',
-      meta: {title: 'rolesetting'},
+      name: 'systemadmin_user_rolesetting',
+      meta: {title: 'systemadmin_user_rolesetting'},
       hidden: true,
     }
   ]

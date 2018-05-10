@@ -199,10 +199,7 @@
       },
       setRole() {
 
-        let route = {
-
-          name:'rolesetting'
-        }
+        let route = { name:'systemadmin_user_rolesetting' }
 
         this.$router.push(route)
       },
