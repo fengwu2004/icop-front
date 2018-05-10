@@ -57,9 +57,11 @@ export let module = {
 },
   {
     name:'messagepush',
+    title:'信息发布',
     children:[
       {
         name:'area',
+        title:'社区消息',
         children:[
           {
             name:'main',
