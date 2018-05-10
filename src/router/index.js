@@ -121,10 +121,7 @@ const systemadmin = {
   component: Layout,
   redirect: '/systemadmin/role',
   name: 'systemadmin',
-  meta: {
-    title: 'systemadmin',
-    icon: 'table'
-  },
+  meta: { title: 'systemadmin'},
   children: [
     role,
     user,
@@ -199,10 +196,7 @@ const messagepush = {
   component: Layout,
   redirect: '/messagepush/area',
   name: 'messagepush',
-  meta: {
-    title: 'messagepush',
-    icon: 'table'
-  },
+  meta: { title: 'messagepush' },
   children: [
     area,
     inner,
