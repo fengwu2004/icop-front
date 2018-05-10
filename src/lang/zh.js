@@ -36,7 +36,7 @@ export default {
     usermanager:'账户管理',
     projectsetting:'项目账户配置',
     rolemanager:'角色管理',
-    createrole:'创建角色',
+    systemadmin_role_create:'创建角色',
     createuser:'创建账户',
     userpermission:'设置权限',
     usermanagermain:'usermanagermain',

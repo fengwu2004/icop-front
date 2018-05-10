@@ -4,8 +4,8 @@
       <bread-crumb class="breadcrumb"></bread-crumb>
       <div class="createsearch">
         <el-input class="input" clearable v-model="rolename" placeholder="请输入角色名称查询"></el-input>
-        <el-button class="search" @click="searchRole">查询</el-button>
-        <el-button class="create" @click="createRole">创建</el-button>
+        <el-button class="search" @click="handleSearchRole">查询</el-button>
+        <el-button class="create" @click="handleCreateRole">创建</el-button>
       </div>
     </div>
     <div class="content">
@@ -65,13 +65,13 @@
       console.log(this.$route)
     },
     methods:{
-      searchRole() {
+      handleSearchRole() {
 
         this.handleSearch(this.rolename)
       },
-      createRole() {
+      handleCreateRole() {
 
-        let route = {name:'createrole'}
+        let route = {name:'systemadmin_role_create'}
 
         this.$router.push(route)
       },

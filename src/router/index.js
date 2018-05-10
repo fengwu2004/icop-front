@@ -78,8 +78,8 @@ const role = {
     {
       path: 'create',
       component: _import('systemadmin/role/create'),
-      name: 'createrole',
-      meta: { title: 'createrole'},
+      name: 'systemadmin_role_create',
+      meta: { title: 'systemadmin_role_create'},
       hidden:true
     },
     {

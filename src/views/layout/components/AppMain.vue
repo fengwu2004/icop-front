@@ -8,10 +8,7 @@
 
 <script>
 
-  import NavBar from './NavBar'
-
   export default {
-    components: { NavBar },
     data() {
 
       return {
@@ -44,7 +41,7 @@
       },
       createRole() {
 
-        let route = {name:'createrole'}
+        let route = {name:'systemadmin_role_create'}
 
         this.$router.push(route)
       },
