@@ -137,7 +137,7 @@
 
         let role = this.tableData.list[index]
 
-        let router = {name:'roledetails', params:{role:role}}
+        let router = {name:'systemadmin_role_detail', params:{role:role}}
 
         this.$router.push(router)
       },
@@ -145,7 +145,7 @@
 
         let role = this.tableData.list[index]
 
-        let router = {name:'editroledetails', params:{role:role}}
+        let router = {name:'systemadmin_role_edit', params:{role:role}}
 
         this.$router.push(router)
       },

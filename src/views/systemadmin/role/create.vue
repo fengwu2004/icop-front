@@ -122,7 +122,12 @@
 
         add(data).then(response => {
 
-          this.$router.push({name:'rolemanager'})
+          this.$message.success('创建角色成功')
+
+          this.$router.go(-1)
+        }).catch(res => {
+
+          this.$message.success('创建角色失败')
         })
       }
     },

@@ -39,6 +39,7 @@
 
 <script>
 
+  import { edit } from "@/api/role";
   import { queryTotalPopedomTree } from '@/api/permissiontree'
   import { queryPopedomListByIds } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
@@ -86,7 +87,7 @@
 
         edit(data).then(response => {
 
-          let route = {name:'rolemanager'}
+          let route = {name:'systemadmin_role'}
 
           this.$router.push(route)
         })

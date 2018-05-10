@@ -90,7 +90,7 @@
 
         edit(data).then(response => {
 
-          let route = {name:'rolemanager'}
+          let route = {name:'systemadmin_role'}
 
           this.$router.push(route)
         })

@@ -65,14 +65,14 @@ const role = {
   
   path: 'role',
   redirect: '/systemadmin/role/main',
-  name: 'rolemanager',
+  name: 'systemadmin_role',
   component:main,
-  meta: { title: 'rolemanager', icon: 'rolemanager' },
+  meta: { title: 'systemadmin_role', icon: 'systemadmin_role' },
   children: [
     {
       path: 'main',
       component:_import('systemadmin/role/main'),
-      meta: { title: 'rolemanager', actions:['search', 'create', 'edit', 'reset', 'delete']},
+      meta: { title: 'systemadmin_role', actions:['search', 'create', 'edit', 'reset', 'delete']},
       hidden:true
     },
     {
@@ -83,17 +83,17 @@ const role = {
       hidden:true
     },
     {
-      path: 'details',
-      component: _import('systemadmin/role/details'),
-      name: 'roledetails',
-      meta: { title: 'roledetails'},
+      path: 'detail',
+      component: _import('systemadmin/role/detail'),
+      name: 'systemadmin_role_detail',
+      meta: { title: 'systemadmin_role_detail'},
       hidden:true
     },
     {
       path: 'edit',
       component: _import('systemadmin/role/edit'),
-      name: 'editroledetails',
-      meta: { title: 'editroledetails'},
+      name: 'systemadmin_role_edit',
+      meta: { title: 'systemadmin_role_edit'},
       hidden:true
     }
   ]
