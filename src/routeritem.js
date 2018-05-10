@@ -324,15 +324,3 @@ let modules = [
     ]
   },
 ]
-
-function generateRouter(module) {
-
-
-}
-
-function createRouter(module) {
-  
-  let route = generateRouter(module.name)
-  
-  return module.name
-}
