@@ -1,4 +1,4 @@
-import Layout from '../views/layout/Layout'
+import Layout from '@/views/layout/Layout'
 
 const main = { template: '<router-view ref="main"></router-view>' }
 
@@ -169,17 +169,24 @@ const project = {
 const systemadmin = {
   path: '/systemadmin',
   component: Layout,
-  redirect: '/systemadmin/user',
   name: 'systemadmin',
-  meta: {
-    title: 'systemadmin',
-    icon: 'table'
-  },
-  children: [
-    role,
-    user,
-    project
-  ]
+  meta: {title: 'systemadmin', icon: 'systemadmin'},
+  children:[systemadmin_role]
+}
+
+let systemadmin_role =  {
+  path: 'role',
+  name: 'systemadmin-role',
+  component:main,
+  meta: { title: 'systemadmin-role', icon: 'systemadmin-role' },
+  children:[systemadmin_role_main]
+}
+
+let systemadmin_role_main = {
+  path: 'systemadmin-role-main',
+  component:_import('systemadmin/role/main'),
+  meta: { title: 'systemadmin-role-main', actions:['search', 'create', 'edit', 'reset', 'delete']},
+  hidden:true
 }
 
 const inner = {
@@ -264,31 +271,51 @@ const error404 = {
   redirect: '/404',
   hidden: true }
   
-  
 let modules = [
-  {
-    name:'messagemanager',
-    children:[
-      {
-        name:'announcement',
-        actions:['search', 'create', 'edit', 'delete', 'send']
-      },
-      {
-        name:'notice',
-        actions:['search', 'create', 'edit', 'delete', 'send']
-      },
-    ]
-  },
   {
     name:'systemmanager',
     children:[
       {
         name:'role',
-        actions:['search', 'create', 'edit', 'reset', 'delete']
+        actions:['search', 'create', 'edit', 'reset', 'delete'],
+        children:[
+          {
+            name:'create',
+            actions:['search', 'create', 'edit', 'reset', 'delete'],
+            hidden:true,
+          },
+          {
+            name:'edit',
+            actions:['search', 'create', 'edit', 'reset', 'delete'],
+            hidden:true,
+          },
+          {
+            name:'detail',
+            actions:['search', 'create', 'edit', 'reset', 'delete'],
+            hidden:true,
+          },
+        ]
       },
       {
         name:'user',
-        actions:['search', 'create', 'edit', 'reset', 'delete']
+        actions:['search', 'create', 'edit', 'reset', 'delete'],
+        children:[
+          {
+            name:'create',
+            actions:['search', 'create', 'edit', 'reset', 'delete'],
+            hidden:true,
+          },
+          {
+            name:'edit',
+            actions:['search', 'create', 'edit', 'reset', 'delete'],
+            hidden:true,
+          },
+          {
+            name:'detail',
+            actions:['search', 'create', 'edit', 'reset', 'delete'],
+            hidden:true,
+          },
+        ]
       },
       {
         name:'project',
@@ -298,9 +325,14 @@ let modules = [
   },
 ]
 
-let mainmodule = {
-  name:null,
-  children:modules
+function generateRouter(module) {
+
+
 }
 
-
+function createRouter(module) {
+  
+  let route = generateRouter(module.name)
+  
+  return module.name
+}
