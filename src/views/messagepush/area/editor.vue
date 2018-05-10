@@ -53,13 +53,13 @@
 
         console.log(html)
 
-        this.$store.dispatch('setMessageContent',this.content)
+        this.$store.dispatch('setMessageContent', this.content)
       },
       HandleSave() {
 
         this.$store.dispatch('setMessageContent',this.content).then(() => {
 
-          alert(JSON.stringify(this.message))
+          // alert(JSON.stringify(this.message))
 
           if (this.message.messageId) {
 

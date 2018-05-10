@@ -28,6 +28,7 @@
 </template>
 
 <script>
+  import { trim } from "@/utils/validate";
   import { queryProjectList, initProjectUser } from '@/api/project'
   import { editPwd } from "@/api/user";
   import PageWidget from '@/components/PageWidget'
@@ -114,6 +115,12 @@
           this.listLoading = false
 
           this.searching = false
+
+        }).catch(res => {
+
+          this.$message.error('数据或网络异常，请刷新重试');
+
+          this.listLoading = false
         })
       },
       pageSizeChange(pageSize){
@@ -186,7 +193,9 @@
           })
         })
       },
-      handleSearch(queryParam) {
+      handleSearch(rawqueryParam) {
+
+        let queryParam = trim(rawqueryParam)
 
         if (!queryParam || queryParam.length == 0) {
 
