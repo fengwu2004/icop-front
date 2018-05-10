@@ -12,7 +12,7 @@
       <div class="content">
         <div class="title">
           <span class="redstar">*</span><span>主题</span><span class="subtitle">(限30个字)</span>
-          <div style="margin-top: 1rem">
+          <div style="margin-top: 1rem;">
             <el-input maxlength="30" placeholder="请输入通知标题" v-model="message.msgSubject"></el-input>
           </div>
         </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="sendtype">
           <div>
-            <span>发送方式</span>
+            <span class="redstar">*</span><span>发送方式</span>
           </div>
           <div class="sendtyperadio">
             <el-radio v-model="message.sendType" label="APP">App</el-radio>
@@ -51,6 +51,7 @@
 </template>
 <script>
 
+  import { trim } from "@/utils/validate";
   import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget/index'
   import BreadCrumb from '@/components/Breadcrumb/index'
@@ -77,9 +78,60 @@
       ]),
     },
     methods: {
+      checkMessageValid() {
+
+        if (!this.message.msgSubject) {
+
+          this.$message({
+            message: '消息主题不能为空',
+            type: 'warning'
+          });
+
+          console.log('zz')
+
+          return false
+        }
+
+        let msgSubject = trim(this.message.msgSubject)
+
+        if (msgSubject.length > 30 || msgSubject <= 0) {
+
+          this.$message({
+            message: '通知主题不能为空',
+            type: 'warning'
+          });
+
+          return false
+        }
+
+        if (!this.message.sendType) {
+
+          this.$message({
+            message: '消息发送方式不能为空',
+            type: 'warning'
+          });
+
+          return false
+        }
+
+        if (!this.message.sendStrategy) {
+
+          this.$message({
+            message: '消息发送策略需要选择',
+            type: 'warning'
+          });
+
+          return false
+        }
+
+        return true
+      },
       onEditorMessage() {
 
-        console.log('zz')
+        if (!this.checkMessageValid()) {
+
+          return
+        }
 
         let route = {name:'messagepush_inner_edit'}
 
@@ -249,6 +301,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .errortip {
+
+    color: red;
+    font-size: 0.4rem;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
   }
 
 </style>
