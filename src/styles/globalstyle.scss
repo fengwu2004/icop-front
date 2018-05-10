@@ -70,7 +70,7 @@ body {
   color: #409eff !important;
 }
 
-.el-button--primary.is-plain:focus {
+.el-button--primary.is-plain:focus, .el-button--primary.is-plain:hover {
 
-  background-color: white !important;
+ color: white !important;
 }
