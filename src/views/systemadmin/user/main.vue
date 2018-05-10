@@ -34,6 +34,7 @@
 
 <script>
 
+  import { trim } from "@/utils/validate";
   import { queryUserList, deleteUser, editPwd } from '@/api/user'
   import BreadCrumb from '@/components/Breadcrumb'
   import { default as PageWidget } from '@/components/PageWidget'
@@ -157,7 +158,9 @@
 
         })
       },
-      handleSearch(queryParam) {
+      handleSearch(rawqueryParam) {
+
+        let queryParam = trim(rawqueryParam)
 
         if (!queryParam || queryParam.length == 0) {
 
@@ -193,7 +196,7 @@
 
           let route = {name:'edituser', params:{title:'修改账户'}}
 
-          this.$router.push(router)
+          this.$router.push(route)
         })
       },
       handleChangePwd(index, row) {

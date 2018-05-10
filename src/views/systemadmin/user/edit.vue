@@ -33,7 +33,13 @@
         <div class="itemrow">
           <div>
             <span class="redstar">*</span><span class="sumtitle">账户</span>
-            <el-input style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur"></el-input>
+            <el-popover
+              placement="right"
+              width="200"
+              trigger="focus">
+              <span style="font-size: 0.6rem">长度6-30位,字母，数组，下划线，不允许空格</span>
+              <el-input slot="reference" style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur"></el-input>
+            </el-popover>
             <div style="margin-top: 10px">
               <span style="font-size: 0.8rem;color: #445577;">注:不能重名,登录时需同时输入@部分</span>
             </div>

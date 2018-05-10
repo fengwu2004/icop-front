@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import { trim } from "@/utils/validate";
   import { queryRoleList, deleteRole } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
@@ -188,7 +189,7 @@
         this.listLoading = true
 
         let data = {
-          roleName:name,
+          roleName:trim(name),
           pageIndex:1,
           pageSize:this.tableData.pageSize,
         }
