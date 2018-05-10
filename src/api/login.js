@@ -9,7 +9,7 @@ export function login(userName, password, Validate) {
   return request({
     url: '/jslife-icop-oms/login',
     method: 'post',
-    data
+    params:data
   })
 }
 
@@ -27,11 +27,11 @@ export function captcha() {
   })
 }
 
-export function editPwd(token) {
+export function editPwd(params) {
   return request({
     url: '/jslife-icop-oms/user/editPwd',
     method: 'post',
-    params: { token }
+    params: params
   })
 }
 

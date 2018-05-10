@@ -27,7 +27,7 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-dialog title="修改密码" :visible.sync="dialogVisible" width="20%">
+      <el-dialog title="修改密码" :visible.sync="dialogVisible" width="500px" :modal-append-to-body="false" :lock-scroll="true" :append-to-body="false">
         <div class="inputgroup">
           <span>旧密码</span><el-input v-model="oldPwd" type="password"></el-input>
         </div>
@@ -35,7 +35,7 @@
           <span>新密码</span><el-input v-model="newPwd1" type="password"></el-input>
         </div>
         <div class="inputgroup">
-          <span>请再次输入</span><el-input v-model="newPwd1" type="password"></el-input>
+          <span>请再次输入</span><el-input v-model="newPwd2" type="password"></el-input>
         </div>
         <div class="btns">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -48,7 +48,7 @@
 
 <script>
   import jsListIcon from '@/assets/jlife_icon.png'
-
+  import { editPwd } from "@/api/login";
   import { mapGetters } from 'vuex'
   import Screenfull from '@/components/Screenfull'
 
@@ -77,14 +77,31 @@
     methods: {
       editPassword() {
 
-        this.dialogVisible = true
-      },
-      toggleSideBar() {
+        if (this.newPwd1 !== this.newPwd2) {
 
-        this.$store.dispatch('toggleSideBar')
+          this.$message.error("新密码两次输入不匹配")
+
+          return
+        }
+
+        let data = {
+          oldPwd:this.oldPwd,
+          newPwd:this.newPwd1
+        }
+
+        editPwd(data).then(res => {
+
+          this.$message({
+            message: '密码修改成功',
+            type: 'success'
+          });
+
+          this.dialogVisible = true
+        })
       },
       logout() {
         this.$store.dispatch('LogOut').then(() => {
+
           location.reload()// In order to re-instantiate the vue-router object to avoid bugs
         })
       }
@@ -149,7 +166,7 @@
 
   .inputgroup {
 
-    margin-top: 0.51rem;
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -167,9 +184,14 @@
     }
   }
 
+  .inputgroup:first-child {
+
+    margin-top: 0;
+  }
+
   .btns {
 
-    margin-top: 1rem;
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
   }

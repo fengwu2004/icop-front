@@ -18,23 +18,13 @@
           <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>
           <el-input style="margin-top: 1rem;" type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="message.summary"></el-input>
         </div>
-        <div class="otherinfo">
-          <!--<div class="messagetype">-->
-            <!--<div>-->
-              <!--<span class="redstar">*</span><span>消息类型</span>-->
-            <!--</div>-->
-            <!--<el-select v-model="message.msgMainType" placeholder="请选择">-->
-              <!--<el-option v-for="item in messageTypeKeyList" :key="item.value" :label="item.text" :value="item.value"></el-option>-->
-            <!--</el-select>-->
-          <!--</div>-->
-          <div class="sendtype">
-            <div>
-              <span>发送方式</span>
-            </div>
-            <div class="sendtyperadio">
-              <el-radio v-model="message.sendType" label="APP">App</el-radio>
-              <el-radio v-model="message.sendType" label="SMS">短信</el-radio>
-            </div>
+        <div class="sendtype">
+          <div>
+            <span>发送方式</span>
+          </div>
+          <div class="sendtyperadio">
+            <el-radio v-model="message.sendType" label="APP">App</el-radio>
+            <el-radio v-model="message.sendType" label="SMS">短信</el-radio>
           </div>
         </div>
         <div class="sendstrategy">
@@ -100,7 +90,7 @@
   .content {
 
     width: 40%;
-    max-width: 500px;
+    min-width: 500px;
     margin: 2rem auto;
   }
 
@@ -169,6 +159,7 @@
   .sendtype {
 
     width: 40%;
+    margin-top: 2rem;
 
     .sendtyperadio {
 
@@ -234,6 +225,7 @@
   .sendstrategy {
 
     margin-top: 2rem;
+    min-width: 500px;
   }
 
   .helpertip {
