@@ -135,9 +135,9 @@
 
       queryTotalPopedomTree({}).then(response => {
 
-        this.app = this.build(null, response.data.app)
+        this.app = this.build(null, response.data.respData.app)
 
-        this.icop = this.build(null, response.data.icop)
+        this.icop = this.build(null, response.data.respData.icop)
       })
     },
     data() {
