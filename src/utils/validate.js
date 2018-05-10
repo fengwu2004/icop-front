@@ -39,6 +39,13 @@ export function validateName(str) {
   return reg.test(str)
 }
 
+function isMobil(s)
+{
+  const patrn = /^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/;
+  
+  return patrn.test(s)
+}
+
 /**
  * validate email
  * @param email
