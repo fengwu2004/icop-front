@@ -59,8 +59,6 @@
 
         this.$store.dispatch('setMessageContent',this.content).then(() => {
 
-          // alert(JSON.stringify(this.message))
-
           if (this.message.messageId) {
 
             edit(this.message).then(res => {

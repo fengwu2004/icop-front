@@ -86,7 +86,7 @@
 
         let user = this.currentEditUser
 
-        alert(JSON.stringify(user))
+        // alert(JSON.stringify(user))
 
         if (user.userId) {
 

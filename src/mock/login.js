@@ -37,7 +37,7 @@ const userMap = {
 export default {
   login: config => {
   
-    alert(JSON.stringify(config))
+    // alert(JSON.stringify(config))
     
     const { userName } = param2Obj(config.url)
     
