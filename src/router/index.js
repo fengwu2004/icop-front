@@ -119,7 +119,7 @@ const project = {
 const systemadmin = {
   path: '/systemadmin',
   component: Layout,
-  redirect: '/systemadmin/user',
+  redirect: '/systemadmin/role',
   name: 'systemadmin',
   meta: {
     title: 'systemadmin',
