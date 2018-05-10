@@ -30,6 +30,77 @@ import Layout from '../views/layout/Layout'
 
 const main = { template: '<router-view ref="main"></router-view>' }
 
+const usermain = {
+  path: 'main',
+  component:_import('systemadmin/user/main'),
+  meta: { title: 'usermanagermain'},
+  hidden:true
+}
+
+const usercreate = {
+  path: 'create',
+  component: _import('systemadmin/user/create'),
+  name: 'usercreate',
+  meta: { title: 'usercreate'},
+  hidden:true
+}
+
+const useredit = {
+  path: 'edit',
+  component: _import('systemadmin/user/edit'),
+  name: 'edituser',
+  meta: { title: 'edituser'},
+  hidden:true
+}
+
+const userrolesetting = {
+  path: 'rolesetting',
+  component: _import('systemadmin/user/rolesetting'),
+  name: 'rolesetting',
+  meta: {title: 'rolesetting'},
+  hidden: true,
+}
+
+const rolemain = {
+  path: 'main',
+  component:_import('systemadmin/role/main'),
+  meta: { title: 'rolemanager', actions:['search', 'create', 'edit', 'reset', 'delete']},
+  hidden:true
+}
+
+const rolecreate = {
+  path: 'create',
+  component: _import('systemadmin/role/create'),
+  name: 'createrole',
+  meta: { title: 'createrole'},
+  hidden:true
+}
+
+const roleedit = {
+  path: 'edit',
+  component: _import('systemadmin/role/edit'),
+  name: 'editroledetails',
+  meta: { title: 'editroledetails'},
+  hidden:true
+}
+
+const roledetail = {
+  
+  path: 'details',
+  component: _import('systemadmin/role/details'),
+  name: 'roledetails',
+  meta: { title: 'roledetails'},
+  hidden:true
+}
+
+const projectmain = {
+  
+  path: 'main',
+  component:_import('systemadmin/project/main'),
+  meta: { title: 'projectsetting'},
+  hidden:true
+}
+
 const user = {
   
   path: 'user',
