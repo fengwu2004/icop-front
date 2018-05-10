@@ -45,13 +45,6 @@ const user = {
       hidden:true
     },
     {
-      path: 'create',
-      component: _import('systemadmin/user/create'),
-      name: 'usercreate',
-      meta: { title: 'usercreate'},
-      hidden:true
-    },
-    {
       path: 'edit',
       component: _import('systemadmin/user/edit'),
       name: 'edituser',
