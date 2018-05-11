@@ -17,7 +17,6 @@
           <el-input placeholder="请输入用户名" v-model="loginForm.userName" prop="userName" auto-complete="off"/>
         </div>
         <div class="inputgroup">
-          <input style="display:none" name="pwd">
           <el-input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" auto-complete="off" prop="password"/>
         </div>
         <div class="inputgroup">
