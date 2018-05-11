@@ -1,11 +1,11 @@
 <template>
   <div class="dateselect">
     <span class="title">统计时间</span>
-    <el-radio-group v-model="days" @change="dayschange">
-      <el-radio-button label="今天"></el-radio-button>
-      <el-radio-button label="本周"></el-radio-button>
-      <el-radio-button label="本月"></el-radio-button>
-      <el-radio-button label="本年"></el-radio-button>
+    <el-radio-group v-model="days" @change="dayschange" size="small">
+      <el-radio-button label="今天" size="small"></el-radio-button>
+      <el-radio-button label="本周" size="small"></el-radio-button>
+      <el-radio-button label="本月" size="small"></el-radio-button>
+      <el-radio-button label="本年" size="small"></el-radio-button>
     </el-radio-group>
     <div class="intervalselect">
       <span class="title">选择时间:</span>
