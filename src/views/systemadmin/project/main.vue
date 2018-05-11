@@ -34,6 +34,7 @@
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
+  import md5 from 'blueimp-md5'
 
   export default {
     components: { PageWidget, BreadCrumb },
@@ -148,7 +149,8 @@
 
         let data = {
           areaId:project.areaId,
-          projectCode:project.projectCode
+          projectCode:project.projectCode,
+          password:md5('888888')
         }
 
         console.log('请求', data)
