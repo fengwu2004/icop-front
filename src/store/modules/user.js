@@ -40,7 +40,7 @@ const user = {
       
       console.log('登陆', userInfo)
       
-      alert(JSON.stringify(userInfo))
+      // alert(JSON.stringify(userInfo))
       
       let passwordhash = md5(userInfo.password)
       
@@ -50,19 +50,15 @@ const user = {
         
         login(username, passwordhash, userInfo.validate).then(response => {
           
-          const data = response.data
+          const data = response.data.respData
+          
+          console.log(response)
           
           commit('SET_USER_TOKEN', data.userToken)
           
-          commit('SET_USER_ID', data.userId)
+          commit('SET_USER_ID', data.id)
           
-          commit('SET_USER_NAME', data.userName)
-          
-          commit('SET_USER_TELEPHONE', data.telephone)
-          
-          commit('SET_USER_PEPODOMIDS', data.pepodomIds.split(','))
-          
-          setTokenAndId(response.data.token, response.data.userId)
+          setTokenAndId(data.userToken, data.id)
           
           resolve()
           
@@ -90,8 +86,6 @@ const user = {
             commit('SET_USER_TOKEN', '')
   
             commit('SET_USER_ID', '')
-            
-            commit('SET_USER_PEPODOMIDS', [])
             
             removeToken()
             
