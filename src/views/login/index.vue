@@ -14,15 +14,15 @@
         <div class="icon"/>
         <div class="title"/>
         <div class="inputgroup">
-          <input placeholder="请输入用户名" v-model="loginForm.userName" prop="userName" autocomplete="off"/>
+          <el-input placeholder="请输入用户名" v-model="loginForm.userName" prop="userName" auto-complete="off"/>
         </div>
         <div class="inputgroup">
           <input style="display:none" name="pwd">
-          <input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" autocomplete="off" prop="password"/>
+          <el-input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" auto-complete="off" prop="password"/>
         </div>
         <div class="inputgroup">
           <div class="inputcodegroup">
-            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.Validate" prop="Validate">
+            <el-input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.Validate" prop="Validate"/>
             <img ref="captichaimg" class="codeimg" @click="updateCaptcha">
           </div>
         </div>
