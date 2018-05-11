@@ -40,13 +40,15 @@ const user = {
       
       console.log('登陆', userInfo)
       
+      alert(JSON.stringify(userInfo))
+      
       let passwordhash = md5(userInfo.password)
       
       const username = userInfo.userName.trim()
       
       return new Promise((resolve, reject) => {
         
-        login(username, passwordhash, userInfo.Validate).then(response => {
+        login(username, passwordhash, userInfo.validate).then(response => {
           
           const data = response.data
           

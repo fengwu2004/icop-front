@@ -22,7 +22,7 @@
         </div>
         <div class="inputgroup">
           <div class="inputcodegroup">
-            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.Validate" prop="Validate">
+            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.validate" prop="Validate">
             <img ref="captichaimg" class="codeimg" @click="updateCaptcha">
           </div>
         </div>
@@ -69,12 +69,12 @@
         loginForm: {
           userName: '',
           password: '',
-          Validate:'',
+          validate:'',
         },
         loginRules: {
           userName: [{ required: true, trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
           password: [{ required: true, trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
-          Validate: [{ required: true, trigger: 'blur'}, {min:4, max:4, message:'长度为4', trigger:'blur'}]
+          validate: [{ required: true, trigger: 'blur'}, {min:4, max:4, message:'长度为4', trigger:'blur'}]
         },
       }
     },
@@ -98,8 +98,6 @@
             this.$store.dispatch('LoginByUsername', this.loginForm)
               .then(() => {
 
-                console.log('登陆成功')
-
                 this.loading = false
 
                 let route = { path: '/' }
@@ -108,7 +106,7 @@
               })
               .catch(() => {
 
-                console.log('登陆失败')
+                this.$message.error('登陆失败，请检查用户名或密码是否正确');
 
                 this.loading = false
               })
