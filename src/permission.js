@@ -3,6 +3,7 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
+import { queryPopedomList } from "@/api/login";
 import { checkValidTokenAndUserId } from '@/utils/auth' // getToken from cookie
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
@@ -18,6 +19,13 @@ const whiteList = ['/login', '/authredirect']// no redirect whitelist
 function dynamicCreateRoutes(to, from, next) {
   
   let routes = store.getters.routes
+  
+  queryPopedomList().then(res => {
+    
+    console.log('获取权限')
+    
+    console.log(res)
+  })
   
   store.dispatch('GenerateRoutes', routes)
     .then(() => {

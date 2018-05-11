@@ -20,9 +20,9 @@ export function logout() {
   })
 }
 
-export function captcha() {
+export function validPic() {
   return request({
-    url: '/jslife-icop-oms/captcha',
+    url: '/jslife-icop-oms/validPic',
     method: 'post'
   })
 }
@@ -30,6 +30,14 @@ export function captcha() {
 export function editPwd(params) {
   return request({
     url: '/jslife-icop-oms/user/editPwd',
+    method: 'post',
+    params: params
+  })
+}
+
+export function queryPopedomList(params) {
+  return request({
+    url: '/jslife-icop-oms/user/queryPopedomList',
     method: 'post',
     params: params
   })

@@ -17,7 +17,7 @@
           <input placeholder="请输入用户名" v-model="loginForm.userName"/>
         </div>
         <div class="inputgroup">
-          <input type="password"  placeholder="请输入密码" v-model="loginForm.password"/>
+          <input type="password"  placeholder="请输入密码" v-model="loginForm.password" autocomplete="off"/>
         </div>
         <div class="inputgroup">
           <div class="inputcodegroup">
@@ -43,7 +43,7 @@
   import img6 from '@/assets/loginimg/cloud6.png'
   import logo from '@/assets/loginimg/logo.png'
 
-  import { login, captcha } from "@/api/login"
+  import { login, validPic } from "@/api/login"
   import { isvalidUsername } from '@/utils/validate'
 
   const validateUsername = (rule, value, callback) => {
@@ -82,17 +82,6 @@
     }
   }
 
-  function dataURItoBlob(dataURI) {
-    var byteString = atob(dataURI.split(',')[1]);
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    var ab = new ArrayBuffer(byteString.length);
-    var ia = new Uint8Array(ab);
-    for (var i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], {type: mimeString});
-  }
-
   export default {
     mounted(){
 
@@ -127,18 +116,9 @@
     methods: {
       updateCaptcha() {
 
-        captcha().then(response => {
+        let timestamp = new Date().getTime()
 
-          let blob = dataURItoBlob(response.data.outputStream)
-
-          let src = window.URL.createObjectURL(blob)
-
-          this.$refs.captichaimg.src = response.data.outputStream
-        })
-          .catch(res => {
-
-            console.log(res)
-          })
+        this.$refs.captichaimg.src = '/jslife-icop-oms/validPic?index=' + timestamp
       },
       handleLogin() {
 

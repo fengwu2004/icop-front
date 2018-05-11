@@ -54,7 +54,7 @@ export default {
     }
   },
   logout: () => 'success',
-  captcha: () => {
+  validPic: () => {
     
     return {
       outputStream:base64image
