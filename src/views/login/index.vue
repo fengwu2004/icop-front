@@ -14,19 +14,20 @@
         <div class="icon"/>
         <div class="title"/>
         <div class="inputgroup">
-          <input placeholder="请输入用户名" v-model="loginForm.userName"/>
+          <input placeholder="请输入用户名" v-model="loginForm.userName" prop="userName" autocomplete="off"/>
         </div>
         <div class="inputgroup">
-          <input type="password"  placeholder="请输入密码" v-model="loginForm.password" autocomplete="off"/>
+          <input style="display:none" name="pwd">
+          <input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" autocomplete="off" prop="password"/>
         </div>
         <div class="inputgroup">
           <div class="inputcodegroup">
-            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.Validate">
+            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.Validate" prop="Validate">
             <img ref="captichaimg" class="codeimg" @click="updateCaptcha">
           </div>
         </div>
         <div class="confirm">
-          <el-button type="danger" :loading="loading" @click.native.prevent="handleLogin">登 陆</el-button>
+          <el-button type="danger" :loading="loading" @click="submitLogin">登 陆</el-button>
         </div>
       </el-form>
     </div>
@@ -45,42 +46,6 @@
 
   import { login, validPic } from "@/api/login"
   import { isvalidUsername } from '@/utils/validate'
-
-  const validateUsername = (rule, value, callback) => {
-
-    if (!isvalidUsername(value)) {
-
-      callback(new Error('Please enter the correct user name'))
-    }
-    else {
-
-      callback()
-    }
-  }
-
-  const validatePassword = (rule, value, callback) => {
-
-    if (value.length < 6) {
-
-      callback(new Error('The password can not be less than 6 digits'))
-    }
-    else {
-
-      callback()
-    }
-  }
-
-  const validateCaptcha = (rule, value, callback) => {
-
-    if (value.length < 4) {
-
-      callback(new Error('The Validate can not be less than 4 digits'))
-    }
-    else {
-
-      callback()
-    }
-  }
 
   export default {
     mounted(){
@@ -107,20 +72,22 @@
           Validate:'',
         },
         loginRules: {
-          userName: [{ required: true, trigger: 'blur', validator: validateUsername }],
-          password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-          Validate: [{ required: true, trigger: 'blur', validator: validateCaptcha }]
+          userName: [{ required: true, trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
+          password: [{ required: true, trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
+          Validate: [{ required: true, trigger: 'blur'}, {min:4, max:4, message:'长度为4', trigger:'blur'}]
         },
       }
     },
     methods: {
       updateCaptcha() {
 
+        console.log('aa')
+
         let timestamp = new Date().getTime()
 
         this.$refs.captichaimg.src = '/jslife-icop-oms/validPic?index=' + timestamp
       },
-      handleLogin() {
+      submitLogin() {
 
         this.$refs.loginForm.validate(valid => {
 
