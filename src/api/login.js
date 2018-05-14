@@ -5,6 +5,7 @@ export function login(userName, password, validate) {
     userName,
     password,
     validate,
+    isLogin:true
   }
   return request({
     url: '/jslife-icop-oms/login',

@@ -15,7 +15,7 @@ service.interceptors.request.use(config => {
   
     let tokenAndId = getTokenAndId()
   
-    if (config.params) {
+    if (config.params && !config.params.isLogin) {
   
       config.params.userToken = tokenAndId.userToken
 
