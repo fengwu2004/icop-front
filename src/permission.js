@@ -26,7 +26,7 @@ function dynamicCreateRoutes(to, from, next) {
   
     store.dispatch('setPemissionCodes', res.respData).then(() => {
   
-      store.dispatch('GenerateRoutes', routes)
+      store.dispatch('GenerateRoutes', store.getters.permissioncodes)
         .then(() => {
       
           router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表

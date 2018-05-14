@@ -1,13 +1,45 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
+import store from "@/store/index";
+
+function checkRouteAndActionEnable(code) {
+  
+  if (store.getters.permissioncodes) {
+    
+    return false
+  }
+  
+  for (let i = 0; i < store.getters.permissioncodes.length; ++i) {
+    
+    if (code === store.getters.permissioncodes[i]) {
+      
+      return true
+    }
+  }
+  
+  return false
+}
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
  * @param permissions
  * @param route
  */
-function hasPermission(permissionsRoutes, route) {
+function hasPermission(route, permissioncodes) {
   
-  return true
+  if (!route.meta || !route.meta.code) {
+  
+    return true
+  }
+  
+  for (let i = 0; i < permissioncodes.length; ++i) {
+    
+    if (route.meta.code === permissioncodes[i]) {
+      
+      return true
+    }
+  }
+  
+  return false
 }
 
 /**
@@ -15,15 +47,15 @@ function hasPermission(permissionsRoutes, route) {
  * @param asyncRouterMap
  * @param permissions
  */
-function filterAsyncRouter(asyncRouterMap, permissionsRoutes) {
+function filterAsyncRouter(asyncRouterMap, permissioncodes) {
   
   const accessedRouters = asyncRouterMap.filter(route => {
     
-    if (hasPermission(permissionsRoutes, route)) {
+    if (hasPermission(route, permissioncodes)) {
       
       if (route.children && route.children.length) {
         
-        route.children = filterAsyncRouter(route.children, permissionsRoutes)
+        route.children = filterAsyncRouter(route.children, permissioncodes)
       }
       
       return true
@@ -52,12 +84,12 @@ export const permission = {
     }
   },
   actions: {
-    GenerateRoutes({ commit }, routes) {
+    GenerateRoutes({ commit }, permissioncodes) {
       return new Promise(resolve => {
         
         console.log('zzz')
         
-        let accessedRouters = filterAsyncRouter(asyncRouterMap, routes)
+        let accessedRouters = filterAsyncRouter(asyncRouterMap, permissioncodes)
         
         commit('SET_ROUTERS', accessedRouters)
         
