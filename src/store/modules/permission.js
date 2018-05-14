@@ -46,9 +46,9 @@ export const permission = {
       state.addRouters = routers
       state.routers = constantRouterMap.concat(routers)
     },
-    SET_VALIDCODES: (state, itemList) => {
+    SET_PERMISSION_CODES: (state, codesstr) => {
       
-      state.validCodes = itemList.map(item => item.popedomCode)
+      state.validCodes = codesstr.split(',')
     }
   },
   actions: {
@@ -60,6 +60,15 @@ export const permission = {
         let accessedRouters = filterAsyncRouter(asyncRouterMap, routes)
         
         commit('SET_ROUTERS', accessedRouters)
+        
+        resolve()
+      })
+    },
+    setPemissionCodes({commit}, codesstr) {
+      
+      return new Promise(resolve => {
+  
+        commit('SET_PERMISSION_CODES', codesstr)
         
         resolve()
       })

@@ -35,7 +35,7 @@ const user = {
   redirect: '/systemadmin/user/main',
   name: 'systemadmin_user',
   component:main,
-  meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:122000 },
+  meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:'122000' },
   children: [
     {
       path: 'main',
@@ -63,12 +63,12 @@ const role = {
   redirect: '/systemadmin/role/main',
   name: 'systemadmin_role',
   component:main,
-  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: 121000 },
+  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: '121000' },
   children: [
     {
       path: 'main',
       component:_import('systemadmin/role/main'),
-      meta: { title: 'systemadmin_role', actions:[{code:121100, name:'search'}, {code:121212, name:'detail'}, {code:121200, name:'create'}, {code:121300, name:'edit'}, {code:121400,name:'delete'}], hidden:true},
+      meta: { title: 'systemadmin_role', hidden:true},
     },
     {
       path: 'create',
@@ -97,7 +97,7 @@ const project = {
   redirect: '/systemadmin/project/main',
   name: 'projectsetting',
   component:main,
-  meta: { title: 'projectsetting', icon: 'projectsetting' },
+  meta: { title: 'projectsetting', icon: 'projectsetting', code:'12300' },
   children: [
     {
       path: 'main',
@@ -112,7 +112,7 @@ const systemadmin = {
   component: Layout,
   redirect: '/systemadmin/role',
   name: 'systemadmin',
-  meta: { title: 'systemadmin'},
+  meta: { title: 'systemadmin', code:'120000'},
   children: [
     role,
     user,
@@ -126,7 +126,7 @@ const inner = {
   redirect: '/messagepush/inner/main',
   name: 'messagepush_inner',
   component:main,
-  meta: { title: 'messagepush_inner', icon: 'innerpush', code:112000 },
+  meta: { title: 'messagepush_inner', icon: 'innerpush', code:'112000' },
   children: [
     {
       path: 'main',
@@ -154,7 +154,7 @@ const area = {
   redirect: '/messagepush/area/main',
   name: 'messagepush_area',
   component:main,
-  meta: { title: 'messagepush_area', icon: 'areapush' },
+  meta: { title: 'messagepush_area', icon: 'areapush', code:'111000' },
   children: [
     {
       path: 'main',
@@ -181,7 +181,7 @@ const messagepush = {
   component: Layout,
   redirect: '/messagepush/area',
   name: 'messagepush',
-  meta: { title: 'messagepush' },
+  meta: { title: 'messagepush', code:'110000' },
   children: [
     area,
     inner,
