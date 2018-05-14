@@ -24,7 +24,7 @@ function dynamicCreateRoutes(to, from, next) {
   
     console.log('获取权限', JSON.stringify(res))
   
-    store.dispatch('setPemissionCodes', res.respData).then(() => {
+    store.dispatch('setPemissionCodes', res.data.respData).then(() => {
   
       store.dispatch('GenerateRoutes', store.getters.permissioncodes)
         .then(() => {

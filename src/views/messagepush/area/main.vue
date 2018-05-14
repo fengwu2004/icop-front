@@ -6,9 +6,9 @@
         <el-button v-show="checkActionEnable('create')" @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
       </div>
       <div class="content">
-        <div class="header">
+        <div class="header" v-show="checkActionEnable('search')">
           <date-select ref="daterange" @daterangechange="onDateRangeChange"></date-select>
-          <div class="operatemenu" v-show="checkActionEnable('search')">
+          <div class="operatemenu">
             <el-input clearable placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
         </div>
