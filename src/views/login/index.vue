@@ -112,6 +112,8 @@
                 this.$message.error('登陆失败，请检查用户名或密码是否正确');
 
                 this.loading = false
+
+                this.updateCaptcha()
               })
           }
           else {
