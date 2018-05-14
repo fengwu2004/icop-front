@@ -1,24 +1,6 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
 import store from "@/store/index";
 
-function checkRouteAndActionEnable(code) {
-  
-  if (store.getters.permissioncodes) {
-    
-    return false
-  }
-  
-  for (let i = 0; i < store.getters.permissioncodes.length; ++i) {
-    
-    if (code == store.getters.permissioncodes[i]) {
-      
-      return true
-    }
-  }
-  
-  return false
-}
-
 /**
  * 通过meta.role判断是否与当前用户权限匹配
  * @param permissions

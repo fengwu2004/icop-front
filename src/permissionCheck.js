@@ -2,6 +2,8 @@ import store from './store'
 
 export function checkRouteAndActionEnable(code) {
 
+  console.log('checkRouteAndActionEnable')
+  
   if (store.getters.permissioncodes) {
     
     return false
