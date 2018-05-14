@@ -80,7 +80,7 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token)
+        logout({})
           .then(() => {
             
             commit('SET_USER_TOKEN', '')
