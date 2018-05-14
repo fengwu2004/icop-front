@@ -3,12 +3,12 @@
     <div>
       <div class="navibar">
         <bread-crumb class="breadcrumb"></bread-crumb>
-        <el-button @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
+        <el-button v-show="checkActionEnable('create')" @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
       </div>
       <div class="content">
         <div class="header">
           <date-select ref="daterange" @daterangechange="onDateRangeChange"></date-select>
-          <div class="operatemenu">
+          <div class="operatemenu" v-show="checkActionEnable('search')">
             <el-input clearable placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
         </div>
@@ -42,9 +42,9 @@
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
               <div v-show="checkEnableOperator(scope.$index, scope.row)">
-                <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
-                <el-button size="mini" @click="handleEditor(scope.$index, scope.row)">修改</el-button>
-                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                <el-button size="mini" @click="handlePush(scope.$index, scope.row)" v-show="checkActionEnable('send')">发布</el-button>
+                <el-button size="mini" @click="handleEditor(scope.$index, scope.row)" v-show="checkActionEnable('edit')">修改</el-button>
+                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">删除</el-button>
               </div>
             </template>
           </el-table-column>
@@ -59,12 +59,21 @@
 
 <script>
 
+  import { checkRouteAndActionEnable } from "@/permissionCheck";
   import { queryAnnouncementList, deleteAnnouncement, sendAnnouncement} from "@/api/areamessage";
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
   import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList } from "@/utils/constvalues";
+
+  const actioncodes = {
+    search:'111100',
+    create:'111200',
+    edit:'111300',
+    delete:'111400',
+    send:'111500',
+  }
 
   export default {
     components: { PageWidget, DateSelect, BreadCrumb },
@@ -92,6 +101,12 @@
       })
     },
     methods:{
+      checkActionEnable(action) {
+
+        let code = actioncodes[action]
+
+        return checkRouteAndActionEnable(code)
+      },
       checkEnableOperator(index, message) {
 
         console.log('checkEnableOperator')
