@@ -35,15 +35,20 @@ function filterAsyncRouter(asyncRouterMap, permissionsRoutes) {
   return accessedRouters
 }
 
-const permission = {
+export const permission = {
   state: {
     routers: constantRouterMap,
-    addRouters: []
+    addRouters: [],
+    validCodes:[]
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
       state.routers = constantRouterMap.concat(routers)
+    },
+    SET_VALIDCODES: (state, itemList) => {
+      
+      state.validCodes = itemList.map(item => item.popedomCode)
     }
   },
   actions: {
@@ -61,5 +66,3 @@ const permission = {
     }
   }
 }
-
-export default permission

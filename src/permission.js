@@ -20,7 +20,7 @@ function dynamicCreateRoutes(to, from, next) {
   
   let routes = store.getters.routes
   
-  queryPopedomList().then(res => {
+  queryPopedomList({}).then(res => {
     
     console.log('获取权限')
     

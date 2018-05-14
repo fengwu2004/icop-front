@@ -10,6 +10,7 @@ const getters = {
   avatar: state => state.user.avatar,
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters,
+  permissioncodes: state => state.permission.validCodes,
   // errorLogs: state => state.errorLog.logs
 }
 export default getters

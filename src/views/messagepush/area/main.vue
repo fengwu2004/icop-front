@@ -216,6 +216,8 @@
 
         queryAnnouncementList(data).then(response => {
 
+          console.log('社区通知', response)
+
           this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
@@ -333,7 +335,7 @@
 
         console.log('search', data)
 
-        queryNoticeList(data).then(response => {
+        queryAnnouncementList(data).then(response => {
 
           this.tableData = this.getResponseTableData(response.data.respData)
 
