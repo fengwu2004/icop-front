@@ -28,7 +28,8 @@
 </template>
 
 <script>
-  import { checkRouteAndActionEnable } from "@/permissionCheck";
+
+  import { checkRouteAndActionEnable, initpassword } from "@/permissionCheck";
   import { trim } from "@/utils/validate";
   import { queryProjectList, initProjectUser } from '@/api/project'
   import { editPwd } from "@/api/user";
@@ -163,7 +164,7 @@
         let data = {
           areaId:project.areaId,
           projectCode:project.projectCode,
-          password:md5('888888')
+          password:initpassword
         }
 
         console.log('请求', data)
@@ -184,7 +185,8 @@
 
         let data = {
 
-          userId:project.userId
+          userId:project.userId,
+          password:initpassword
         }
 
         this.$confirm('此操作将重置账户密码为初始密码（6个8）, 是否继续?', '提示', {

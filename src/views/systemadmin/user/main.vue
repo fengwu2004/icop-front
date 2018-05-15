@@ -34,7 +34,7 @@
 
 <script>
 
-  import { checkRouteAndActionEnable } from "@/permissionCheck";
+  import { checkRouteAndActionEnable, initpassword } from "@/permissionCheck";
   import { trim } from "@/utils/validate";
   import { queryUserList, deleteUser, editPwd } from '@/api/user'
   import BreadCrumb from '@/components/Breadcrumb'
@@ -220,7 +220,8 @@
         let user = this.tableData.data[index]
 
         let data = {
-          userId:user.userId
+          userId:user.userId,
+          password:initpassword
         }
 
         this.$confirm('此操作将重置账户初始密码为888888，是否继续？','警告', {
