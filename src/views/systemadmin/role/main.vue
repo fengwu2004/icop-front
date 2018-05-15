@@ -3,9 +3,9 @@
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
       <div class="createsearch">
-        <el-input class="input" clearable v-model="rolename" placeholder="请输入角色名称查询"></el-input>
-        <el-button class="search" @click="handleSearchRole">查询</el-button>
-        <el-button class="create" @click="handleCreateRole">创建</el-button>
+        <el-input class="input" clearable v-model="rolename" placeholder="请输入角色名称查询" v-show="checkActionEnable('search')"></el-input>
+        <el-button class="search" @click="handleSearchRole" v-show="checkActionEnable('search')">查询</el-button>
+        <el-button class="create" @click="handleCreateRole" v-show="checkActionEnable('create')">创建</el-button>
       </div>
     </div>
     <div class="content">
@@ -20,9 +20,9 @@
           <el-table-column prop="remark" label="备注" min-width="400"></el-table-column>
           <el-table-column label="操作" min-width="300">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">详细</el-button>
-              <el-button size="mini" @click="handleManager(scope.$index, scope.row)">管理账户</el-button>
-              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              <el-button size="mini" @click="handleDetail(scope.$index, scope.row)" v-show="checkActionEnable('detail')">详细</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')">管理账户</el-button>
+              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -35,11 +35,20 @@
 </template>
 
 <script>
+  import { checkRouteAndActionEnable } from "@/permissionCheck";
   import { trim } from "@/utils/validate";
   import { queryRoleList, deleteRole } from '@/api/role'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
+
+  const actioncodes = {
+    search:'121100',
+    create:'121200',
+    detail:'121300',
+    delete:'121400',
+    edit:'121500',
+  }
 
   export default {
     components: { PageWidget, BreadCrumb },
@@ -65,6 +74,12 @@
       console.log(this.$route)
     },
     methods:{
+      checkActionEnable(action) {
+
+        let code = actioncodes[action]
+
+        return checkRouteAndActionEnable(code)
+      },
       handleSearchRole() {
 
         this.handleSearch(this.rolename)
@@ -141,7 +156,7 @@
 
         this.$router.push(router)
       },
-      handleManager(index, row) {
+      handleEdit(index, row) {
 
         let role = this.tableData.list[index]
 

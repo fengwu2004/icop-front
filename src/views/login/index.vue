@@ -23,7 +23,7 @@
         <div class="inputgroup">
           <div class="inputcodegroup">
             <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.validate" prop="Validate">
-            <img ref="captichaimg" class="codeimg" @click="updateCaptcha">
+            <img ref="captichaimg" src="/jslife-icop-oms/validPic" class="codeimg" @click="updateCaptcha">
           </div>
         </div>
         <div class="confirm">
@@ -48,9 +48,12 @@
   import { isvalidUsername } from '@/utils/validate'
 
   export default {
-    mounted(){
+    created(){
 
-      this.updateCaptcha()
+      login('666666', '666666', '6666').then(res => {
+
+
+      })
     },
     data() {
       return {
@@ -109,6 +112,8 @@
                 this.$message.error('登陆失败，请检查用户名或密码是否正确');
 
                 this.loading = false
+
+                this.updateCaptcha()
               })
           }
           else {

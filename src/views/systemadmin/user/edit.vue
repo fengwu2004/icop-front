@@ -72,12 +72,17 @@
 
 <script>
 
+  import { checkRouteAndActionEnable } from "@/permissionCheck";
   import { validateName } from "@/utils/validate";
   import { mapGetters } from 'vuex'
   import { edit, checkExistUserName, add } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
   import BreadCrumb from '@/components/Breadcrumb'
   import md5 from 'blueimp-md5'
+
+  const actioncodes = {
+    selectperson:'122700'
+  }
 
   export default {
     components: { SelectUser, BreadCrumb },
@@ -220,6 +225,10 @@
     created() {
 
       this.$route.meta.title = this.$route.params.title
+
+      let code = actioncodes['selectperson']
+
+      this.justEnableSelect = checkRouteAndActionEnable(code)
     },
   }
 </script>

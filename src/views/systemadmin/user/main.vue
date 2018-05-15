@@ -3,9 +3,9 @@
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
       <div class="createsearch">
-        <el-input class="input" clearable v-model="queryParam" placeholder="请输入人员编号、姓名"></el-input>
-        <el-button class="search" @click="searchUser">查询</el-button>
-        <el-button class="create" @click="createUser">创建</el-button>
+        <el-input class="input" clearable v-model="queryParam" placeholder="请输入人员编号、姓名" v-show="checkActionEnable('search')"></el-input>
+        <el-button class="search" @click="searchUser" v-show="checkActionEnable('search')">查询</el-button>
+        <el-button class="create" @click="createUser" v-show="checkActionEnable('create')">创建</el-button>
       </div>
     </div>
     <div class="content">
@@ -18,9 +18,9 @@
           <el-table-column prop="telephone" label="联系电话" min-width="200"></el-table-column>
           <el-table-column label="操作" min-width="300">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-              <el-button size="mini" @click="handleChangePwd(scope.$index, scope.row)">重置密码</el-button>
-              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">注销账户</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')">修改</el-button>
+              <el-button size="mini" @click="handleChangePwd(scope.$index, scope.row)" v-show="checkActionEnable('resetpwd')">重置密码</el-button>
+              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">注销账户</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -34,11 +34,21 @@
 
 <script>
 
+  import { checkRouteAndActionEnable } from "@/permissionCheck";
   import { trim } from "@/utils/validate";
   import { queryUserList, deleteUser, editPwd } from '@/api/user'
   import BreadCrumb from '@/components/Breadcrumb'
   import { default as PageWidget } from '@/components/PageWidget'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
+
+  const actioncodes = {
+    search:'122100',
+    create:'122200',
+    edit:'122300',
+    detail:'122400',
+    resetpwd:'122500',
+    delete:'122600',
+  }
 
   export default {
     components: { PageWidget, BreadCrumb },
@@ -61,6 +71,12 @@
       this.getList()
     },
     methods:{
+      checkActionEnable(action) {
+
+        let code = actioncodes[action]
+
+        return checkRouteAndActionEnable(code)
+      },
       searchUser() {
 
         this.handleSearch(this.queryParam)

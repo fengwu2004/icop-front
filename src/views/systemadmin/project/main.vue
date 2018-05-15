@@ -3,8 +3,8 @@
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
       <div class="createsearch">
-        <el-input class="input" v-model="queryParam" placeholder="项目编号、项目名称"></el-input>
-        <el-button class="search" style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;" @click="handleSearch(queryParam)">查询</el-button>
+        <el-input class="input" v-model="queryParam" placeholder="项目编号、项目名称" v-show="checkActionEnable('search')"></el-input>
+        <el-button class="search" style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;" @click="handleSearch(queryParam)" v-show="checkActionEnable('search')">查询</el-button>
       </div>
     </div>
     <div class="content">
@@ -15,8 +15,8 @@
         <el-table-column prop="userName" label="管理账号" min-width="200"></el-table-column>
         <el-table-column label="操作" min-width="300">
           <template slot-scope="scope">
-            <el-button size="mini" v-if="checkNotAdmin(scope.$index, scope.row)" @click="handleAddAdmin(scope.$index, scope.row)">生成管理账户</el-button>
-            <el-button size="mini" v-else @click="handleResetPws(scope.$index, scope.row)">重置密码</el-button>
+            <el-button size="mini" v-if="checkNotAdmin(scope.$index, scope.row)" @click="handleAddAdmin(scope.$index, scope.row)" v-show="checkActionEnable('initadmin')">生成管理账户</el-button>
+            <el-button size="mini" v-else @click="handleResetPws(scope.$index, scope.row)" v-show="checkActionEnable('resetpwd')">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+  import { checkRouteAndActionEnable } from "@/permissionCheck";
   import { trim } from "@/utils/validate";
   import { queryProjectList, initProjectUser } from '@/api/project'
   import { editPwd } from "@/api/user";
@@ -35,6 +36,12 @@
   import BreadCrumb from '@/components/Breadcrumb'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
   import md5 from 'blueimp-md5'
+
+  const actioncodes = {
+    search:'123100',
+    initadmin:'123200',
+    resetpwd:'123300'
+  }
 
   export default {
     components: { PageWidget, BreadCrumb },
@@ -57,6 +64,12 @@
       this.getList()
     },
     methods:{
+      checkActionEnable(action) {
+
+        let code = actioncodes[action]
+
+        return checkRouteAndActionEnable(code)
+      },
       headercellstyle({row, rowIndex, columnIndex}){
 
         return columnIndex == 3 ? headercellcenter: headercell

@@ -15,7 +15,7 @@ service.interceptors.request.use(config => {
   
     let tokenAndId = getTokenAndId()
   
-    if (config.params) {
+    if (config.params && !config.params.isLogin) {
   
       config.params.userToken = tokenAndId.userToken
 
@@ -23,11 +23,7 @@ service.interceptors.request.use(config => {
     }
   }
   
-  console.log('请求')
-  
-  console.log(config)
-  
-  console.log(config.params)
+  console.log('请求', config, config.params)
   
   return config
   
