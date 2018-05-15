@@ -35,6 +35,10 @@ export default {
     }
   },
   methods: {
+    pathHidden(route) {
+
+      return route && route.meta && route.meta.hidden
+    },
     getActiveRouteName(route) {
 
       if (!this.pathHidden(route)) {
