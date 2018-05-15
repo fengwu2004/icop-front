@@ -42,6 +42,8 @@ export default {
 
       if (!this.pathHidden(route)) {
 
+        console.log('当前路由', route.path)
+
         return route.path
       }
 
