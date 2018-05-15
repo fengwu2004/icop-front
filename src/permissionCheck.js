@@ -4,9 +4,9 @@ export function checkRouteAndActionEnable(code) {
 
   console.log('checkRouteAndActionEnable')
   
-  if (store.getters.permissioncodes) {
+  if (!store.getters.permissioncodes) {
     
-    return false
+    return true
   }
   
   for (let i = 0; i < store.getters.permissioncodes.length; ++i) {

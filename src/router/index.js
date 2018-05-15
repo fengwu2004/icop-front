@@ -97,7 +97,7 @@ const project = {
   redirect: '/systemadmin/project/main',
   name: 'projectsetting',
   component:main,
-  meta: { title: 'projectsetting', icon: 'projectsetting', code:'12300' },
+  meta: { title: 'projectsetting', icon: 'projectsetting', code:'123000' },
   children: [
     {
       path: 'main',
