@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import app from './modules/app'
-import permission from './modules/permission'
+import { permission } from "@/store/modules/permission";
 import currentedituser from './modules/currentUser'
 import currenteditmessage from './modules/currenteditmessage'
 import user from './modules/user'

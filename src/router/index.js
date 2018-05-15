@@ -35,24 +35,24 @@ const user = {
   redirect: '/systemadmin/user/main',
   name: 'systemadmin_user',
   component:main,
-  meta: { title: 'systemadmin_user', icon: 'systemadmin_user' },
+  meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:'122000' },
   children: [
     {
       path: 'main',
       component:_import('systemadmin/user/main'),
-      meta: { title: 'systemadmin_user_main', hidden:true},
+      meta: { title: 'systemadmin_user_main', hidden:true },
     },
     {
       path: 'edit',
       component: _import('systemadmin/user/edit'),
       name: 'systemadmin_user_edit',
-      meta: { title: 'systemadmin_user_edit', hidden:true},
+      meta: { title: 'systemadmin_user_edit', hidden:true },
     },
     {
       path: 'rolesetting',
       component: _import('systemadmin/user/rolesetting'),
       name: 'systemadmin_user_rolesetting',
-      meta: {title: 'systemadmin_user_rolesetting', hidden:true},
+      meta: {title: 'systemadmin_user_rolesetting', hidden:true },
     }
   ]
 }
@@ -63,12 +63,12 @@ const role = {
   redirect: '/systemadmin/role/main',
   name: 'systemadmin_role',
   component:main,
-  meta: { title: 'systemadmin_role', icon: 'systemadmin_role' },
+  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: '121000' },
   children: [
     {
       path: 'main',
       component:_import('systemadmin/role/main'),
-      meta: { title: 'systemadmin_role', actions:['search', 'create', 'edit', 'reset', 'delete'], hidden:true},
+      meta: { title: 'systemadmin_role', hidden:true},
     },
     {
       path: 'create',
@@ -97,7 +97,7 @@ const project = {
   redirect: '/systemadmin/project/main',
   name: 'projectsetting',
   component:main,
-  meta: { title: 'projectsetting', icon: 'projectsetting' },
+  meta: { title: 'projectsetting', icon: 'projectsetting', code:'123000' },
   children: [
     {
       path: 'main',
@@ -112,7 +112,7 @@ const systemadmin = {
   component: Layout,
   redirect: '/systemadmin/role',
   name: 'systemadmin',
-  meta: { title: 'systemadmin'},
+  meta: { title: 'systemadmin', code:'120000'},
   children: [
     role,
     user,
@@ -126,7 +126,7 @@ const inner = {
   redirect: '/messagepush/inner/main',
   name: 'messagepush_inner',
   component:main,
-  meta: { title: 'messagepush_inner', icon: 'innerpush' },
+  meta: { title: 'messagepush_inner', icon: 'innerpush', code:'112000' },
   children: [
     {
       path: 'main',
@@ -154,7 +154,7 @@ const area = {
   redirect: '/messagepush/area/main',
   name: 'messagepush_area',
   component:main,
-  meta: { title: 'messagepush_area', icon: 'areapush' },
+  meta: { title: 'messagepush_area', icon: 'areapush', code:'111000' },
   children: [
     {
       path: 'main',
@@ -181,7 +181,7 @@ const messagepush = {
   component: Layout,
   redirect: '/messagepush/area',
   name: 'messagepush',
-  meta: { title: 'messagepush' },
+  meta: { title: 'messagepush', code:'110000' },
   children: [
     area,
     inner,

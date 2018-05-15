@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 
-export function login(userName, password, Validate) {
+export function login(userName, password, validate) {
   const data = {
     userName,
     password,
-    Validate,
+    validate,
+    isLogin:true
   }
   return request({
     url: '/jslife-icop-oms/login',
@@ -13,10 +14,11 @@ export function login(userName, password, Validate) {
   })
 }
 
-export function logout() {
+export function logout(params) {
   return request({
     url: '/jslife-icop-oms/logout',
-    method: 'post'
+    method: 'post',
+    params:params
   })
 }
 

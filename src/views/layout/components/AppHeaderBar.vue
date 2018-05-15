@@ -63,6 +63,7 @@
   import { editPwd } from "@/api/login";
   import { mapGetters } from 'vuex'
   import Screenfull from '@/components/Screenfull'
+  import md5 from 'blueimp-md5'
 
   export default {
 
@@ -97,8 +98,8 @@
         }
 
         let data = {
-          oldPwd:this.oldPwd,
-          newPwd:this.newPwd1
+          oldPwd:md5(this.oldPwd) ,
+          newPwd:md5(this.newPwd1)
         }
 
         editPwd(data).then(res => {
