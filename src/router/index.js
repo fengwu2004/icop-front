@@ -35,7 +35,7 @@ const user = {
   redirect: '/systemadmin/user/main',
   name: 'systemadmin_user',
   component:main,
-  meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:'122000' },
+  meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:'122000', activeicon:'systemadmin_user_active' },
   children: [
     {
       path: 'main',
@@ -63,7 +63,7 @@ const role = {
   redirect: '/systemadmin/role/main',
   name: 'systemadmin_role',
   component:main,
-  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: '121000' },
+  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: '121000', activeicon:'systemadmin_role_active' },
   children: [
     {
       path: 'main',
@@ -97,7 +97,7 @@ const project = {
   redirect: '/systemadmin/project/main',
   name: 'projectsetting',
   component:main,
-  meta: { title: 'projectsetting', icon: 'projectsetting', code:'123000' },
+  meta: { title: 'projectsetting', icon: 'projectsetting', code:'123000', activeicon:'projectsetting_active' },
   children: [
     {
       path: 'main',
@@ -126,7 +126,7 @@ const inner = {
   redirect: '/messagepush/inner/main',
   name: 'messagepush_inner',
   component:main,
-  meta: { title: 'messagepush_inner', icon: 'innerpush', code:'112000' },
+  meta: { title: 'messagepush_inner', icon: 'innerpush', code:'112000', activeicon:'innerpush_active' },
   children: [
     {
       path: 'main',
@@ -154,7 +154,7 @@ const area = {
   redirect: '/messagepush/area/main',
   name: 'messagepush_area',
   component:main,
-  meta: { title: 'messagepush_area', icon: 'areapush', code:'111000' },
+  meta: { title: 'messagepush_area', icon: 'areapush', code:'111000', activeicon:'areapush_active' },
   children: [
     {
       path: 'main',
