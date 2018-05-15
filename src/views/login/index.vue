@@ -1,13 +1,13 @@
 <template>
   <div class="login">
     <div class="backgroundimg">
-      <img class="cloud1" :src="images.img1">
-      <img class="cloud2" :src="images.img2">
-      <img class="cloud3" :src="images.img3">
-      <img class="cloud4" :src="images.img4">
-      <img class="cloud5" :src="images.img5">
-      <img class="cloud6" :src="images.img6">
-      <img class="city" :src="images.logo">
+      <img class="cloud1" src="../../assets/loginimg/cloud1.png">
+      <img class="cloud2" src="../../assets/loginimg/cloud2.png">
+      <img class="cloud3" src="../../assets/loginimg/cloud3.png">
+      <img class="cloud4" src="../../assets/loginimg/cloud4.png">
+      <img class="cloud5" src="../../assets/loginimg/cloud5.png">
+      <img class="cloud6" src="../../assets/loginimg/cloud6.png">
+      <img class="city" src="../../assets/loginimg/city.png">
     </div>
     <div class="main">
       <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm">
@@ -42,14 +42,6 @@
 
 <script>
 
-  import img1 from '@/assets/loginimg/cloud1.png'
-  import img2 from '@/assets/loginimg/cloud2.png'
-  import img3 from '@/assets/loginimg/cloud3.png'
-  import img4 from '@/assets/loginimg/cloud4.png'
-  import img5 from '@/assets/loginimg/cloud5.png'
-  import img6 from '@/assets/loginimg/cloud6.png'
-  import logo from '@/assets/loginimg/logo.png'
-
   import { login, validPic } from "@/api/login"
   import { isvalidUsername } from '@/utils/validate'
 
@@ -63,27 +55,16 @@
     },
     data() {
       return {
-        imageencode:'',
-        isnull: false,
         loading: false,
-        images: {
-          img1,
-          img2,
-          img3,
-          img4,
-          img5,
-          img6,
-          logo,
-        },
         loginForm: {
           userName: '',
           password: '',
           validate:'',
         },
         loginRules: {
-          userName: [{ required: true, trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
-          password: [{ required: true, trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
-          validate: [{ required: true, trigger: 'blur'}, {min:4, max:4, message:'长度为4', trigger:'blur'}]
+          userName: [{ required: true, message:'请填写用户名', trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
+          password: [{ required: true, message:'请填写密码', trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
+          validate: [{ required: true, message:'请填写验证码', trigger: 'blur'}, {min:4, max:4, message:'长度为4', trigger:'blur'}]
         },
       }
     },
