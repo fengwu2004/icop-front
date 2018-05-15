@@ -13,22 +13,28 @@
       <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm">
         <div class="icon"/>
         <div class="title"/>
-        <div class="inputgroup">
-          <input placeholder="请输入用户名" v-model="loginForm.userName" prop="userName" autocomplete="off"/>
-        </div>
-        <div class="inputgroup">
-          <input style="display:none" name="pwd">
-          <input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" autocomplete="off" prop="password"/>
-        </div>
-        <div class="inputgroup">
-          <div class="inputcodegroup">
-            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.validate" prop="Validate">
+        <el-form-item prop="userName" >
+          <div class="inputgroup">
+            <input placeholder="请输入用户名" v-model="loginForm.userName" autocomplete="off"/>
+          </div>
+        </el-form-item>
+        <el-form-item prop="password">
+          <div class="inputgroup">
+            <input style="display:none" name="pwd">
+            <input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" autocomplete="off"/>
+          </div>
+        </el-form-item>
+        <el-form-item prop="validate">
+          <div class="inputgroup">
+            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.validate"/>
             <img ref="captichaimg" src="/jslife-icop-oms/validPic" class="codeimg" @click="updateCaptcha">
           </div>
-        </div>
-        <div class="confirm">
-          <el-button type="danger" :loading="loading" @click="submitLogin">登 陆</el-button>
-        </div>
+        </el-form-item>
+        <el-form-item>
+          <div style="padding: 1rem;">
+            <el-button style="width: 100%; background-color: #FF955B;border: #FF955B" type="danger" :loading="loading" @click="submitLogin">登 陆</el-button>
+          </div>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -175,7 +181,6 @@
 
   .inputgroup {
 
-    margin-top: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -184,9 +189,8 @@
 
     input {
 
+      width: 100%;
       line-height: 1.5rem;
-      width: 90%;
-      margin: 0.5rem auto;
       border: none;
       outline: none;
       font-size: 0.8rem;
