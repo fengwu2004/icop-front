@@ -3,10 +3,10 @@
     <div>
       <div class="navibar">
         <bread-crumb class="breadcrumb"></bread-crumb>
-        <el-button @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
+        <el-button v-show="checkActionEnable('create')" @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
       </div>
       <div class="content">
-        <div class="header">
+        <div class="header" v-show="checkActionEnable('search')">
           <date-select ref="daterange" @daterangechange="onDateRangeChange"></date-select>
           <div class="operatemenu">
             <el-input clearable placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
@@ -37,9 +37,9 @@
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
               <div v-show="checkEnableOperator(scope.$index, scope.row)">
-                <el-button size="mini" @click="handlePush(scope.$index, scope.row)">发布</el-button>
-                <el-button size="mini" @click="handleEditor(scope.$index, scope.row)">修改</el-button>
-                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                <el-button size="mini" @click="handlePush(scope.$index, scope.row)" v-show="checkActionEnable('send')">发布</el-button>
+                <el-button size="mini" @click="handleEditor(scope.$index, scope.row)" v-show="checkActionEnable('edit')">修改</el-button>
+                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">删除</el-button>
               </div>
             </template>
           </el-table-column>
@@ -59,11 +59,20 @@
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
+  import { checkRouteAndActionEnable } from "@/permissionCheck";
 
   const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
   const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
   const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
   const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATE' }, { text: '定时生效', value: 'TIMES' }]
+
+  const actioncodes = {
+    search:'112100',
+    create:'112200',
+    edit:'112300',
+    delete:'112400',
+    send:'112500',
+  }
 
   export default {
     components: { PageWidget, DateSelect, BreadCrumb },
@@ -91,6 +100,12 @@
       })
     },
     methods:{
+      checkActionEnable(action) {
+
+        let code = actioncodes[action]
+
+        return checkRouteAndActionEnable(code)
+      },
       checkEnableOperator(index, message) {
 
         console.log('checkEnableOperator')

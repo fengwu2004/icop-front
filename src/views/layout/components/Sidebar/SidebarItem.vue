@@ -7,7 +7,7 @@
           <sidebar-item :is-nest="true" class="nest-menu" v-if=" child.children && child.children.length > 0 && hasOneShowingChildren(child.children)" :routes="[child]" :key="child.path"></sidebar-item>
           <router-link v-else :to="composePath(route, child, false)" :key="child.name">
             <el-menu-item :index="composePath(route, child, true)">
-              <svg-icon v-if="child.meta && child.meta.icon" :icon-class="child.meta.icon" style="margin-right: 0.5rem"></svg-icon>
+              <svg-icon v-if="child.meta && child.meta.icon" :icon-class="getMenuIcon($route, child)" style="margin-right: 0.5rem"></svg-icon>
               <span v-if="child.meta && child.meta.title" slot="title">{{ generateTitle(child.meta.title) }}</span>
             </el-menu-item>
           </router-link>
@@ -35,6 +35,30 @@ export default {
     }
   },
   methods: {
+    pathHidden(route) {
+
+      return route && route.meta && route.meta.hidden
+    },
+    getActiveRouteName(route) {
+
+      if (!this.pathHidden(route)) {
+
+        return route.name
+      }
+
+      return this.getActiveRouteName(route.matched[route.matched.length - 1].parent)
+    },
+    getMenuIcon(activeroute, route) {
+
+      let activeRouteName = this.getActiveRouteName(activeroute)
+
+      if (route.name === activeRouteName) {
+
+        return route.meta.activeicon
+      }
+
+      return route.meta.icon
+    },
     showRoute(route) {
 
       return  (!route.meta || !route.meta.hidden) && route.children

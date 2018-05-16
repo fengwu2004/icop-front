@@ -14,34 +14,51 @@ function hasPermission(roles, permissionRoles) {
   return true
 }
 
+function getFirstValidRoute(routes) {
+  
+  if (!routes || routes.length == 0) {
+    
+    return ''
+  }
+  
+  let path = routes[0].path + '/' + getFirstValidRoute(routes[0].children)
+  
+  return path
+}
+
 const whiteList = ['/login', '/authredirect']// no redirect whitelist
 
 function dynamicCreateRoutes(to, from, next) {
   
   let routes = store.getters.routes
   
-  queryPopedomList().then(res => {
-    
-    console.log('获取权限')
-    
-    console.log(res)
-  })
+  queryPopedomList({}).then(res => {
   
-  store.dispatch('GenerateRoutes', routes)
-    .then(() => {
+    console.log('获取权限', JSON.stringify(res))
+  
+    store.dispatch('setPemissionCodes', res.data.respData).then(() => {
+  
+      store.dispatch('GenerateRoutes', store.getters.permissioncodes)
+        .then(() => {
       
-      router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+          router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+          
+          console.log(store.getters.addRouters)
+          
+          let validRoute = getFirstValidRoute(store.getters.addRouters)
       
-      let replace = { ...to, replace: true }
+          let replace = { ...to, replace: true, path: validRoute}
       
-      console.log(from.path + ' 替换为 ' + replace.path)
+          console.log(from.path + ' 替换为 ' + replace.path)
       
-      next(replace) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+          next(replace) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+        })
+        .catch(res => {
+      
+          console.log(res)
+        })
     })
-    .catch(res => {
-      
-      console.log(res)
-    })
+  })
 }
 
 router.beforeEach((to, from, next) => {

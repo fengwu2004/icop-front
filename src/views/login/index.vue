@@ -1,34 +1,40 @@
 <template>
   <div class="login">
     <div class="backgroundimg">
-      <img class="cloud1" :src="images.img1">
-      <img class="cloud2" :src="images.img2">
-      <img class="cloud3" :src="images.img3">
-      <img class="cloud4" :src="images.img4">
-      <img class="cloud5" :src="images.img5">
-      <img class="cloud6" :src="images.img6">
-      <img class="city" :src="images.logo">
+      <img class="cloud1" src="../../assets/loginimg/cloud1.png">
+      <img class="cloud2" src="../../assets/loginimg/cloud2.png">
+      <img class="cloud3" src="../../assets/loginimg/cloud3.png">
+      <img class="cloud4" src="../../assets/loginimg/cloud4.png">
+      <img class="cloud5" src="../../assets/loginimg/cloud5.png">
+      <img class="cloud6" src="../../assets/loginimg/cloud6.png">
+      <img class="city" src="../../assets/loginimg/city.png">
     </div>
     <div class="main">
       <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm">
         <div class="icon"/>
         <div class="title"/>
-        <div class="inputgroup">
-          <input placeholder="请输入用户名" v-model="loginForm.userName" prop="userName" autocomplete="off"/>
-        </div>
-        <div class="inputgroup">
-          <input style="display:none" name="pwd">
-          <input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" autocomplete="off" prop="password"/>
-        </div>
-        <div class="inputgroup">
-          <div class="inputcodegroup">
-            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.validate" prop="Validate">
-            <img ref="captichaimg" class="codeimg" @click="updateCaptcha">
+        <el-form-item prop="userName" >
+          <div class="inputgroup">
+            <input placeholder="请输入用户名" v-model="loginForm.userName" autocomplete="off"/>
           </div>
-        </div>
-        <div class="confirm">
-          <el-button type="danger" :loading="loading" @click="submitLogin">登 陆</el-button>
-        </div>
+        </el-form-item>
+        <el-form-item prop="password">
+          <div class="inputgroup">
+            <input style="display:none" name="pwd">
+            <input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" autocomplete="off"/>
+          </div>
+        </el-form-item>
+        <el-form-item prop="validate">
+          <div class="inputgroup">
+            <input type="code" placeholder="请输入验证码" alt="验证码" v-model="loginForm.validate"/>
+            <img ref="captichaimg" src="/jslife-icop-oms/validPic" class="codeimg" @click="updateCaptcha">
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <div style="padding: 1rem;">
+            <el-button style="width: 100%; background-color: #FF955B;border: #FF955B" type="danger" :loading="loading" @click="submitLogin">登 陆</el-button>
+          </div>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -36,45 +42,29 @@
 
 <script>
 
-  import img1 from '@/assets/loginimg/cloud1.png'
-  import img2 from '@/assets/loginimg/cloud2.png'
-  import img3 from '@/assets/loginimg/cloud3.png'
-  import img4 from '@/assets/loginimg/cloud4.png'
-  import img5 from '@/assets/loginimg/cloud5.png'
-  import img6 from '@/assets/loginimg/cloud6.png'
-  import logo from '@/assets/loginimg/logo.png'
-
   import { login, validPic } from "@/api/login"
   import { isvalidUsername } from '@/utils/validate'
 
   export default {
-    mounted(){
+    created(){
 
-      this.updateCaptcha()
+      login('666666', '666666', '6666').then(res => {
+
+
+      })
     },
     data() {
       return {
-        imageencode:'',
-        isnull: false,
         loading: false,
-        images: {
-          img1,
-          img2,
-          img3,
-          img4,
-          img5,
-          img6,
-          logo,
-        },
         loginForm: {
           userName: '',
           password: '',
           validate:'',
         },
         loginRules: {
-          userName: [{ required: true, trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
-          password: [{ required: true, trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
-          validate: [{ required: true, trigger: 'blur'}, {min:4, max:4, message:'长度为4', trigger:'blur'}]
+          userName: [{ required: true, message:'请填写用户名', trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
+          password: [{ required: true, message:'请填写密码', trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
+          validate: [{ required: true, message:'请填写验证码', trigger: 'blur'}, {min:4, max:4, message:'长度为4', trigger:'blur'}]
         },
       }
     },
@@ -109,6 +99,8 @@
                 this.$message.error('登陆失败，请检查用户名或密码是否正确');
 
                 this.loading = false
+
+                this.updateCaptcha()
               })
           }
           else {
@@ -170,7 +162,6 @@
 
   .inputgroup {
 
-    margin-top: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -179,9 +170,8 @@
 
     input {
 
+      width: 100%;
       line-height: 1.5rem;
-      width: 90%;
-      margin: 0.5rem auto;
       border: none;
       outline: none;
       font-size: 0.8rem;
