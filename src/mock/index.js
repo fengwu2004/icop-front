@@ -15,7 +15,7 @@ let mock_role = false
 let mock_user = false
 let mock_project = false
 let mock_message_area = false
-let mock_login = false
+let mock_login = true
 
 //角色相关
 if (mock_role) {
@@ -67,6 +67,7 @@ if (mock_login) {
   Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
   Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
   Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
+  Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomList/, 'post', loginAPI.queryPopedomList)
 }
 
 export default Mock

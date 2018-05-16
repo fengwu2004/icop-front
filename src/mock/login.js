@@ -17,7 +17,7 @@ const userMap = {
   admin: {
     pepodomIds: "301100,301200,301400,301500,301600,301760",
     userToken: 'admin',
-    userId:'admin001',
+    id:'admin001',
     telephone:'12933333333',
     userName: 'Super Admin',
     introduction: '我是超级管理员',
@@ -26,7 +26,7 @@ const userMap = {
   editor: {
     pepodomIds: "301100,301200,301400,301500,301600,301760",
     userToken: 'admin',
-    userId:'admin002',
+    id:'admin002',
     telephone:'12933333333',
     userName: 'Super Admin',
     introduction: '我是超级管理员',
@@ -43,7 +43,9 @@ export default {
     
     console.log('登陆名' + userName)
     
-    return userMap['admin']
+    return {
+      respData:userMap['admin']
+    }
   },
   editPwd: config => {
     const { token } = param2Obj(config.url)
@@ -58,6 +60,12 @@ export default {
     
     return {
       outputStream:base64image
+    }
+  },
+  queryPopedomList: () => {
+    
+    return {
+      respData:'100000,120000,121000,121100,121200,121300,121400,121500,122000,122100,122200,122300,122400,122500,122600,122700,123000,123100,123200,123300'
     }
   },
 }

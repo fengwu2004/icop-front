@@ -14,6 +14,18 @@ function hasPermission(roles, permissionRoles) {
   return true
 }
 
+function getFirstValidRoute(routes) {
+  
+  if (!routes || routes.length == 0) {
+    
+    return ''
+  }
+  
+  let path = routes[0].path + '/' + getFirstValidRoute(routes[0].children)
+  
+  return path
+}
+
 const whiteList = ['/login', '/authredirect']// no redirect whitelist
 
 function dynamicCreateRoutes(to, from, next) {
@@ -30,8 +42,12 @@ function dynamicCreateRoutes(to, from, next) {
         .then(() => {
       
           router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+          
+          console.log(store.getters.addRouters)
+          
+          let validRoute = getFirstValidRoute(store.getters.addRouters)
       
-          let replace = { ...to, replace: true }
+          let replace = { ...to, replace: true, path: validRoute}
       
           console.log(from.path + ' 替换为 ' + replace.path)
       
