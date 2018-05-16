@@ -15,7 +15,7 @@ let mock_role = false
 let mock_user = false
 let mock_project = false
 let mock_message_area = false
-let mock_login = true
+let mock_login = false
 
 //角色相关
 if (mock_role) {
