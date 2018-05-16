@@ -62,7 +62,7 @@
           validate:'',
         },
         loginRules: {
-          userName: [{ required: true, message:'请填写用户名', trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
+          userName: [{ required: true, message:'请填写用户名', trigger: 'blur'}, {min:3, max:20, message:'长度在3到20字符之间', trigger:'blur'}],
           password: [{ required: true, message:'请填写密码', trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}],
           validate: [{ required: true, message:'请填写验证码', trigger: 'blur'}, {min:4, max:4, message:'长度为4', trigger:'blur'}]
         },
