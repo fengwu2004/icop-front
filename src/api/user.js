@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function queryUserList(query) {
   return request({
-    url: '/jslife-icop-oms/user/queryUserList',
+    url: '/user/queryUserList',
     method: 'post',
     params: query
   })
@@ -10,7 +10,7 @@ export function queryUserList(query) {
 
 export function userInfo(query) {
   return request({
-    url: '/jslife-icop-oms/user/userInfo',
+    url: '/user/userInfo',
     method: 'post',
     params: query
   })
@@ -18,7 +18,7 @@ export function userInfo(query) {
 
 export function queryPersonList(query) {
   return request({
-    url: '/jslife-icop-oms/user/queryPersonList',
+    url: '/user/queryPersonList',
     method: 'post',
     params: query
   })
@@ -26,7 +26,7 @@ export function queryPersonList(query) {
 
 export function queryRoleListByIds(query) {
   return request({
-    url: '/jslife-icop-oms/user/queryRoleListByIds',
+    url: '/user/queryRoleListByIds',
     method: 'post',
     params: query
   })
@@ -34,7 +34,7 @@ export function queryRoleListByIds(query) {
 
 export function add(query) {
   return request({
-    url: '/jslife-icop-oms/user/add',
+    url: '/user/add',
     method: 'post',
     params: query
   })
@@ -42,7 +42,7 @@ export function add(query) {
 
 export function edit(query) {
   return request({
-    url: '/jslife-icop-oms/user/edit',
+    url: '/user/edit',
     method: 'post',
     params: query
   })
@@ -50,7 +50,7 @@ export function edit(query) {
 
 export function deleteUser(query) {
   return request({
-    url: '/jslife-icop-oms/user/delete',
+    url: '/user/delete',
     method: 'post',
     params: query
   })
@@ -58,7 +58,7 @@ export function deleteUser(query) {
 
 export function editPwd(query) {
   return request({
-    url: '/jslife-icop-oms/user/editPwd',
+    url: '/user/editPwd',
     method: 'post',
     params: query
   })
@@ -66,7 +66,7 @@ export function editPwd(query) {
 
 export function queryRoleList(query) {
   return request({
-    url: '/jslife-icop-oms/user/queryRoleList',
+    url: '/user/queryRoleList',
     method: 'post',
     params: query
   })
@@ -74,7 +74,7 @@ export function queryRoleList(query) {
 
 export function checkExistUserName(query) {
   return request({
-    url: '/jslife-icop-oms/user/checkExistUserName',
+    url: '/user/checkExistUserName',
     method: 'post',
     params: query
   })
@@ -82,7 +82,7 @@ export function checkExistUserName(query) {
 
 export function queryUserInfo(query) {
   return request({
-    url: '/jslife-icop-oms/user/queryUserInfo',
+    url: '/user/queryUserInfo',
     method: 'post',
     params: query
   })

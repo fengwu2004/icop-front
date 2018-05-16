@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function queryRoleList(query) {
   return request({
-    url: '/jslife-icop-oms/role/queryRoleList',
+    url: '/role/queryRoleList',
     method: 'post',
     params: query
   })
@@ -10,7 +10,7 @@ export function queryRoleList(query) {
 
 export function queryPopedomListByIds(query) {
   return request({
-    url: '/jslife-icop-oms/role/queryPopedomListByIds',
+    url: '/role/queryPopedomListByIds',
     method: 'post',
     params: query
   })
@@ -18,7 +18,7 @@ export function queryPopedomListByIds(query) {
 
 export function add(query) {
   return request({
-    url: '/jslife-icop-oms/role/add',
+    url: '/role/add',
     method: 'post',
     params: query
   })
@@ -26,7 +26,7 @@ export function add(query) {
 
 export function edit(query) {
   return request({
-    url: '/jslife-icop-oms/role/edit',
+    url: '/role/edit',
     method: 'post',
     params: query
   })
@@ -34,7 +34,7 @@ export function edit(query) {
 
 export function deleteRole(query) {
   return request({
-    url: '/jslife-icop-oms/role/delete',
+    url: '/role/delete',
     method: 'post',
     params: query
   })
@@ -42,7 +42,7 @@ export function deleteRole(query) {
 
 export function checkExistRoleName(query) {
   return request({
-    url: '/jslife-icop-oms/role/checkExistRoleName',
+    url: '/role/checkExistRoleName',
     method: 'post',
     params: query
   })

@@ -8,7 +8,7 @@ export function login(userName, password, validate) {
     isLogin:true
   }
   return request({
-    url: '/jslife-icop-oms/login',
+    url: '/login',
     method: 'post',
     params:data
   })
@@ -16,7 +16,7 @@ export function login(userName, password, validate) {
 
 export function logout(params) {
   return request({
-    url: '/jslife-icop-oms/logout',
+    url: '/logout',
     method: 'post',
     params:params
   })
@@ -24,14 +24,14 @@ export function logout(params) {
 
 export function validPic() {
   return request({
-    url: '/jslife-icop-oms/validPic',
+    url: '/validPic',
     method: 'post'
   })
 }
 
 export function editPwd(params) {
   return request({
-    url: '/jslife-icop-oms/user/editPwd',
+    url: '/user/editPwd',
     method: 'post',
     params: params
   })
@@ -39,7 +39,7 @@ export function editPwd(params) {
 
 export function queryPopedomList(params) {
   return request({
-    url: '/jslife-icop-oms/user/queryPopedomList',
+    url: '/user/queryPopedomList',
     method: 'post',
     params: params
   })
