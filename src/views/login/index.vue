@@ -149,7 +149,7 @@
     width: 45px;
     height: 45px;
     margin: 1rem auto;
-    background: url("/static/loginimg/community-icon.png") no-repeat center/100%;
+    background: url("../../assets/loginimg/community-icon.png") no-repeat center/100%;
   }
 
   .title {
@@ -157,7 +157,7 @@
     width: 200px;
     height: 30px;
     margin: 1rem auto;
-    background: url("/static/loginimg/title.png") no-repeat center/100%;
+    background: url("../../assets/loginimg/title.png") no-repeat center/100%;
   }
 
   .inputgroup {
