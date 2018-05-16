@@ -54,7 +54,7 @@ export default {
 
       if (route.name === activeRouteName) {
 
-        return route.meta.icon
+        return route.meta.activeicon
       }
 
       return route.meta.icon
