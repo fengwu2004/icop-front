@@ -12,23 +12,16 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/jslife-icop-oms': {
-        target: 'http://10.101.90.151:8080/jslife-icop-oms', // 接口的域名,
+        target: 'http://120.79.167.104:8080/jslife-icop-oms', // 接口的域名,
         changeOrigin:true,
         pathRewrite: {
           '^/jslife-icop-oms': ''
-        }
-      },
-      '/jslife-file-service': {
-        target: 'http://10.101.90.151:8080/jslife-file-service', // 接口的域名,
-        changeOrigin:true,
-        pathRewrite: {
-          '^/jslife-file-service': ''
         }
       }
     },
 
     // Various Dev Server settings
-    host: '0.0.0.0', // can be overwritten by process.env.HOST
+    host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
