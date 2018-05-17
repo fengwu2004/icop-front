@@ -185,7 +185,7 @@
       },
       checkUserPersonId(user) {
 
-        return user.personId != null
+        return user.personCode != null || user.personId != null
       },
       checkUserValid(user) {
 
@@ -199,7 +199,7 @@
           return false
         }
 
-        if (this.checkUserNameValid(user)) {
+        if (!this.checkUserNameValid(user)) {
 
           this.$message({
             message: '警告，账户名格式错误',
