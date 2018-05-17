@@ -1,6 +1,6 @@
 <template>
-  <div class="main">
-    <div style="min-width: 500px">
+  <div class="imagemain">
+    <div>
       <span>主题图片</span>
       <div style="background: #E0E5EE;padding: 2rem 2rem 1rem;">
         <div class="imagecroppaouter">
@@ -19,11 +19,11 @@
         <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
       </div>
     </div>
-    <div v-show="imageAttacted" style="margin-left: 3rem">
+    <div v-show="imageAttacted">
       <span>手机效果预览</span>
       <div style="padding: 1rem;box-shadow: 0 8px 20px 0 #D9D9DD;">
-        <div style="width: 230px;height: 80px;overflow: hidden;">
-          <img id="preview_img_phone"/>
+        <div style="width: 460px;height: 160px;overflow: hidden;">
+          <img id="preview"/>
         </div>
       </div>
       <span class="helpertip">系统自动按指定尺寸生成</span>
@@ -33,19 +33,14 @@
 
 <script>
 
-  import { picFile } from "@/api/fileupload";
-  import Cropper from 'cropperjs'
   import './cropper.css'
+  import Cropper from 'cropperjs'
 
   export default {
-    data() {
-      return {
-        cropper:null,
-        dataUrl:null,
-        imageAttacted:false
-      }
+    created() {
+
+      this.dataUrl = this.initUrl
     },
-    props:['initUrl'],
     methods:{
       upload() {
 
@@ -55,32 +50,9 @@
 
         this.cropper.getCroppedCanvas().toBlob(blob => {
 
-          let formData = new FormData()
+          this.clearImg()
 
-          formData.append('file', blob)
-
-          let params = {
-            picType:'JSLIFEMAINPAGECARD',
-            productCode:'ICOP',
-            imgType:'.jpg'
-          }
-
-          picFile(formData, params).then(res => {
-
-            this.clearImg()
-
-            let respData = res.data.respData
-
-            this.dataUrl = respData.url
-
-            this.$store.dispatch('setMessageImageUrl', this.dataUrl).then(() => {
-
-              this.$message({
-                type: 'success',
-                message: '裁剪上传成功!'
-              });
-            })
-          })
+          this.dataUrl = 'https://github.com/fengwu2004/testelementui/blob/master/static/picture.jpg?raw=true'
         })
       },
       clearImg() {
@@ -124,7 +96,7 @@
 
         let image = document.getElementById('imagecropper_item')
 
-        let preview = document.getElementById('preview_img_phone')
+        let preview = document.getElementById('preview')
 
         preview.src = image.src
 
@@ -147,7 +119,7 @@
 
             var imageData = cropper.getImageData();
 
-            var previewWidth = 230;
+            var previewWidth = 460;
 
             var imageScaledRatio = data.width / previewWidth;
 
@@ -166,14 +138,10 @@
       return {
         cropper:null,
         dataUrl:null,
-        imageAttacted:false,
-        initialImage:null
+        imageAttacted:false
       }
     },
-    created() {
-
-      this.dataUrl = this.initUrl
-    },
+    props:['initUrl']
   }
 </script>
 
@@ -181,35 +149,23 @@
 
   .imagecroppaouter {
 
-    background: #E0E5EE;
-    border: 1px solid #D0D5E5;
-    width: 100%;
+    border: 1px dashed #D0D5E5;
     height: 240px;
-    max-width: 500px;
-    margin-top: 1rem;
+    width: 690px;
   }
 
-  .croppabound {
+  .sr-only {
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
   }
 
-  .imgpreview {
-
-    background: #FFFFFF;
-    box-shadow: 0 8px 20px 0 #D9D9DD;
-    border-radius: 8px;
-    padding: 1rem;
-    align-self: flex-start;
-    margin-top: 1rem;
-  }
-
-  .main {
+  .imagemain {
 
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
   }
 
   $fontcolor:#16325C;
@@ -223,17 +179,4 @@
     left: -0.2rem;
   }
 
-  .helpertip {
-
-    color: #445577;
-    font-size: 0.7rem;
-    font-weight: normal;
-  }
-
-  .focustip {
-
-    color: black;
-    font-size: 0.7rem;
-    font-weight: normal;
-  }
 </style>

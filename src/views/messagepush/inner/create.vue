@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="selectimg">
-          <image-cropper :initImageUrl="message.imageUrl"></image-cropper>
+          <image-cropper></image-cropper>
         </div>
         <div class="btns">
           <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
