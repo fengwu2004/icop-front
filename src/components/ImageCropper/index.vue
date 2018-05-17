@@ -164,7 +164,7 @@
     },
     data() {
       return {
-        croppa:{},
+        cropper:null,
         dataUrl:null,
         imageAttacted:false,
         initialImage:null
