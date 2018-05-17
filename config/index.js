@@ -17,6 +17,13 @@ module.exports = {
         pathRewrite: {
           '^/jslife-icop-oms': ''
         }
+      },
+      '/lichao-server': {
+        target: 'http://10.101.90.151:8080/jslife-icop-oms', // 接口的域名,
+        changeOrigin:true,
+        pathRewrite: {
+          '^/jslife-icop-oms': ''
+        }
       }
     },
 
