@@ -1,5 +1,5 @@
 module.exports = {
   NODE_ENV: '"production"',
   ENV_CONFIG: '"prod"',
-  BASE_API: '"/icopoms"'
+  BASE_API: '"/jslife-icop-oms"'
 }
