@@ -2,39 +2,31 @@
   <div class="main">
     <div style="min-width: 500px">
       <span>主题图片</span>
-      <div class="imagecroppaouter">
-        <div class="croppabound">
-          <div style="border: 1px dashed #D0D5EF;margin-top: 2rem;background-color: white;height: 160px">
-            <croppa
-              canvas-color="#FFFFFF"
-              v-model="croppa"
-              :show-remove-button="false"
-              :placeholder-font-size="20"
-              :initial-image="initialImage"
-              placeholder="点击/拖拽上传"
-              @new-image="onImageAttatched"
-              @image-remove="onImageRemoved"
-              :height="160" :width="460">
-            </croppa>
+      <div style="background: #E0E5EE;padding: 2rem 2rem 1rem;">
+        <div class="imagecroppaouter">
+          <img v-show="dataUrl" id="imagecropper_item" :src="dataUrl" alt="Picture" style="max-width: 100%;">
+          <div v-show="!dataUrl" style="display: flex;height: 100%;align-items: center;justify-content: center;" @click="upload">
+            <input id="addfile-btn" ref="input" class="sr-only" type="file" style="display: none" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" @input="imagechange"/>
+            <span style="font-size: 2rem">点击上传</span>
           </div>
         </div>
-        <div style="display: flex;width: 100%;justify-content: center;margin-top: 1rem" :style="{visibility:imageAttacted ? 'visible' : 'hidden'}">
-          <el-button @click="outputImg" size="mini">确定</el-button>
-          <el-button @click="cancelImg" size="mini">取消</el-button>
+        <div style="display: flex;width: 100%;justify-content: center;margin-top: 1rem" :style="{visibility:dataUrl ? 'visible' : 'hidden'}">
+          <el-button @click="outputImg" size="mini" v-show="imageAttacted">确定</el-button>
+          <el-button @click="reloadImage" size="mini">重新上传</el-button>
         </div>
       </div>
       <div style="margin-top: 1rem;">
         <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
       </div>
     </div>
-    <div v-show="dataUrl != null" style="margin-left: 3rem">
+    <div v-show="imageAttacted" style="margin-left: 3rem">
       <span>手机效果预览</span>
-      <div class="imgpreview">
-        <img :src="dataUrl" width="230" height="80"/>
+      <div style="padding: 1rem;box-shadow: 0 8px 20px 0 #D9D9DD;">
+        <div style="width: 460px;height: 160px;overflow: hidden;">
+          <img id="preview"/>
+        </div>
       </div>
-      <div style="margin-top: 1rem;">
-        <span class="helpertip">系统自动按指定尺寸生成</span>
-      </div>
+      <span class="helpertip">系统自动按指定尺寸生成</span>
     </div>
   </div>
 </template>
@@ -42,13 +34,25 @@
 <script>
 
   import { picFile } from "@/api/fileupload";
+  import Cropper from 'cropperjs'
 
   export default {
-    props:['initImageUrl'],
+    data() {
+      return {
+        cropper:null,
+        dataUrl:null,
+        imageAttacted:false
+      }
+    },
+    props:['initUrl'],
     methods:{
+      upload() {
+
+        document.getElementById("addfile-btn").click();
+      },
       outputImg() {
 
-        this.croppa.generateBlob(blob => {
+        this.cropper.getCroppedCanvas().toBlob(blob => {
 
           let formData = new FormData()
 
@@ -62,7 +66,7 @@
 
           picFile(formData, params).then(res => {
 
-            console.log(res)
+            this.clearImg()
 
             let respData = res.data.respData
 
@@ -78,19 +82,83 @@
           })
         })
       },
-      cancelImg() {
-
-        this.croppa.remove()
+      clearImg() {
 
         this.dataUrl = null
-      },
-      onImageAttatched() {
 
-        this.imageAttacted = true
-      },
-      onImageRemoved() {
+        this.$refs.input.value = ''
+
+        if (this.cropper) {
+
+          this.cropper.destroy()
+        }
 
         this.imageAttacted = false
+      },
+      reloadImage() {
+
+        this.clearImg()
+
+        this.upload()
+      },
+      imagechange() {
+
+        let file = document.getElementById("addfile-btn").files[0]
+
+        this.dataUrl = URL.createObjectURL(file)
+
+        this.$nextTick(() => {
+
+          this.onimageChange()
+        })
+      },
+      onimageChange() {
+
+        if (this.cropper) {
+
+          this.cropper.destroy()
+        }
+
+        this.imageAttacted = true
+
+        let image = document.getElementById('imagecropper_item')
+
+        let preview = document.getElementById('preview')
+
+        preview.src = image.src
+
+        let aspectRatio = 690/240
+
+        let viewMode = 1
+
+        this.cropper = new Cropper(image, {
+          aspectRatio,
+          viewMode,
+          ready() {
+
+            this.imageAttacted = true
+          },
+          crop(e) {
+
+            var data = e.detail;
+
+            var cropper = this.cropper;
+
+            var imageData = cropper.getImageData();
+
+            var previewWidth = 460;
+
+            var imageScaledRatio = data.width / previewWidth;
+
+            preview.style.width = imageData.naturalWidth / imageScaledRatio + 'px'
+
+            preview.style.height = imageData.naturalHeight / imageScaledRatio + 'px';
+
+            preview.style.marginLeft = -data.x / imageScaledRatio + 'px';
+
+            preview.style.marginTop = -data.y / imageScaledRatio + 'px';
+          }
+        })
       },
     },
     data() {
@@ -101,22 +169,9 @@
         initialImage:null
       }
     },
-    mounted() {
+    created() {
 
-      if (!this.initImageUrl) {
-
-        return
-      }
-
-      let image = new Image()
-
-      image.src = this.initImageUrl
-
-      image.setAttribute('crossorigin', 'anonymous')
-
-      this.initialImage = image
-
-      this.croppa.refresh()
+      this.dataUrl = this.initUrl
     },
   }
 </script>
