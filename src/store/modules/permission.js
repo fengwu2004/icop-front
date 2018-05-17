@@ -38,6 +38,11 @@ function filterAsyncRouter(asyncRouterMap, permissioncodes) {
       if (route.children && route.children.length) {
         
         route.children = filterAsyncRouter(route.children, permissioncodes)
+        
+        if (route.children.length > 0) {
+  
+          route.redirect = route.children[0].path
+        }
       }
       
       return true
@@ -69,10 +74,17 @@ export const permission = {
     GenerateRoutes({ commit }, permissioncodes) {
       return new Promise(resolve => {
         
-        console.log('zzz')
-        
         let accessedRouters = filterAsyncRouter(asyncRouterMap, permissioncodes)
         
+        if (accessedRouters.length > 0) {
+  
+          let route = { path: '', redirect:''}
+  
+          route.redirect = accessedRouters[0].path
+  
+          accessedRouters.push(route)
+        }
+  
         commit('SET_ROUTERS', accessedRouters)
         
         resolve()

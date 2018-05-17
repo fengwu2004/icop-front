@@ -22,8 +22,8 @@
     <div v-show="imageAttacted" style="margin-left: 3rem">
       <span>手机效果预览</span>
       <div style="padding: 1rem;box-shadow: 0 8px 20px 0 #D9D9DD;">
-        <div style="width: 460px;height: 160px;overflow: hidden;">
-          <img id="preview"/>
+        <div style="width: 230px;height: 80px;overflow: hidden;">
+          <img id="preview_img_phone"/>
         </div>
       </div>
       <span class="helpertip">系统自动按指定尺寸生成</span>
@@ -35,6 +35,7 @@
 
   import { picFile } from "@/api/fileupload";
   import Cropper from 'cropperjs'
+  import './cropper.css'
 
   export default {
     data() {
@@ -123,7 +124,7 @@
 
         let image = document.getElementById('imagecropper_item')
 
-        let preview = document.getElementById('preview')
+        let preview = document.getElementById('preview_img_phone')
 
         preview.src = image.src
 
@@ -146,7 +147,7 @@
 
             var imageData = cropper.getImageData();
 
-            var previewWidth = 460;
+            var previewWidth = 230;
 
             var imageScaledRatio = data.width / previewWidth;
 

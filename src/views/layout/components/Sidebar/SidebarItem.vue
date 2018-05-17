@@ -71,12 +71,9 @@ export default {
     },
     composePath(item, child, log) {
 
-      let value = item.path + '/' + child.path
+      let value = child.path
 
-      if (log) {
-
-        console.log('menu index', value)
-      }
+      console.log('index', value)
 
       return value
     },

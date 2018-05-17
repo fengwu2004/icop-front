@@ -31,25 +31,24 @@ const main = { template: '<router-view ref="main"></router-view>' }
 
 const user = {
   
-  path: 'user',
-  redirect: '/systemadmin/user/main',
+  path: '/systemadmin/user',
   name: 'systemadmin_user',
   component:main,
   meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:'122000', activeicon:'systemadmin_user_active' },
   children: [
     {
-      path: 'main',
+      path: '/systemadmin/user/main',
       component:_import('systemadmin/user/main'),
       meta: { title: 'systemadmin_user_main', hidden:true },
     },
     {
-      path: 'edit',
+      path: '/systemadmin/user/edit',
       component: _import('systemadmin/user/edit'),
       name: 'systemadmin_user_edit',
       meta: { title: 'systemadmin_user_edit', hidden:true },
     },
     {
-      path: 'rolesetting',
+      path: '/systemadmin/user/rolesetting',
       component: _import('systemadmin/user/rolesetting'),
       name: 'systemadmin_user_rolesetting',
       meta: {title: 'systemadmin_user_rolesetting', hidden:true },
@@ -59,31 +58,30 @@ const user = {
 
 const role = {
   
-  path: 'role',
-  redirect: '/systemadmin/role/main',
+  path: '/systemadmin/role',
   name: 'systemadmin_role',
   component:main,
   meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: '121000', activeicon:'systemadmin_role_active' },
   children: [
     {
-      path: 'main',
+      path: '/systemadmin/role/main',
       component:_import('systemadmin/role/main'),
       meta: { title: 'systemadmin_role', hidden:true},
     },
     {
-      path: 'create',
+      path: '/systemadmin/role/create',
       component: _import('systemadmin/role/create'),
       name: 'systemadmin_role_create',
       meta: { title: 'systemadmin_role_create', hidden:true},
     },
     {
-      path: 'detail',
+      path: '/systemadmin/role/detail',
       component: _import('systemadmin/role/detail'),
       name: 'systemadmin_role_detail',
       meta: { title: 'systemadmin_role_detail', hidden:true},
     },
     {
-      path: 'edit',
+      path: '/systemadmin/role/edit',
       component: _import('systemadmin/role/edit'),
       name: 'systemadmin_role_edit',
       meta: { title: 'systemadmin_role_edit', hidden:true},
@@ -93,14 +91,13 @@ const role = {
 
 const project = {
 
-  path: 'project',
-  redirect: '/systemadmin/project/main',
+  path: '/systemadmin/project',
   name: 'projectsetting',
   component:main,
   meta: { title: 'projectsetting', icon: 'projectsetting', code:'123000', activeicon:'projectsetting_active' },
   children: [
     {
-      path: 'main',
+      path: '/systemadmin/project/main',
       component:_import('systemadmin/project/main'),
       meta: { title: 'projectsetting', hidden:true},
     }
@@ -110,9 +107,8 @@ const project = {
 const systemadmin = {
   path: '/systemadmin',
   component: Layout,
-  redirect: '/systemadmin/role',
   name: 'systemadmin',
-  meta: { title: 'systemadmin', code:'120000'},
+  meta: { title: 'systemadmin' },
   children: [
     role,
     user,
@@ -122,25 +118,24 @@ const systemadmin = {
 
 const inner = {
   
-  path: 'inner',
-  redirect: '/messagepush/inner/main',
+  path: '/messagepush/inner',
   name: 'messagepush_inner',
   component:main,
   meta: { title: 'messagepush_inner', icon: 'innerpush', code:'112000', activeicon:'innerpush_active' },
   children: [
     {
-      path: 'main',
+      path: '/messagepush/inner/main',
       component:_import('messagepush/inner/main'),
       meta: { title: 'messagepush_inner', hidden:true},
     },
     {
-      path: 'edit',
+      path: '/messagepush/inner/edit',
       component: _import('messagepush/inner/editor'),
       name: 'messagepush_inner_edit',
       meta: { title: 'messagepush_inner_edit', hidden:true},
     },
     {
-      path: 'create',
+      path: '/messagepush/inner/create',
       component: _import('messagepush/inner/create'),
       name: 'messagepush_inner_create',
       meta: {title: 'messagepush_inner_create', hidden:true},
@@ -150,25 +145,24 @@ const inner = {
 
 const area = {
   
-  path: 'area',
-  redirect: '/messagepush/area/main',
+  path: '/messagepush/area',
   name: 'messagepush_area',
   component:main,
   meta: { title: 'messagepush_area', icon: 'areapush', code:'111000', activeicon:'areapush_active' },
   children: [
     {
-      path: 'main',
+      path: '/messagepush/area/main',
       component:_import('messagepush/area/main'),
       meta: { title: 'messagepush_area', hidden:true},
     },
     {
-      path: 'edit',
+      path: '/messagepush/area/edit',
       component: _import('messagepush/area/editor'),
       name: 'messagepush_area_edit',
       meta: { title: 'messagepush_area_edit', hidden:true},
     },
     {
-      path: 'create',
+      path: '/messagepush/area/create',
       component: _import('messagepush/area/create'),
       name: 'messagepush_area_create',
       meta: {title: 'messagepush_area_create', hidden:true},
@@ -179,9 +173,8 @@ const area = {
 const messagepush = {
   path: '/messagepush',
   component: Layout,
-  redirect: '/messagepush/area',
   name: 'messagepush',
-  meta: { title: 'messagepush', code:'110000' },
+  meta: { title: 'messagepush' },
   children: [
     area,
     inner,
@@ -199,7 +192,6 @@ export const constantRouterMap = [
   { path: '/authredirect', component: _import('login/authredirect'), meta:{hidden: true} },
   { path: '/404', component: _import('errorPage/404'), meta:{hidden: true} },
   { path: '/401', component: _import('errorPage/401'), meta:{hidden: true} },
-  { path: '', redirect:'/messagepush'}
 ]
 
 export default new Router({

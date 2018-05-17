@@ -32,80 +32,67 @@ function dynamicCreateRoutes(to, from, next) {
   
   let routes = store.getters.routes
   
-  queryPopedomList({}).then(res => {
-  
-    console.log('获取权限', JSON.stringify(res))
-  
-    store.dispatch('setPemissionCodes', res.data.respData).then(() => {
-  
-      store.dispatch('GenerateRoutes', store.getters.permissioncodes)
-        .then(() => {
-      
-          router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-          
-          console.log(store.getters.addRouters)
-          
-          let validRoute = getFirstValidRoute(store.getters.addRouters)
-      
-          let replace = { ...to, replace: true, path: validRoute}
-      
-          console.log(from.path + ' 替换为 ' + replace.path)
-      
-          next(replace) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-        })
-        .catch(res => {
-      
-          console.log(res)
-        })
+  queryPopedomList({}).
+    then(res => {
+    
+      return store.dispatch('setPemissionCodes', res.data.respData)
     })
-  })
+    .then(res => {
+      
+      return store.dispatch('GenerateRoutes', store.getters.permissioncodes)
+    })
+    .then(res => {
+  
+      router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+  
+      let replace = { ...to, replace: true}
+  
+      next(replace)
+    })
+    .catch(res => {
+    
+      console.log(res)
+    })
 }
 
 router.beforeEach((to, from, next) => {
   
-  console.log(to.path, from.path)
+  console.log(from.path, to.path)
   
   NProgress.start() // start progress bar
   
-  if (checkValidTokenAndUserId()) {
-    
-    if (to.path === '/login') {
-      
-      next({ path: '/' })
-      
-      NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
-    }
-    else {
-      
-      if (store.getters.addRouters.length == 0) {
-        
-        dynamicCreateRoutes(to, from, next)
-      }
-      else {
+  if (!checkValidTokenAndUserId()) {
   
-        if (hasPermission(store.getters.permissions, to.meta.permissions)) {
-          
-          next()//
-        }
-        else {
-          
-          next({ path: '/401', replace: true, query: { noGoBack: true }})
-        }
-      }
-    }
-  }
-  else {
-    /* has no token*/
-    if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
-      
+    if (whiteList.indexOf(to.path) !== -1) {
+    
       next()
     }
     else {
-      
-      next('/login') // 否则全部重定向到登录页
-      
-      NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
+  
+      next('/login')
+  
+      NProgress.done()
     }
+    
+    return
+  }
+  
+  if (to.path === '/login') {
+    
+    next({ path: '/' })
+    
+    NProgress.done()
+    
+    return
+  }
+  
+  if (store.getters.addRouters.length == 0) {
+    
+    dynamicCreateRoutes(to, from, next)
+  }
+  else {
+  
+    next()
   }
 })
 
