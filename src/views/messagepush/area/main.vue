@@ -363,7 +363,7 @@
 
         this.$store.dispatch('setMessage', message).then(() => {
 
-          let router = {name:'innercreatemessage'}
+          let router = {name:'messagepush_area_create', meta:{title:'修改通知'}}
 
           this.$router.push(router)
         })

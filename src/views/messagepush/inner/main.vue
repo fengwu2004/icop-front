@@ -278,7 +278,7 @@
 
         this.$store.dispatch('setMessage', message).then(() => {
 
-          let route = {name:'innercreatemessage'}
+          let route = {name:'messagepush_inner_create', meta:{isCreate:true}}
 
           this.$router.push(route)
         })

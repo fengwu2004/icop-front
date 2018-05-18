@@ -85,6 +85,17 @@
 
         this.$router.push(route)
       },
+    },
+    mounted() {
+
+      if (this.message.messageId) {
+
+        this.$route.meta.title = '修改通知'
+      }
+      else {
+
+        this.$route.meta.title = '创建通知'
+      }
     }
   }
 </script>
