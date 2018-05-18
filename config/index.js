@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/jslife-icop-oms': {
-        // target: 'http://120.79.167.104:8080/jslife-icop-oms', // 测试服,
-        target: 'http://10.101.90.151:8080/jslife-icop-oms', // 李超服务器,
+        target: 'http://120.79.167.104:8080/jslife-icop-oms', // 测试服,
+        // target: 'http://10.101.90.151:8080/jslife-icop-oms', // 李超服务器,
         changeOrigin:true,
         pathRewrite: {
           '^/jslife-icop-oms': ''
