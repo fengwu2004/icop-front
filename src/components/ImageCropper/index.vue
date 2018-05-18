@@ -1,8 +1,8 @@
 <template>
   <div class="main">
-    <div style="min-width: 500px">
+    <div style="min-width: 600px;">
       <span>主题图片</span>
-      <div style="background: #E0E5EE;padding: 2rem 2rem 1rem;">
+      <div style="background: #E0E5EE;padding: 2rem 2rem 1rem;margin-top: 1rem">
         <div class="imagecroppaouter">
           <img v-show="dataUrl" id="imagecropper_item" :src="dataUrl" alt="Picture" style="max-width: 100%;">
           <div v-show="!dataUrl" style="display: flex;height: 100%;align-items: center;justify-content: center;" @click="upload">
@@ -21,7 +21,7 @@
     </div>
     <div v-show="imageAttacted" style="margin-left: 3rem">
       <span>手机效果预览</span>
-      <div style="padding: 1rem;box-shadow: 0 8px 20px 0 #D9D9DD;">
+      <div style="padding: 1rem;box-shadow: 0 8px 20px 0 #D9D9DD;margin-top: 1rem">
         <div style="width: 230px;height: 80px;overflow: hidden;">
           <img id="preview_img_phone"/>
         </div>
@@ -184,9 +184,7 @@
     background: #E0E5EE;
     border: 1px solid #D0D5E5;
     width: 100%;
-    height: 240px;
-    max-width: 500px;
-    margin-top: 1rem;
+    height: 160px;
   }
 
   .croppabound {
