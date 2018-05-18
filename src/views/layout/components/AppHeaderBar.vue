@@ -40,7 +40,7 @@
               placement="right"
               width="150"
               trigger="focus">
-              <span style="font-size: 0.6rem">密码长度6-18位,字母，数组，标点符号，不允许空格</span>
+              <span style="font-size: 0.6rem">密码长度6-18位，字母，数字，标点符号，不允许空格</span>
               <el-input style="width: 200px;" v-model="newPwd1" slot="reference" type="password" auto-complete="off"></el-input>
             </el-popover>
           </div>

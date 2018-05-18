@@ -37,7 +37,7 @@
               placement="right"
               width="200"
               trigger="focus">
-              <span style="font-size: 0.6rem">长度6-30位,字母，数组，下划线，不允许空格</span>
+              <span style="font-size: 0.6rem">长度6-30位，字母，数字，下划线，不允许空格</span>
               <el-input slot="reference" style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur"></el-input>
             </el-popover>
             <div style="margin-top: 10px">
@@ -51,7 +51,7 @@
               placement="right"
               width="200"
               trigger="focus">
-              <span style="font-size: 0.6rem">密码长度6-18位,字母，数组，标点符号，不允许空格</span>
+              <span style="font-size: 0.6rem">密码长度6-18位，字母，数字，标点符号，不允许空格</span>
               <el-input slot="reference" type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password" name="txtpwd"></el-input>
             </el-popover>
             <div style="margin-top: 10px">
