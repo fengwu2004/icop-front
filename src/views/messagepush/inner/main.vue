@@ -354,17 +354,6 @@
           this.listLoading = false
         })
       },
-      handleEdit(index, row) {
-
-        let message = this.tableData.data[index]
-
-        this.$store.dispatch('setMessage', message).then(() => {
-
-          let router = {name:'innercreatemessage'}
-
-          this.$router.push(router)
-        })
-      },
       headercellstyle({row, rowIndex, columnIndex}){
 
         return columnIndex == 5 ? headercellcenter: headercell

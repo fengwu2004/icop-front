@@ -73,8 +73,6 @@ export default {
 
       let value = child.path
 
-      console.log('index', value)
-
       return value
     },
     hasOneShowingChildren(children) {

@@ -46,9 +46,9 @@
   import { isvalidUsername } from '@/utils/validate'
 
   export default {
-    created(){
+    mounted(){
 
-      login('666666', '666666', '6666').then(res => {
+      login('666666', '999999', '6666').then(res => {
 
 
       })
