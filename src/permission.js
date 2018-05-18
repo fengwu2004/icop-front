@@ -6,27 +6,9 @@ import 'nprogress/nprogress.css'// progress bar style
 import { queryPopedomList } from "@/api/login";
 import { checkValidTokenAndUserId } from '@/utils/auth' // getToken from cookie
 
-NProgress.configure({ showSpinner: false })// NProgress Configuration
+NProgress.configure({ showSpinner: false })
 
-// permissiom judge function
-function hasPermission(roles, permissionRoles) {
-  
-  return true
-}
-
-function getFirstValidRoute(routes) {
-  
-  if (!routes || routes.length == 0) {
-    
-    return ''
-  }
-  
-  let path = routes[0].path + '/' + getFirstValidRoute(routes[0].children)
-  
-  return path
-}
-
-const whiteList = ['/login', '/authredirect']// no redirect whitelist
+const whiteList = ['/login', '/authredirect']
 
 function dynamicCreateRoutes(to, from, next) {
   
@@ -43,7 +25,7 @@ function dynamicCreateRoutes(to, from, next) {
     })
     .then(res => {
   
-      router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+      router.addRoutes(store.getters.addRouters)
   
       let replace = { ...to, replace: true}
   
@@ -59,7 +41,7 @@ router.beforeEach((to, from, next) => {
   
   console.log(from.path, to.path)
   
-  NProgress.start() // start progress bar
+  NProgress.start()
   
   if (!checkValidTokenAndUserId()) {
   

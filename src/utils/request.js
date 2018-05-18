@@ -6,7 +6,7 @@ import { getTokenAndId, checkValidTokenAndUserId } from '@/utils/auth'
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 5000 // request timeout
+  timeout: 30000 // request timeout
 })
 
 service.interceptors.request.use(config => {
@@ -23,7 +23,7 @@ service.interceptors.request.use(config => {
     }
   }
   
-  console.log('请求', config, config.params)
+  console.log('请求', config)
   
   return config
   

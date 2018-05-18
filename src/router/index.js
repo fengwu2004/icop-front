@@ -108,7 +108,7 @@ const systemadmin = {
   path: '/systemadmin',
   component: Layout,
   name: 'systemadmin',
-  meta: { title: 'systemadmin' },
+  meta: { title: 'systemadmin', code:'120000' },
   children: [
     role,
     user,
@@ -174,7 +174,7 @@ const messagepush = {
   path: '/messagepush',
   component: Layout,
   name: 'messagepush',
-  meta: { title: 'messagepush' },
+  meta: { title: 'messagepush', code:'110000' },
   children: [
     area,
     inner,

@@ -1,8 +1,8 @@
 <template>
   <div class="main">
-    <div style="min-width: 600px;">
+    <div style="min-width: 500px;">
       <span>主题图片</span>
-      <div style="background: #E0E5EE;padding: 2rem 2rem 1rem;margin-top: 1rem">
+      <div style="background: #E0E5EE;padding: 2rem 2rem 1rem;margin-top: 1rem;">
         <div class="imagecroppaouter">
           <img v-show="dataUrl" id="imagecropper_item" :src="dataUrl" alt="Picture" style="max-width: 100%;">
           <div v-show="!dataUrl" style="display: flex;height: 100%;align-items: center;justify-content: center;" @click="upload">
@@ -45,7 +45,7 @@
         imageAttacted:false
       }
     },
-    props:['initUrl'],
+    props:['initImageUrl'],
     methods:{
       upload() {
 
@@ -172,7 +172,7 @@
     },
     created() {
 
-      this.dataUrl = this.initUrl
+      this.dataUrl = this.initImageUrl
     },
   }
 </script>
@@ -181,10 +181,11 @@
 
   .imagecroppaouter {
 
-    background: #E0E5EE;
-    border: 1px solid #D0D5E5;
-    width: 100%;
-    height: 160px;
+    background: white;
+    border: 1px dashed #D0D5E5;
+    width: 460px;
+    height: 162px;
+    margin: auto;
   }
 
   .croppabound {

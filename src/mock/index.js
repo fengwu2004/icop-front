@@ -66,9 +66,8 @@ if (mock_login) {
   Mock.mock(/\/jslife-icop-oms\/captcha/, 'post', loginAPI.validPic)
   Mock.mock(/\/jslife-icop-oms\/logout/, 'post', loginAPI.logout)
   Mock.mock(/\/jslife-icop-oms\/user\/editPwd/, 'post', loginAPI.editPwd)
+  Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
+  Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomList/, 'post', loginAPI.queryPopedomList)
 }
-
-Mock.mock(/\/jslife-icop-oms\/login/, 'post', loginAPI.login)
-Mock.mock(/\/jslife-icop-oms\/user\/queryPopedomList/, 'post', loginAPI.queryPopedomList)
 
 export default Mock

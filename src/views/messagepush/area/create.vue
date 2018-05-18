@@ -93,8 +93,7 @@
 
   .content {
 
-    width: 40%;
-    max-width: 500px;
+    width: 500px;
     margin: 2rem auto;
   }
 

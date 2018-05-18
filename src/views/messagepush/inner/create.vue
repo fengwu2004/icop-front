@@ -145,7 +145,7 @@
 
   .content {
 
-    width: 600px;
+    width: 500px;
     margin: 2rem auto;
   }
 
