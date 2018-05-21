@@ -78,13 +78,13 @@
         newPwd1:'',
         newPwd2:'',
         jsListIcon:jsListIcon,
+        avatar:'/static/defaultavatar.gif'
       }
     },
     computed: {
       ...mapGetters([
         'sidebar',
         'name',
-        'avatar'
       ])
     },
     methods: {
