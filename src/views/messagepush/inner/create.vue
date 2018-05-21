@@ -43,7 +43,7 @@
           <image-cropper :initImageUrl="message.imageUrl"></image-cropper>
         </div>
         <div class="btns">
-          <el-button>取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
+          <el-button @click="onCancelCreate">取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
         </div>
       </div>
     </div>
@@ -137,6 +137,10 @@
 
         this.$router.push(route)
       },
+      onCancelCreate() {
+
+        this.$router.go(-1)
+      }
     },
     mounted() {
 

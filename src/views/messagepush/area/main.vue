@@ -140,8 +140,6 @@
       },
       getStrategyStr(strategy) {
 
-        console.log('getStrategyStr')
-
         for (let i = 0; i < strategyKeyList.length; ++i) {
 
           let item = strategyKeyList[i]

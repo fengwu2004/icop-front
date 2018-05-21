@@ -57,9 +57,17 @@
       },
       HandleSave() {
 
-        this.$store.dispatch('setMessageContent',this.content).then(() => {
+        if (!this.content || this.content.length == 0) {
 
-          // alert(JSON.stringify(this.message))
+          this.$message({
+            message: '通知内容必须填写',
+            type: 'warning'
+          });
+
+          return
+        }
+
+        this.$store.dispatch('setMessageContent',this.content).then(() => {
 
           if (this.message.messageId) {
 

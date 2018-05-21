@@ -10,12 +10,12 @@
       <img class="city" src="../../assets/loginimg/city.png">
     </div>
     <div class="main">
-      <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm">
+      <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm" onsubmit="return false">
         <div class="icon"/>
         <div class="title"/>
         <el-form-item prop="userName" >
           <div class="inputgroup">
-            <input placeholder="请输入用户名" v-model="loginForm.userName" autocomplete="off"/>
+            <input placeholder="请输入用户名" v-model="loginForm.userName" autocomplete="off" autofocus/>
           </div>
         </el-form-item>
         <el-form-item prop="password">
@@ -32,7 +32,7 @@
         </el-form-item>
         <el-form-item>
           <div style="padding: 1rem;">
-            <el-button style="width: 100%; background-color: #FF955B;border: #FF955B" type="danger" :loading="loading" @click="submitLogin">登 陆</el-button>
+            <el-button style="width: 100%; background-color: #FF955B;border: #FF955B" type="danger" :loading="loading" @click="submitLogin" native-type="submit">登 录</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -74,33 +74,32 @@
 
         this.$refs.loginForm.validate(valid => {
 
-          if (valid) {
+          if (!valid) {
 
-            this.loading = true
+            alert('error')
 
-            this.$store.dispatch('LoginByUsername', this.loginForm)
-              .then(() => {
-
-                this.loading = false
-
-                let route = { path: '/' }
-
-                this.$router.push(route)
-              })
-              .catch(() => {
-
-                this.$message.error('登陆失败，请检查用户名或密码是否正确');
-
-                this.loading = false
-
-                this.updateCaptcha()
-              })
+            return
           }
-          else {
-            console.log('error submit!!')
 
-            return false
-          }
+          this.loading = true
+
+          this.$store.dispatch('LoginByUsername', this.loginForm)
+            .then(() => {
+
+              this.loading = false
+
+              let route = { path: '/' }
+
+              this.$router.push(route)
+            })
+            .catch(() => {
+
+              this.$message.error('登陆失败，请检查用户名或密码是否正确');
+
+              this.loading = false
+
+              this.updateCaptcha()
+            })
         })
       },
     }
