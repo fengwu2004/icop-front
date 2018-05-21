@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="settings">
-        <el-button>取消</el-button>
+        <el-button @click="cancelCreate">取消</el-button>
         <el-button type="primary" @click="createRole">保存</el-button>
       </div>
     </div>
@@ -103,6 +103,10 @@
         }
 
         return _array;
+      },
+      cancelCreate() {
+
+        this.$router.go(-1)
       },
       createRole() {
 

@@ -6,7 +6,7 @@ const currentuser = {
       personCode:' ',
       userName:null,
       telephone:null,
-      sex:'男',
+      sex:'MALE',
       password:null,
       roleIds:null,
       userId:null
@@ -34,7 +34,7 @@ const currentuser = {
         personCode:' ',
         userName:null,
         telephone:null,
-        sex:'男',
+        sex:'MALE',
         password:null,
         roleIds:null
       }

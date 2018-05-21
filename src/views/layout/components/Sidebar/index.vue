@@ -42,6 +42,8 @@ export default {
 
       if (!this.pathHidden(route)) {
 
+        console.log('active index', route.path)
+
         return route.path
       }
 

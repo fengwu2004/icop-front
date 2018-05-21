@@ -37,11 +37,11 @@
               placement="right"
               width="200"
               trigger="focus">
-              <span style="font-size: 0.6rem">长度6-30位,字母，数组，下划线，不允许空格</span>
+              <span style="font-size: 0.6rem">长度6-30位，字母，数字，下划线，不允许空格</span>
               <el-input slot="reference" style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur"></el-input>
             </el-popover>
             <div style="margin-top: 10px">
-              <span style="font-size: 0.8rem;color: #445577;">注:不能重名,登录时需同时输入@部分</span>
+              <span style="font-size: 0.8rem;color: #445577;">注:不能重名</span>
             </div>
           </div>
           <div>
@@ -51,7 +51,7 @@
               placement="right"
               width="200"
               trigger="focus">
-              <span style="font-size: 0.6rem">密码长度6-18位,字母，数组，标点符号，不允许空格</span>
+              <span style="font-size: 0.6rem">密码长度6-18位，字母，数字，标点符号，不允许空格</span>
               <el-input slot="reference" type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password" name="txtpwd"></el-input>
             </el-popover>
             <div style="margin-top: 10px">
@@ -134,8 +134,6 @@
 
         Object.assign(value, user, {password:md5(pwd)})
 
-        alert(JSON.stringify(value))
-
         if (user.userId) {
 
           edit(value).then(response => {
@@ -185,7 +183,7 @@
       },
       checkUserPersonId(user) {
 
-        return user.personId != null
+        return user.personCode != null || user.personId != null
       },
       checkUserValid(user) {
 
@@ -199,7 +197,7 @@
           return false
         }
 
-        if (this.checkUserNameValid(user)) {
+        if (!this.checkUserNameValid(user)) {
 
           this.$message({
             message: '警告，账户名格式错误',

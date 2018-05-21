@@ -137,6 +137,17 @@
 
         this.$router.push(route)
       },
+    },
+    mounted() {
+
+      if (this.message.messageId) {
+
+        this.$route.meta.title = '修改通知'
+      }
+      else {
+
+        this.$route.meta.title = '创建通知'
+      }
     }
   }
 </script>
@@ -145,8 +156,7 @@
 
   .content {
 
-    width: 40%;
-    min-width: 500px;
+    width: 500px;
     margin: 2rem auto;
   }
 

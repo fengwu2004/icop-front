@@ -23,7 +23,7 @@ service.interceptors.request.use(config => {
     }
   }
   
-  console.log('请求', config, config.params)
+  console.log('请求', config)
   
   return config
   

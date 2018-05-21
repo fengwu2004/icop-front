@@ -12,19 +12,13 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/jslife-icop-oms': {
-        target: 'http://120.79.167.104:8080/jslife-icop-oms', // 接口的域名,
+        target: 'http://120.79.167.104:8080/jslife-icop-oms', // 测试服,
+        // target: 'http://10.101.90.151:8080/jslife-icop-oms', // 李超服务器,
         changeOrigin:true,
         pathRewrite: {
           '^/jslife-icop-oms': ''
         }
       },
-      '/lichao-server': {
-        target: 'http://10.101.90.151:8080/jslife-icop-oms', // 接口的域名,
-        changeOrigin:true,
-        pathRewrite: {
-          '^/jslife-icop-oms': ''
-        }
-      }
     },
 
     // Various Dev Server settings

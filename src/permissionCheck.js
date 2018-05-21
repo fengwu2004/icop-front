@@ -3,8 +3,6 @@ import md5 from 'blueimp-md5'
 
 export function checkRouteAndActionEnable(code) {
 
-  console.log('checkRouteAndActionEnable')
-  
   if (!store.getters.permissioncodes) {
     
     return true

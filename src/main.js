@@ -16,13 +16,9 @@ import store from './store'
 import i18n from './lang' // Internationalization
 import './icons' // icon
 import './permission' // permission control
-import './mock' // simulation data
-import Croppa from 'vue-croppa'
-import 'vue-croppa/dist/vue-croppa.css'
+// import './mock' // simulation data
 
 import * as filters from './filters' // global filters
-
-Vue.use(Croppa)
 
 Vue.use(Element, {
   size: 'medium', // set element-ui default size

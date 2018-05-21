@@ -278,7 +278,7 @@
 
         this.$store.dispatch('setMessage', message).then(() => {
 
-          let route = {name:'innercreatemessage'}
+          let route = {name:'messagepush_inner_create', meta:{isCreate:true}}
 
           this.$router.push(route)
         })
@@ -352,17 +352,6 @@
           this.tableData = this.getResponseTableData(response.data.respData)
 
           this.listLoading = false
-        })
-      },
-      handleEdit(index, row) {
-
-        let message = this.tableData.data[index]
-
-        this.$store.dispatch('setMessage', message).then(() => {
-
-          let router = {name:'innercreatemessage'}
-
-          this.$router.push(router)
         })
       },
       headercellstyle({row, rowIndex, columnIndex}){
