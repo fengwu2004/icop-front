@@ -20,16 +20,16 @@
             </div>
           </div>
         </div>
-        <div class="permissionctr">
+        <div class="permissionctr" v-show="app">
           <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
           <div class="permissiontree">
-            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
+            <el-tree :data="app" :default-expanded-keys="defaultAppKeys" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
           </div>
         </div>
-        <div class="permissionctr">
+        <div class="permissionctr" v-show="icop">
           <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
           <div class="permissiontree">
-            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
+            <el-tree :data="icop" :default-expanded-keys="defaultIcopKeys" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-checked-keys="apppermissions"></el-tree>
           </div>
         </div>
       </div>
@@ -49,6 +49,11 @@
     components: { BreadCrumb },
     methods:{
       build(parentid, items) {
+
+        if (!items) {
+
+          return null
+        }
 
         var _array = [];
 
@@ -111,7 +116,23 @@
 
         this.app = this.build(null, respData.app)
 
+        if (this.app) {
+
+          this.defaultAppKeys = respData.app.map(item => {
+
+            return item.treeId
+          })
+        }
+
         this.icop = this.build(null, respData.icop)
+
+        if (this.icop) {
+
+          this.defaultIcopKeys = respData.icop.map(item => {
+
+            return item.treeId
+          })
+        }
       })
 
       let data = {
@@ -132,6 +153,8 @@
     },
     data() {
       return {
+        defaultAppKeys:[],
+        defaultIcopKeys:[],
         app: [],
         icop: [],
         role:null,
