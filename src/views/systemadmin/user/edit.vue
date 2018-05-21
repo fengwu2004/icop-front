@@ -143,6 +143,7 @@
               type: 'success'
             });
 
+            this.$router.go(-1)
           })
         }
         else {
@@ -154,6 +155,7 @@
               type: 'success'
             });
 
+            this.$router.go(-1)
           })
         }
       },

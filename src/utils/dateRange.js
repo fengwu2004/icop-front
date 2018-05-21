@@ -31,30 +31,33 @@ function dateRangeUtil() {
    * 获得本周起止时间
    */
   this.getCurrentWeek = function () {
-    //起止日期数组
+  
     var startStop = new Array();
-    //获取当前时间
+  
     var currentDate = this.getCurrentDate();
-    //返回date是一周中的某一天
+  
     var week = currentDate.getDay();
-    //返回date是一个月中的某一天
+  
     var month = currentDate.getDate();
-    
-    
-    //一天的毫秒数
+  
+    let hours = currentDate.getHours()
+  
+    let minutes = currentDate.getMinutes()
+  
+    let seconds = currentDate.getSeconds()
+  
     var millisecond = 1000 * 60 * 60 * 24;
-    //减去的天数
+  
     var minusDay = week != 0 ? week - 1 : 6;
-    //alert(minusDay);
-    //本周 周一
-    var monday = new Date(currentDate.getTime() - (minusDay * millisecond));
-    //本周 周日
-    var sunday = new Date(monday.getTime() + (6 * millisecond));
-    //添加本周时间
-    startStop.push(monday); //本周起始时间
-    //添加本周最后一天时间
-    startStop.push(sunday); //本周终止时间
-    //返回
+  
+    var monday = new Date(currentDate.getTime() - (minusDay * millisecond) - hours * 1000 * 3600 - minutes * 1000 * 60 - seconds * 1000 + 1000);
+  
+    var sunday = new Date(monday.getTime() + (7 * millisecond) - 1000);
+  
+    startStop.push(monday)
+  
+    startStop.push(sunday)
+  
     return startStop;
   };
   

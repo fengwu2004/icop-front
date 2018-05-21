@@ -48,10 +48,10 @@
   export default {
     mounted(){
 
-      login('666666', '999999', '6666').then(res => {
-
-
-      })
+      // login('666666', '999999', '6666').then(res => {
+      //
+      //
+      // })
     },
     data() {
       return {

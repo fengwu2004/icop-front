@@ -20,16 +20,16 @@
             </div>
           </div>
         </div>
-        <div class="permissionctr">
+        <div class="permissionctr" v-bind="app">
           <div class="doselectapp">请勾选可使用的捷物管APP功能</div>
           <div class="permissiontree">
-            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
+            <el-tree :data="app" :default-expanded-keys="defaultAppKeys" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
           </div>
         </div>
-        <div class="permissionctr">
+        <div class="permissionctr" v-show="icop">
           <div class="doselectapp">请勾选可使用的社区运营平台功能</div>
           <div class="permissiontree">
-            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" @check-change="appcheckchange" :props="defaultProps"></el-tree>
+            <el-tree :data="icop" :default-expanded-keys="defaultIcopKeys" ref="icoptree" show-checkbox node-key="treeId" @check-change="appcheckchange" :props="defaultProps"></el-tree>
           </div>
         </div>
       </div>
@@ -86,6 +86,11 @@
       },
       build(parentid, items) {
 
+        if (!items) {
+
+          return null
+        }
+
         var _array = [];
 
         for (var i = 0; i < items.length; i++) {
@@ -141,11 +146,29 @@
 
         this.app = this.build(null, response.data.respData.app)
 
+        if (this.app) {
+
+          this.defaultAppKeys = response.data.respData.app.map(item => {
+
+            return item.treeId
+          })
+        }
+
         this.icop = this.build(null, response.data.respData.icop)
+
+        if (this.icop) {
+
+          this.defaultIcopKeys = response.data.respData.icop.map(item => {
+
+            return item.treeId
+          })
+        }
       })
     },
     data() {
       return {
+        defaultAppKeys:[],
+        defaultIcopKeys:[],
         app: [],
         icop: [],
         roleName:'',

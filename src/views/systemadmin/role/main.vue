@@ -21,7 +21,7 @@
           <el-table-column label="操作" min-width="300">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleDetail(scope.$index, scope.row)" v-show="checkActionEnable('detail')">详细</el-button>
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')">管理账户</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')">修改</el-button>
               <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">删除</el-button>
             </template>
           </el-table-column>
