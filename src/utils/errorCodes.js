@@ -1,0 +1,16 @@
+
+export const errorcode = {
+  'JSLIFEICOP1001':'用户密码错误',
+  'JSLIFEICOP1003':'用户名或密码错误',
+  'JSLIFEICOP1004':'用户密码只能由数字或字母组成',
+  'JSLIFEICOP1006':'验证码错误',
+}
+
+export const systemerrorCode = {
+  'JSLIFEICOP0999':"您还没有登陆",
+  'JSLIFEICOP0998':'超时未操作',
+  'JSLIFEICOP0997':'您的账号在其他地方登陆',
+  'JSLIFEICOP0002':'处理失败',
+  'JSLIFEICOP0003':'参数为空',
+  'JSLIFEICOP0004':'参数非法',
+}

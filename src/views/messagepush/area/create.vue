@@ -62,6 +62,7 @@
   import BreadCrumb from '@/components/Breadcrumb/index'
   import ImageCropper from '@/components/ImageCropper/index'
   import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList } from "@/utils/constvalues";
+  import { trim } from "@/utils/validate";
 
   export default {
     components: { PageWidget, BreadCrumb, ImageCropper },
@@ -79,7 +80,60 @@
       ]),
     },
     methods: {
+      checkMessageValid() {
+
+        if (!this.message.msgSubject) {
+
+          this.$message({
+            message: '消息主题不能为空',
+            type: 'warning'
+          });
+
+          console.log('zz')
+
+          return false
+        }
+
+        let msgSubject = trim(this.message.msgSubject)
+
+        if (msgSubject.length > 30 || msgSubject <= 0) {
+
+          this.$message({
+            message: '通知主题不能为空',
+            type: 'warning'
+          });
+
+          return false
+        }
+
+        if (!this.message.sendType) {
+
+          this.$message({
+            message: '消息发送方式不能为空',
+            type: 'warning'
+          });
+
+          return false
+        }
+
+        if (!this.message.sendStrategy) {
+
+          this.$message({
+            message: '消息发送策略需要选择',
+            type: 'warning'
+          });
+
+          return false
+        }
+
+        return true
+      },
       onEditorMessage() {
+
+        if (!this.checkMessageValid()) {
+
+          return
+        }
 
         let route = {name:'messagepush_area_edit'}
 

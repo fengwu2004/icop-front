@@ -90,9 +90,7 @@
 
               this.$router.push(route)
             })
-            .catch(() => {
-
-              this.$message.error('登陆失败，请检查用户名或密码是否正确');
+            .catch(res => {
 
               this.loading = false
 

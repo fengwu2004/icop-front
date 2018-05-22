@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
+import router from '@/router'
 import { getTokenAndId, checkValidTokenAndUserId, removeToken } from '@/utils/auth'
+import { systemerrorCode, errorcode } from "@/utils/errorCodes";
 
 // create an axios instance
 const service = axios.create({
@@ -39,14 +41,46 @@ service.interceptors.response.use(
   
   response => {
     
-    if (response.data.respCode === 'JSLIFEICOP0001') {
-      
-      return response.data.respData
-    }
-  
-    removeToken()
+    const respCode = response.data.respCode
     
-    return Promise.reject('error');
+    if (respCode === 'JSLIFEICOP0001') {
+      
+      return Promise.resolve(response.data.respData)
+    }
+    
+    if (respCode in systemerrorCode) {
+    
+      let msg = systemerrorCode[respCode]
+  
+      Message({
+    
+        message: msg,
+        type: 'error',
+        duration: 5 * 1000
+      })
+  
+      router.push({path:'/login'})
+  
+      removeToken()
+  
+      return Promise.reject(null)
+    }
+    
+    if (respCode in errorcode) {
+  
+      let msg = errorcode[respCode]
+  
+      Message({
+  
+        message: msg,
+        type: 'error',
+        duration: 5 * 1000
+      })
+      
+      return Promise.reject(null)
+    }
+    
+    return Promise.reject('未知错误')
   },
   error => {
     console.log('err' + error)// for debug

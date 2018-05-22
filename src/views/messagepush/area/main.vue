@@ -353,6 +353,10 @@
           this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
+
+        }).catch(res => {
+
+          console.log(res)
         })
       },
       handleEdit(index, row) {
