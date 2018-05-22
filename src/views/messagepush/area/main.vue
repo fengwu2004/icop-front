@@ -271,7 +271,7 @@
       },
       filterTag(value, row) {
 
-        return row.pushStatus === value;
+        return row.sendStatus === value;
       },
       handleEditor(index, row) {
 

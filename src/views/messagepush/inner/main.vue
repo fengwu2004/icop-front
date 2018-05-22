@@ -266,7 +266,7 @@
       },
       filterTag(value, row) {
 
-        return row.pushStatus === value;
+        return row.sendStatus === value;
       },
       handleEditor(index, row) {
 
@@ -340,8 +340,6 @@
         this.searching = true
 
         const data = this.getQueryParams()
-
-        console.log('search', data)
 
         queryNoticeList(data).then(respData => {
 
