@@ -23,13 +23,13 @@
         <div class="permissionctr" v-show="app">
           <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
           <div class="permissiontree">
-            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expanded-keys="defaultAppKeys" :default-checked-keys="apppermissions"></el-tree>
+            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true" :default-checked-keys="apppermissions"></el-tree>
           </div>
         </div>
         <div class="permissionctr" v-show="icop">
           <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
           <div class="permissiontree">
-            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expanded-keys="defaultIcopKeys" :default-checked-keys="apppermissions"></el-tree>
+            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true" :default-checked-keys="apppermissions"></el-tree>
           </div>
         </div>
       </div>
@@ -136,31 +136,25 @@
 
         this.$router.go(-1)
       },
-    },
-    created() {
+      queryPopedomList() {
 
-      queryTotalPopedomTree({}).then(respData => {
+        const roleId = this.currentEditRole.roleId
 
-        this.app = this.build(null, respData.app)
+        if (!roleId) {
 
-        if (this.app) {
-
-          this.defaultAppKeys = respData.app.map(item => {
-
-            return item.treeId
-          })
+          return
         }
 
-        this.icop = this.build(null, respData.icop)
+        queryPopedomListByIds({roleIds:roleId}).then(respData => {
 
-        if (this.icop) {
+          this.$nextTick(() => {
 
-          this.defaultIcopKeys = respData.icop.map(item => {
+            this.apppermissions = respData.split(',')
 
-            return item.treeId
+            this.icoppermission = respData.split(',')
           })
-        }
-      })
+        })
+      }
     },
     mounted() {
 
@@ -180,29 +174,22 @@
         this.$route.meta.title = 'systemadmin_role_edit'
       }
 
-      const roleId = this.currentEditRole.roleId
+      this.queryPopedomList()
+    },
+    created() {
 
-      if (!roleId) {
-
-        return
-      }
-
-      queryPopedomListByIds({roleIds:roleId}).then(respData => {
-
-        console.log(respData)
+      queryTotalPopedomTree({}).then(respData => {
 
         this.$nextTick(() => {
 
-          this.apppermissions = respData.split(',')
+          this.app = this.build(null, respData.app)
 
-          this.icoppermission = respData.split(',')
+          this.icop = this.build(null, respData.icop)
         })
       })
     },
     data() {
       return {
-        defaultAppKeys:[],
-        defaultIcopKeys:[],
         app: [],
         icop: [],
         apppermissions:[],

@@ -343,9 +343,9 @@
 
         console.log('search', data)
 
-        queryNoticeList(data).then(response => {
+        queryNoticeList(data).then(respData => {
 
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
         })

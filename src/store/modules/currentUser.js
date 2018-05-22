@@ -43,6 +43,8 @@ const currentuser = {
   actions: {
     setCurrentUser({ commit }, user) {
       
+      console.log(user)
+      
       return new Promise(resolve => {
   
         commit('SET_USER', user)
