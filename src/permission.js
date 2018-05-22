@@ -15,9 +15,9 @@ function dynamicCreateRoutes(to, from, next) {
   let routes = store.getters.routes
   
   queryPopedomList({}).
-    then(res => {
+    then(respData => {
     
-      return store.dispatch('setPemissionCodes', res.data.respData)
+      return store.dispatch('setPemissionCodes', respData)
     })
     .then(res => {
       

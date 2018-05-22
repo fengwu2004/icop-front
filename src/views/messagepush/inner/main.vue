@@ -60,11 +60,7 @@
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
   import { checkRouteAndActionEnable } from "@/permissionCheck";
-
-  const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
-  const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
-  const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
-  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATE' }, { text: '定时生效', value: 'TIMES' }]
+  import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList } from "@/utils/constvalues";
 
   const actioncodes = {
     search:'112100',
@@ -228,9 +224,9 @@
 
         const data = this.getQueryParams()
 
-        queryNoticeList(data).then(response => {
+        queryNoticeList(data).then(respData => {
 
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
         })

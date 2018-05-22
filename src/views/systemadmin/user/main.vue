@@ -85,7 +85,7 @@
 
         this.$store.dispatch('resetUser').then(() => {
 
-          let route = {name:'systemadmin_user_edit', params:{title:'创建账户'}}
+          let route = {name:'systemadmin_user_edit', params:{title:'systemadmin_user_create'}}
 
           this.$router.push(route)
         })
@@ -118,11 +118,9 @@
 
         console.log(data)
 
-        queryUserList(data).then(response => {
+        queryUserList(data).then(respData => {
 
-          console.log(response)
-
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
         })
@@ -210,7 +208,7 @@
 
         this.$store.dispatch('setCurrentUser', user).then(() => {
 
-          let route = {name:'systemadmin_user_edit', params:{title:'修改账户'}}
+          let route = {name:'systemadmin_user_edit', params:{title:'systemadmin_user_edit'}}
 
           this.$router.push(route)
         })

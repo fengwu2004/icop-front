@@ -8,14 +8,6 @@ export function queryUserList(query) {
   })
 }
 
-export function userInfo(query) {
-  return request({
-    url: '/user/userInfo',
-    method: 'post',
-    params: query
-  })
-}
-
 export function queryPersonList(query) {
   return request({
     url: '/user/queryPersonList',
@@ -75,14 +67,6 @@ export function queryRoleList(query) {
 export function checkExistUserName(query) {
   return request({
     url: '/user/checkExistUserName',
-    method: 'post',
-    params: query
-  })
-}
-
-export function queryUserInfo(query) {
-  return request({
-    url: '/user/queryUserInfo',
     method: 'post',
     params: query
   })

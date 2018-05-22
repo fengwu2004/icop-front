@@ -227,11 +227,11 @@
 
         const data = this.getQueryParams()
 
-        queryAnnouncementList(data).then(response => {
+        queryAnnouncementList(data).then(respData => {
 
-          console.log('社区通知', response)
+          console.log('社区通知', respData)
 
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
         })
@@ -348,9 +348,9 @@
 
         console.log('search', data)
 
-        queryAnnouncementList(data).then(response => {
+        queryAnnouncementList(data).then(respData => {
 
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
         })

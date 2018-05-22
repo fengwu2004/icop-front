@@ -139,11 +139,7 @@
       },
       createTotalPermissionTree() {
 
-        queryTotalPopedomTree({}).then(response => {
-
-          console.log(response)
-
-          let respData = response.data.respData
+        queryTotalPopedomTree({}).then(respData => {
 
           this.app = this.build(null, respData.app)
 
@@ -152,9 +148,7 @@
       },
       createRoleTree() {
 
-        queryRoleList({}).then(res => {
-
-          let respData = res.data.respData
+        queryRoleList({}).then(respData => {
 
           let parent = {roleName:'全选', treeId:0, parentId:null}
 
@@ -181,11 +175,7 @@
           userIds:this.currentEditUser.userId
         }
 
-        queryRoleListByIds(data).then(response => {
-
-          let respData = response.data.respData
-
-          console.log(response)
+        queryRoleListByIds(data).then(respData => {
 
           if (respData) {
 

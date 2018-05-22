@@ -65,11 +65,9 @@
             imgType:'.jpg'
           }
 
-          picFile(formData, params).then(res => {
+          picFile(formData, params).then(respData => {
 
             this.clearImg()
-
-            let respData = res.data.respData
 
             this.dataUrl = respData.url
 

@@ -121,11 +121,9 @@
           data.queryParam = this.queryParam
         }
 
-        queryProjectList(data).then(response => {
+        queryProjectList(data).then(respData => {
 
-          console.log(response)
-
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
 

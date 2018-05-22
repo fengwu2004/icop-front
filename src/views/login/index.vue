@@ -42,7 +42,7 @@
 
 <script>
 
-  import { login, validPic } from "@/api/login"
+  import { login } from "@/api/login"
   import { isvalidUsername } from '@/utils/validate'
 
   export default {
@@ -75,8 +75,6 @@
         this.$refs.loginForm.validate(valid => {
 
           if (!valid) {
-
-            alert('error')
 
             return
           }

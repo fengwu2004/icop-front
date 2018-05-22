@@ -106,9 +106,9 @@
 
         let data = {userName:this.currentEditUser.userName}
 
-        checkExistUserName(data).then(res => {
+        checkExistUserName(data).then(respData => {
 
-          if (res.data.respData) {
+          if (respData) {
 
             this.$message({
               message: '警告，账户名重复',

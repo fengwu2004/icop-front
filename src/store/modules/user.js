@@ -45,17 +45,15 @@ const user = {
       return new Promise((resolve, reject) => {
         
         login(username, passwordhash, userInfo.validate)
-          .then(response => {
+          .then(respData => {
           
-          const data = response.data.respData
+          console.log(respData)
           
-          console.log(response)
+          commit('SET_USER_TOKEN', respData.userToken)
           
-          commit('SET_USER_TOKEN', data.userToken)
+          commit('SET_USER_ID', respData.id)
           
-          commit('SET_USER_ID', data.id)
-          
-          setTokenAndId(data.userToken, data.id)
+          setTokenAndId(respData.userToken, respData.id)
           
           resolve()
         })

@@ -115,11 +115,7 @@
 
       this.remark = this.role.remark
 
-      queryTotalPopedomTree({}).then(response => {
-
-        console.log(response)
-
-        let respData = response.data.respData
+      queryTotalPopedomTree({}).then(respData => {
 
         this.app = this.build(null, respData.app)
 

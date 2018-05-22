@@ -54,9 +54,9 @@
 
         let data = {roleName:this.roleName}
 
-        checkExistRoleName(data).then(res => {
+        checkExistRoleName(data).then(respData => {
 
-          if (res.respData) {
+          if (respData) {
 
             this.$message({
               message: '警告，角色名重复',
@@ -142,23 +142,23 @@
     },
     created() {
 
-      queryTotalPopedomTree({}).then(response => {
+      queryTotalPopedomTree({}).then(respData => {
 
-        this.app = this.build(null, response.data.respData.app)
+        this.app = this.build(null, respData.app)
 
         if (this.app) {
 
-          this.defaultAppKeys = response.data.respData.app.map(item => {
+          this.defaultAppKeys = respData.app.map(item => {
 
             return item.treeId
           })
         }
 
-        this.icop = this.build(null, response.data.respData.icop)
+        this.icop = this.build(null, respData.icop)
 
         if (this.icop) {
 
-          this.defaultIcopKeys = response.data.respData.icop.map(item => {
+          this.defaultIcopKeys = respData.icop.map(item => {
 
             return item.treeId
           })

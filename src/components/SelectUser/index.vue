@@ -130,11 +130,9 @@
           data.queryParam = this.queryParam
         }
 
-        queryPersonList(data).then(response => {
+        queryPersonList(data).then(respData => {
 
-          console.log(response)
-
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
         })

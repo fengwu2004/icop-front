@@ -73,8 +73,6 @@
 
             edit(this.message).then(res => {
 
-              console.log(res)
-
               this.$message({
                 message: '修改成功',
                 type: 'success'
@@ -86,8 +84,6 @@
           else {
 
             add(this.message).then(res => {
-
-              console.log(res)
 
               this.$message({
                 message: '新增成功',
