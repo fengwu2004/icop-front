@@ -2,7 +2,7 @@ const currentuser = {
   state: {
     currentUser: {
       personId:null,
-      name:null,
+      personName:null,
       personCode:' ',
       userName:null,
       telephone:null,
@@ -30,7 +30,7 @@ const currentuser = {
     RESET_USER: (state) => {
       
       state.currentUser = {
-        name:null,
+        personName:null,
         personCode:' ',
         userName:null,
         telephone:null,

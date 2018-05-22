@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 import { queryPopedomList } from "@/api/login";
-import { checkValidTokenAndUserId } from '@/utils/auth' // getToken from cookie
+import {checkValidTokenAndUserId, removeToken} from '@/utils/auth' // getToken from cookie
 
 NProgress.configure({ showSpinner: false })
 
@@ -33,7 +33,9 @@ function dynamicCreateRoutes(to, from, next) {
     })
     .catch(res => {
     
-      console.log(res)
+      next('/login')
+  
+      removeToken()
     })
 }
 

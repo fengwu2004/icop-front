@@ -41,6 +41,8 @@ service.interceptors.response.use(
   
   response => {
     
+    console.log(response)
+    
     const respCode = response.data.respCode
     
     if (respCode === 'JSLIFEICOP0001') {

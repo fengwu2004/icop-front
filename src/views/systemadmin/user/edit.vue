@@ -20,7 +20,7 @@
         <div class="itemrow">
           <div>
             <span>姓名</span>
-            <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="currentEditUser.name"></el-input>
+            <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="currentEditUser.personName"></el-input>
           </div>
           <div>
             <span>性别</span>

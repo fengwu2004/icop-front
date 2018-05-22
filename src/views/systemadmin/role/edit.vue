@@ -161,20 +161,6 @@
           })
         }
       })
-
-      const roleId = this.currentEditRole.roleId
-
-      if (!roleId) {
-
-        return
-      }
-
-      queryPopedomListByIds({roleIds:roleId}).then(respData => {
-
-        this.apppermissions = respData.split(',')
-
-        this.icoppermission = respData.split(',')
-      })
     },
     mounted() {
 
@@ -193,6 +179,25 @@
 
         this.$route.meta.title = 'systemadmin_role_edit'
       }
+
+      const roleId = this.currentEditRole.roleId
+
+      if (!roleId) {
+
+        return
+      }
+
+      queryPopedomListByIds({roleIds:roleId}).then(respData => {
+
+        console.log(respData)
+
+        this.$nextTick(() => {
+
+          this.apppermissions = respData.split(',')
+
+          this.icoppermission = respData.split(',')
+        })
+      })
     },
     data() {
       return {
