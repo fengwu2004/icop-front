@@ -116,8 +116,6 @@
           data.queryParam = this.queryParam
         }
 
-        console.log(data)
-
         queryUserList(data).then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
@@ -191,11 +189,9 @@
           pageSize:this.tableData.pageSize,
         }
 
-        queryUserList(data).then(response => {
+        queryUserList(data).then(respData => {
 
-          console.log(response)
-
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
 

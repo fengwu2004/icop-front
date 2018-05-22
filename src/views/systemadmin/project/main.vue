@@ -227,9 +227,9 @@
 
         console.log('search', data)
 
-        queryProjectList(data).then(response => {
+        queryProjectList(data).then(respData => {
 
-          this.tableData = this.getResponseTableData(response.data.respData)
+          this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
 
