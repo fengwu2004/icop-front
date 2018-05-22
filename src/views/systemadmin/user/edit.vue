@@ -88,7 +88,8 @@
     components: { SelectUser, BreadCrumb },
     data() {
       return {
-        justEnableSelect:true
+        justEnableSelect:true,
+        initUserName:''
       }
     },
     computed: {
@@ -99,7 +100,7 @@
     methods:{
       onUserNameBlur() {
 
-        if (!this.currentEditUser.userName || this.currentEditUser.userName.length == 0) {
+        if (!this.currentEditUser.userName || this.currentEditUser.userName.length == 0 || this.initUserName == this.currentEditUser.userName) {
 
           return
         }
@@ -227,6 +228,8 @@
       this.$route.meta.title = this.$route.params.title
 
       let code = actioncodes['selectperson']
+
+      this.initUserName = this.currentEditUser.userName
 
       this.justEnableSelect = checkRouteAndActionEnable(code)
     },

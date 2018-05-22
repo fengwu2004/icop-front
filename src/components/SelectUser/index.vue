@@ -10,7 +10,7 @@
       </div>
       <el-table @current-change="handleSelectChange" :cell-style="cellstyle" :header-cell-style="headercellstyle" :data="tableData.data" v-loading="listLoading" height="400" highlight-current-row>
         <el-table-column prop="personCode" label="人员编号" min-width="100"></el-table-column>
-        <el-table-column prop="name" label="姓名" min-width="200"></el-table-column>
+        <el-table-column prop="personName" label="姓名" min-width="200"></el-table-column>
         <el-table-column prop="sex" label="性别" min-width="100"></el-table-column>
         <el-table-column prop="telephone" min-width="200" label="联系电话"></el-table-column>
       </el-table>

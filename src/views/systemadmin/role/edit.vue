@@ -107,7 +107,7 @@
 
         let strpermissions = permissons.join(',')
 
-        let data = Object.assign(this.currentEditRole, {popedomIds:strpermissions})
+        let data = Object.assign({}, this.currentEditRole, {popedomIds:strpermissions})
 
         if (this.currentEditRole.roleId) {
 

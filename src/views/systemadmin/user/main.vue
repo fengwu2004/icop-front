@@ -13,7 +13,7 @@
         <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
           <el-table-column prop="userName" label="员工账号" min-width="200"></el-table-column>
           <el-table-column prop="personCode" label="人员编号" min-width="200"></el-table-column>
-          <el-table-column prop="name" label="姓名" min-width="150"></el-table-column>
+          <el-table-column prop="personName" label="姓名" min-width="150"></el-table-column>
           <el-table-column prop="sex" label="性别" min-width="150"></el-table-column>
           <el-table-column prop="telephone" label="联系电话" min-width="200"></el-table-column>
           <el-table-column label="操作" min-width="300">
