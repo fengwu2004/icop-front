@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import router from '@/router'
 import { getTokenAndId, checkValidTokenAndUserId, removeToken } from '@/utils/auth'
-import { systemerrorCode, errorcode } from "@/utils/errorCodes";
+import { systemerrorCode, errorcode, loginerrorCode } from "@/utils/errorCodes";
 
 // create an axios instance
 const service = axios.create({
@@ -47,6 +47,24 @@ service.interceptors.response.use(
       
       return Promise.resolve(response.data.respData)
     }
+  
+    if (respCode in loginerrorCode) {
+    
+      let msg = loginerrorCode[respCode]
+    
+      Message({
+      
+        message: msg,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    
+      router.push({path:'/login'})
+    
+      removeToken()
+    
+      return Promise.reject(null)
+    }
     
     if (respCode in systemerrorCode) {
     
@@ -58,11 +76,7 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-  
-      router.push({path:'/login'})
-  
-      removeToken()
-  
+      
       return Promise.reject(null)
     }
     

@@ -86,9 +86,12 @@
       },
       handleCreateRole() {
 
-        let route = {name:'systemadmin_role_create'}
+        this.$store.dispatch('RESET_ROLE').then(res => {
 
-        this.$router.push(route)
+          let router = {name:'systemadmin_role_edit'}
+
+          this.$router.push(router)
+        })
       },
       getList() {
 
@@ -146,21 +149,25 @@
       },
       handleDetail(index, row) {
 
-        console.log('handleDetail')
-
         let role = this.tableData.list[index]
 
-        let router = {name:'systemadmin_role_detail', params:{role:role}}
+        this.$store.dispatch('setCurrentRole', role).then(res => {
 
-        this.$router.push(router)
+          let router = {name:'systemadmin_role_edit', params:{detail:true}}
+
+          this.$router.push(router)
+        })
       },
       handleEdit(index, row) {
 
         let role = this.tableData.list[index]
 
-        let router = {name:'systemadmin_role_edit', params:{role:role}}
+        this.$store.dispatch('setCurrentRole', role).then(res => {
 
-        this.$router.push(router)
+          let router = {name:'systemadmin_role_edit'}
+
+          this.$router.push(router)
+        })
       },
       handleDelete(index, row) {
 

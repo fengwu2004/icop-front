@@ -1,8 +1,10 @@
+import currenteidtrole from "@/store/modules/currentRole";
 
 const getters = {
   sidebar: state => state.app.sidebar,
   language: state => state.app.language,
   currentEditUser: state => state.currentedituser.currentUser,
+  currentEditRole: state => state.currenteidtrole.currentrole,
   message: state => state.currenteditmessage.message,
   userToken: state => state.user.userToken,
   userId: state => state.user.userId,

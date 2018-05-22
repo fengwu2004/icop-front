@@ -69,18 +69,6 @@ const role = {
       meta: { title: 'systemadmin_role', hidden:true},
     },
     {
-      path: '/systemadmin/role/create',
-      component: _import('systemadmin/role/create'),
-      name: 'systemadmin_role_create',
-      meta: { title: 'systemadmin_role_create', hidden:true},
-    },
-    {
-      path: '/systemadmin/role/detail',
-      component: _import('systemadmin/role/detail'),
-      name: 'systemadmin_role_detail',
-      meta: { title: 'systemadmin_role_detail', hidden:true},
-    },
-    {
       path: '/systemadmin/role/edit',
       component: _import('systemadmin/role/edit'),
       name: 'systemadmin_role_edit',

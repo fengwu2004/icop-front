@@ -10,13 +10,13 @@
             <li class="baseinfotitle">基本信息</li>
             <div class="rolename">角色名称(不能重名):</div>
             <div style="margin-top: 0.5rem;width: 300px">
-              <el-input maxlength="20" v-model="roleName"></el-input>
+              <el-input maxlength="20" v-model="currentEditRole.roleName" @blur="onRoleNameBlur" :disabled="!enableedit"></el-input>
             </div>
           </div>
           <div>
             <div style="font-size:0.8rem">备注(限50字)</div>
             <div style="margin-top: 0.5rem;">
-              <el-input type="textarea" maxlength="50" rows="12" v-model="remark"></el-input>
+              <el-input type="textarea" maxlength="50" rows="12" v-model="currentEditRole.remark" :disabled="!enableedit"></el-input>
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="settings">
+      <div class="settings" v-show="enableedit">
         <el-button @click="cancelCreate">取消</el-button>
         <el-button type="primary" @click="createRole">保存</el-button>
       </div>
@@ -44,13 +44,34 @@
 <script>
 
   import { queryTotalPopedomTree } from '@/api/permissiontree'
-  import { edit, queryPopedomListByIds } from '@/api/role'
+  import { edit, add, checkExistRoleName, queryPopedomListByIds } from '@/api/role'
+  import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
 
   export default {
+    computed: {
+      ...mapGetters([
+        'currentEditRole'
+      ]),
+    },
     components: { BreadCrumb },
     methods:{
+      onRoleNameBlur() {
+
+        let data = {roleName:this.currentEditRole.roleName}
+
+        checkExistRoleName(data).then(respData => {
+
+          if (respData) {
+
+            this.$message({
+              message: '警告，角色名重复',
+              type: 'warning'
+            });
+          }
+        })
+      },
       build(parentid, items) {
 
         if (!items) {
@@ -86,19 +107,30 @@
 
         let strpermissions = permissons.join(',')
 
-        let data = {
-          roleId:this.role.roleId,
-          roleName:this.roleName,
-          remark:this.remark,
-          popedomIds:strpermissions
+        let data = Object.assign(this.currentEditRole, {popedomIds:strpermissions})
+
+        if (this.currentEditRole.roleId) {
+
+          edit(data).then(response => {
+
+            this.$message.success('保存成功')
+
+            let route = {name:'systemadmin_role'}
+
+            this.$router.push(route)
+          })
         }
+        else {
 
-        edit(data).then(response => {
+          add(data).then(response => {
 
-          let route = {name:'systemadmin_role'}
+            this.$message.success('创建成功')
 
-          this.$router.push(route)
-        })
+            let route = {name:'systemadmin_role'}
+
+            this.$router.push(route)
+          })
+        }
       },
       cancelCreate() {
 
@@ -106,14 +138,6 @@
       },
     },
     created() {
-
-      console.log('created')
-
-      this.role = this.$route.params.role
-
-      this.roleName = this.role.roleName
-
-      this.remark = this.role.remark
 
       queryTotalPopedomTree({}).then(respData => {
 
@@ -138,21 +162,37 @@
         }
       })
 
-      let data = {
+      const roleId = this.currentEditRole.roleId
 
-        roleIds:this.role.roleId
+      if (!roleId) {
+
+        return
       }
 
-      queryPopedomListByIds(data).then(response => {
-
-        console.log(response)
-
-        let respData = response.data.respData
+      queryPopedomListByIds({roleIds:roleId}).then(respData => {
 
         this.apppermissions = respData.split(',')
 
         this.icoppermission = respData.split(',')
       })
+    },
+    mounted() {
+
+      if (!this.currentEditRole.roleId) {
+
+        this.$route.meta.title = 'systemadmin_role_create'
+      }
+
+      if (this.$route.params.detail) {
+
+        this.enableedit = false
+
+        this.$route.meta.title = 'systemadmin_role_detail'
+      }
+      else {
+
+        this.$route.meta.title = 'systemadmin_role_edit'
+      }
     },
     data() {
       return {
@@ -160,9 +200,6 @@
         defaultIcopKeys:[],
         app: [],
         icop: [],
-        role:null,
-        roleName:'',
-        remark:'',
         apppermissions:[],
         icoppermission:[],
         enableedit:true,
