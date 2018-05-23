@@ -141,7 +141,7 @@
 
         if (!validatePassword(value)) {
 
-          return callback(new Error('长度为6-15，中文、数字、字母'));
+          return callback(new Error('长度为6-16，中文、数字、字母'));
         }
 
         callback()

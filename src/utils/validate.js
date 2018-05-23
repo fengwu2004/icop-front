@@ -61,7 +61,7 @@ export function trim(str){
 
 export function validatePassword(str) {
   
-  const reg = /^[a-zA-Z]\w{5,17}$/
+  const reg = /^[a-zA-Z]\w{5,15}$/
   
   return reg.test(str)
 }
@@ -70,7 +70,7 @@ export function validateRoleName(str) {
   
   let trimstr = trim(str)
   
-  const reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]{6,15}$/
+  const reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]{5,15}$/
   
   return reg.test(trimstr)
 }
