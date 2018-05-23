@@ -35,6 +35,17 @@
   export default {
     components: { PageWidget },
     methods:{
+      getSex(index, row) {
+
+        let user = this.tableData.data[index]
+
+        if (user.sex == 'MALE') {
+
+          return '男'
+        }
+
+        return '女'
+      },
       refresh() {
 
         this.searching = false

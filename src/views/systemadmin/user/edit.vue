@@ -112,9 +112,13 @@
 
       let validPersonName = (rule, value, callback) => {
 
+        console.log('z')
+
         if (!value) {
 
           callback()
+
+          return
         }
 
         if (!validateUserName(value)) {

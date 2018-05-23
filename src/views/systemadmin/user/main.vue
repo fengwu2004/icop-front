@@ -14,7 +14,11 @@
           <el-table-column prop="userName" label="员工账号" min-width="200"></el-table-column>
           <el-table-column prop="personCode" label="人员编号" min-width="200"></el-table-column>
           <el-table-column prop="personName" label="姓名" min-width="150"></el-table-column>
-          <el-table-column prop="sex" label="性别" min-width="150"></el-table-column>
+          <el-table-column label="性别" min-width="150">
+            <template slot-scope="scope">
+              <span>{{getSex(scope.$index, scope.row)}}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="telephone" label="联系电话" min-width="200"></el-table-column>
           <el-table-column label="操作" min-width="300">
             <template slot-scope="scope">
@@ -71,6 +75,17 @@
       this.getList()
     },
     methods:{
+      getSex(index, row) {
+
+        let user = this.tableData.data[index]
+
+        if (user.sex == 'MALE') {
+
+          return '男'
+        }
+
+        return '女'
+      },
       checkActionEnable(action) {
 
         let code = actioncodes[action]
