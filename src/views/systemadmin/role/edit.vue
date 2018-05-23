@@ -4,39 +4,45 @@
       <bread-crumb class="breadcrumb"></bread-crumb>
     </div>
     <div class="content">
-      <div class="createuser">
-        <div class="baseinfo">
-          <div>
-            <li class="baseinfotitle">基本信息</li>
-            <div class="rolename">角色名称(不能重名):</div>
-            <div style="margin-top: 0.5rem;width: 300px">
-              <el-input maxlength="15" v-model="currentEditRole.roleName" @blur="onRoleNameBlur" :disabled="!enableedit"></el-input>
+      <el-form :rules="rules" ref="baseinfoForm" :model="formData">
+        <div class="createuser">
+          <div class="baseinfo">
+            <div>
+              <li class="baseinfotitle">基本信息</li>
+              <div class="rolename">角色名称(不能重名):</div>
+              <div style="margin-top: 0.5rem;width: 300px">
+                <el-form-item prop="roleName">
+                  <el-input v-model="formData.roleName" :disabled="!enableedit"></el-input>
+                </el-form-item>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:0.8rem">备注(限50字)</div>
+              <div style="margin-top: 0.5rem;">
+                <el-form-item prop="remark">
+                  <el-input type="textarea" rows="12" v-model="formData.remark" :disabled="!enableedit"></el-input>
+                </el-form-item>
+              </div>
             </div>
           </div>
-          <div>
-            <div style="font-size:0.8rem">备注(限50字)</div>
-            <div style="margin-top: 0.5rem;">
-              <el-input type="textarea" maxlength="50" rows="12" v-model="currentEditRole.remark" :disabled="!enableedit"></el-input>
+          <div class="permissionctr" v-show="app">
+            <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
+            <div class="permissiontree">
+              <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true" :default-checked-keys="apppermissions"></el-tree>
+            </div>
+          </div>
+          <div class="permissionctr" v-show="icop">
+            <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
+            <div class="permissiontree">
+              <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true" :default-checked-keys="apppermissions"></el-tree>
             </div>
           </div>
         </div>
-        <div class="permissionctr" v-show="app">
-          <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
-          <div class="permissiontree">
-            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true" :default-checked-keys="apppermissions"></el-tree>
-          </div>
+        <div class="settings" v-show="enableedit">
+          <el-button @click="cancelCreate">取消</el-button>
+          <el-button type="primary" @click="createRole">保存</el-button>
         </div>
-        <div class="permissionctr" v-show="icop">
-          <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
-          <div class="permissiontree">
-            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true" :default-checked-keys="apppermissions"></el-tree>
-          </div>
-        </div>
-      </div>
-      <div class="settings" v-show="enableedit">
-        <el-button @click="cancelCreate">取消</el-button>
-        <el-button type="primary" @click="createRole">保存</el-button>
-      </div>
+      </el-form>
     </div>
   </div>
 </template>
@@ -48,6 +54,7 @@
   import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
+  import { validateRoleName, validateName } from "@/utils/validate"
 
   export default {
     computed: {
@@ -57,24 +64,29 @@
     },
     components: { BreadCrumb },
     methods:{
-      onRoleNameBlur() {
+      async onRoleNameBlur() {
 
-        if (!this.currentEditRole.roleName || this.currentEditRole.roleName.length == 0 || this.currentEditRole.roleName === this.initRoleName) {
+        if (!this.formData.roleName || this.formData.roleName.length == 0 || this.formData.roleName === this.initRoleName) {
 
-          return
+          return Promise.resolve()
         }
 
-        let data = {roleName:this.currentEditRole.roleName}
+        let data = {roleName:this.formData.roleName}
 
-        checkExistRoleName(data).then(respData => {
+        return new Promise((resolve, reject) => {
 
-          if (respData) {
+          checkExistRoleName(data)
+            .then(respData => {
 
-            this.$message({
-              message: '警告，角色名重复',
-              type: 'warning'
-            });
-          }
+            if (respData) {
+
+              reject('警告，角色名重复')
+            }
+            else {
+
+              resolve()
+            }
+          })
         })
       },
       build(parentid, items) {
@@ -102,40 +114,64 @@
 
         return _array;
       },
+      async doValid() {
+
+        return new Promise((resolve, reject) => {
+
+          this.$refs.baseinfoForm.validate(valid => {
+
+            if (valid) {
+
+              return resolve()
+            }
+            else {
+
+              return reject('表单验证失败')
+            }
+          })
+        })
+      },
       createRole() {
 
-        let apppermissions = this.$refs.apptree.getCheckedKeys()
+        this.doValid()
+          .then(() => {
 
-        let icoppermissions = this.$refs.icoptree.getCheckedKeys()
+            let apppermissions = this.$refs.apptree.getCheckedKeys()
 
-        let permissons = apppermissions.concat(icoppermissions)
+            let icoppermissions = this.$refs.icoptree.getCheckedKeys()
 
-        let strpermissions = permissons.join(',')
+            let permissons = apppermissions.concat(icoppermissions)
 
-        let data = Object.assign({}, this.currentEditRole, {popedomIds:strpermissions})
+            let strpermissions = permissons.join(',')
 
-        if (this.currentEditRole.roleId) {
+            let data = Object.assign({}, this.formData, {popedomIds:strpermissions})
 
-          edit(data).then(response => {
+            if (this.currentEditRole.roleId) {
 
-            this.$message.success('保存成功')
+              edit(data).then(response => {
 
-            let route = {name:'systemadmin_role'}
+                this.$message.success('保存成功')
 
-            this.$router.push(route)
-          })
-        }
-        else {
+                let route = {name:'systemadmin_role'}
 
-          add(data).then(response => {
+                this.$router.push(route)
+              })
+            }
+            else {
 
-            this.$message.success('创建成功')
+              add(data).then(response => {
 
-            let route = {name:'systemadmin_role'}
+                this.$message.success('创建成功')
 
-            this.$router.push(route)
-          })
-        }
+                let route = {name:'systemadmin_role'}
+
+                this.$router.push(route)
+              })
+            }
+          }).catch(res => {
+
+
+        })
       },
       cancelCreate() {
 
@@ -194,8 +230,35 @@
       })
 
       this.initRoleName = this.currentEditRole.roleName
+
+      this.formData.roleName = this.currentEditRole.roleName
+
+      this.formData.remark = this.currentEditRole.remark
     },
     data() {
+
+      let validatePass = (rule, value, callback) => {
+
+        if (!value) {
+
+          return callback(new Error('请输入角色名称'));
+        }
+
+        if (!validateRoleName(value)) {
+
+          return callback(new Error('长度为6-15，中文、数字、字母'));
+        }
+
+        this.onRoleNameBlur().then(() => {
+
+          callback()
+        })
+          .catch(res => {
+
+            return callback(new Error(res));
+          })
+      }
+
       return {
         initRoleName:'',
         app: [],
@@ -206,6 +269,18 @@
         defaultProps: {
           children: 'children',
           label: 'text'
+        },
+        formData:{
+          roleName:'',
+          remark:'',
+        },
+        rules:{
+          roleName:[
+            {validator:validatePass, trigger:'blur'},
+          ],
+          remark:[
+            {min:0, max:50, message:'长度在50个字以内', trigger:'blur'}
+          ]
         }
       }
     }

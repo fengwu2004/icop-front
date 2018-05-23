@@ -70,8 +70,6 @@
     created() {
 
       this.getList()
-
-      console.log(this.$route)
     },
     methods:{
       checkActionEnable(action) {

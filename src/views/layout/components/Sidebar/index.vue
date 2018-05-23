@@ -42,8 +42,6 @@ export default {
 
       if (!this.pathHidden(route)) {
 
-        console.log('active index', route.path)
-
         return route.path
       }
 
@@ -52,7 +50,6 @@ export default {
   },
   mounted() {
 
-    console.log('当前路由', this.$route.path)
   },
   data() {
     return {

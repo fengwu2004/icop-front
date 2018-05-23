@@ -41,8 +41,6 @@ function dynamicCreateRoutes(to, from, next) {
 
 router.beforeEach((to, from, next) => {
   
-  console.log(from.path, to.path)
-  
   NProgress.start()
   
   if (!checkValidTokenAndUserId()) {

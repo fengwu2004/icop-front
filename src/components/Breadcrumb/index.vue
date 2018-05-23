@@ -16,8 +16,6 @@ export default {
   created() {
 
     this.getBreadcrumb()
-
-    console.log(this.levelList)
   },
 
   data() {
@@ -35,8 +33,6 @@ export default {
   methods: {
     generateTitle,
     getBreadcrumb() {
-
-      console.log(this.$route)
 
       let matched = this.$route.matched.filter(item => item.name)
 
