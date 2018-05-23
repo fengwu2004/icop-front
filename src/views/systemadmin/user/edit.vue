@@ -261,6 +261,8 @@
       },
       async checkUserValid(user) {
 
+        console.log(user)
+
         if (!this.checkUserPersonId(user)) {
 
           this.$message({

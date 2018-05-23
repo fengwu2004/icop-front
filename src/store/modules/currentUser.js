@@ -30,13 +30,15 @@ const currentuser = {
     RESET_USER: (state) => {
       
       state.currentUser = {
+        personId:null,
         personName:null,
-        personCode:' ',
+        personCode:null,
         userName:null,
         telephone:null,
         sex:'MALE',
         password:null,
-        roleIds:null
+        roleIds:null,
+        userId:null
       }
     },
   },
