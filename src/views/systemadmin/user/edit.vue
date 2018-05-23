@@ -119,7 +119,7 @@
 
         if (!validateUserName(value)) {
 
-          return callback(new Error('长度为6-15，中文、数字、字母'));
+          return callback(new Error('长度为1-30，中文、数字、字母'));
         }
 
         this.checkUserNameExist().then(() => {
@@ -141,7 +141,17 @@
 
         if (!validatePassword(value)) {
 
-          return callback(new Error('长度为6-16，中文、数字、字母'));
+          return callback(new Error('长度为6-20，中文、数字、字母'));
+        }
+
+        callback()
+      }
+
+      let validPersonCode = (rule, value, callback) => {
+
+        if (!value && !this.user.personId) {
+
+          return callback(new Error('人员编号不能为空'));
         }
 
         callback()
@@ -161,14 +171,18 @@
           sex:''
         },
         rules:{
-          personCode:[],
+          personCode:[
+            {validator:validPersonCode, trigger:'blur'},
+          ],
           personName:[
             {validator:validPersonName, trigger:'blur'},
           ],
           userName:[
             {validator:validUserName, trigger:'blur'},
           ],
-          telephone:[],
+          telephone:[
+            {max:30, message:'长度在30个字以内', trigger:'blur'},
+          ],
           password:[
             {validator:validPassword, trigger:'blur'}
           ],
@@ -214,7 +228,7 @@
 
         let value = Object.assign({}, user, {password:md5(pwd)})
 
-        this.checkUserValid(value).then(res => {
+        this.checkUserValid().then(res => {
 
           if (user.userId) {
 
@@ -259,19 +273,7 @@
 
         return user.personCode != null || user.personId != null
       },
-      async checkUserValid(user) {
-
-        console.log(user)
-
-        if (!this.checkUserPersonId(user)) {
-
-          this.$message({
-            message: '警告，人员编号不能为空',
-            type: 'warning'
-          });
-
-          return Promise.reject('警告，人员编号不能为空')
-        }
+      async checkUserValid() {
 
         return new Promise((resolve, reject) => {
 
@@ -286,11 +288,14 @@
       },
       setRole() {
 
-        this.$store.dispatch('setCurrentUser', this.user).then(() => {
+        this.checkUserValid().then(res => {
 
-          let route = { name:'systemadmin_user_rolesetting' }
+          this.$store.dispatch('setCurrentUser', this.user).then(() => {
 
-          this.$router.push(route)
+            let route = { name:'systemadmin_user_rolesetting' }
+
+            this.$router.push(route)
+          })
         })
       },
       selectaccount() {

@@ -30,6 +30,7 @@
   import { queryPersonList } from '@/api/user'
   import { default as PageWidget } from '@/components/PageWidget'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
+  import { trim } from "@/utils/validate";
 
   export default {
     components: { PageWidget },
@@ -63,12 +64,13 @@
           return
         }
 
+        let value = trim(queryParam)
+
         let data = {
-          queryParam:queryParam,
+          queryParam:value,
           pageIndex:1,
           pageSize:this.tableData.pageSize,
         }
-        console.log('search', queryParam)
 
         this.listLoading = true
 
