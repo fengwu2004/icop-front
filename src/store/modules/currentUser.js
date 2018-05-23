@@ -3,7 +3,7 @@ const currentuser = {
     currentUser: {
       personId:null,
       personName:null,
-      personCode:' ',
+      personCode:null,
       userName:null,
       telephone:null,
       sex:'MALE',

@@ -233,7 +233,9 @@
 
           this.tableData = this.getResponseTableData(respData)
 
-        }).finally(() => {
+        })
+          .catch()
+          .finally(() => {
 
           this.listLoading = false
         })

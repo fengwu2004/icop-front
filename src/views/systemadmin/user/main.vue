@@ -120,6 +120,7 @@
 
           this.tableData = this.getResponseTableData(respData)
         })
+          .catch()
           .finally(() => {
 
             this.listLoading = false

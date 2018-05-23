@@ -13,8 +13,8 @@ export const systemerrorCode = {
 }
 
 export const loginerrorCode = {
-  'JSLIFEICOP0999':"您还没有登陆",
-  'JSLIFEICOP0998':'超时未操作',
+  'JSLIFEICOP0999':"您还没有登陆，请登录后再进行操作",
+  'JSLIFEICOP0998':'超时未操作，请重行登录',
   'JSLIFEICOP0997':'您的账号在其他地方登陆',
 }
 

@@ -109,6 +109,7 @@
 
           this.tableData = this.getResponseTableData(respData)
         })
+          .catch(res => console.log(res))
           .finally(() => {
 
             this.listLoading = false

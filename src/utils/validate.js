@@ -40,9 +40,9 @@ export function validateAlphabets(str) {
 }
 
 /*数字，字母，下划线，不以下划线开头结尾, 长度6-30*/
-export function validateName(str) {
+export function validateUserName(str) {
   
-  const reg = /^[a-zA-Z][a-zA-Z0-9_]{5,29}$/
+  const reg = /^[a-zA-Z][a-zA-Z0-9_]{0,29}$/
   
   return reg.test(str)
 }

@@ -4,62 +4,62 @@
       <bread-crumb class="breadcrumb"></bread-crumb>
     </div>
     <div class="content">
-      <div class="createaccount">
-        <div class="itemrow">
-          <div>
-            <span class="redstar">*</span><span class="sumtitle">人员编号</span>
-            <div class="specialinput">
-              <input v-model="currentEditUser.personCode" :disabled="justEnableSelect"/><el-button v-show="justEnableSelect" type="primary" plain size="mini" @click="selectaccount">请选择</el-button>
+      <el-form :model="user" :rules="rules" ref="baseinfoForm">
+        <div class="createaccount">
+          <div class="itemrow">
+            <div>
+              <span class="redstar">*</span><span class="sumtitle">人员编号</span>
+              <el-form-item prop="personCode">
+                <div class="specialinput">
+                    <input v-model="user.personCode" :disabled="justEnableSelect"/><el-button v-show="justEnableSelect" type="primary" plain size="mini" @click="selectaccount">请选择</el-button>
+                </div>
+              </el-form-item>
+            </div>
+            <div>
+              <span>联系电话</span>
+              <el-form-item prop="telephone">
+                <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="user.telephone"></el-input>
+              </el-form-item>
             </div>
           </div>
-          <div>
-            <span>联系电话</span>
-            <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="currentEditUser.telephone"></el-input>
+          <div class="itemrow">
+            <div>
+              <span>姓名</span>
+              <el-form-item prop="personName">
+                <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="user.personName"></el-input>
+              </el-form-item>
+            </div>
+            <div>
+              <span>性别</span>
+              <div style="margin-top: 1rem">
+                <el-radio :disabled="justEnableSelect" v-model="user.sex" label="MALE">男</el-radio>
+                <el-radio :disabled="justEnableSelect" v-model="user.sex" label="FEMALE">女</el-radio>
+              </div>
+            </div>
+          </div>
+          <div class="itemrow">
+            <div>
+              <span class="redstar">*</span><span class="sumtitle">账户</span>
+              <el-form-item prop="userName">
+                <el-input style="margin-top: 0.5rem" v-model="user.userName"></el-input>
+              </el-form-item>
+              <div style="margin-top: 10px">
+                <span style="font-size: 0.8rem;color: #445577;">注:不能重名</span>
+              </div>
+            </div>
+            <div>
+              <span class="redstar">*</span><span class="sumtitle">密码</span>
+              <el-form-item prop="password">
+                <input style="display:none" name="txtpwd">
+                <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="user.password" name="txtpwd"></el-input>
+              </el-form-item>
+              <div style="margin-top: 10px">
+                <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="itemrow">
-          <div>
-            <span>姓名</span>
-            <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="currentEditUser.personName"></el-input>
-          </div>
-          <div>
-            <span>性别</span>
-            <div style="margin-top: 1rem">
-              <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="MALE">男</el-radio>
-              <el-radio :disabled="justEnableSelect" v-model="currentEditUser.sex" label="FEMALE">女</el-radio>
-            </div>
-          </div>
-        </div>
-        <div class="itemrow">
-          <div>
-            <span class="redstar">*</span><span class="sumtitle">账户</span>
-            <el-popover
-              placement="right"
-              width="200"
-              trigger="focus">
-              <span style="font-size: 0.6rem">长度6-30位，字母，数字，下划线，不允许空格</span>
-              <el-input slot="reference" style="margin-top: 0.5rem" v-model="currentEditUser.userName" @blur="onUserNameBlur"></el-input>
-            </el-popover>
-            <div style="margin-top: 10px">
-              <span style="font-size: 0.8rem;color: #445577;">注:不能重名</span>
-            </div>
-          </div>
-          <div>
-            <span class="redstar">*</span><span class="sumtitle">密码</span>
-            <input style="display:none" name="txtpwd">
-            <el-popover
-              placement="right"
-              width="200"
-              trigger="focus">
-              <span style="font-size: 0.6rem">密码长度6-18位，字母，数字，标点符号，不允许空格</span>
-              <el-input slot="reference" type="password" style="margin-top: 0.5rem" placeholder="******" v-model="currentEditUser.password" name="txtpwd"></el-input>
-            </el-popover>
-            <div style="margin-top: 10px">
-              <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      </el-form>
       <div class="settings">
         <el-button @click="cancelEdit">取消</el-button>
         <el-button type="primary" @click="handleCreate" style="margin-right: 2rem;margin-left: 2rem;">保存</el-button>
@@ -73,7 +73,7 @@
 <script>
 
   import { checkRouteAndActionEnable } from "@/permissionCheck";
-  import { validateName } from "@/utils/validate";
+  import { validateUserName, validatePassword, trim } from "@/utils/validate";
   import { mapGetters } from 'vuex'
   import { edit, checkExistUserName, add } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
@@ -87,9 +87,92 @@
   export default {
     components: { SelectUser, BreadCrumb },
     data() {
+
+      let validUserName = (rule, value, callback) => {
+
+        if (!value) {
+
+          return callback(new Error('请输入角色名称'));
+        }
+
+        if (!validateUserName(value)) {
+
+          return callback(new Error('长度为1-30，中文、数字、字母'));
+        }
+
+        this.checkUserNameExist().then(() => {
+
+          callback()
+        })
+          .catch(res => {
+
+            return callback(new Error(res));
+          })
+      }
+
+      let validPersonName = (rule, value, callback) => {
+
+        if (!value) {
+
+          callback()
+        }
+
+        if (!validateUserName(value)) {
+
+          return callback(new Error('长度为6-15，中文、数字、字母'));
+        }
+
+        this.checkUserNameExist().then(() => {
+
+          callback()
+        })
+          .catch(res => {
+
+            return callback(new Error(res));
+          })
+      }
+
+      let validPassword = (rule, value, callback) => {
+
+        if (!value) {
+
+          callback()
+        }
+
+        if (!validatePassword(value)) {
+
+          return callback(new Error('长度为6-15，中文、数字、字母'));
+        }
+
+        callback()
+      }
+
       return {
         justEnableSelect:true,
-        initUserName:''
+        initUserName:'',
+        user:{
+          userId:'',
+          personId:null,
+          personCode:null,
+          personName:'',
+          userName:'',
+          telephone:'',
+          password:'',
+          sex:''
+        },
+        rules:{
+          personCode:[],
+          personName:[
+            {validator:validPersonName, trigger:'blur'},
+          ],
+          userName:[
+            {validator:validUserName, trigger:'blur'},
+          ],
+          telephone:[],
+          password:[
+            {validator:validPassword, trigger:'blur'}
+          ],
+        }
       }
     },
     computed: {
@@ -98,80 +181,72 @@
       ]),
     },
     methods:{
-      onUserNameBlur() {
+      async checkUserNameExist() {
 
-        if (!this.currentEditUser.userName || this.currentEditUser.userName.length == 0 || this.initUserName == this.currentEditUser.userName) {
+        if (!this.user.userName || this.user.userName.length == 0 || this.initUserName == this.user.userName) {
 
-          return
+          return Promise.resolve()
         }
 
-        let data = {userName:this.currentEditUser.userName}
+        let data = {userName:trim(this.user.userName)}
 
-        checkExistUserName(data).then(respData => {
+        return new Promise((resolve, reject) => {
 
-          if (respData) {
+          checkExistUserName(data)
+            .then(respData => {
 
-            this.$message({
-              message: '警告，账户名重复',
-              type: 'warning'
-            });
-          }
+            if (respData) {
+
+              reject('警告，账户名重复')
+            }
+            else {
+
+              resolve()
+            }
+          })
         })
       },
       handleCreate() {
 
-        console.log('handleCreate')
+        let user = this.user
 
-        let user = this.currentEditUser
+        let pwd = user.password != null ? user.password : '888888'
 
-        if (!this.checkUserValid(user)) {
+        let value = Object.assign({}, user, {password:md5(pwd)})
 
-          return
-        }
+        this.checkUserValid(value).then(res => {
 
-        let pwd = user.password !== null ? user.password : '888888'
+          if (user.userId) {
 
-        let value = {}
+            edit(value).then(response => {
 
-        Object.assign(value, user, {password:md5(pwd)})
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
 
-        if (user.userId) {
+              this.$router.go(-1)
+            })
+          }
+          else {
 
-          edit(value).then(response => {
+            add(value).then(response => {
 
-            this.$message({
-              message: '保存成功',
-              type: 'success'
-            });
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
 
-            this.$router.go(-1)
-          })
-        }
-        else {
-
-          add(value).then(response => {
-
-            this.$message({
-              message: '保存成功',
-              type: 'success'
-            });
-
-            this.$router.go(-1)
-          })
-        }
+              this.$router.go(-1)
+            })
+          }
+        })
       },
       onSelectedPerson(person) {
 
         console.log(person)
 
-        let user = {}
-
-        Object.assign(user, this.currentEditUser, person)
-
-        this.$store.dispatch('setCurrentUser', user).then(() => {
-
-          console.log(this.currentEditUser)
-        })
+        this.user = Object.assign({}, this.user, person)
       },
       cancelEdit() {
 
@@ -180,15 +255,11 @@
           this.$router.back()
         })
       },
-      checkUserNameValid(user) {
-
-        return user.userName && user.userName.length > 0 && validateName(user.userName)
-      },
       checkUserPersonId(user) {
 
         return user.personCode != null || user.personId != null
       },
-      checkUserValid(user) {
+      async checkUserValid(user) {
 
         if (!this.checkUserPersonId(user)) {
 
@@ -197,26 +268,28 @@
             type: 'warning'
           });
 
-          return false
+          return Promise.reject('警告，人员编号不能为空')
         }
 
-        if (!this.checkUserNameValid(user)) {
+        return new Promise((resolve, reject) => {
 
-          this.$message({
-            message: '警告，账户名格式错误',
-            type: 'warning'
-          });
+          this.$refs.baseinfoForm.validate(valid => {
 
-          return false
-        }
+            if (valid) {
 
-        return true
+              resolve()
+            }
+          })
+        })
       },
       setRole() {
 
-        let route = { name:'systemadmin_user_rolesetting' }
+        this.$store.dispatch('setCurrentUser', this.user).then(() => {
 
-        this.$router.push(route)
+          let route = { name:'systemadmin_user_rolesetting' }
+
+          this.$router.push(route)
+        })
       },
       selectaccount() {
 
@@ -232,6 +305,8 @@
       this.initUserName = this.currentEditUser.userName
 
       this.justEnableSelect = checkRouteAndActionEnable(code)
+
+      this.user = this.currentEditUser
     },
   }
 </script>
