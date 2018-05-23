@@ -112,11 +112,9 @@
 
       let validPersonName = (rule, value, callback) => {
 
-        console.log('z')
-
         if (!value) {
 
-          callback()
+          return callback(new Error('请输入姓名'));
 
           return
         }
