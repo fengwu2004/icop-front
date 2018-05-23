@@ -20,7 +20,7 @@
     </div>
     <div class="btns">
       <el-button @click="() => hide()">取消</el-button>
-      <el-button type="primary" @click="handleConfirm">确定</el-button>
+      <el-button type="primary" @click="handleConfirm" :disabled="selectedPerson == null">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -132,6 +132,8 @@
 
           this.tableData = this.getResponseTableData(respData)
 
+        }).finally(() => {
+
           this.listLoading = false
         })
       },
@@ -158,7 +160,7 @@
     },
     data() {
       return {
-        selectedPersion:null,
+        selectedPerson:null,
         dialogVisible:false,
         listLoading:true,
         searching:false,

@@ -119,9 +119,11 @@
         queryUserList(data).then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
-
-          this.listLoading = false
         })
+          .finally(() => {
+
+            this.listLoading = false
+          })
       },
       pageSizeChange(pageSize){
 

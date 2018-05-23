@@ -125,16 +125,17 @@
 
           this.tableData = this.getResponseTableData(respData)
 
-          this.listLoading = false
-
           this.searching = false
 
         }).catch(res => {
 
           this.$message.error('数据或网络异常，请刷新重试');
 
-          this.listLoading = false
         })
+          .finally(() => {
+
+            this.listLoading = false
+          })
       },
       pageSizeChange(pageSize){
 

@@ -228,6 +228,8 @@
 
           this.tableData = this.getResponseTableData(respData)
 
+        }).finally(() => {
+
           this.listLoading = false
         })
       },
