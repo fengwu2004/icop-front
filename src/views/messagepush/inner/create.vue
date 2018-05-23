@@ -10,48 +10,56 @@
         </div>
       </div>
       <div class="content">
-        <div class="title">
-          <span class="redstar">*</span><span>主题</span><span class="subtitle">(限30个字)</span>
-          <div style="margin-top: 1rem;">
-            <el-input maxlength="30" placeholder="请输入通知标题" v-model="message.msgSubject"></el-input>
+        <el-form :rules="rules" :model="currentMessage" ref="formData">
+          <div class="title">
+            <span class="redstar">*</span><span>主题</span><span class="subtitle">(限30个字)</span>
+            <div style="margin-top: 1rem;">
+              <el-form-item prop="msgSubject">
+                <el-input maxlength="30" placeholder="请输入通知标题" v-model="currentMessage.msgSubject"></el-input>
+              </el-form-item>
+            </div>
           </div>
-        </div>
-        <div class="summary">
-          <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>
-          <div style="margin-top: 1rem;">
-            <el-input type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="message.summary"></el-input>
+          <div class="summary">
+            <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>
+            <div style="margin-top: 1rem;">
+              <el-form-item prop="summary">
+                <el-input type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="currentMessage.summary"></el-input>
+              </el-form-item>
+            </div>
           </div>
-        </div>
-        <div class="sendtype">
-          <div>
-            <span class="redstar">*</span><span>发送方式</span>
+          <div class="sendtype">
+            <div>
+              <span class="redstar">*</span><span>发送方式</span>
+            </div>
+            <div class="sendtyperadio">
+              <el-radio v-model="currentMessage.sendType" label="APP">App</el-radio>
+              <el-radio v-model="currentMessage.sendType" label="SMS">短信</el-radio>
+            </div>
           </div>
-          <div class="sendtyperadio">
-            <el-radio v-model="message.sendType" label="APP">App</el-radio>
-            <el-radio v-model="message.sendType" label="SMS">短信</el-radio>
+          <div class="sendstrategy">
+            <span class="redstar">*</span><span>发送策略</span>
+            <div style="margin-top: 1rem">
+              <el-form-item prop="sendStrategy">
+                <el-radio v-model="currentMessage.sendStrategy" label="IMMEDIATE">立即发送</el-radio>
+                <el-radio v-model="currentMessage.sendStrategy" label="TIMES">定时发送</el-radio>
+                <el-date-picker style="margin-left: 1rem" :style="{visibility:currentMessage.sendStrategy == 'IMMEDIATE' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="currentMessage.planSendTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+              </el-form-item>
+            </div>
           </div>
-        </div>
-        <div class="sendstrategy">
-          <span class="redstar">*</span><span>发送策略</span>
-          <div style="margin-top: 1rem">
-            <el-radio v-model="message.sendStrategy" label="IMMEDIATE">立即发送</el-radio>
-            <el-radio v-model="message.sendStrategy" label="TIMES">定时发送</el-radio>
-            <el-date-picker style="margin-left: 1rem" :style="{visibility:message.sendStrategy == 'IMMEDIATE' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="message.planSendTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+          <div class="selectimg">
+            <image-cropper :initImageUrl="message.imageUrl"></image-cropper>
           </div>
-        </div>
-        <div class="selectimg">
-          <image-cropper :initImageUrl="message.imageUrl"></image-cropper>
-        </div>
-        <div class="btns">
-          <el-button @click="onCancelCreate">取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
-        </div>
+          <div class="btns">
+            <el-button @click="onCancelCreate">取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
+          </div>
+        </el-form>
       </div>
     </div>
   </transition>
 </template>
 <script>
 
-  import { trim } from "@/utils/validate";
+  import { trim, validateMsgSubject, validateMsgSummary } from "@/utils/validate";
   import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget/index'
   import BreadCrumb from '@/components/Breadcrumb/index'
@@ -65,11 +73,68 @@
   export default {
     components: { PageWidget, BreadCrumb, ImageCropper },
     data() {
+      let validMsgSubject = (rule, rawvalue, callback) => {
+
+        if (!rawvalue || rawvalue.length === 0 || trim(rawvalue).length == 0) {
+
+          return callback(new Error('请输入消息主题'))
+        }
+
+        callback()
+      }
+
+      let validMsgSummary = (rule, rawvalue, callback) => {
+
+        if (!rawvalue || rawvalue.length === 0 || trim(rawvalue).length == 0) {
+
+          return callback(new Error('请输入消息摘要'))
+        }
+
+        callback()
+      }
+
+      let validMsgSendStrategy = (rule, value, callback) => {
+
+        if (!value) {
+
+          return callback(new Error('请选择发送策略'))
+        }
+
+        if (value == 'TIMES' && !this.currentMessage.planSendTime) {
+
+          return callback(new Error('请选择定时发送时间'))
+        }
+
+        callback()
+      }
+
       return {
         messageTypeKeyList:messageTypeKeyList,
         value:'',
         sendtype:'',
         myCroppa:{},
+        currentMessage:{
+          messageId:null,
+          msgSubject:null,
+          summary:null,
+          sendType:'APP',
+          sendStrategy:null,
+          planSendTime:null,
+          imageUrl:null,
+          msgContent:null,
+          noticeType:null,
+        },
+        rules:{
+          msgSubject:[
+            {validator:validMsgSubject, trigger:'blur'},
+          ],
+          summary:[
+            {validator:validMsgSummary, trigger:'blur'},
+          ],
+          sendStrategy:[
+            {validator:validMsgSendStrategy, trigger:'blur'},
+          ]
+        }
       }
     },
     computed: {
@@ -77,65 +142,25 @@
         'message'
       ]),
     },
+    created() {
+
+      this.currentMessage = this.message
+    },
     methods: {
-      checkMessageValid() {
-
-        if (!this.message.msgSubject) {
-
-          this.$message({
-            message: '消息主题不能为空',
-            type: 'warning'
-          });
-
-          console.log('zz')
-
-          return false
-        }
-
-        let msgSubject = trim(this.message.msgSubject)
-
-        if (msgSubject.length > 30 || msgSubject <= 0) {
-
-          this.$message({
-            message: '通知主题不能为空',
-            type: 'warning'
-          });
-
-          return false
-        }
-
-        if (!this.message.sendType) {
-
-          this.$message({
-            message: '消息发送方式不能为空',
-            type: 'warning'
-          });
-
-          return false
-        }
-
-        if (!this.message.sendStrategy) {
-
-          this.$message({
-            message: '消息发送策略需要选择',
-            type: 'warning'
-          });
-
-          return false
-        }
-
-        return true
-      },
       onEditorMessage() {
 
-        if (!this.checkMessageValid()) {
+        this.$refs.formData.validate(valid => {
 
-          return
-        }
+          if (valid) {
 
-        let route = {name:'messagepush_inner_edit'}
+            this.$store.dispatch('setMessage', this.currentMessage).then(res => {
 
-        this.$router.push(route)
+              let route = {name:'messagepush_inner_edit'}
+
+              this.$router.push(route)
+            })
+          }
+        })
       },
       onCancelCreate() {
 

@@ -39,7 +39,7 @@ export function validateAlphabets(str) {
   return reg.test(str)
 }
 
-/*数字，字母，下划线，不以下划线开头结尾, 长度6-30*/
+/*数字，字母，下划线，不以下划线开头结尾, 长度1-30*/
 export function validateUserName(str) {
   
   const reg = /^[a-zA-Z][a-zA-Z0-9_]{0,29}$/
@@ -71,6 +71,24 @@ export function validateRoleName(str) {
   let trimstr = trim(str)
   
   const reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]{0,15}$/
+  
+  return reg.test(trimstr)
+}
+
+export function validateMsgSubject(str) {
+  
+  let trimstr = trim(str)
+  
+  const reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]{0,30}$/
+  
+  return reg.test(trimstr)
+}
+
+export function validateMsgSummary(str) {
+  
+  let trimstr = trim(str)
+  
+  const reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]{0,60}$/
   
   return reg.test(trimstr)
 }

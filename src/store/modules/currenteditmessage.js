@@ -5,7 +5,7 @@ const currentEditMessage = {
       msgSubject:null,
       summary:null,
       sendType:'APP',
-      sendStrategy:null,
+      sendStrategy:'IMMEDIATE',
       planSendTime:null,
       imageUrl:null,
       msgContent:null,
@@ -14,8 +14,6 @@ const currentEditMessage = {
   },
   mutations: {
     SET_MESSAGE: (state, message) => {
-      
-      console.log('ok')
       
       state.message = message
     },
@@ -34,7 +32,7 @@ const currentEditMessage = {
         msgSubject:null,
         summary:null,
         sendType:'APP',
-        sendStrategy:null,
+        sendStrategy:'IMMEDIATE',
         planSendTime:null,
         imageUrl:null,
         msgContent:null,
