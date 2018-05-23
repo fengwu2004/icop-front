@@ -10,7 +10,7 @@
             <li class="baseinfotitle">基本信息</li>
             <div class="rolename">角色名称(不能重名):</div>
             <div style="margin-top: 0.5rem;width: 300px">
-              <el-input maxlength="20" v-model="currentEditRole.roleName" @blur="onRoleNameBlur" :disabled="!enableedit"></el-input>
+              <el-input maxlength="15" v-model="currentEditRole.roleName" @blur="onRoleNameBlur" :disabled="!enableedit"></el-input>
             </div>
           </div>
           <div>
@@ -58,6 +58,11 @@
     components: { BreadCrumb },
     methods:{
       onRoleNameBlur() {
+
+        if (!this.currentEditRole.roleName || this.currentEditRole.roleName.length == 0 || this.currentEditRole.roleName === this.initRoleName) {
+
+          return
+        }
 
         let data = {roleName:this.currentEditRole.roleName}
 
@@ -187,9 +192,12 @@
           this.icop = this.build(null, respData.icop)
         })
       })
+
+      this.initRoleName = this.currentEditRole.roleName
     },
     data() {
       return {
+        initRoleName:'',
         app: [],
         icop: [],
         apppermissions:[],

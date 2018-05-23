@@ -107,8 +107,6 @@
           data.roleName = this.roleName
         }
 
-        console.log('getList', data)
-
         queryRoleList(data).then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
