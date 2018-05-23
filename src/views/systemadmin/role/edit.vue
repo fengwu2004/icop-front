@@ -55,6 +55,7 @@
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
   import { validateRoleName, validateName } from "@/utils/validate"
+  import { trim } from "@/utils/validate";
 
   export default {
     computed: {
@@ -64,14 +65,14 @@
     },
     components: { BreadCrumb },
     methods:{
-      async onRoleNameBlur() {
+      async checkNameExist() {
 
         if (!this.formData.roleName || this.formData.roleName.length == 0 || this.formData.roleName === this.initRoleName) {
 
           return Promise.resolve()
         }
 
-        let data = {roleName:this.formData.roleName}
+        let data = {roleName:trim(this.formData.roleName)}
 
         return new Promise((resolve, reject) => {
 
@@ -124,10 +125,6 @@
 
               return resolve()
             }
-            else {
-
-              return reject('表单验证失败')
-            }
           })
         })
       },
@@ -168,9 +165,10 @@
                 this.$router.push(route)
               })
             }
-          }).catch(res => {
+          })
+          .catch(res => {
 
-
+            console.log(res)
         })
       },
       cancelCreate() {
@@ -249,7 +247,7 @@
           return callback(new Error('长度为6-15，中文、数字、字母'));
         }
 
-        this.onRoleNameBlur().then(() => {
+        this.checkNameExist().then(() => {
 
           callback()
         })
