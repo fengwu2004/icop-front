@@ -42,9 +42,11 @@ export function validateAlphabets(str) {
 /*数字，字母，下划线，不以下划线开头结尾, 长度1-30*/
 export function validateUserName(str) {
   
+  let trimstr = trim(str)
+  
   const reg =  /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]{0,30}$/
   
-  return reg.test(str)
+  return reg.test(trimstr)
 }
 
 export function isMobil(s) {

@@ -18,7 +18,7 @@
             <div>
               <span>联系电话</span>
               <el-form-item prop="telephone">
-                <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="user.telephone"></el-input>
+                <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="user.telephone" max="30"></el-input>
               </el-form-item>
             </div>
           </div>
@@ -90,7 +90,7 @@
 
       let validUserName = (rule, value, callback) => {
 
-        if (!value) {
+        if (!value || trim(value).length == 0) {
 
           return callback(new Error('请输入账户名称'));
         }
