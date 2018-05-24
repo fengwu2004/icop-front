@@ -6,7 +6,7 @@
         <div class="imagecroppaouter">
           <img v-show="dataUrl" id="imagecropper_item" :src="dataUrl" alt="Picture" style="max-width: 100%;">
           <div v-show="!dataUrl" style="display: flex;height: 100%;align-items: center;justify-content: center;" @click="upload">
-            <input id="addfile-btn" ref="input" class="sr-only" type="file" style="display: none" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" @input="imagechange"/>
+            <input id="addfile-btn" ref="input" class="sr-only" type="file" style="display: none" accept=".jpg,.jpeg,.png,.bmp,.tiff" @input="imagechange"/>
             <span style="font-size: 2rem">点击上传</span>
           </div>
         </div>
