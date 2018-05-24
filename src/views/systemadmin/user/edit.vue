@@ -24,7 +24,7 @@
           </div>
           <div class="itemrow">
             <div>
-              <span>姓名</span>
+              <span class="redstar">*</span><span class="sumtitle">姓名</span>
               <el-form-item prop="personName">
                 <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="user.personName"></el-input>
               </el-form-item>
@@ -73,7 +73,7 @@
 <script>
 
   import { checkRouteAndActionEnable } from "@/permissionCheck";
-  import { validateUserName, validatePassword, trim } from "@/utils/validate";
+  import { validateUserName, validatePassword, trim, isValidPersonCode } from "@/utils/validate";
   import { mapGetters } from 'vuex'
   import { edit, checkExistUserName, add } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
@@ -152,9 +152,21 @@
 
       let validPersonCode = (rule, value, callback) => {
 
-        if (!value && !this.user.personId) {
+        if (this.user.personId) {
+
+          callback()
+
+          return
+        }
+
+        if (!value || trim(value).length == 0) {
 
           return callback(new Error('人员编号不能为空'));
+        }
+
+        if (!isValidPersonCode(value)) {
+
+          return callback(new Error('30个字以内，字母，数字'));
         }
 
         callback()

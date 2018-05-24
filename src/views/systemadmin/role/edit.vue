@@ -60,22 +60,19 @@
   export default {
     computed: {
       ...mapGetters([
-        'currentEditRole',
-        'appicopvalid',
-        'appfunctions',
-        'icopfunctions',
+        'currentEditRole'
       ]),
     },
     components: { BreadCrumb },
     methods:{
-      async checkNameExist() {
+      async checkNameExist(name) {
 
-        if (!this.formData.roleName || this.formData.roleName.length == 0 || this.formData.roleName === this.initRoleName) {
+        if (name === this.initRoleName) {
 
           return Promise.resolve()
         }
 
-        let data = {roleName:trim(this.formData.roleName)}
+        let data = {roleName:name}
 
         return new Promise((resolve, reject) => {
 
@@ -199,26 +196,6 @@
           console.log(this.$refs)
         })
       },
-      async queryAppIcopFeature() {
-
-        if (this.appicopvalid) {
-
-          return Promise.resolve({app:this.appfunctions, icop:this.icopfunctions})
-        }
-
-        return new Promise((resolve, reject) => {
-
-          queryTotalPopedomTree({})
-            .then(respData => {
-
-              return this.$store.dispatch('setAppAndIcopFunctions', respData)
-          })
-            .then(res => {
-
-              resolve({app:this.appfunctions, icop:this.icopfunctions})
-            })
-        })
-      },
     },
     mounted() {
 
@@ -238,7 +215,7 @@
         this.$route.meta.title = 'systemadmin_role_edit'
       }
 
-      this.queryAppIcopFeature()
+      queryTotalPopedomTree()
         .then(respData => {
 
           this.app = this.build(null, respData.app)
@@ -262,7 +239,7 @@
 
       let validatePass = (rule, value, callback) => {
 
-        if (!value) {
+        if (!value || trim(value).length == 0) {
 
           return callback(new Error('请输入角色名称'));
         }
@@ -272,7 +249,7 @@
           return callback(new Error('长度为1-15，中文、数字、字母'));
         }
 
-        this.checkNameExist().then(() => {
+        this.checkNameExist(trim(value)).then(() => {
 
           callback()
         })

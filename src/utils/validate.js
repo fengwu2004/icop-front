@@ -93,6 +93,14 @@ export function validateMsgSummary(str) {
   return reg.test(trimstr)
 }
 
+export function isValidPersonCode(str) {
+  
+  let trimstr = trim(str)
+  
+  const reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9]{0,30}$/
+  
+  return reg.test(trimstr)
+}
 /**
  * validate email
  * @param email
