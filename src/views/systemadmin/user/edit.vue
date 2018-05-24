@@ -112,6 +112,13 @@
 
       let validPersonName = (rule, value, callback) => {
 
+        if (this.justEnableSelect) {
+
+          callback()
+
+          return
+        }
+
         if (!value) {
 
           return callback(new Error('请输入姓名'));

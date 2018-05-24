@@ -8,16 +8,16 @@
         <div class="permissiontree" style="padding: 20px">
           <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expanded-keys="[0]" :props="roleProps"></el-tree>
         </div>
-        <div class="permissionctr">
+        <div class="permissionctr" v-show="app">
           <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
           <div class="permissiontree">
-            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
+            <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true"></el-tree>
           </div>
         </div>
-        <div class="permissionctr">
+        <div class="permissionctr" v-show="icop">
           <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
           <div class="permissiontree">
-            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps"></el-tree>
+            <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true"></el-tree>
           </div>
         </div>
       </div>
@@ -64,9 +64,9 @@
 
         this.$store.dispatch('setUserRoles', roleIds).then(() => {
 
-          queryPopedomListByIds(reqeustdata).then(response => {
+          queryPopedomListByIds(reqeustdata).then(respData => {
 
-            let permissons = response.data.respData.split(',')
+            let permissons = respData.split(',')
 
             this.$refs.apptree.setCheckedKeys(permissons)
 
@@ -118,6 +118,11 @@
         this.$router.go(-2)
       },
       build(parentid, items) {
+
+        if (!items) {
+
+          return null
+        }
 
         var _array = [];
 
