@@ -213,8 +213,6 @@
           pageSize:this.tableData.pageSize,
         }
 
-        console.log('search', data)
-
         queryRoleList(data).then(respData => {
 
           this.tableData = this.getResponseTableData(respData)

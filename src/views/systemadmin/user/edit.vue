@@ -73,7 +73,7 @@
 <script>
 
   import { checkRouteAndActionEnable } from "@/permissionCheck";
-  import { validateUserName, validatePassword, trim, isValidPersonCode } from "@/utils/validate";
+  import { validateUserName, validatePassword, trim, isValidPersonCode, isValidPhoneNumber } from "@/utils/validate";
   import { mapGetters } from 'vuex'
   import { edit, checkExistUserName, add } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
@@ -90,7 +90,7 @@
 
       let validUserName = (rule, value, callback) => {
 
-        if (!value || trim(value).length == 0) {
+        if (!value) {
 
           return callback(new Error('请输入账户名称'));
         }
@@ -100,9 +100,10 @@
           return callback(new Error('长度为1-30，中文、数字、字母'));
         }
 
-        this.checkUserNameExist().then(() => {
+        this.checkUserNameExist()
+          .then(() => {
 
-          callback()
+          return callback()
         })
           .catch(res => {
 
@@ -114,16 +115,12 @@
 
         if (this.justEnableSelect) {
 
-          callback()
-
-          return
+          return callback()
         }
 
         if (!value) {
 
           return callback(new Error('请输入姓名'));
-
-          return
         }
 
         if (!validateUserName(value)) {
@@ -131,37 +128,34 @@
           return callback(new Error('长度为1-30，中文、数字、字母'));
         }
 
-
-        callback()
+        return callback()
       }
 
       let validPassword = (rule, value, callback) => {
 
         if (!value) {
 
-          callback()
+          return callback()
         }
 
         if (!validatePassword(value)) {
 
-          return callback(new Error('长度为6-20，中文、数字、字母'));
+          return callback(new Error('长度为6-20，数字、字母'));
         }
 
-        callback()
+        return callback()
       }
 
       let validPersonCode = (rule, value, callback) => {
 
         if (this.user.personId) {
 
-          callback()
-
-          return
+          return callback()
         }
 
-        if (!value || trim(value).length == 0) {
+        if (!value) {
 
-          return callback(new Error('人员编号不能为空'));
+          return callback(new Error('请输入人员编号'));
         }
 
         if (!isValidPersonCode(value)) {
@@ -169,7 +163,22 @@
           return callback(new Error('30个字以内，字母，数字'));
         }
 
-        callback()
+        return callback()
+      }
+
+      let validPhoneNumber = (rule, value, callback) => {
+
+        if (!value) {
+
+          return callback()
+        }
+
+        if (isValidPhoneNumber(value)) {
+
+          return callback()
+        }
+
+        return callback(new Error('30个字以内, 数字，多个号码由逗号分隔'));
       }
 
       return {
@@ -198,6 +207,7 @@
           ],
           telephone:[
             {max:30, message:'长度在30个字以内', trigger:'blur'},
+            {validator:validPhoneNumber, trigger:'blur'}
           ],
           password:[
             {validator:validPassword, trigger:'blur'}
@@ -244,33 +254,27 @@
 
         let value = Object.assign({}, user, {password:md5(pwd)})
 
-        this.checkUserValid().then(res => {
+        this.checkUserValid()
+          .then(res => {
 
-          if (user.userId) {
+            if (user.userId) {
 
-            edit(value).then(response => {
+              return edit(value)
+            }
+            else {
 
-              this.$message({
-                message: '保存成功',
-                type: 'success'
-              });
+              return add(value)
+            }
+          })
+          .then(response => {
 
-              this.$router.go(-1)
-            })
-          }
-          else {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            });
 
-            add(value).then(response => {
-
-              this.$message({
-                message: '保存成功',
-                type: 'success'
-              });
-
-              this.$router.go(-1)
-            })
-          }
-        })
+            this.$router.go(-1)
+          })
       },
       onSelectedPerson(person) {
 

@@ -239,7 +239,7 @@
 
       let validatePass = (rule, value, callback) => {
 
-        if (!value || trim(value).length == 0) {
+        if (!value) {
 
           return callback(new Error('请输入角色名称'));
         }

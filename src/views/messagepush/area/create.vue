@@ -79,21 +79,16 @@
   export default {
     components: { PageWidget, BreadCrumb, ImageCropper },
     data() {
-      let validMsgSubject = (rule, rawvalue, callback) => {
+      let validMsgSubject = (rule, value, callback) => {
 
-        if (!rawvalue || rawvalue.length === 0 || trim(rawvalue).length == 0) {
+        if (!value) {
 
           return callback(new Error('请输入消息主题'))
         }
 
-        callback()
-      }
+        if (!validateMsgSubject(value)) {
 
-      let validMsgSummary = (rule, rawvalue, callback) => {
-
-        if (!rawvalue || rawvalue.length === 0 || trim(rawvalue).length == 0) {
-
-          return callback(new Error('请输入消息摘要'))
+          return callback(new Error('30个字以内，中文，字母，数字'));
         }
 
         callback()
@@ -133,7 +128,7 @@
             {validator:validMsgSubject, trigger:'blur'},
           ],
           summary:[
-            {validator:validMsgSummary, trigger:'blur'},
+            {min:1, max:60, message:'不能为空，60个字以内', trigger:'blur'}
           ],
           sendStrategy:[
             {validator:validMsgSendStrategy, trigger:'blur'},
