@@ -163,7 +163,7 @@
         justEnableSelect:true,
         initUserName:'',
         user:{
-          userId:'',
+          userId:null,
           personId:null,
           personCode:null,
           personName:'',
