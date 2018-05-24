@@ -94,6 +94,16 @@
         callback()
       }
 
+      let validNoticeType = (rule, value, callback) => {
+
+        if (!value) {
+
+          return callback(new Error('请选择消息类型'))
+        }
+
+        return callback()
+      }
+
       let validMsgSendStrategy = (rule, value, callback) => {
 
         if (!value) {
@@ -128,10 +138,14 @@
             {validator:validMsgSubject, trigger:'blur'},
           ],
           summary:[
+            {required: true, message: '请输入摘要', trigger: 'blur' },
             {min:1, max:60, message:'不能为空，60个字以内', trigger:'blur'}
           ],
           sendStrategy:[
             {validator:validMsgSendStrategy, trigger:'blur'},
+          ],
+          noticeType:[
+            {validator:validNoticeType, trigger:'blur'},
           ]
         }
       }
