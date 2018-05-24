@@ -124,14 +124,14 @@
           return callback(new Error('请输入姓名'));
 
           return
-        }
+        } 
 
         if (!validateUserName(value)) {
 
           return callback(new Error('长度为1-30，中文、数字、字母'));
         }
 
-        
+
         callback()
       }
 
