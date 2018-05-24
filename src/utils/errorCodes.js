@@ -4,6 +4,7 @@ export const errorcode = {
   'JSLIFEICOP1003':'用户名或密码错误',
   'JSLIFEICOP1004':'用户密码只能由数字或字母组成',
   'JSLIFEICOP1006':'验证码错误',
+  'JSLIFEICOP1012':'角色已经关联用户，不能删除',
 }
 
 export const systemerrorCode = {

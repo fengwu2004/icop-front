@@ -84,7 +84,7 @@ service.interceptors.response.use(
     
     if (respCode in errorcode) {
   
-      let msg = errorcode[respCode]
+      let msg = response.data.respMsg | errorcode[respCode]
   
       Message({
   
