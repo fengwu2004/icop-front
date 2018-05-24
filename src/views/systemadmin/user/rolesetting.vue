@@ -42,7 +42,10 @@
     components: { BreadCrumb },
     computed: {
       ...mapGetters([
-        'currentEditUser'
+        'currentEditUser',
+        'appicopvalid',
+        'appfunctions',
+        'icopfunctions',
       ]),
     },
     methods:{
@@ -145,23 +148,43 @@
 
         return _array;
       },
-      async createTotalPermissionTree() {
+      async queryAppIcopFeature() {
+
+        if (this.appicopvalid) {
+
+          return Promise.resolve({app:this.appfunctions, icop:this.icopfunctions})
+        }
 
         return new Promise((resolve, reject) => {
 
           queryTotalPopedomTree({})
             .then(respData => {
 
-            this.app = this.build(null, respData.app, true)
+              return this.$store.dispatch('setAppAndIcopFunctions', respData)
+            })
+            .then(res => {
 
-            this.icop = this.build(null, respData.icop, true)
+              resolve({app:this.appfunctions, icop:this.icopfunctions})
+            })
+        })
+      },
+      async createTotalPermissionTree() {
 
-            resolve()
+        return new Promise((resolve, reject) => {
 
-          }).catch(e => {
+          this.queryAppIcopFeature()
+            .then(respData => {
 
-            reject(e)
+              this.app = this.build(null, respData.app, true)
+
+              this.icop = this.build(null, respData.icop, true)
+
+              resolve()
           })
+            .catch(e => {
+
+              reject(e)
+            })
         })
       },
       async createRoleTree() {

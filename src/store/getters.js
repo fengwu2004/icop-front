@@ -13,6 +13,9 @@ const getters = {
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters,
   permissioncodes: state => state.permission.validCodes,
+  appicopvalid: state => state.permission.appicopvalid,
+  appfunctions: state => state.permission.appfunctions,
+  icopfunctions: state => state.permission.icopfunctions,
   // errorLogs: state => state.errorLog.logs
 }
 export default getters

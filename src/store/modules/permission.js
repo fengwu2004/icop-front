@@ -57,8 +57,11 @@ function filterAsyncRouter(asyncRouterMap, permissioncodes) {
 export const permission = {
   state: {
     routers: constantRouterMap,
-    addRouters: [],
-    validCodes:[]
+    addRouters:[],
+    validCodes:[],
+    appfunctions:null,
+    icopfunctions:null,
+    appicopvalid:false,
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
@@ -68,7 +71,15 @@ export const permission = {
     SET_PERMISSION_CODES: (state, codesstr) => {
       
       state.validCodes = codesstr.split(',')
-    }
+    },
+    SET_APP_ICOP_FUNCTIONS: (state, appandicop) => {
+  
+      if (appandicop.app) state.appfunctions = Array.from(appandicop.app)
+      
+      if (appandicop.icop) state.icopfunctions = Array.from(appandicop.icop)
+      
+      state.appicopvalid = true
+    },
   },
   actions: {
     GenerateRoutes({ commit }, permissioncodes) {
@@ -96,6 +107,15 @@ export const permission = {
   
         commit('SET_PERMISSION_CODES', codesstr)
         
+        resolve()
+      })
+    },
+    setAppAndIcopFunctions({commit}, appandicop) {
+  
+      return new Promise(resolve => {
+    
+        commit('SET_APP_ICOP_FUNCTIONS', appandicop)
+    
         resolve()
       })
     }

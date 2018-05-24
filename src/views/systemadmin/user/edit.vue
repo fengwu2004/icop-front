@@ -124,7 +124,7 @@
           return callback(new Error('请输入姓名'));
 
           return
-        } 
+        }
 
         if (!validateUserName(value)) {
 

@@ -28,13 +28,13 @@
           <div class="permissionctr" v-show="app">
             <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
             <div class="permissiontree">
-              <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true" :default-checked-keys="apppermissions"></el-tree>
+              <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true"></el-tree>
             </div>
           </div>
           <div class="permissionctr" v-show="icop">
             <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
             <div class="permissiontree">
-              <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true" :default-checked-keys="apppermissions"></el-tree>
+              <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true"></el-tree>
             </div>
           </div>
         </div>
@@ -54,13 +54,16 @@
   import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
-  import { validateRoleName, validateName } from "@/utils/validate"
+  import { validateRoleName } from "@/utils/validate"
   import { trim } from "@/utils/validate";
 
   export default {
     computed: {
       ...mapGetters([
-        'currentEditRole'
+        'currentEditRole',
+        'appicopvalid',
+        'appfunctions',
+        'icopfunctions',
       ]),
     },
     components: { BreadCrumb },
@@ -145,6 +148,7 @@
 
             if (this.currentEditRole.roleId) {
 
+              console.log(data.popedomIds)
               edit(data).then(response => {
 
                 this.$message.success('保存成功')
@@ -186,14 +190,35 @@
 
         queryPopedomListByIds({roleIds:roleId}).then(respData => {
 
-          this.$nextTick(() => {
+          const ids = respData.split(',')
 
-            this.apppermissions = respData.split(',')
+          this.$refs.apptree.setCheckedKeys(ids)
 
-            this.icoppermission = respData.split(',')
-          })
+          this.$refs.icoptree.setCheckedKeys(ids)
+
+          console.log(this.$refs)
         })
-      }
+      },
+      async queryAppIcopFeature() {
+
+        if (this.appicopvalid) {
+
+          return Promise.resolve({app:this.appfunctions, icop:this.icopfunctions})
+        }
+
+        return new Promise((resolve, reject) => {
+
+          queryTotalPopedomTree({})
+            .then(respData => {
+
+              return this.$store.dispatch('setAppAndIcopFunctions', respData)
+          })
+            .then(res => {
+
+              resolve({app:this.appfunctions, icop:this.icopfunctions})
+            })
+        })
+      },
     },
     mounted() {
 
@@ -213,19 +238,17 @@
         this.$route.meta.title = 'systemadmin_role_edit'
       }
 
-      this.queryPopedomList()
-    },
-    created() {
-
-      queryTotalPopedomTree({}).then(respData => {
-
-        this.$nextTick(() => {
+      this.queryAppIcopFeature()
+        .then(respData => {
 
           this.app = this.build(null, respData.app)
 
           this.icop = this.build(null, respData.icop)
+
+          this.queryPopedomList()
         })
-      })
+    },
+    created() {
 
       this.initRoleName = this.currentEditRole.roleName
 
@@ -263,8 +286,6 @@
         initRoleName:'',
         app: [],
         icop: [],
-        apppermissions:[],
-        icoppermission:[],
         enableedit:true,
         defaultProps: {
           children: 'children',
