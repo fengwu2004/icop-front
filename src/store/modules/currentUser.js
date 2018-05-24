@@ -54,7 +54,7 @@ const currentuser = {
         resolve()
       })
     },
-    setUserRoles({ commit }, roleIdsList) {
+      setUserRoles({ commit }, roleIdsList) {
     
       return new Promise(resolve => {
       

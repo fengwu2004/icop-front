@@ -6,7 +6,7 @@
     <div class="content">
       <div class="createuser">
         <div class="permissiontree" style="padding: 20px">
-          <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expand-all="true" :props="roleProps" :default-checked-keys="defaultRoleTreeKeys"></el-tree>
+          <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expand-all="true" :props="roleProps"></el-tree>
         </div>
         <div class="permissionctr" v-show="app">
           <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+  import md5 from 'blueimp-md5'
   import { mapGetters } from 'vuex'
   import { queryPopedomListByIds } from '@/api/role'
   import { queryRoleListByIds, edit, add, queryRoleList } from '@/api/user'
@@ -51,6 +52,8 @@
 
           return
         }
+
+        console.log('refreshTreeChecked')
 
         this.refreshTreeChecked()
       },
@@ -84,9 +87,13 @@
 
         let user = this.currentEditUser
 
+        let pwd = user.password != null ? user.password : '888888'
+
+        let value = Object.assign({}, user, {password:md5(pwd)})
+
         if (user.userId) {
 
-          edit(user).then(response => {
+          edit(value).then(response => {
 
             this.$message({
               type: 'success',
@@ -99,7 +106,7 @@
         }
         else {
 
-          add(user).then(response => {
+          add(value).then(response => {
 
             this.$message({
               type: 'success',
@@ -142,73 +149,109 @@
 
         return new Promise((resolve, reject) => {
 
-          queryTotalPopedomTree({}).then(respData => {
+          queryTotalPopedomTree({})
+            .then(respData => {
 
             this.app = this.build(null, respData.app, true)
 
             this.icop = this.build(null, respData.icop, true)
 
             resolve()
-          })
-            .catch(e => {
 
-              reject(e)
+          }).catch(e => {
+
+            reject(e)
+          })
+        })
+      },
+      async createRoleTree() {
+
+        return new Promise((resolve, reject) => {
+
+          queryRoleList({})
+            .then(respData => {
+
+            let parent = {roleName:'全选', treeId:0, parentId:null}
+
+            let list = [parent]
+
+            for (let i = 0; i < respData.length; ++i) {
+
+              let role = respData[i]
+
+              role.parentId = 0
+
+              role.treeId = role.roleId
+
+              list.push(role)
+            }
+
+            this.roletree = this.build(null, list, false)
+
+              resolve()
+          })
+            .catch(res => {
+
+              reject(res)
             })
         })
       },
-      createRoleTree() {
+      async getUserRoles() {
 
-        queryRoleList({}).then(respData => {
+        if (this.currentEditUser.roleIds) {
 
-          let parent = {roleName:'全选', treeId:0, parentId:null}
-
-          let list = [parent]
-
-          for (let i = 0; i < respData.length; ++i) {
-
-            let role = respData[i]
-
-            role.parentId = 0
-
-            role.treeId = role.roleId
-
-            list.push(role)
-          }
-
-          this.roletree = this.build(null, list, false)
-        })
-          .catch(res => {
-
-            console.log(res)
-          })
-      },
-      getUserRoles() {
+          return Promise.resolve()
+        }
 
         let data = {
 
           userIds:this.currentEditUser.userId
         }
 
-        queryRoleListByIds(data).then(respData => {
+        return new Promise((resolve, reject) => {
 
-          if (respData) {
+          queryRoleListByIds(data)
+            .then(respData => {
 
-            let roleIds = respData.split(',')
+            if (respData) {
 
-            this.$refs.roletree.setCheckedKeys(roleIds)
+              let roleIds = respData.split(',')
 
-            this.refreshTreeChecked()
-          }
+              return this.$store.dispatch('setUserRoles', roleIds)
+            }
+
+            return Promise.reject(null)
+          })
+            .then(res => {
+
+              resolve()
+            })
+            .catch(e => {
+
+              reject(e)
+            })
         })
       }
     },
-    created() {
+    mounted() {
 
       this.createTotalPermissionTree()
+        .then(res => {
 
-      this.createRoleTree()
+          return this.createRoleTree()
+        })
+        .then(res => {
 
-      this.getUserRoles()
+        return this.getUserRoles()
+      })
+        .then(res => {
+
+          this.$refs.roletree.setCheckedKeys(this.currentEditUser.roleIds.split(','))
+        })
+        .catch(e => {
+
+          console.log(e)
+        })
     },
     data() {
       return {
@@ -216,7 +259,6 @@
         app: [],
         icop: [],
         roletree:[],
-        defaultRoleTreeKeys:[],
         defaultProps: {
           children: 'children',
           label: 'text'
