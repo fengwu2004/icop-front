@@ -27,7 +27,7 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-dialog title="修改密码" :visible.sync="dialogVisible" width="515px" :modal-append-to-body="false" :lock-scroll="true" :append-to-body="false">
+      <el-dialog title="修改密码" :visible.sync="dialogVisible" width="515px" :modal-append-to-body="false" :lock-scroll="true" :append-to-body="false" :close-on-click-modal="false">
         <el-form auto-complete="off">
           <div class="inputgroup">
             <span>旧密码</span>
