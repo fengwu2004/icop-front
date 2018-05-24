@@ -92,7 +92,7 @@
 
         if (!value) {
 
-          return callback(new Error('请输入角色名称'));
+          return callback(new Error('请输入账户名称'));
         }
 
         if (!validateUserName(value)) {
@@ -131,14 +131,7 @@
           return callback(new Error('长度为1-30，中文、数字、字母'));
         }
 
-        this.checkUserNameExist().then(() => {
-
-          callback()
-        })
-          .catch(res => {
-
-            return callback(new Error(res));
-          })
+        callback()
       }
 
       let validPassword = (rule, value, callback) => {

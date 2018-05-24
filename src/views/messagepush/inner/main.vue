@@ -104,8 +104,6 @@
       },
       checkEnableOperator(index, message) {
 
-        console.log('checkEnableOperator')
-
         return message.sendStatus == '0'
       },
       onFilterChange(filters) {

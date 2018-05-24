@@ -6,7 +6,7 @@
     <div class="content">
       <div class="createuser">
         <div class="permissiontree" style="padding: 20px">
-          <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expanded-keys="[0]" :props="roleProps"></el-tree>
+          <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expand-all="true" :props="roleProps" :default-checked-keys="defaultRoleTreeKeys"></el-tree>
         </div>
         <div class="permissionctr" v-show="app">
           <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
@@ -47,8 +47,6 @@
     methods:{
       handleRoleCheckChange(data, checked, indeterminate) {
 
-        console.log(data, checked, indeterminate)
-
         if (indeterminate) {
 
           return
@@ -86,8 +84,6 @@
 
         let user = this.currentEditUser
 
-        // alert(JSON.stringify(user))
-
         if (user.userId) {
 
           edit(user).then(response => {
@@ -117,7 +113,7 @@
 
         this.$router.go(-2)
       },
-      build(parentid, items) {
+      build(parentid, items, disabled) {
 
         if (!items) {
 
@@ -130,11 +126,11 @@
 
           var item = items[i]
 
-          item.disabled = false
+          item.disabled = disabled
 
           if (item.parentId === parentid) {
 
-            item.children = this.build(item.treeId, items)
+            item.children = this.build(item.treeId, items, disabled)
 
             _array.push(item);
           }
@@ -142,13 +138,22 @@
 
         return _array;
       },
-      createTotalPermissionTree() {
+      async createTotalPermissionTree() {
 
-        queryTotalPopedomTree({}).then(respData => {
+        return new Promise((resolve, reject) => {
 
-          this.app = this.build(null, respData.app)
+          queryTotalPopedomTree({}).then(respData => {
 
-          this.icop = this.build(null, respData.icop)
+            this.app = this.build(null, respData.app, true)
+
+            this.icop = this.build(null, respData.icop, true)
+
+            resolve()
+          })
+            .catch(e => {
+
+              reject(e)
+            })
         })
       },
       createRoleTree() {
@@ -170,8 +175,12 @@
             list.push(role)
           }
 
-          this.roletree = this.build(null, list)
+          this.roletree = this.build(null, list, false)
         })
+          .catch(res => {
+
+            console.log(res)
+          })
       },
       getUserRoles() {
 
@@ -195,16 +204,11 @@
     },
     created() {
 
-      console.log('aa')
+      this.createTotalPermissionTree()
 
-      this.$nextTick(() => {
+      this.createRoleTree()
 
-        this.createTotalPermissionTree()
-
-        this.createRoleTree()
-
-        this.getUserRoles()
-      })
+      this.getUserRoles()
     },
     data() {
       return {
@@ -212,6 +216,7 @@
         app: [],
         icop: [],
         roletree:[],
+        defaultRoleTreeKeys:[],
         defaultProps: {
           children: 'children',
           label: 'text'

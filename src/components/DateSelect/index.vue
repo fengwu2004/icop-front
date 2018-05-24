@@ -9,7 +9,7 @@
     </el-radio-group>
     <div class="intervalselect">
       <span class="title">选择时间:</span>
-      <el-date-picker v-model="dayinterval" type="daterange" unlink-panels placeholder="选择时间范围"></el-date-picker>
+      <el-date-picker v-model="dayinterval" type="daterange" unlink-panels placeholder="选择时间范围" size="small" @change="onDayIntervalChange"></el-date-picker>
     </div>
   </div>
 </template>
@@ -34,13 +34,9 @@
     methods:{
       refresh() {
 
-        this.dayinterval = this.getDateRange(this.days)
-
         this.$emit('daterangechange', this.dayinterval)
       },
       getDateRange(value) {
-
-        console.log('getDateRange')
 
         if (value == '今天') return dateRangeUtilIntance.getCurrentDay()
 
@@ -51,6 +47,14 @@
         if (value == '本年') return dateRangeUtilIntance.getCurrentYear()
       },
       dayschange(value) {
+
+        this.dayinterval = this.getDateRange(this.days)
+
+        this.refresh()
+      },
+      onDayIntervalChange() {
+
+        this.days = null
 
         this.refresh()
       }
