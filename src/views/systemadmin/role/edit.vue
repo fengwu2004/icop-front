@@ -232,6 +232,8 @@
       this.formData.roleName = this.currentEditRole.roleName
 
       this.formData.remark = this.currentEditRole.remark
+
+      this.formData.roleId = this.currentEditRole.roleId
     },
     data() {
 
@@ -269,6 +271,7 @@
           label: 'text'
         },
         formData:{
+          roleId:'',
           roleName:'',
           remark:'',
         },
