@@ -58,7 +58,7 @@ export function editPwd(query) {
 
 export function queryRoleList(query) {
   return request({
-    url: '/user/queryRoleList',
+    url: '/role/listRoles',
     method: 'post',
     params: query
   })
