@@ -163,14 +163,15 @@
         justEnableSelect:true,
         initUserName:'',
         user:{
-          userId:null,
           personId:null,
+          personName:null,
           personCode:null,
-          personName:'',
-          userName:'',
-          telephone:'',
-          password:'',
-          sex:''
+          userName:null,
+          telephone:null,
+          sex:'MALE',
+          password:null,
+          roleIds:null,
+          userId:null
         },
         rules:{
           personCode:[
