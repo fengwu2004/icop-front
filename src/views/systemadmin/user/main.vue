@@ -120,6 +120,8 @@
           })
         }
 
+        console.log(respData.list)
+
         let tableData = {
 
           totalCount:respData.total,

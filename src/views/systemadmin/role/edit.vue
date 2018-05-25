@@ -193,7 +193,7 @@
 
           this.$refs.icoptree.setCheckedKeys(ids)
 
-          console.log(this.$refs)
+          console.log(this.$refs, ids)
         })
       },
     },
