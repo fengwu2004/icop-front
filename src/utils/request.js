@@ -64,8 +64,15 @@ service.interceptors.response.use(
       router.push({path:'/login'})
     
       removeToken()
-    
-      return Promise.reject(null)
+      
+      return new Promise((resolve, reject) => {
+  
+        store.dispatch('resetPermissions')
+          .then(() => {
+  
+            return reject(null)
+          })
+      })
     }
     
     if (respCode in systemerrorCode) {

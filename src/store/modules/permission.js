@@ -80,6 +80,20 @@ export const permission = {
       
       state.appicopvalid = true
     },
+    RESET_PERMISSION: (state) => {
+    
+      state.routers = constantRouterMap
+  
+      state.addRouters = []
+      
+      state.validCodes = []
+      
+      state.appfunctions = null
+      
+      state.icopfunctions = null
+      
+      state.appicopvalid = false
+    }
   },
   actions: {
     GenerateRoutes({ commit }, permissioncodes) {
@@ -115,6 +129,15 @@ export const permission = {
       return new Promise(resolve => {
     
         commit('SET_APP_ICOP_FUNCTIONS', appandicop)
+    
+        resolve()
+      })
+    },
+    resetPermissions({commit}) {
+  
+      return new Promise(resolve => {
+    
+        commit('RESET_PERMISSION')
     
         resolve()
       })
