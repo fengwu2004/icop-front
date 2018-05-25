@@ -51,7 +51,7 @@
               <span class="redstar">*</span><span class="sumtitle">密码</span>
               <el-form-item prop="password">
                 <input style="display:none" name="txtpwd">
-                <el-input type="password" style="margin-top: 0.5rem" placeholder="******" v-model="user.password" name="txtpwd"></el-input>
+                <el-input type="password" style="margin-top: 0.5rem" :placeholder="placeholderpassword" v-model="user.password" name="txtpwd"></el-input>
               </el-form-item>
               <div style="margin-top: 10px">
                 <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
@@ -184,6 +184,7 @@
       return {
         justEnableSelect:true,
         initUserName:'',
+        placeholderpassword:null,
         user:{
           personId:null,
           personName:null,
@@ -250,18 +251,24 @@
 
         let user = this.user
 
-        let pwd = user.password != null ? user.password : '888888'
-
-        let value = Object.assign({}, user, {password:md5(pwd)})
-
         this.checkUserValid()
           .then(res => {
 
             if (user.userId) {
 
+              let pwd = user.password ? md5(user.password) : null
+
+              let value = Object.assign({}, user, {password:pwd})
+
+              console.log(value)
+
               return edit(value)
             }
             else {
+
+              let pwd = user.password ? md5(user.password) : md5('888888')
+
+              let value = Object.assign({}, user, {password:pwd})
 
               return add(value)
             }
@@ -334,6 +341,11 @@
       this.justEnableSelect = checkRouteAndActionEnable(code)
 
       this.user = this.currentEditUser
+
+      if (!this.user.userId) {
+
+        this.placeholderpassword = '******'
+      }
     },
   }
 </script>

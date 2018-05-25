@@ -83,7 +83,7 @@
 
         if (!value) {
 
-          return callback(new Error('请输入消息主题'))
+          return callback(new Error('请输入通知主题'))
         }
 
         if (!validateMsgSubject(value)) {

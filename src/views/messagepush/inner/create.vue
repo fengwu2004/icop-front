@@ -77,7 +77,7 @@
 
         if (!value) {
 
-          return callback(new Error('请输入消息主题'))
+          return callback(new Error('请输入通知主题'))
         }
 
         if (!validateMsgSubject(value)) {
@@ -124,6 +124,7 @@
             {validator:validMsgSubject, trigger:'blur'},
           ],
           summary:[
+            {required: true, message: '请输入摘要', trigger: 'blur' },
             {min:1, max:60, message:'不能为空，60个字以内', trigger:'blur'},
           ],
           sendStrategy:[

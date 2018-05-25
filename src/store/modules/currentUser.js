@@ -19,8 +19,6 @@ const currentuser = {
     },
     SET_USER: (state, user) => {
       
-      console.log('ok')
-      
       state.currentUser = user
     },
     CLEAR_USER: (state) => {

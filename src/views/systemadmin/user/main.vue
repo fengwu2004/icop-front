@@ -107,6 +107,19 @@
       },
       getResponseTableData(respData) {
 
+        if (respData.list) {
+
+          respData.list.sort((leftunit, rightunit) => {
+
+            if (new Date(leftunit.createTime).getTime() > new Date(rightunit.createTime).getTime()) {
+
+              return -1
+            }
+
+            return 1
+          })
+        }
+
         let tableData = {
 
           totalCount:respData.total,
