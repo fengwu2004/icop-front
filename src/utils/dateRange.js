@@ -31,33 +31,33 @@ function dateRangeUtil() {
    * 获得本周起止时间
    */
   this.getCurrentWeek = function () {
-  
+    
     var startStop = new Array();
-  
+    
     var currentDate = this.getCurrentDate();
-  
+    
     var week = currentDate.getDay();
-  
+    
     var month = currentDate.getDate();
-  
+    
     let hours = currentDate.getHours()
-  
+    
     let minutes = currentDate.getMinutes()
-  
+    
     let seconds = currentDate.getSeconds()
-  
+    
     var millisecond = 1000 * 60 * 60 * 24;
-  
+    
     var minusDay = week != 0 ? week - 1 : 6;
-  
-    var monday = new Date(currentDate.getTime() - (minusDay * millisecond) - hours * 1000 * 3600 - minutes * 1000 * 60 - seconds * 1000 + 1000);
-  
-    var sunday = new Date(monday.getTime() + (7 * millisecond) - 1000);
-  
+    
+    var monday = new Date(currentDate.getTime() - (minusDay * millisecond) - hours * 1000 * 3600 - minutes * 1000 * 60 - seconds * 1000);
+    
+    var sunday = new Date(monday.getTime() + (7 * millisecond) - 1000 * 1);
+    
     startStop.push(monday)
-  
+    
     startStop.push(sunday)
-  
+    
     return startStop;
   };
   
@@ -65,43 +65,38 @@ function dateRangeUtil() {
    * 获得本月的起止时间
    */
   this.getCurrentMonth = function () {
-    //起止日期数组
+    
     var startStop = new Array();
-    //获取当前时间
+    
     var currentDate = this.getCurrentDate();
-    //获得当前月份0-11
+    
     var currentMonth = currentDate.getMonth();
-    //获得当前年份4位年
+    
     var currentYear = currentDate.getFullYear();
-    //求出本月第一天
+    
     var firstDay = new Date(currentYear, currentMonth, 1);
     
-    
-    //当为12月的时候年份需要加1
-    //月份需要更新为0 也就是下一年的第一个月
     if (currentMonth == 11) {
+      
       currentYear++;
+      
       currentMonth = 0; //就为
-    } else {
-      //否则只是月份增加,以便求的下一月的第一天
+    }
+    else {
+      
       currentMonth++;
     }
     
-    
-    
-    
-    //一天的毫秒数
     var millisecond = 1000 * 60 * 60 * 24;
-    //下月的第一天
+    
     var nextMonthDayOne = new Date(currentYear, currentMonth, 1);
-    //求出上月的最后一天
-    var lastDay = new Date(nextMonthDayOne.getTime() - millisecond);
     
+    var lastDay = new Date(nextMonthDayOne.getTime() - 100 * 1);
     
-    //添加至数组中返回
     startStop.push(firstDay);
+    
     startStop.push(lastDay);
-    //返回
+    
     return startStop;
   };
   
@@ -210,9 +205,10 @@ function dateRangeUtil() {
     //本年第一天
     var currentYearFirstDate = new Date(currentYear, 0, 1);
     //本年最后一天
-    var currentYearLastDate = new Date(currentYear, 11, 31);
+    var currentYearLastDate = new Date(currentYear, 11, 31, 23, 59, 59);
     //添加至数组
     startStop.push(currentYearFirstDate);
+    
     startStop.push(currentYearLastDate);
     //返回
     return startStop;

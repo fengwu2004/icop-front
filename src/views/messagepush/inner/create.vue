@@ -33,7 +33,7 @@
             </div>
             <div class="sendtyperadio">
               <el-radio v-model="currentMessage.sendType" label="APP">App</el-radio>
-              <el-radio v-model="currentMessage.sendType" label="SMS">短信</el-radio>
+              <!--<el-radio v-model="currentMessage.sendType" label="SMS">短信</el-radio>-->
             </div>
           </div>
           <div class="sendstrategy">
