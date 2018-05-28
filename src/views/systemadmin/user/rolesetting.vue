@@ -8,7 +8,7 @@
         <div class="permissiontree" style="padding: 20px">
           <el-tree ref="roletree" :data="roletree" @check-change="handleRoleCheckChange" show-checkbox node-key="treeId" :default-expand-all="true" :props="roleProps"></el-tree>
         </div>
-        <div class="permissionctr" v-show="false">
+        <div class="permissionctr" v-show="app">
           <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
           <div class="permissiontree">
             <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true"></el-tree>
@@ -291,7 +291,7 @@
 
   .content {
 
-    width: 70%;
+    width: 90%;
     margin: 2rem auto;
   }
 

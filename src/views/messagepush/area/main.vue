@@ -290,6 +290,13 @@
 
         let message = this.tableData.data[index]
 
+        if (new Date().getTime() > new Date(message.planSendTime).getTime()) {
+
+          this.$message.error('发布失败，已过计划发布时间');
+
+          return
+        }
+
         let data = {messageId:message.messageId}
 
         console.log('发送', data)

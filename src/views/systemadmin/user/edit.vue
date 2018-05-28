@@ -75,7 +75,7 @@
   import { checkRouteAndActionEnable } from "@/permissionCheck";
   import { validateUserName, validatePassword, trim, isValidPersonCode, isValidPhoneNumber } from "@/utils/validate";
   import { mapGetters } from 'vuex'
-  import { edit, checkExistUserName, add } from '@/api/user'
+  import { edit, checkExistUserName, add, checkExistPersonCode } from '@/api/user'
   import SelectUser from '@/components/SelectUser/index'
   import BreadCrumb from '@/components/Breadcrumb'
   import md5 from 'blueimp-md5'
@@ -163,7 +163,15 @@
           return callback(new Error('30个字以内，字母，数字'));
         }
 
-        return callback()
+        this.checkPersonCodeExist()
+          .then(() => {
+
+            return callback()
+          })
+          .catch(res => {
+
+            return callback(new Error(res));
+          })
       }
 
       let validPhoneNumber = (rule, value, callback) => {
@@ -222,6 +230,31 @@
       ]),
     },
     methods:{
+      async checkPersonCodeExist() {
+
+        if (!this.user.personCode || this.user.personCode.length == 0) {
+
+          return Promise.resolve()
+        }
+
+        let data = {personCode:trim(this.user.personCode)}
+
+        return new Promise((resolve, reject) => {
+
+          checkExistPersonCode(data)
+            .then(respData => {
+
+              if (respData) {
+
+                reject('警告，人员编号重复')
+              }
+              else {
+
+                resolve()
+              }
+            })
+        })
+      },
       async checkUserNameExist() {
 
         if (!this.user.userName || this.user.userName.length == 0 || this.initUserName == this.user.userName) {

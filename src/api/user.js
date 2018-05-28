@@ -72,3 +72,11 @@ export function checkExistUserName(query) {
   })
 }
 
+export function checkExistPersonCode(query) {
+  return request({
+    url: '/user/checkExistPersonCode',
+    method: 'post',
+    params: query
+  })
+}
+
