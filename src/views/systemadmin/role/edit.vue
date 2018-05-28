@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-          <div class="permissionctr" v-show="app">
+          <div class="permissionctr" v-show="false">
             <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
             <div class="permissiontree">
               <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true"></el-tree>
@@ -305,7 +305,7 @@
 
   .content {
 
-    width: 90%;
+    width: 70%;
     margin: 2rem auto;
   }
 

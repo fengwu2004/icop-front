@@ -15,20 +15,11 @@ function hasPermission(route, permissioncodes) {
   
   for (let i = 0; i < permissioncodes.length; ++i) {
     
-    if (route.meta.code.indexOf(permissioncodes[i]) != -1 ) {
+    if (permissioncodes[i].length != 0 && route.meta.code.indexOf(permissioncodes[i]) != -1 ) {
+      
+      console.log(route.name)
       
       return true
-    }
-  }
-  
-  if (route.children && route.children.length) {
-    
-    for (let i = 0; i < route.children.length; ++i) {
-      
-      if (hasPermission(route.children[i], permissioncodes)) {
-        
-        return true
-      }
     }
   }
   

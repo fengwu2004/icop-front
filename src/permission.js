@@ -17,6 +17,7 @@ function dynamicCreateRoutes(to, from, next) {
   queryPopedomList({}).
     then(respData => {
     
+      // console.log('权限', respData)
       return store.dispatch('setPemissionCodes', respData)
     })
     .then(res => {
