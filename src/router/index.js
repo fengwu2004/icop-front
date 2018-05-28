@@ -34,7 +34,7 @@ const user = {
   path: '/systemadmin/user',
   name: 'systemadmin_user',
   component:main,
-  meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:'122000', activeicon:'systemadmin_user_active' },
+  meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:'122000,122100,122200,122300,122400,122500,122600,122700', activeicon:'systemadmin_user_active' },
   children: [
     {
       path: '/systemadmin/user/main',
@@ -61,7 +61,7 @@ const role = {
   path: '/systemadmin/role',
   name: 'systemadmin_role',
   component:main,
-  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: '121000', activeicon:'systemadmin_role_active' },
+  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: '121000,121100,121200,121300,121400,121500', activeicon:'systemadmin_role_active' },
   children: [
     {
       path: '/systemadmin/role/main',
@@ -82,7 +82,7 @@ const project = {
   path: '/systemadmin/project',
   name: 'projectsetting',
   component:main,
-  meta: { title: 'projectsetting', icon: 'projectsetting', code:'123000', activeicon:'projectsetting_active' },
+  meta: { title: 'projectsetting', icon: 'projectsetting', code:'123000,123100,123200,123300', activeicon:'projectsetting_active' },
   children: [
     {
       path: '/systemadmin/project/main',
@@ -109,7 +109,7 @@ const inner = {
   path: '/messagepush/inner',
   name: 'messagepush_inner',
   component:main,
-  meta: { title: 'messagepush_inner', icon: 'innerpush', code:'112000', activeicon:'innerpush_active' },
+  meta: { title: 'messagepush_inner', icon: 'innerpush', code:'112000,112100,112200,112300,112400,112500', activeicon:'innerpush_active' },
   children: [
     {
       path: '/messagepush/inner/main',
@@ -136,7 +136,7 @@ const area = {
   path: '/messagepush/area',
   name: 'messagepush_area',
   component:main,
-  meta: { title: 'messagepush_area', icon: 'areapush', code:'111000', activeicon:'areapush_active' },
+  meta: { title: 'messagepush_area', icon: 'areapush', code:'111000,111100,111200,111300,111400,111500', activeicon:'areapush_active' },
   children: [
     {
       path: '/messagepush/area/main',
