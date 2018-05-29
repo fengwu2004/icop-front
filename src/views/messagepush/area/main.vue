@@ -38,7 +38,11 @@
               <span>{{ getStrategyStr(scope.row.sendStrategy) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="planSendTime" label="发送时间" min-width="200"></el-table-column>
+          <el-table-column prop="planSendTime" label="发送时间" min-width="200">
+            <template slot-scope="scope">
+              <span>{{ getPlanSendTime(scope.$index, scope.row) }}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
               <div v-show="checkEnableOperator(scope.$index, scope.row)">
@@ -135,6 +139,17 @@
 
           this.$router.push(route)
         })
+      },
+      getPlanSendTime(index, row) {
+
+        let message = this.tableData.data[index]
+
+        if (message.sendStrategy != 'IMMEDIATE') {
+
+          return message.planSendTime
+        }
+
+        return ''
       },
       getStrategyStr(strategy) {
 
@@ -290,7 +305,7 @@
 
         let message = this.tableData.data[index]
 
-        if (new Date().getTime() > new Date(message.planSendTime).getTime()) {
+        if (message.sendStrategy == 'TIMES' && new Date().getTime() > new Date(message.planSendTime).getTime()) {
 
           this.$message.error('发布失败，已过计划发布时间');
 
