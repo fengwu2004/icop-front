@@ -1,28 +1,30 @@
 <template>
-  <div class="main">
-    <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm" onsubmit="return false">
-      <div class="bluetile"></div>
-      <div class="icon"/>
-      <div class="title">硬件资产维修管理系统</div>
-      <div class="center">
-        <el-form-item prop="userName" >
-          <div class="inputgroup">
-            <input placeholder="请输入用户名" v-model="loginForm.userName" autocomplete="off" autofocus/>
-          </div>
-        </el-form-item>
-        <el-form-item prop="password">
-          <div class="inputgroup">
-            <input style="display:none" name="pwd">
-            <input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" autocomplete="off"/>
-          </div>
-        </el-form-item>
-        <el-form-item>
-          <div class="confirm">
-            <el-button style="width: 100%; color:white !important" type="danger;" :loading="loading" @click="submitLogin" native-type="submit">登 录</el-button>
-          </div>
-        </el-form-item>
-      </div>
-    </el-form>
+  <div class="bg">
+    <div class="main">
+      <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm" onsubmit="return false">
+        <div class="bluetile"></div>
+        <div class="icon"/>
+        <div class="title">硬件资产维修管理系统</div>
+        <div class="center">
+          <el-form-item prop="userName" >
+            <div class="inputgroup">
+              <input placeholder="请输入用户名" v-model="loginForm.userName" autocomplete="off" autofocus/>
+            </div>
+          </el-form-item>
+          <el-form-item prop="password">
+            <div class="inputgroup">
+              <input style="display:none" name="pwd">
+              <input type="password" placeholder="请输入密码" name="pwd" v-model="loginForm.password" autocomplete="off"/>
+            </div>
+          </el-form-item>
+          <el-form-item>
+            <div class="confirm">
+              <el-button style="width: 100%; color:white !important" type="danger;" :loading="loading" @click="submitLogin" native-type="submit">登 录</el-button>
+            </div>
+          </el-form-item>
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -37,8 +39,7 @@
         loading: false,
         loginForm: {
           userName: '',
-          password: '',
-          validate:'',
+          password: ''
         },
         loginRules: {
           userName: [{ required: true, message:'请填写用户名', trigger: 'blur'}, {min:3, max:20, message:'长度在3到20字符之间', trigger:'blur'}],
@@ -80,21 +81,21 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
-  .login {
+  .bg {
 
     position: absolute;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .main {
 
-    margin: 10rem auto;
     background: white;
     position: absolute;
+    top: 15rem;
     z-index: 999;
-    left: 0;
-    right: 0;
     width: 40%;
     max-width: 25rem;
     display: flex;
