@@ -1,5 +1,6 @@
 <template>
   <div class="bg">
+    <div class="greytile"></div>
     <div class="main">
       <el-form class="content" :model="loginForm" :rules="loginRules" ref="loginForm" onsubmit="return false">
         <div class="bluetile"></div>
@@ -31,7 +32,6 @@
 <script>
 
   import { login } from "@/api/login"
-  import { isvalidUsername } from '@/utils/validate'
 
   export default {
     data() {
@@ -88,6 +88,15 @@
     height: 100%;
     display: flex;
     justify-content: center;
+  }
+
+  .greytile {
+
+    position: absolute;
+    top: 20rem;
+    width: 100%;
+    height: 20rem;
+    background: #333333;
   }
 
   .main {
@@ -166,10 +175,10 @@
       background:transparent !important;
     }
 
-    *:focus {
+    input:focus {
 
       outline: none;
-      background-color: transparent !important;
+      background-color: white !important;
     }
   }
 
