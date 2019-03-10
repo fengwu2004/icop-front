@@ -38,6 +38,7 @@ const userMap = {
 export default {
   login: config => {
   
+    console.log('zzzz')
     const { userName } = param2Obj(config.url)
     
     console.log('登陆名' + userName)

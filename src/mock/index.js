@@ -11,11 +11,11 @@ Mock.setup({
   timeout: '350-600'
 })
 
-let mock_role = false
-let mock_user = false
-let mock_project = false
-let mock_message_area = false
-let mock_login = false
+let mock_role = true
+let mock_user = true
+let mock_project = true
+let mock_message_area = true
+let mock_login = true
 
 //角色相关
 if (mock_role) {
