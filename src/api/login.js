@@ -1,15 +1,13 @@
 import request from '@/utils/request'
 
-export function login(userName, password, validate) {
+export function login(account, pwd) {
   const data = {
-    userName,
-    password,
-    validate,
-    isLogin:true
+    account,
+    pwd
   }
   return request({
-    url: '/login',
-    method: 'post',
+    url: '/s/login',
+    method: 'get',
     params:data
   })
 }

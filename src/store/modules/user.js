@@ -1,14 +1,11 @@
 import { login, logout, editPwd } from '@/api/login'
-import { getTokenAndId, setTokenAndId, removeToken } from '@/utils/auth'
+import { setTokenAndId, removeToken } from '@/utils/auth'
 import md5 from 'blueimp-md5'
 import { module } from "@/store/modules/enableroutes";
 
-let tokenAndId = getTokenAndId()
-
 const user = {
   state: {
-    userId: tokenAndId.loginUserId,
-    userToken: tokenAndId.userToken,
+    userId: '',
     userName: '',
     telephone:'',
     pepodomIds:'',
@@ -19,9 +16,6 @@ const user = {
   mutations: {
     SET_USER_ID: (state, userId) => {
       state.userId = userId
-    },
-    SET_USER_TOKEN: (state, token) => {
-      state.userToken = token
     },
     SET_USER_NAME: (state, userName) => {
       state.userName = userName
@@ -38,22 +32,18 @@ const user = {
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
       
-      let passwordhash = md5(userInfo.password)
+      console.log('z')
+      
+      let passwordhash = userInfo.password
       
       const username = userInfo.userName.trim()
       
       return new Promise((resolve, reject) => {
         
-        login(username, passwordhash, userInfo.validate)
+        login(username, passwordhash)
           .then(respData => {
           
           console.log(respData)
-          
-          commit('SET_USER_TOKEN', respData.userToken)
-          
-          commit('SET_USER_ID', respData.id)
-          
-          setTokenAndId(respData.userToken, respData.id)
           
           resolve()
         })

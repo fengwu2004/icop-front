@@ -6,7 +6,6 @@ const getters = {
   currentEditUser: state => state.currentedituser.currentUser,
   currentEditRole: state => state.currenteidtrole.currentrole,
   message: state => state.currenteditmessage.message,
-  userToken: state => state.user.userToken,
   userId: state => state.user.userId,
   routes: state => state.user.routes,
   avatar: state => state.user.avatar,

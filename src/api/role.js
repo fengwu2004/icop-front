@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function queryRoleList(query) {
   return request({
-    url: '/role/queryRoleList',
+    url: '/s/mgr/listManager',
     method: 'post',
     params: query
   })

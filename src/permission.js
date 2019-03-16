@@ -14,16 +14,7 @@ function dynamicCreateRoutes(to, from, next) {
   
   let routes = store.getters.routes
   
-  queryPopedomList({}).
-    then(respData => {
-    
-      // console.log('权限', respData)
-      return store.dispatch('setPemissionCodes', respData)
-    })
-    .then(res => {
-      
-      return store.dispatch('GenerateRoutes', store.getters.permissioncodes)
-    })
+  return store.dispatch('GenerateRoutes')
     .then(res => {
   
       router.addRoutes(store.getters.addRouters)

@@ -10,16 +10,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    // proxyTable: {
-    //   '/jslife-icop-oms': {
-    //     target: 'http://120.79.167.104:8080/jslife-icop-oms', // 测试服,
-    //     // target: 'http://10.101.90.151:8080/jslife-icop-oms', // 李超服务器,
-    //     changeOrigin:true,
-    //     pathRewrite: {
-    //       '^/jslife-icop-oms': ''
-    //     }
-    //   },
-    // },
+    proxyTable: {
+      '/api': {
+        target: 'http://repairmgr.indoorun.com', // 测试服,
+        changeOrigin:true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

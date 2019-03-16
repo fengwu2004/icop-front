@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
-    <div style="position: absolute;z-index: 0;width: 180px;background: #E0E5EE;height: 100%;left: 0;top: 0"></div>
+    <div style="position: absolute;z-index: 0;width: 180px;background: #333333;height: 100%;left: 0;top: 0"></div>
     <div style="z-index: 1">
       <app-header-bar></app-header-bar>
       <div class="main-container">

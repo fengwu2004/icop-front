@@ -9,24 +9,6 @@ Vue.use(Router)
 /* Layout */
 import Layout from '../views/layout/Layout'
 
-/** note: submenu only apppear when children.length>=1
- *   detail see  https://panjiachen.github.io/vue-element-admin-site/#/router-and-nav?id=sidebar
- **/
-
-/**
- * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
- *                                if not set alwaysShow, only more than one route under the children
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']     will control the page roles (you can set multiple roles)
-    title: 'title'               the name show in submenu and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar,
-    noCache: true                if true ,the page will no be cached(default is false)
-  }
- **/
-
 const main = { template: '<router-view ref="main"></router-view>' }
 
 const user = {
@@ -77,21 +59,6 @@ const role = {
   ]
 }
 
-const project = {
-
-  path: '/systemadmin/project',
-  name: 'projectsetting',
-  component:main,
-  meta: { title: 'projectsetting', icon: 'projectsetting', code:'123000,123100,123200,123300', activeicon:'projectsetting_active' },
-  children: [
-    {
-      path: '/systemadmin/project/main',
-      component:_import('systemadmin/project/main'),
-      meta: { title: 'projectsetting', hidden:true},
-    }
-  ]
-}
-
 const systemadmin = {
   path: '/systemadmin',
   component: Layout,
@@ -99,8 +66,7 @@ const systemadmin = {
   meta: { title: 'systemadmin', code:'120000,123000,123100,123200,123300,121000,121100,121200,121300,121400,121500,122000,122100,122200,122300,122400,122500,122600,122700' },
   children: [
     role,
-    user,
-    project
+    user
   ]
 }
 
@@ -131,40 +97,12 @@ const inner = {
   ]
 }
 
-const area = {
-  
-  path: '/messagepush/area',
-  name: 'messagepush_area',
-  component:main,
-  meta: { title: 'messagepush_area', icon: 'areapush', code:'111000,111100,111200,111300,111400,111500', activeicon:'areapush_active' },
-  children: [
-    {
-      path: '/messagepush/area/main',
-      component:_import('messagepush/area/main'),
-      meta: { title: 'messagepush_area', hidden:true},
-    },
-    {
-      path: '/messagepush/area/edit',
-      component: _import('messagepush/area/editor'),
-      name: 'messagepush_area_edit',
-      meta: { title: 'messagepush_area_edit', hidden:true},
-    },
-    {
-      path: '/messagepush/area/create',
-      component: _import('messagepush/area/create'),
-      name: 'messagepush_area_create',
-      meta: {title: 'messagepush_area_create', hidden:true},
-    }
-  ]
-}
-
 const messagepush = {
   path: '/messagepush',
   component: Layout,
   name: 'messagepush',
   meta: { title: 'messagepush', code:'110000,111000,111100,111200,111300,111400,111500,112000,112100,112200,112300,112400,112500' },
   children: [
-    area,
     inner,
   ]
 }

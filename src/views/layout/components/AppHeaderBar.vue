@@ -1,8 +1,7 @@
 <template>
   <div class="main">
     <div class="title">
-      <img :src="jsListIcon" height="30" width="30"/>
-      <span>智慧社区运营平台</span>
+      <span>硬件资产管理维修系统</span>
     </div>
     <div class="rightmenu">
       <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
@@ -159,7 +158,7 @@
 
   .main {
 
-    background: #FFFFFF;
+    background: #333333;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.10);
     padding: 0 2rem;
     width: 100%;

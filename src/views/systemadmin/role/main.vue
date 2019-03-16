@@ -42,14 +42,6 @@
   import BreadCrumb from '@/components/Breadcrumb'
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
 
-  const actioncodes = {
-    search:'121100',
-    create:'121200',
-    detail:'121300',
-    delete:'121400',
-    edit:'121500',
-  }
-
   export default {
     components: { PageWidget, BreadCrumb },
     data() {
@@ -74,9 +66,7 @@
     methods:{
       checkActionEnable(action) {
 
-        let code = actioncodes[action]
-
-        return checkRouteAndActionEnable(code)
+        return true
       },
       handleSearchRole() {
 

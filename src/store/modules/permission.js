@@ -6,24 +6,9 @@ import store from "@/store/index";
  * @param permissions
  * @param route
  */
-function hasPermission(route, permissioncodes) {
+function hasPermission(route) {
   
-  if (!route.meta || !route.meta.code) {
-  
-    return true
-  }
-  
-  for (let i = 0; i < permissioncodes.length; ++i) {
-    
-    if (permissioncodes[i].length != 0 && route.meta.code.indexOf(permissioncodes[i]) != -1 ) {
-      
-      console.log(route.name)
-      
-      return true
-    }
-  }
-  
-  return false
+  return true
 }
 
 /**
@@ -31,15 +16,15 @@ function hasPermission(route, permissioncodes) {
  * @param asyncRouterMap
  * @param permissions
  */
-function filterAsyncRouter(asyncRouterMap, permissioncodes) {
+function filterAsyncRouter(asyncRouterMap) {
   
   const accessedRouters = asyncRouterMap.filter(route => {
     
-    if (hasPermission(route, permissioncodes)) {
+    if (hasPermission(route)) {
       
       if (route.children && route.children.length) {
         
-        route.children = filterAsyncRouter(route.children, permissioncodes)
+        route.children = filterAsyncRouter(route.children)
         
         if (route.children.length > 0) {
   
@@ -98,10 +83,10 @@ export const permission = {
     }
   },
   actions: {
-    GenerateRoutes({ commit }, permissioncodes) {
+    GenerateRoutes({ commit }) {
       return new Promise(resolve => {
         
-        let accessedRouters = filterAsyncRouter(asyncRouterMap, permissioncodes)
+        let accessedRouters = filterAsyncRouter(asyncRouterMap)
         
         if (accessedRouters.length > 0) {
   

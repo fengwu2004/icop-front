@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
 import router from '@/router'
-import { getTokenAndId, checkValidTokenAndUserId, removeToken } from '@/utils/auth'
+import { checkValidTokenAndUserId, removeToken } from '@/utils/auth'
 import { systemerrorCode, errorcode, loginerrorCode } from "@/utils/errorCodes";
 
 // create an axios instance
@@ -13,19 +13,7 @@ const service = axios.create({
 
 service.interceptors.request.use(config => {
   
-  if (checkValidTokenAndUserId()) {
-  
-    let tokenAndId = getTokenAndId()
-  
-    if (config.params && !config.params.isLogin) {
-  
-      config.params.userToken = tokenAndId.userToken
-
-      config.params.loginUserId = tokenAndId.loginUserId
-    }
-  }
-  
-  console.log('请求', config)
+  console.log(config)
   
   return config
   
@@ -33,77 +21,24 @@ service.interceptors.request.use(config => {
   
   console.log(error)
   
-  Promise.reject(error)
+  return Promise.reject(error)
 })
 
 // respone interceptor
 service.interceptors.response.use(
   
   response => {
-    
+  
     console.log(response)
     
-    const respCode = response.data.respCode
+    const { code ,data, msg} = response.data
     
-    if (respCode === 'JSLIFEICOP0001') {
+    if (code == 0) {
       
-      return Promise.resolve(response.data.respData)
-    }
-  
-    if (respCode in loginerrorCode) {
-    
-      let msg = loginerrorCode[respCode]
-    
-      Message({
-      
-        message: msg,
-        type: 'error',
-        duration: 5 * 1000
-      })
-    
-      router.push({path:'/login'})
-    
-      removeToken()
-      
-      return new Promise((resolve, reject) => {
-  
-        store.dispatch('resetPermissions')
-          .then(() => {
-  
-            return reject(null)
-          })
-      })
+      return Promise.resolve(data)
     }
     
-    if (respCode in systemerrorCode) {
-    
-      let msg = systemerrorCode[respCode]
-  
-      Message({
-    
-        message: msg,
-        type: 'error',
-        duration: 5 * 1000
-      })
-      
-      return Promise.reject(null)
-    }
-    
-    if (respCode in errorcode) {
-  
-      let msg = response.data.respMsg || errorcode[respCode]
-  
-      Message({
-  
-        message: msg,
-        type: 'error',
-        duration: 5 * 1000
-      })
-      
-      return Promise.reject(null)
-    }
-    
-    return Promise.reject('未知错误')
+    return Promise.reject(msg)
   },
   error => {
     console.log('err' + error)// for debug

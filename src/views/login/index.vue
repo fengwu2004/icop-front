@@ -43,7 +43,7 @@
         },
         loginRules: {
           userName: [{ required: true, message:'请填写用户名', trigger: 'blur'}, {min:3, max:20, message:'长度在3到20字符之间', trigger:'blur'}],
-          password: [{ required: true, message:'请填写密码', trigger: 'blur'}, {min:6, max:20, message:'长度在6到20字符之间', trigger:'blur'}]
+          password: [{ required: true, message:'请填写密码', trigger: 'blur'}, {min:4, max:20, message:'长度在4到20字符之间', trigger:'blur'}]
         },
       }
     },
