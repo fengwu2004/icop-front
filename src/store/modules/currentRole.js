@@ -2,8 +2,10 @@ const currentrole = {
   state: {
     currentrole: {
       roleId:null,
-      roleName:'',
-      remark:'',
+      account:'',
+      name:'',
+      phone:'',
+      pwd:''
     },
   },
   mutations: {

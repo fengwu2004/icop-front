@@ -18,7 +18,7 @@ export function queryPopedomListByIds(query) {
 
 export function add(query) {
   return request({
-    url: '/role/add',
+    url: '/s/mgr/addManager',
     method: 'post',
     params: query
   })

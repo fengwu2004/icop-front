@@ -6,36 +6,19 @@
     <div class="content">
       <el-form :rules="rules" ref="baseinfoForm" :model="formData">
         <div class="createuser">
-          <div class="baseinfo">
-            <div>
-              <li class="baseinfotitle">基本信息</li>
-              <div class="rolename">角色名称(不能重名):</div>
-              <div style="margin-top: 0.5rem;width: 300px">
-                <el-form-item prop="roleName">
-                  <el-input v-model="formData.roleName" :disabled="!enableedit"></el-input>
-                </el-form-item>
-              </div>
-            </div>
-            <div>
-              <div style="font-size:0.8rem">备注(限50字)</div>
-              <div style="margin-top: 0.5rem;">
-                <el-form-item prop="remark">
-                  <el-input type="textarea" rows="12" v-model="formData.remark" :disabled="!enableedit"></el-input>
-                </el-form-item>
-              </div>
-            </div>
-          </div>
-          <div class="permissionctr" v-show="app">
-            <div style="font-size:0.8rem">可使用的捷物管APP功能</div>
-            <div class="permissiontree">
-              <el-tree :data="app" ref="apptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true"></el-tree>
-            </div>
-          </div>
-          <div class="permissionctr" v-show="icop">
-            <div style="font-size:0.8rem">可使用的社区运营平台功能</div>
-            <div class="permissiontree">
-              <el-tree :data="icop" ref="icoptree" show-checkbox node-key="treeId" :props="defaultProps" :default-expand-all="true"></el-tree>
-            </div>
+          <div>
+            <el-form-item prop="account">
+              <span class="rolename">账号</span><el-input v-model="formData.account" :disabled="!enableedit"></el-input>
+            </el-form-item>
+            <el-form-item prop="name">
+              <span class="rolename">用户名</span><el-input v-model="formData.name" :disabled="!enableedit"></el-input>
+            </el-form-item>
+            <el-form-item prop="phone">
+              <span class="rolename">手机号</span><el-input v-model="formData.phone" :disabled="!enableedit"></el-input>
+            </el-form-item>
+            <el-form-item prop="pwd">
+              <span class="rolename">密码</span><el-input v-model="formData.pwd" :disabled="!enableedit"></el-input>
+            </el-form-item>
           </div>
         </div>
         <div class="settings" v-show="enableedit">
@@ -133,39 +116,17 @@
         this.doValid()
           .then(() => {
 
-            let apppermissions = this.$refs.apptree.getCheckedKeys()
+            let data = Object.assign({}, this.formData)
 
-            let icoppermissions = this.$refs.icoptree.getCheckedKeys()
+            return add(data)
+          })
+          .then(response => {
 
-            let permissons = apppermissions.concat(icoppermissions)
+            this.$message.success('创建成功')
 
-            let strpermissions = permissons.join(',')
+            let route = {name:'systemadmin_role'}
 
-            let data = Object.assign({}, this.formData, {popedomIds:strpermissions})
-
-            if (this.currentEditRole.roleId) {
-
-              console.log(data.popedomIds)
-              edit(data).then(response => {
-
-                this.$message.success('保存成功')
-
-                let route = {name:'systemadmin_role'}
-
-                this.$router.push(route)
-              })
-            }
-            else {
-
-              add(data).then(response => {
-
-                this.$message.success('创建成功')
-
-                let route = {name:'systemadmin_role'}
-
-                this.$router.push(route)
-              })
-            }
+            this.$router.push(route)
           })
           .catch(res => {
 
@@ -176,106 +137,35 @@
 
         this.$router.go(-1)
       },
-      queryPopedomList() {
-
-        const roleId = this.currentEditRole.roleId
-
-        if (!roleId) {
-
-          return
-        }
-
-        queryPopedomListByIds({roleIds:roleId}).then(respData => {
-
-          const ids = respData.split(',')
-
-          this.$refs.apptree.setCheckedKeys(ids)
-
-          this.$refs.icoptree.setCheckedKeys(ids)
-
-          console.log(this.$refs, ids)
-        })
-      },
     },
     mounted() {
 
-      if (!this.currentEditRole.roleId) {
-
-        this.$route.meta.title = 'systemadmin_role_create'
-      }
-
-      if (this.$route.params.detail) {
-
-        this.enableedit = false
-
-        this.$route.meta.title = 'systemadmin_role_detail'
-      }
-      else {
-
-        this.$route.meta.title = 'systemadmin_role_edit'
-      }
-
-      queryTotalPopedomTree()
-        .then(respData => {
-
-          this.app = this.build(null, respData.app)
-
-          this.icop = this.build(null, respData.icop)
-
-          this.queryPopedomList()
-        })
+      this.$route.meta.title = 'systemadmin_role_create'
     },
     created() {
 
-      this.initRoleName = this.currentEditRole.roleName
+      this.initRoleName = this.currentEditRole.account
 
-      this.formData.roleName = this.currentEditRole.roleName
+      this.formData.name = this.currentEditRole.name
 
-      this.formData.remark = this.currentEditRole.remark
+      this.formData.phone = this.currentEditRole.phone
 
-      this.formData.roleId = this.currentEditRole.roleId
+      this.formData.pwd = this.currentEditRole.pwd
     },
     data() {
 
-      let validatePass = (rule, value, callback) => {
-
-        if (!value) {
-
-          return callback(new Error('请输入角色名称'));
-        }
-
-        if (!validateRoleName(value)) {
-
-          return callback(new Error('长度为1-15，中文、数字、字母'));
-        }
-
-        this.checkNameExist(trim(value)).then(() => {
-
-          callback()
-        })
-          .catch(res => {
-
-            return callback(new Error(res));
-          })
-      }
-
       return {
         initRoleName:'',
-        app: [],
-        icop: [],
         enableedit:true,
-        defaultProps: {
-          children: 'children',
-          label: 'text'
-        },
         formData:{
-          roleId:'',
-          roleName:'',
-          remark:'',
+          account:'',
+          name:'',
+          phone:'',
+          pwd:''
         },
         rules:{
-          roleName:[
-            {validator:validatePass, trigger:'blur'},
+          account:[
+            {min:0, max:50, message:'长度在50个字以内', trigger:'blur'}
           ],
           remark:[
             {min:0, max:50, message:'长度在50个字以内', trigger:'blur'}
@@ -309,35 +199,10 @@
     margin: 2rem auto;
   }
 
-  .baseinfo {
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    .nameinput {
-
-      width: 300px;
-    }
-  }
-
   .createuser {
 
     display: flex;
     justify-content: space-around;
-  }
-
-  .permissionctr {
-
-    .permissiontree {
-
-      height: 400px;
-      width: 300px;
-      margin-top: 0.5rem;
-      border: 1px solid #e0e5ee;
-      padding: 10px;
-      overflow-y: scroll;
-    }
   }
 
   .rolename {
@@ -352,15 +217,6 @@
     font-size:0.8rem;
     color: #445577;
   }
-
-  .baseinfotitle {
-
-    position: relative;
-    left: -1.4rem;
-    color:#061C3F;
-    font-weight: bold;
-  }
-
 
   .settings {
 

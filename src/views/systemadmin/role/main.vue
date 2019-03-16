@@ -143,9 +143,12 @@
       },
       handleAdd() {
 
-        let router = {name:'systemadmin_role_create'}
+        this.$store.dispatch('RESET_ROLE').then(res => {
 
-        this.$router.push(router)
+          let router = {name:'systemadmin_role_create'}
+
+          this.$router.push(router)
+        })
       },
       handleEdit(index, row) {
 
