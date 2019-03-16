@@ -2,26 +2,18 @@
   <div class="rolemain">
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
-      <div class="createsearch">
-        <el-input class="input" clearable v-model="rolename" placeholder="请输入角色名称查询" v-show="checkActionEnable('search')"></el-input>
-        <el-button class="search" @click="handleSearchRole" v-show="checkActionEnable('search')">查询</el-button>
-        <el-button class="create" @click="handleCreateRole" v-show="checkActionEnable('create')">创建</el-button>
-      </div>
+      <div class="addRole" @click="handleAdd">添加管理员&nbsp&nbsp&nbsp&nbsp+</div>
     </div>
     <div class="content">
       <div class="table">
         <el-table :data="tableData.list" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight" highlight-current-row>
-          <el-table-column min-width="150">
-            <template slot-scope="scope">
-              <span>{{scope.$index + (tableData.pageIndex - 1) * tableData.pageSize + 1}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="roleName" label="角色名称" min-width="250"></el-table-column>
-          <el-table-column prop="remark" label="备注" min-width="400"></el-table-column>
+          <el-table-column prop="account" label="账号" min-width="250"></el-table-column>
+          <el-table-column prop="name" label="用户名" min-width="250"></el-table-column>
+          <el-table-column prop="phone" label="手机号" min-width="250"></el-table-column>
+          <el-table-column prop="createTimeStr" label="创建时间" min-width="250"></el-table-column>
           <el-table-column label="操作" min-width="300">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleDetail(scope.$index, scope.row)" v-show="checkActionEnable('detail')">详细</el-button>
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')">修改</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')">编辑</el-button>
               <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">删除</el-button>
             </template>
           </el-table-column>
@@ -48,7 +40,6 @@
       return {
         maxheight:window.innerHeight - 200,
         rolename:'',
-        searching:false,
         listLoading:true,
         tableData: {
           totalCount:0,
@@ -90,12 +81,8 @@
           pageSize:this.tableData.pageSize,
         }
 
-        if (this.searching && this.roleName && this.roleName.length > 0) {
-
-          data.roleName = this.roleName
-        }
-
-        queryRoleList(data).then(respData => {
+        queryRoleList(data)
+          .then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
         })
@@ -105,14 +92,21 @@
             this.listLoading = false
           })
       },
-      getResponseTableData(respData) {
+      getResponseTableData(roleList) {
+
+        console.log(roleList)
+
+        let convertDate = roleList.map((item)=>{
+
+          return Object.assign({}, item, {createTimeStr:new Date(item.createTime).toLocaleString()})
+        })
 
         let tableData = {
 
-          totalCount:respData.total,
-          list:respData.list,
-          pageSize:respData.pageSize,
-          pageIndex:respData.pageNum
+          totalCount:roleList.length,
+          list:convertDate,
+          pageSize:this.pageSize,
+          pageIndex:this.pageIndex
         }
 
         return tableData
@@ -147,6 +141,12 @@
           this.$router.push(router)
         })
       },
+      handleAdd() {
+
+        let router = {name:'systemadmin_role_create'}
+
+        this.$router.push(router)
+      },
       handleEdit(index, row) {
 
         let role = this.tableData.list[index]
@@ -162,11 +162,13 @@
 
         let role = this.tableData.list[index]
 
-        let data = {roleId:role.roleId}
+        let data = {managerId:role.id, account:role.account}
 
         console.log('handleDelete')
 
-        this.$confirm('此操作将永久删除角色，是否继续？','警告', {
+        let msg = '此操作将永久删除' + role.name + '，是否继续？'
+
+        this.$confirm(msg,'警告', {
 
           confirmButtonText:'确定',
           cancelButtonText:'取消',
@@ -174,7 +176,8 @@
 
         }).then(() => {
 
-          deleteRole(data).then(response => {
+          deleteRole(data)
+            .then(response => {
 
             this.getList()
 
@@ -183,8 +186,8 @@
               message: '删除成功!'
             });
           })
-        }).catch (() => {
-
+        })
+          .catch(() => {
 
         })
       },
@@ -290,6 +293,15 @@
 
     height: 100%;
     position: relative;
+  }
+
+  .addRole {
+
+    background: #4B74FF;
+    border-radius: 24px;
+    font-size: 14px;
+    color: white;
+    padding: 0.5rem 1rem;
   }
 
 </style>

@@ -26,7 +26,7 @@ export function add(query) {
 
 export function edit(query) {
   return request({
-    url: '/role/edit',
+    url: '/s/mgr/editManagerInfo',
     method: 'post',
     params: query
   })
@@ -34,7 +34,7 @@ export function edit(query) {
 
 export function deleteRole(query) {
   return request({
-    url: '/role/delete',
+    url: '/s/mgr/delManager',
     method: 'post',
     params: query
   })
