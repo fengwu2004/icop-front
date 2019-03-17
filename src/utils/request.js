@@ -38,6 +38,11 @@ service.interceptors.response.use(
       return Promise.resolve(data)
     }
     
+    if (code == 201) {
+      
+      removeToken()
+    }
+    
     return Promise.reject(msg)
   },
   error => {

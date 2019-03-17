@@ -15,6 +15,7 @@ export default {
     systemadmin_role_edit:'修改角色',
     systemadmin_user:'维修人员',
     systemadmin_user_edit:'修改账户',
+    systemadmin_user_detail:'详情',
     systemadmin_user_create:'创建账户',
     systemadmin_user_rolesetting:'角色设置',
     dashboard: '首页',

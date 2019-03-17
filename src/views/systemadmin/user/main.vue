@@ -20,21 +20,21 @@
           <el-table-column prop="name" label="姓名" min-width="250"></el-table-column>
           <el-table-column prop="company" label="公司名称" min-width="250"></el-table-column>
           <el-table-column prop="phone" label="手机号" min-width="250"></el-table-column>
-          <el-table-column label="状态" min-width="150">
+          <el-table-column prop="status" label="状态" min-width="150">
             <template slot-scope="scope">
-              <span>{{ getNoticeTypeStr(scope.row.noticeType) }}</span>
+              <span>{{ getAuditTypeStr(scope.row.status) }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="applyTime" label="申请时间" min-width="200">
             <template slot-scope="scope">
-              <span>{{ getPlanSendTime(scope.$index, scope.row) }}</span>
+              <span>{{ getPlanSendTime(scope.row.applyTime) }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" min-width="250">
+          <el-table-column label="操作" prop="status" min-width="250">
             <template slot-scope="scope">
-              <div v-show="checkEnableOperator(scope.$index, scope.row)">
-                <el-button size="mini" @click="handlePush(scope.$index, scope.row)" v-show="checkActionEnable('send')">审核</el-button>
-                <el-button size="mini" @click="handleEditor(scope.$index, scope.row)" v-show="checkActionEnable('edit')">详情</el-button>
+              <div>
+                <el-button size="mini" @click="handleAudit(scope.$index, scope.row)" v-show="scope.row.status == 0">审核</el-button>
+                <el-button size="mini" @click="handleDetail(scope.$index, scope.row)" v-show="scope.row.status == 1">详情</el-button>
               </div>
             </template>
           </el-table-column>
@@ -58,7 +58,7 @@
   import DateSelect from '@/components/DateSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
-  import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList } from "@/utils/constvalues";
+  import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList, auditTypeList } from "@/utils/constvalues";
 
   export default {
     components: { PageWidget, DateSelect, BreadCrumb },
@@ -120,60 +120,19 @@
           this.$router.push(route)
         })
       },
-      getPlanSendTime(index, row) {
+      getPlanSendTime(timestamp) {
 
-        let message = this.tableData.data[index]
-
-        console.log('111')
-
-        console.log(message)
-
-        if (message.sendStrategy != 'IMMEDIATE') {
-
-          return message.planSendTime
-        }
-
-        return ''
-      },
-      getStrategyStr(strategy) {
-
-        for (let i = 0; i < strategyKeyList.length; ++i) {
-
-          let item = strategyKeyList[i]
-
-          if (item.value === strategy) {
-
-            return item.text
-          }
-        }
-
-        return null
-      },
-      getPushChannelStr(pushChannel) {
-
-        for (let i = 0; i < pushChannelKeyList.length; ++i) {
-
-          let item = pushChannelKeyList[i]
-
-          if (item.value === pushChannel) {
-
-            return item.text
-          }
-        }
-
-        console.log(pushChannel)
-
-        return null
+        return new Date(timestamp).toLocaleString()
       },
       auditStatusChange(value){
 
 
       },
-      getNoticeTypeStr(type) {
+      getAuditTypeStr(type) {
 
-        for (let i = 0; i < noticeTypeKeyList.length; ++i) {
+        for (let i = 0; i < auditTypeList.length; ++i) {
 
-          let item = noticeTypeKeyList[i]
+          let item = auditTypeList[i]
 
           if (item.value === type) {
 
@@ -181,18 +140,7 @@
           }
         }
 
-        console.log(type)
-
         return null
-      },
-      getPushStatusStr(sendStatus) {
-
-        if (sendStatus === '0') {
-
-          return '未发布'
-        }
-
-        return '已发布'
       },
       getQueryParams() {
 
@@ -222,7 +170,7 @@
         queryUserList(data)
           .then(respData => {
 
-          console.log('社区通知', respData)
+          console.log('维修人员列表', respData)
 
           this.tableData = this.getResponseTableData(respData)
 
@@ -235,14 +183,14 @@
       },
       getResponseTableData(respData) {
 
-        let msgList = respData.list
+        let repairerList = respData.repairerList
 
         let tableData = {
 
-          totalCount:respData.total,
-          data:msgList,
+          totalCount:respData.totalPage,
+          data:repairerList,
           pageSize:respData.pageSize,
-          pageIndex:respData.pageNum
+          pageIndex:respData.pageIndex
         }
 
         return tableData
@@ -266,22 +214,21 @@
 
         this.getList()
       },
-      filterTag(value, row) {
+      handleDetail(index, row) {
 
-        return row.sendStatus === value;
-      },
-      handleEditor(index, row) {
+        let user = this.tableData.data[index]
 
-        let message = this.tableData.data[index]
+        console.log(this.tableData.data)
 
-        this.$store.dispatch('setMessage', message).then(() => {
+        this.$store.dispatch('setCurrentUser', user)
+          .then(() => {
 
-          let route = {name:'messagepush_area_create'}
+          let route = {name:'systemadmin_user_detail'}
 
           this.$router.push(route)
         })
       },
-      handlePush(index, row) {
+      handleAudit(index, row) {
 
         let message = this.tableData.data[index]
 

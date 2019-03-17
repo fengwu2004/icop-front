@@ -156,7 +156,7 @@
     font-size: 1.5rem;
     display: flex;
     align-items: center;
-
+    color: white;
     img {
 
       margin-right: 1rem;

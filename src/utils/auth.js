@@ -1,16 +1,25 @@
 import Cookies from 'js-cookie'
 
-export function checkValidTokenAndUserId() {
+const TokenKey = 'LoginSuccess'
+
+export function getTokenAndId() {
   
-  return true
+  return {userToken:Cookies.get(TokenKey)}
 }
 
-export function setTokenAndId(token, userId) {
+export function checkValidTokenAndUserId() {
+  
+  let userToken = Cookies.get(TokenKey)
+  
+  return userToken === '1'
+}
 
+export function setTokenAndId() {
 
+  Cookies.set(TokenKey, '1')
 }
 
 export function removeToken() {
 
-
+  return Cookies.remove(TokenKey)
 }

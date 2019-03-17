@@ -30,6 +30,12 @@ const user = {
       meta: { title: 'systemadmin_user_edit', hidden:true },
     },
     {
+      path: '/systemadmin/user/detail',
+      component: _import('systemadmin/user/detail'),
+      name: 'systemadmin_user_detail',
+      meta: { title: 'systemadmin_user_detail', hidden:true },
+    },
+    {
       path: '/systemadmin/user/rolesetting',
       component: _import('systemadmin/user/rolesetting'),
       name: 'systemadmin_user_rolesetting',

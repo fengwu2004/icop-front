@@ -8,14 +8,6 @@
         <div class="createaccount">
           <div class="itemrow">
             <div>
-              <span class="redstar">*</span><span class="sumtitle">人员编号</span>
-              <el-form-item prop="personCode">
-                <div class="specialinput">
-                    <input v-model="user.personCode" :disabled="justEnableSelect"/><el-button v-show="justEnableSelect" type="primary" plain size="mini" @click="selectaccount">请选择</el-button>
-                </div>
-              </el-form-item>
-            </div>
-            <div>
               <span>联系电话</span>
               <el-form-item prop="telephone">
                 <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="user.telephone" max="30"></el-input>
@@ -28,34 +20,6 @@
               <el-form-item prop="personName">
                 <el-input style="margin-top: 0.5rem" :disabled="justEnableSelect" v-model="user.personName"></el-input>
               </el-form-item>
-            </div>
-            <div>
-              <span>性别</span>
-              <div style="margin-top: 1rem">
-                <el-radio :disabled="justEnableSelect" v-model="user.sex" label="MALE">男</el-radio>
-                <el-radio :disabled="justEnableSelect" v-model="user.sex" label="FEMALE">女</el-radio>
-              </div>
-            </div>
-          </div>
-          <div class="itemrow">
-            <div>
-              <span class="redstar">*</span><span class="sumtitle">账户</span>
-              <el-form-item prop="userName">
-                <el-input style="margin-top: 0.5rem" v-model="user.userName"></el-input>
-              </el-form-item>
-              <div style="margin-top: 10px">
-                <span style="font-size: 0.8rem;color: #445577;">注:不能重名</span>
-              </div>
-            </div>
-            <div>
-              <span class="redstar">*</span><span class="sumtitle">密码</span>
-              <el-form-item prop="password">
-                <input style="display:none" name="txtpwd">
-                <el-input type="password" style="margin-top: 0.5rem" :placeholder="placeholderpassword" v-model="user.password" name="txtpwd"></el-input>
-              </el-form-item>
-              <div style="margin-top: 10px">
-                <span style="font-size: 0.8rem;color: #445577;">注:初始密码为6个8</span>
-              </div>
             </div>
           </div>
         </div>

@@ -42,15 +42,17 @@ const user = {
         
         login(username, passwordhash)
           .then(respData => {
-          
-          console.log(respData)
-          
-          resolve()
-        })
+            
+            setTokenAndId()
+            
+            console.log(respData)
+            
+            resolve()
+          })
           .catch(error => {
-          
-          reject(error)
-        })
+            
+            reject(error)
+          })
       })
     },
     

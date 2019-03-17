@@ -1,15 +1,18 @@
 const currentuser = {
   state: {
     currentUser: {
-      personId:null,
-      personName:null,
-      personCode:null,
-      userName:null,
-      telephone:null,
-      sex:'MALE',
-      password:null,
-      roleIds:null,
-      userId:null
+      identityNum:null,
+      phoneValidated:null,
+      createTime:null,
+      phone:null,
+      qiyeshibiehao:null,
+      name:null,
+      company:null,
+      id:null,
+      applyTime:null,
+      applyCheckTime:null,
+      lastUpdateTime:null,
+      status:null,
     },
   },
   mutations: {
@@ -28,22 +31,23 @@ const currentuser = {
     RESET_USER: (state) => {
       
       state.currentUser = {
-        personId:null,
-        personName:null,
-        personCode:null,
-        userName:null,
-        telephone:null,
-        sex:'MALE',
-        password:null,
-        roleIds:null,
-        userId:null
+        identityNum:null,
+        phoneValidated:null,
+        createTime:null,
+        phone:null,
+        qiyeshibiehao:null,
+        name:null,
+        company:null,
+        id:null,
+        applyTime:null,
+        applyCheckTime:null,
+        lastUpdateTime:null,
+        status:null,
       }
     },
   },
   actions: {
     setCurrentUser({ commit }, user) {
-      
-      console.log(user)
       
       return new Promise(resolve => {
   
