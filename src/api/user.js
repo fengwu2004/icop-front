@@ -8,6 +8,14 @@ export function queryUserList(query) {
   })
 }
 
+export function auditRepairer(query) {
+  return request({
+    url: '/s/repairer/auditRepairer',
+    method: 'post',
+    params: query
+  })
+}
+
 export function queryPersonList(query) {
   return request({
     url: '/user/queryPersonList',
