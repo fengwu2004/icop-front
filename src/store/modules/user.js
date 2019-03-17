@@ -71,6 +71,8 @@ const user = {
           .then(() => {
             
             resolve()
+            
+            removeToken()
           })
           .catch(error => {
             

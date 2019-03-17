@@ -218,8 +218,6 @@
 
         let user = this.tableData.data[index]
 
-        console.log(this.tableData.data)
-
         this.$store.dispatch('setCurrentUser', user)
           .then(() => {
 
@@ -230,28 +228,15 @@
       },
       handleAudit(index, row) {
 
-        let message = this.tableData.data[index]
+        let user = this.tableData.data[index]
 
-        if (message.sendStrategy == 'TIMES' && new Date().getTime() > new Date(message.planSendTime).getTime()) {
+        this.$store.dispatch('setCurrentUser', user)
+          .then(() => {
 
-          this.$message.error('发布失败，已过计划发布时间');
+            let route = {name:'systemadmin_user_edit'}
 
-          return
-        }
-
-        let data = {messageId:message.messageId}
-
-        console.log('发送', data)
-
-        sendAnnouncement(data).then(() => {
-
-          this.$message({
-            type: 'success',
-            message: '发布成功!'
-          });
-
-          this.getList()
-        })
+            this.$router.push(route)
+          })
       },
       handleDelete(index, row) {
 
