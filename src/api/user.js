@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function queryUserList(query) {
   return request({
-    url: '/user/queryUserList',
+    url: '/s/repairer/listRepairer',
     method: 'post',
     params: query
   })

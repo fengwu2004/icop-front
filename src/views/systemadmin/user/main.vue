@@ -1,140 +1,200 @@
 <template>
-  <div>
-    <div class="navibar">
-      <bread-crumb class="breadcrumb"></bread-crumb>
-      <div class="createsearch">
-        <el-input class="input" clearable v-model="queryParam" placeholder="请输入人员编号、姓名" v-show="checkActionEnable('search')"></el-input>
-        <el-button class="search" @click="searchUser" v-show="checkActionEnable('search')">查询</el-button>
-        <el-button class="create" @click="createUser" v-show="checkActionEnable('create')">创建</el-button>
+  <transition name="fade" mode="out-in">
+    <div>
+      <div class="navibar">
+        <bread-crumb class="breadcrumb"></bread-crumb>
+        <el-button v-show="checkActionEnable('create')" @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
       </div>
-    </div>
-    <div class="content">
-      <div class="table">
-        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" :max-height="maxheight">
-          <el-table-column prop="userName" label="员工账号" min-width="200"></el-table-column>
-          <el-table-column prop="personCode" label="人员编号" min-width="200"></el-table-column>
-          <el-table-column prop="personName" label="姓名" min-width="150"></el-table-column>
-          <el-table-column label="性别" min-width="150">
+      <div class="content">
+        <div class="header" v-show="checkActionEnable('search')">
+          <el-radio-group v-model="selectedAuditStatus" @change="auditStatusChange" size="small">
+            <el-radio-button label="全部" size="small"></el-radio-button>
+            <el-radio-button label="已审核" size="small"></el-radio-button>
+            <el-radio-button label="未审核" size="small"></el-radio-button>
+          </el-radio-group>
+          <div class="operatemenu">
+            <el-input clearable placeholder="输入姓名查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
+          </div>
+        </div>
+        <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" @filter-change="onFilterChange" :max-height="maxheight">
+          <el-table-column prop="name" label="姓名" min-width="250"></el-table-column>
+          <el-table-column prop="company" label="公司名称" min-width="250"></el-table-column>
+          <el-table-column prop="phone" label="手机号" min-width="250"></el-table-column>
+          <el-table-column label="状态" min-width="150">
             <template slot-scope="scope">
-              <span>{{getSex(scope.$index, scope.row)}}</span>
+              <span>{{ getNoticeTypeStr(scope.row.noticeType) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="telephone" label="联系电话" min-width="200"></el-table-column>
-          <el-table-column label="操作" min-width="300">
+          <el-table-column prop="applyTime" label="申请时间" min-width="200">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')">修改</el-button>
-              <el-button size="mini" @click="handleChangePwd(scope.$index, scope.row)" v-show="checkActionEnable('resetpwd')">重置密码</el-button>
-              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">注销账户</el-button>
+              <span>{{ getPlanSendTime(scope.$index, scope.row) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" min-width="250">
+            <template slot-scope="scope">
+              <div v-show="checkEnableOperator(scope.$index, scope.row)">
+                <el-button size="mini" @click="handlePush(scope.$index, scope.row)" v-show="checkActionEnable('send')">审核</el-button>
+                <el-button size="mini" @click="handleEditor(scope.$index, scope.row)" v-show="checkActionEnable('edit')">详情</el-button>
+              </div>
             </template>
           </el-table-column>
         </el-table>
-      </div>
-      <div class="pagination">
-        <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
+        <div class="pagination">
+          <page-widget :total="tableData.totalCount" :pagesizes="[10, 20, 40, 50]" @pageSizeChange="pageSizeChange" @pageChange="pageChange" :pagesize="tableData.pageSize"></page-widget>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
 
-  import { checkRouteAndActionEnable, initpassword } from "@/permissionCheck";
-  import { trim } from "@/utils/validate";
-  import { queryUserList, deleteUser, editPwd } from '@/api/user'
-  import BreadCrumb from '@/components/Breadcrumb'
-  import { default as PageWidget } from '@/components/PageWidget'
-  import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
+  import { checkRouteAndActionEnable } from "@/permissionCheck";
 
-  const actioncodes = {
-    search:'122100',
-    create:'122200',
-    edit:'122300',
-    detail:'122400',
-    resetpwd:'122500',
-    delete:'122600',
-  }
+  import { queryUserList, edit} from "@/api/user";
+
+  import { queryAnnouncementList, deleteAnnouncement, sendAnnouncement} from "@/api/areamessage";
+  import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
+  import DateSelect from '@/components/DateSelect'
+  import PageWidget from '@/components/PageWidget'
+  import BreadCrumb from '@/components/Breadcrumb'
+  import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList } from "@/utils/constvalues";
 
   export default {
-    components: { PageWidget, BreadCrumb },
+    components: { PageWidget, DateSelect, BreadCrumb },
     data() {
       return {
-        maxheight:window.innerHeight - 200,
+        selectedAuditStatus:'全部',
         queryParam:'',
+        maxheight:window.innerHeight - 250,
+        pushStatusKeyList:pushStatusKeyList,
         listLoading:true,
-        searching:false,
+        pushStatus:null,
         tableData: {
           totalCount:0,
-          list:null,
+          data:null,
           pageSize:20,
+          totalPage:0,
           pageIndex:1,
         },
       }
     },
-    created() {
+    mounted() {
 
-      this.getList()
+      this.$nextTick(() => {
+
+        this.getList()
+      })
     },
     methods:{
-      getSex(index, row) {
-
-        let user = this.tableData.data[index]
-
-        if (user.sex == 'MALE') {
-
-          return '男'
-        }
-
-        return '女'
-      },
       checkActionEnable(action) {
 
-        let code = actioncodes[action]
-
-        return checkRouteAndActionEnable(code)
+        return true
       },
-      searchUser() {
+      checkEnableOperator(index, message) {
 
-        this.handleSearch(this.queryParam)
+        return message.sendStatus == '0'
       },
-      createUser() {
+      onFilterChange(filters) {
 
-        this.$store.dispatch('resetUser').then(() => {
+        let pushstatus = filters.pushStatus
 
-          let route = {name:'systemadmin_user_edit', params:{title:'systemadmin_user_create'}}
+        this.pushStatus = pushstatus[0]
+
+        this.pageIndex = 1
+
+        this.getList()
+      },
+      onDateRangeChange() {
+
+        this.pageIndex = 1
+
+        this.getList()
+      },
+      createMessage() {
+
+        this.$store.dispatch('resetMessage').then(() => {
+
+          let route = {name:'messagepush_area_create'}
 
           this.$router.push(route)
         })
       },
-      getResponseTableData(respData) {
+      getPlanSendTime(index, row) {
 
-        if (respData.list) {
+        let message = this.tableData.data[index]
 
-          respData.list.sort((leftunit, rightunit) => {
+        console.log('111')
 
-            if (new Date(leftunit.createTime).getTime() > new Date(rightunit.createTime).getTime()) {
+        console.log(message)
 
-              return -1
-            }
+        if (message.sendStrategy != 'IMMEDIATE') {
 
-            return 1
-          })
+          return message.planSendTime
         }
 
-        console.log(respData.list)
-
-        let tableData = {
-
-          totalCount:respData.total,
-          data:respData.list,
-          pageSize:respData.pageSize,
-          pageIndex:respData.pageNum
-        }
-
-        return tableData
+        return ''
       },
-      getList() {
+      getStrategyStr(strategy) {
 
-        this.listLoading = true
+        for (let i = 0; i < strategyKeyList.length; ++i) {
+
+          let item = strategyKeyList[i]
+
+          if (item.value === strategy) {
+
+            return item.text
+          }
+        }
+
+        return null
+      },
+      getPushChannelStr(pushChannel) {
+
+        for (let i = 0; i < pushChannelKeyList.length; ++i) {
+
+          let item = pushChannelKeyList[i]
+
+          if (item.value === pushChannel) {
+
+            return item.text
+          }
+        }
+
+        console.log(pushChannel)
+
+        return null
+      },
+      auditStatusChange(value){
+
+
+      },
+      getNoticeTypeStr(type) {
+
+        for (let i = 0; i < noticeTypeKeyList.length; ++i) {
+
+          let item = noticeTypeKeyList[i]
+
+          if (item.value === type) {
+
+            return item.text
+          }
+        }
+
+        console.log(type)
+
+        return null
+      },
+      getPushStatusStr(sendStatus) {
+
+        if (sendStatus === '0') {
+
+          return '未发布'
+        }
+
+        return '已发布'
+      },
+      getQueryParams() {
 
         let data = {
           pageIndex:this.tableData.pageIndex,
@@ -143,18 +203,49 @@
 
         if (this.searching && this.queryParam && this.queryParam.length > 0) {
 
-          data.queryParam = this.queryParam
+          data.msgSubject = this.queryParam
         }
 
-        queryUserList(data).then(respData => {
+        if (this.pushStatus) {
+
+          data.pushStatus = this.pushStatus
+        }
+
+        return data
+      },
+      getList() {
+
+        this.listLoading = true
+
+        const data = this.getQueryParams()
+
+        queryUserList(data)
+          .then(respData => {
+
+          console.log('社区通知', respData)
 
           this.tableData = this.getResponseTableData(respData)
+
         })
           .catch()
           .finally(() => {
 
             this.listLoading = false
           })
+      },
+      getResponseTableData(respData) {
+
+        let msgList = respData.list
+
+        let tableData = {
+
+          totalCount:respData.total,
+          data:msgList,
+          pageSize:respData.pageSize,
+          pageIndex:respData.pageNum
+        }
+
+        return tableData
       },
       pageSizeChange(pageSize){
 
@@ -175,13 +266,53 @@
 
         this.getList()
       },
+      filterTag(value, row) {
+
+        return row.sendStatus === value;
+      },
+      handleEditor(index, row) {
+
+        let message = this.tableData.data[index]
+
+        this.$store.dispatch('setMessage', message).then(() => {
+
+          let route = {name:'messagepush_area_create'}
+
+          this.$router.push(route)
+        })
+      },
+      handlePush(index, row) {
+
+        let message = this.tableData.data[index]
+
+        if (message.sendStrategy == 'TIMES' && new Date().getTime() > new Date(message.planSendTime).getTime()) {
+
+          this.$message.error('发布失败，已过计划发布时间');
+
+          return
+        }
+
+        let data = {messageId:message.messageId}
+
+        console.log('发送', data)
+
+        sendAnnouncement(data).then(() => {
+
+          this.$message({
+            type: 'success',
+            message: '发布成功!'
+          });
+
+          this.getList()
+        })
+      },
       handleDelete(index, row) {
 
-        let user = this.tableData.data[index]
+        let message = this.tableData.data[index]
 
-        let data = {userId:user.userId}
+        let data = {messageId:message.messageId}
 
-        this.$confirm('此操作将永久删除账户信息，是否继续？','警告', {
+        this.$confirm('此操作将永久删除此通知，是否继续？','警告', {
 
           confirmButtonText:'确定',
           cancelButtonText:'取消',
@@ -189,96 +320,67 @@
 
         }).then(() => {
 
-          deleteUser(data).then(response => {
+          deleteAnnouncement(data).then(response => {
 
             this.getList()
 
             this.$message({
               type: 'success',
-              message: '注销成功!'
+              message: '删除成功!'
             });
           })
+
         }).catch (() => {
 
 
         })
       },
-      handleSearch(rawqueryParam) {
-
-        let queryParam = trim(rawqueryParam)
+      handleSearch(queryParam) {
 
         if (!queryParam || queryParam.length == 0) {
 
           return
         }
 
-        console.log('search', queryParam)
-
         this.listLoading = true
 
-        let data = {
-          queryParam:queryParam,
-          pageIndex:1,
-          pageSize:this.tableData.pageSize,
-        }
+        this.pageIndex = 1
 
-        queryUserList(data).then(respData => {
+        this.searching = true
+
+        const data = this.getQueryParams()
+
+        console.log('search', data)
+
+        queryAnnouncementList(data).then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
 
           this.listLoading = false
 
-          this.searching = true
+        }).catch(res => {
+
+          console.log(res)
         })
       },
       handleEdit(index, row) {
 
-        let user = this.tableData.data[index]
+        let message = this.tableData.data[index]
 
-        this.$store.dispatch('setCurrentUser', user).then(() => {
+        this.$store.dispatch('setMessage', message).then(() => {
 
-          let route = {name:'systemadmin_user_edit', params:{title:'systemadmin_user_edit'}}
+          let router = {name:'messagepush_area_create', meta:{title:'修改通知'}}
 
-          this.$router.push(route)
-        })
-      },
-      handleChangePwd(index, row) {
-
-        let user = this.tableData.data[index]
-
-        let data = {
-          userId:user.userId,
-          password:initpassword
-        }
-
-        this.$confirm('此操作将重置账户初始密码为888888，是否继续？','警告', {
-
-          confirmButtonText:'确定',
-          cancelButtonText:'取消',
-          type:'warning'
-
-        }).then(() => {
-
-          editPwd(data).then((res) => {
-
-            this.$message({
-              type: 'success',
-              message: '重置成功!'
-            });
-          })
-
-        }).catch (() => {
-
-
+          this.$router.push(router)
         })
       },
       headercellstyle({row, rowIndex, columnIndex}){
 
-        return columnIndex == 5 ? headercellcenter: headercell
+        return columnIndex == 6 ? headercellcenter: headercell
       },
       cellstyle({row, rowIndex, columnIndex}) {
 
-        return columnIndex == 5 ? normalcellcenter : normalcell
+        return columnIndex == 6 ? normalcellcenter : normalcell
       },
     },
     watch:{
@@ -313,38 +415,42 @@
     border-bottom: 1px solid #D0D5E5;
   }
 
-  .createsearch {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .input {
-      margin-right: 10px;
-    }
-
-    .create {
-      margin-right: 10px;
-    }
-  }
-
   .content {
 
+    margin-top: 1rem;
     width: 100%;
-    height: calc(100% - 51px);
+    /*height: calc(100% - 51px);*/
     position: relative;
   }
 
-  .table {
+  .header {
 
-    width: 100%;
-    overflow-y: scroll;
-    max-height: calc(100% - 4rem);
+    display: flex;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+
+    .dateselect {
+
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .operatemenu {
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .el-button {
+
+      margin-left: 1rem;
+    }
   }
 
   .pagination {
 
-    margin: 1rem auto;
+    margin-top: 1rem;
   }
 
 </style>
