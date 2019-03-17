@@ -4,9 +4,6 @@
       <span>硬件资产管理维修系统</span>
     </div>
     <div class="rightmenu">
-      <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
-        <screenfull class="screenfull right-menu-item"></screenfull>
-      </el-tooltip>
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
           <img class="user-avatar" src="../../../assets/defaultavatar.gif?imageView2/1/w/80/h/80">
@@ -97,25 +94,35 @@
         }
 
         let data = {
-          oldPwd:md5(this.oldPwd) ,
-          newPwd:md5(this.newPwd1)
+          oldPwd:this.oldPwd,
+          newPwd:this.newPwd1
         }
 
-        editPwd(data).then(res => {
+        editPwd(data)
+          .then(res => {
 
           this.$message({
             message: '密码修改成功',
             type: 'success'
           });
 
-          this.dialogVisible = true
+          this.dialogVisible = false
         })
+          .catch(msg=>{
+
+            this.$message.error(msg);
+          })
       },
       logout() {
-        this.$store.dispatch('LogOut').then(() => {
+        this.$store.dispatch('LogOut')
+          .then(() => {
 
           location.reload()// In order to re-instantiate the vue-router object to avoid bugs
         })
+          .catch(msg=>{
+
+            this.$message.error(msg);
+          })
       }
     }
   }

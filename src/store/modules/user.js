@@ -68,12 +68,6 @@ const user = {
         logout({})
           .then(() => {
             
-            commit('SET_USER_TOKEN', '')
-  
-            commit('SET_USER_ID', '')
-            
-            removeToken()
-            
             resolve()
           })
           .catch(error => {

@@ -14,7 +14,7 @@ export function login(account, pwd) {
 
 export function logout(params) {
   return request({
-    url: '/logout',
+    url: '/s/logout',
     method: 'post',
     params:params
   })
@@ -29,7 +29,7 @@ export function validPic() {
 
 export function editPwd(params) {
   return request({
-    url: '/user/editPwd',
+    url: '/s/mgr/modifySelfPwd',
     method: 'post',
     params: params
   })
