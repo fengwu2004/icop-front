@@ -3,7 +3,7 @@
     <div>
       <div class="navibar">
         <bread-crumb class="breadcrumb"></bread-crumb>
-        <el-button @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>录入资产</el-button>
+        <el-button @click="createEquip" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>录入资产</el-button>
       </div>
       <div class="content">
         <div class="header">
@@ -97,7 +97,7 @@
 
         this.getList()
       },
-      createMessage() {
+      createEquip() {
 
         this.$store.dispatch('resetMessage')
           .then(() => {

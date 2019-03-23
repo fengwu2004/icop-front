@@ -1,21 +1,16 @@
 const currentEditMessage = {
   state: {
-    message: {
-      messageId:null,
-      msgSubject:null,
-      summary:null,
-      sendType:'APP',
-      sendStrategy:'IMMEDIATE',
-      planSendTime:null,
-      imageUrl:null,
-      msgContent:null,
-      noticeType:null,
+    equip: {
+      name:null,
+      describe:null,
+      category:'道闸',
+      imageUrl:null
     },
   },
   mutations: {
-    SET_MESSAGE: (state, message) => {
+    SET_EQUIP: (state, equip) => {
       
-      state.message = message
+      state.equip = equip
     },
     SET_MESSAGE_NOTICECONTENT:(state, msgContent) => {
       
@@ -25,27 +20,22 @@ const currentEditMessage = {
     
       state.message.imageUrl = imageUrl
     },
-    RESET_MESSAGE: (state) => {
+    RESET_EQUIP: (state) => {
       
-      state.message = {
-        messageId:null,
-        msgSubject:null,
-        summary:null,
-        sendType:'APP',
-        sendStrategy:'IMMEDIATE',
-        planSendTime:null,
-        imageUrl:null,
-        msgContent:null,
-        noticeType:null,
+      state.equip = {
+        name:null,
+        describe:null,
+        category:'道闸',
+        imageUrl:null
       }
     },
   },
   actions: {
-    setMessage({ commit }, message) {
+    setEquip({ commit }, equip) {
       
       return new Promise(resolve => {
   
-        commit('SET_MESSAGE', message)
+        commit('SET_EQUIP', equip)
   
         resolve()
       })
@@ -68,11 +58,11 @@ const currentEditMessage = {
         resolve()
       })
     },
-    resetMessage({ commit, state }) {
+    resetEquip({ commit, state }) {
     
       return new Promise((resolve) => {
       
-        commit('RESET_MESSAGE')
+        commit('RESET_EQUIP')
       
         resolve()
       })

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div style="min-width: 500px;">
-      <span>主题图片</span>
+      <span>资产图片</span>
       <div style="background: #E0E5EE;padding: 2rem 0 1rem;margin-top: 1rem;">
         <div class="imagecroppaouter">
           <img v-show="dataUrl" id="imagecropper_item" :src="dataUrl" alt="Picture" style="max-width: 100%;">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div style="margin-top: 1rem;">
-        <span class="helpertip">为了更好的显示在捷生活APP首页的信息卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
+        <span class="helpertip">为了更好的显示在APP的设备卡片列表里面，图片尺寸要求</span><span class="focustip">长宽690*240px</span>
       </div>
     </div>
     <div v-show="imageAttacted" style="margin-left: 3rem">

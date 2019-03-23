@@ -3,54 +3,38 @@
     <div>
       <div class="navibar">
         <bread-crumb class="breadcrumb"></bread-crumb>
-        <div class="createmessageprocess">
-          <span>1 填写基本信息</span>
-          <span class="line"></span>
-          <span style="color: #AAB6CC;">2 填写通知内容</span>
-        </div>
       </div>
       <div class="content">
-        <el-form :rules="rules" :model="currentMessage" ref="formData">
+        <el-form :rules="rules" :model="currentEquip" ref="formData">
           <div class="title">
-            <span class="redstar">*</span><span>主题</span><span class="subtitle">(限30个字)</span>
+            <span class="redstar">*</span><span>资产名称</span><span class="subtitle">(限30个字)</span>
             <div style="margin-top: 1rem;">
-              <el-form-item prop="msgSubject">
-                <el-input maxlength="30" placeholder="请输入通知标题" v-model="currentMessage.msgSubject"></el-input>
+              <el-form-item prop="name">
+                <el-input maxlength="30" placeholder="请输入资产名称" v-model="currentEquip.name"></el-input>
               </el-form-item>
             </div>
           </div>
           <div class="summary">
-            <span class="redstar">*</span><span>摘要</span><span class="subtitle">(限60个字)</span>
+            <span class="redstar">*</span><span>描述</span><span class="subtitle">(限60个字)</span>
             <div style="margin-top: 1rem;">
-              <el-form-item prop="summary">
-                <el-input type="textarea" maxlength="60" placeholder="请输入通知内容摘要" v-model="currentMessage.summary"></el-input>
+              <el-form-item prop="describe">
+                <el-input type="textarea" maxlength="60" placeholder="请输入资产描述" v-model="currentEquip.describe"></el-input>
               </el-form-item>
-            </div>
-          </div>
-          <div class="sendtype">
-            <div>
-              <span class="redstar">*</span><span>发送方式</span>
-            </div>
-            <div class="sendtyperadio">
-              <el-radio v-model="currentMessage.sendType" label="APP">App</el-radio>
-              <!--<el-radio v-model="currentMessage.sendType" label="SMS">短信</el-radio>-->
             </div>
           </div>
           <div class="sendstrategy">
-            <span class="redstar">*</span><span>发送策略</span>
+            <span class="redstar">*</span><span>资产分类</span>
             <div style="margin-top: 1rem">
-              <el-form-item prop="sendStrategy">
-                <el-radio v-model="currentMessage.sendStrategy" label="IMMEDIATE">立即发送</el-radio>
-                <el-radio v-model="currentMessage.sendStrategy" label="TIMES">定时发送</el-radio>
-                <el-date-picker style="margin-left: 1rem" :style="{visibility:currentMessage.sendStrategy == 'IMMEDIATE' ? 'hidden':'visible'}" value-format="yyyy-MM-dd HH:mm:ss" v-model="currentMessage.planSendTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+              <el-form-item prop="category">
+                <el-radio v-model="currentEquip.category" label="道闸">道闸</el-radio>
+                <el-radio v-model="currentEquip.category" label="安检门">安检门</el-radio>
+                <el-radio v-model="currentEquip.category" label="门禁">门禁</el-radio>
+                <el-radio v-model="currentEquip.category" label="摄像头">摄像头</el-radio>
               </el-form-item>
             </div>
           </div>
-          <div class="selectimg">
-            <image-cropper :initImageUrl="message.imageUrl"></image-cropper>
-          </div>
           <div class="btns">
-            <el-button @click="onCancelCreate">取消</el-button><el-button type="primary" @click="onEditorMessage">下一步</el-button>
+            <el-button @click="onCancelCreate">取消</el-button><el-button type="primary" @click="onEditorMessage">提交</el-button>
           </div>
         </el-form>
       </div>
@@ -63,17 +47,11 @@
   import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget/index'
   import BreadCrumb from '@/components/Breadcrumb/index'
-  import ImageCropper from '@/components/ImageCropper/index'
-
-  const pushStatusKeyList = [{ text: '待推送', value: 'UNPUSH' }, { text: '不推送', value: 'NOPUSH' }, { text: '推送成功', value: 'SUCCESS' }, { text: '推送失败', value: 'FAIL' }]
-  const messageTypeKeyList = [{ text: '安全防范公告', value: 'SECURITY' }, { text: '物业风采', value: 'PROPERTY' }, { text: '电梯维修保养', value: 'ELEVATOR' }, { text: '投票及调查互动', value: 'VOTE' }, { text: '商店优惠公告', value: 'COUPONS' }]
-  const pushChannelKeyList = [{ text: 'APP推送', value: 'APP' }, { text: '短信', value: 'SMS' }]
-  const strategyKeyList = [{ text: '立即生效', value: 'IMMEDIATE' }, { text: '定时生效', value: 'TIMES' }]
 
   export default {
-    components: { PageWidget, BreadCrumb, ImageCropper },
+    components: { PageWidget, BreadCrumb },
     data() {
-      let validMsgSubject = (rule, value, callback) => {
+      let validEquipName = (rule, value, callback) => {
 
         if (!value) {
 
@@ -88,47 +66,23 @@
         callback()
       }
 
-      let validMsgSendStrategy = (rule, value, callback) => {
-
-        if (!value) {
-
-          return callback(new Error('请选择发送策略'))
-        }
-
-        if (value == 'TIMES' && !this.currentMessage.planSendTime) {
-
-          return callback(new Error('请选择定时发送时间'))
-        }
-
-        callback()
-      }
-
       return {
-        messageTypeKeyList:messageTypeKeyList,
         value:'',
         sendtype:'',
         myCroppa:{},
-        currentMessage:{
-          messageId:null,
-          msgSubject:null,
-          summary:null,
-          sendType:'APP',
-          sendStrategy:null,
-          planSendTime:null,
-          imageUrl:null,
-          msgContent:null,
-          noticeType:null,
+        currentEquip:{
+          name:null,
+          describe:null,
+          category:'道闸',
+          imageUrl:null
         },
         rules:{
-          msgSubject:[
-            {validator:validMsgSubject, trigger:'blur'},
+          name:[
+            {validator:validEquipName, trigger:'blur'},
           ],
-          summary:[
-            {required: true, message: '请输入摘要', trigger: 'blur' },
+          describe:[
+            {required: true, message: '请输入描述', trigger: 'blur' },
             {min:1, max:60, message:'不能为空，60个字以内', trigger:'blur'},
-          ],
-          sendStrategy:[
-            {validator:validMsgSendStrategy, trigger:'blur'},
           ]
         }
       }
@@ -137,10 +91,6 @@
       ...mapGetters([
         'message'
       ]),
-    },
-    created() {
-
-      this.currentMessage = this.message
     },
     methods: {
       onEditorMessage() {
@@ -165,14 +115,7 @@
     },
     mounted() {
 
-      if (this.message.messageId) {
-
-        this.$route.meta.title = '修改通知'
-      }
-      else {
-
-        this.$route.meta.title = '创建通知'
-      }
+      this.$route.meta.title = '录入资产'
     }
   }
 </script>
