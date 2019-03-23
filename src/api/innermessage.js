@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function queryNoticeList(query) {
+export function listEquip(query) {
   return request({
-    url: '/notice/queryNoticeList',
+    url: '/s/equip/listEquip',
     method: 'post',
     params: query
   })

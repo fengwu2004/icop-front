@@ -3,47 +3,37 @@
     <div>
       <div class="navibar">
         <bread-crumb class="breadcrumb"></bread-crumb>
-        <el-button v-show="checkActionEnable('create')" @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>新增</el-button>
+        <el-button @click="createMessage" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>录入资产</el-button>
       </div>
       <div class="content">
-        <div class="header" v-show="checkActionEnable('search')">
-          <date-select ref="daterange" @daterangechange="onDateRangeChange"></date-select>
+        <div class="header">
+          <equip-select ref="equipselector" @equipchange="onEquipTypeChange"></equip-select>
           <div class="operatemenu">
-            <el-input clearable placeholder="输入主题查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
+            <el-input clearable placeholder="输入相关信息查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
         </div>
         <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" @filter-change="onFilterChange" :max-height="maxheight">
-          <el-table-column prop="msgSubject" label="内容主题" min-width="250"></el-table-column>
-          <el-table-column label="发送方式" min-width="150">
-            <template slot-scope="scope">
-              <span>{{ getPushChannelStr(scope.row.sendType) }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="pushStatus" label="发布状态" min-width="150"
-                           :filters="pushStatusKeyList"
+          <el-table-column prop="name" label="资产名称" min-width="250"></el-table-column>
+          <el-table-column prop="category" label="分类" min-width="150"></el-table-column>
+          <el-table-column prop="status" label="状态" min-width="150"
+                           :filters="equipStatus"
                            :filter-method="filterTag"
                            :filter-multiple="false"
                            column-key="pushStatus">
             <template slot-scope="scope">
-              <span>{{ getPushStatusStr(scope.row.sendStatus) }}</span>
+              <span>{{ getEquipStatusStr(scope.row.status) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="strategy" label="发送策略" min-width="150">
+          <el-table-column prop="updateTime" label="上次维修时间" min-width="200">
             <template slot-scope="scope">
-              <span>{{ getStrategyStr(scope.row.sendStrategy) }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="planSendTime" label="发送时间" min-width="200">
-            <template slot-scope="scope">
-              <span>{{ getPlanSendTime(scope.$index, scope.row) }}</span>
+              <span>{{ getUpateTime(scope.$index, scope.row) }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" min-width="250">
             <template slot-scope="scope">
-              <div v-show="checkEnableOperator(scope.$index, scope.row)">
-                <el-button size="mini" @click="handlePush(scope.$index, scope.row)" v-show="checkActionEnable('send')">发布</el-button>
-                <el-button size="mini" @click="handleEditor(scope.$index, scope.row)" v-show="checkActionEnable('edit')">修改</el-button>
-                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">删除</el-button>
+              <div>
+                <el-button type="primary" size="mini" @click="handleDetail(scope.$index, scope.row)">资产详情</el-button>
+                <el-button type="success" size="mini" @click="handleRepair(scope.$index, scope.row)">维修记录</el-button>
               </div>
             </template>
           </el-table-column>
@@ -58,29 +48,20 @@
 
 <script>
 
-  import { queryNoticeList, deleteNotice, sendNotice} from "@/api/innermessage";
+  import { listEquip, deleteNotice, sendNotice} from "@/api/innermessage";
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
   import DateSelect from '@/components/DateSelect'
+  import EquipSelect from '@/components/EquipSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
-  import { checkRouteAndActionEnable } from "@/permissionCheck";
-  import { pushStatusKeyList, noticeTypeKeyList, pushChannelKeyList, strategyKeyList } from "@/utils/constvalues";
-
-  const actioncodes = {
-    search:'112100',
-    create:'112200',
-    edit:'112300',
-    delete:'112400',
-    send:'112500',
-  }
 
   export default {
-    components: { PageWidget, DateSelect, BreadCrumb },
+    components: { PageWidget, EquipSelect, BreadCrumb },
     data() {
       return {
         queryParam:'',
         maxheight:window.innerHeight - 250,
-        pushStatusKeyList:pushStatusKeyList,
+        equipStatus:[{ text: '待维修', value: '0' }, { text: '正常', value: '1' }, {text: '维修中', value: '2'}],
         listLoading:true,
         pushStatus:null,
         tableData: {
@@ -100,16 +81,6 @@
       })
     },
     methods:{
-      checkActionEnable(action) {
-
-        let code = actioncodes[action]
-
-        return checkRouteAndActionEnable(code)
-      },
-      checkEnableOperator(index, message) {
-
-        return message.sendStatus == '0'
-      },
       onFilterChange(filters) {
 
         let pushstatus = filters.pushStatus
@@ -120,7 +91,7 @@
 
         this.getList()
       },
-      onDateRangeChange() {
+      onEquipTypeChange() {
 
         this.pageIndex = 1
 
@@ -128,96 +99,48 @@
       },
       createMessage() {
 
-        this.$store.dispatch('resetMessage').then(() => {
+        this.$store.dispatch('resetMessage')
+          .then(() => {
 
           let route = {name:'messagepush_inner_create'}
 
           this.$router.push(route)
         })
       },
-      getPlanSendTime(index, row) {
+      getUpateTime(index, row) {
 
-        let message = this.tableData.data[index]
+        let equipInfo = this.tableData.data[index]
 
-        if (message.sendStrategy != 'IMMEDIATE') {
+        if (equipInfo.updateTime != 0) {
 
-          return message.planSendTime
+          return new Date(equipInfo.updateTime).toLocaleString()
         }
 
         return ''
       },
-      getStrategyStr(strategy) {
+      getEquipStatusStr(status) {
 
-        console.log('getStrategyStr')
+        if (status === '0') {
 
-        for (let i = 0; i < strategyKeyList.length; ++i) {
-
-          let item = strategyKeyList[i]
-
-          if (item.value === strategy) {
-
-            return item.text
-          }
+          return '待维修'
         }
 
-        return null
-      },
-      getPushChannelStr(pushChannel) {
+        if (status == '1') {
 
-        for (let i = 0; i < pushChannelKeyList.length; ++i) {
-
-          let item = pushChannelKeyList[i]
-
-          if (item.value === pushChannel) {
-
-            return item.text
-          }
+          return '正常'
         }
 
-        console.log(pushChannel)
-
-        return null
-      },
-      getMessageTypeStr(type) {
-
-        for (let i = 0; i < messageTypeKeyList.length; ++i) {
-
-          let item = messageTypeKeyList[i]
-
-          if (item.value === type) {
-
-            return item.text
-          }
-        }
-
-        console.log(type)
-
-        return null
-      },
-      getPushStatusStr(sendStatus) {
-
-        if (sendStatus === '0') {
-
-          return '未发布'
-        }
-
-        return '已发布'
+        return '维修中'
       },
       getQueryParams() {
 
         let data = {
+
           pageIndex:this.tableData.pageIndex,
           pageSize:this.tableData.pageSize,
         }
 
-        let daterange = this.$refs.daterange.dayinterval
-
-        if (daterange && daterange.length == 2) {
-
-          data.beginTime = daterange[0].getTime()
-
-          data.endTime = daterange[1].getTime()
-        }
+        let equiptype = this.$refs.equipselector.type
 
         if (this.searching && this.queryParam && this.queryParam.length > 0) {
 
@@ -237,7 +160,8 @@
 
         const data = this.getQueryParams()
 
-        queryNoticeList(data).then(respData => {
+        listEquip(data)
+          .then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
 
@@ -250,14 +174,16 @@
       },
       getResponseTableData(respData) {
 
-        let msgList = respData.list
+        console.log(respData)
+
+        let equipList = respData.equipList
 
         let tableData = {
 
-          totalCount:respData.total,
-          data:msgList,
+          totalCount:equipList.totalItem,
+          data:equipList,
           pageSize:respData.pageSize,
-          pageIndex:respData.pageNum
+          pageIndex:respData.pageIndex
         }
 
         return tableData
@@ -296,7 +222,7 @@
           this.$router.push(route)
         })
       },
-      handlePush(index, row) {
+      handleDetail(index, row) {
 
         let message = this.tableData.data[index]
 
@@ -321,7 +247,7 @@
           this.getList()
         })
       },
-      handleDelete(index, row) {
+      handleRepair(index, row) {
 
         let message = this.tableData.data[index]
 
@@ -365,7 +291,8 @@
 
         const data = this.getQueryParams()
 
-        queryNoticeList(data).then(respData => {
+        listEquip(data)
+          .then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
 
