@@ -101,7 +101,7 @@
 
             this.$store.dispatch('setMessage', this.currentMessage).then(res => {
 
-              let route = {name:'messagepush_inner_edit'}
+              let route = {name:'assetmanager_edit'}
 
               this.$router.push(route)
             })

@@ -84,48 +84,48 @@ const systemadmin = {
 
 const inner = {
   
-  path: '/messagepush/inner',
-  name: 'messagepush_inner',
+  path: '/assetmanager/equip',
+  name: 'assetmanager',
   component:main,
-  meta: { title: 'messagepush_inner', icon: 'innerpush', code:'112000,112100,112200,112300,112400,112500', activeicon:'innerpush_active' },
+  meta: { title: 'assetmanager', icon: 'innerpush', code:'112000,112100,112200,112300,112400,112500', activeicon:'innerpush_active' },
   children: [
     {
-      path: '/messagepush/inner/main',
-      component:_import('messagepush/inner/main'),
-      meta: { title: 'messagepush_inner', hidden:true},
+      path: '/assetmanager/equip/main',
+      component:_import('assetmanager/equip/main'),
+      meta: { title: 'assetmanager', hidden:true},
     },
     {
-      path: '/messagepush/inner/edit',
-      component: _import('messagepush/inner/editor'),
-      name: 'messagepush_inner_edit',
-      meta: { title: 'messagepush_inner_edit', hidden:true},
+      path: '/assetmanager/equip/edit',
+      component: _import('assetmanager/equip/editor'),
+      name: 'assetmanager_edit',
+      meta: { title: 'assetmanager_edit', hidden:true},
     },
     {
-      path: '/messagepush/inner/create',
-      component: _import('messagepush/inner/create'),
-      name: 'messagepush_inner_create',
-      meta: {title: 'messagepush_inner_create', hidden:true},
+      path: '/assetmanager/equip/create',
+      component: _import('assetmanager/equip/create'),
+      name: 'assetmanager_create',
+      meta: {title: 'assetmanager_create', hidden:true},
     },
     {
-      path: '/messagepush/inner/repairlist',
-      component: _import('messagepush/inner/repairlist'),
-      name: 'messagepush_inner_repairlist',
-      meta: {title: 'messagepush_inner_repairlist', hidden:true},
+      path: '/assetmanager/equip/repairlist',
+      component: _import('assetmanager/equip/repairlist'),
+      name: 'assetmanager_repairlist',
+      meta: {title: 'assetmanager_repairlist', hidden:true},
     },
     {
-      path: '/messagepush/inner/equipdetail',
-      component: _import('messagepush/inner/equipdetail'),
-      name: 'messagepush_inner_equipdetail',
-      meta: {title: 'messagepush_inner_equipdetail', hidden:true},
+      path: '/assetmanager/equip/equipdetail',
+      component: _import('assetmanager/equip/equipdetail'),
+      name: 'assetmanager_equipdetail',
+      meta: {title: 'assetmanager_equipdetail', hidden:true},
     }
   ]
 }
 
-const messagepush = {
+const assetmanager = {
   path: '/messagepush',
   component: Layout,
   name: 'messagepush',
-  meta: { title: 'messagepush', code:'110000,111000,111100,111200,111300,111400,111500,112000,112100,112200,112300,112400,112500' },
+  meta: { title: 'assetmanager', code:'110000,111000,111100,111200,111300,111400,111500,112000,112100,112200,112300,112400,112500' },
   children: [
     inner,
   ]
@@ -151,7 +151,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  messagepush,
+  assetmanager,
   systemadmin,
   error404
 ]
