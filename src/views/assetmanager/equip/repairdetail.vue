@@ -6,20 +6,36 @@
     <div class="content">
       <div class="cell">
         <span class="title">资产名称</span>
-        <span class="message">{{name}}</span>
+        <span class="message">{{equipName}}</span>
       </div>
       <div class="cell">
-        <span class="title">描述</span>
-        <span class="message">{{description}}</span>
+        <span class="title">维修人员</span>
+        <span class="message">{{repairerName}}</span>
       </div>
       <div class="cell">
-        <span class="title">资产分类</span>
-        <span class="message">{{category}}</span>
+        <span class="title">所属公司</span>
+        <span class="message">{{repairerConpany}}</span>
+      </div>
+      <div class="cell">
+        <span class="title">联系方式</span>
+        <span class="message">{{repairerPhone}}</span>
+      </div>
+      <div class="cell">
+        <span class="title">维修日期</span>
+        <span class="message">{{new Date(repairedTime).toLocaleString()}}</span>
+      </div>
+      <div class="cell">
+        <span class="title">维修报价</span>
+        <span class="message">{{repairPrice}}</span>
+      </div>
+      <div class="cell">
+        <span class="title">维修说明</span>
+        <span class="message">{{problemDescription}}</span>
       </div>
       <div class="imagecell">
-        <span class="title">资产图片</span>
+        <span class="title">维修图片</span>
         <div>
-          <img v-for="photo in photoUrls" v-bind:src="photo">
+          <img v-for="photo in repairedPhotoUrls" v-bind:src="photo">
         </div>
       </div>
     </div>
@@ -61,11 +77,15 @@
     data() {
       return {
         repairId:null,
-        photoUrls: [],
-        qrCode: null,
-        name: '',
-        description: '',
-        category: '',
+
+        equipName: "一层东入口道闸",
+        repairerName: "陆建惠",
+        repairerConpany: "上海雅丰",
+        repairerPhone: "18963651150",
+        repairedTime: 1552551866000,
+        repairPrice: 100,
+        problemDescription: "已经损坏，无法使用",
+        repairedPhotoUrls: []
       }
     }
   }
