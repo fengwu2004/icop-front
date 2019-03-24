@@ -32,6 +32,15 @@ export function getRepairById(query) {
   })
 }
 
+export function addEquip(data, params) {
+  return request({
+    url: '/s/equip/addEquip',
+    method: 'post',
+    data: data,
+    params: params
+  })
+}
+
 export function add(query) {
   return request({
     url: '/notice/add',

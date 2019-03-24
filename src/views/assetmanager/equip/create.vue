@@ -5,12 +5,12 @@
         <bread-crumb class="breadcrumb"></bread-crumb>
       </div>
       <div class="content">
-        <el-form :rules="rules" :model="currentEquip" ref="formData">
+        <el-form :rules="rules" :model="equip" ref="formData">
           <div class="title">
             <span class="redstar">*</span><span>资产名称</span><span class="subtitle">(限30个字)</span>
             <div style="margin-top: 1rem;">
               <el-form-item prop="name">
-                <el-input maxlength="30" placeholder="请输入资产名称" v-model="currentEquip.name"></el-input>
+                <el-input maxlength="30" placeholder="请输入资产名称" v-model="equip.name"></el-input>
               </el-form-item>
             </div>
           </div>
@@ -18,7 +18,7 @@
             <span class="redstar">*</span><span>描述</span><span class="subtitle">(限60个字)</span>
             <div style="margin-top: 1rem;">
               <el-form-item prop="describe">
-                <el-input type="textarea" maxlength="60" placeholder="请输入资产描述" v-model="currentEquip.describe"></el-input>
+                <el-input type="textarea" maxlength="60" placeholder="请输入资产描述" v-model="equip.describe"></el-input>
               </el-form-item>
             </div>
           </div>
@@ -26,15 +26,21 @@
             <span class="redstar">*</span><span>资产分类</span>
             <div style="margin-top: 1rem">
               <el-form-item prop="category">
-                <el-radio v-model="currentEquip.category" label="道闸">道闸</el-radio>
-                <el-radio v-model="currentEquip.category" label="安检门">安检门</el-radio>
-                <el-radio v-model="currentEquip.category" label="门禁">门禁</el-radio>
-                <el-radio v-model="currentEquip.category" label="摄像头">摄像头</el-radio>
+                <el-radio v-model="equip.category" label="道闸">道闸</el-radio>
+                <el-radio v-model="equip.category" label="安检门">安检门</el-radio>
+                <el-radio v-model="equip.category" label="门禁">门禁</el-radio>
+                <el-radio v-model="equip.category" label="摄像头">摄像头</el-radio>
               </el-form-item>
             </div>
           </div>
+          <div class="summary">
+            <span class="redstar">*</span><span>上传图片</span>
+            <div style="margin-top: 1rem">
+            <el-upload action="" :file-list="fileList" :auto-upload="false" :multiple="true" list-type="picture-card" :on-change="handleImageChange" :on-remove="handleRemove"><i class="el-icon-plus"></i></el-upload>
+            </div>
+          </div>
           <div class="btns">
-            <el-button @click="onCancelCreate">取消</el-button><el-button type="primary" @click="onEditorMessage">提交</el-button>
+            <el-button @click="onCancelCreate">取消</el-button><el-button type="primary" @click="onCreate">提交</el-button>
           </div>
         </el-form>
       </div>
@@ -44,9 +50,9 @@
 <script>
 
   import { trim, validateMsgSubject, validateMsgSummary } from "@/utils/validate";
-  import { mapGetters } from 'vuex'
   import PageWidget from '@/components/PageWidget/index'
   import BreadCrumb from '@/components/Breadcrumb/index'
+  import { addEquip } from "@/api/innermessage"
 
   export default {
     components: { PageWidget, BreadCrumb },
@@ -67,14 +73,11 @@
       }
 
       return {
-        value:'',
-        sendtype:'',
-        myCroppa:{},
-        currentEquip:{
+        fileList:[],
+        equip:{
           name:null,
           describe:null,
-          category:'道闸',
-          imageUrl:null
+          category:'道闸'
         },
         rules:{
           name:[
@@ -87,23 +90,37 @@
         }
       }
     },
-    computed: {
-      ...mapGetters([
-        'message'
-      ]),
-    },
     methods: {
-      onEditorMessage() {
+      handleImageChange(file, fileList) {
+
+        this.fileList = fileList
+      },
+      handleRemove(file, fileList) {
+
+        this.fileList = fileList
+      },
+      onCreate() {
+
+        var formdata = new FormData()
+
+        this.fileList.forEach(img=>{
+
+          formdata.append("imgFiles", img)
+        })
 
         this.$refs.formData.validate(valid => {
 
           if (valid) {
 
-            this.$store.dispatch('setMessage', this.currentMessage).then(res => {
+            addEquip(formdata, this.equip)
+              .then(res => {
 
-              let route = {name:'assetmanager_edit'}
+                this.$message({
+                  message: '恭喜你，这是一条成功消息',
+                  type: 'success'
+                });
 
-              this.$router.push(route)
+              this.$router.go(-1)
             })
           }
         })
@@ -165,52 +182,6 @@
   .summary {
 
     margin-top: 2rem;
-  }
-
-  .otherinfo {
-
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-
-  .messagetype {
-
-    .el-select {
-
-      margin-top: 1rem;
-    }
-  }
-
-  .sendtype {
-
-    width: 40%;
-    margin-top: 2rem;
-
-    .sendtyperadio {
-
-      margin-top: 1rem;
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-
-  .selectimg {
-
-    margin-top: 2rem;
-
-    .img-cropper {
-
-      width: 100%;
-      height: 300px;
-      border: 1px solid black;
-    }
-
-    .tip {
-
-      font-size: 0.6rem;
-      margin-top: 0.5rem;
-    }
   }
 
   .btns {
