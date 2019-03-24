@@ -213,28 +213,15 @@
       },
       handleDetail(index, row) {
 
-        let message = this.tableData.data[index]
+        let equip = this.tableData.data[index]
 
-        if (message.sendStrategy == 'TIMES' && new Date().getTime() > new Date(message.planSendTime).getTime()) {
+        this.$store.dispatch('setEquip', equip)
+          .then(() => {
 
-          this.$message.error('发布失败，已过计划发布时间');
+            let route = {name:'messagepush_inner_equipdetail', query:{equipId:equip.id}}
 
-          return
-        }
-
-        let data = {messageId:message.messageId}
-
-        console.log('发送', data)
-
-        sendNotice(data).then(() => {
-
-          this.$message({
-            type: 'success',
-            message: '发布成功!'
-          });
-
-          this.getList()
-        })
+            this.$router.push(route)
+          })
       },
       handleRepairList(index, row) {
 

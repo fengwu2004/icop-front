@@ -111,6 +111,12 @@ const inner = {
       component: _import('messagepush/inner/repairlist'),
       name: 'messagepush_inner_repairlist',
       meta: {title: 'messagepush_inner_repairlist', hidden:true},
+    },
+    {
+      path: '/messagepush/inner/equipdetail',
+      component: _import('messagepush/inner/equipdetail'),
+      name: 'messagepush_inner_equipdetail',
+      meta: {title: 'messagepush_inner_equipdetail', hidden:true},
     }
   ]
 }
