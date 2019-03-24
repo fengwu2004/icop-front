@@ -3,37 +3,36 @@
     <div>
       <div class="navibar">
         <bread-crumb class="breadcrumb"></bread-crumb>
-        <el-button @click="createEquip" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>录入资产</el-button>
       </div>
       <div class="content">
         <div class="header">
-          <equip-select ref="equipselector" @equipchange="onEquipTypeChange"></equip-select>
           <div class="operatemenu">
             <el-input clearable placeholder="输入相关信息查询" v-model="queryParam"></el-input><el-button style="margin-left: 1rem; background-color: #16325C;color: #FFFFFF !important;border-color: #16325C" type="primary" @click="handleSearch(queryParam)">查询</el-button>
           </div>
         </div>
         <el-table :data="tableData.data" v-loading="listLoading" :cell-style="cellstyle" :header-cell-style="headercellstyle" @filter-change="onFilterChange" :max-height="maxheight">
-          <el-table-column prop="name" label="资产名称" min-width="250"></el-table-column>
-          <el-table-column prop="category" label="分类" min-width="150"></el-table-column>
-          <el-table-column prop="status" label="状态" min-width="150"
-                           :filters="equipStatus"
-                           :filter-method="filterTag"
-                           :filter-multiple="false"
-                           column-key="pushStatus">
-            <template slot-scope="scope">
-              <span>{{ getEquipStatusStr(scope.row.status) }}</span>
-            </template>
-          </el-table-column>
           <el-table-column prop="updateTime" label="上次维修时间" min-width="200">
             <template slot-scope="scope">
               <span>{{ getUpateTime(scope.$index, scope.row) }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" min-width="250">
+          <el-table-column prop="repairerName" label="维修人员" min-width="150"></el-table-column>
+          <el-table-column prop="repairerConpany" label="所属公司" min-width="150"></el-table-column>
+          <el-table-column prop="repairerPhone" label="联系方式" min-width="150"></el-table-column>
+          <el-table-column prop="repairPrice" label="报价" min-width="100"></el-table-column>
+          <el-table-column prop="status" label="状态" min-width="250"
+                           :filters="repairStatus"
+                           :filter-method="filterTag"
+                           :filter-multiple="false"
+                           column-key="status">
+            <template slot-scope="scope">
+              <span>{{ getEquipStatusStr(scope.row.status) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" min-width="150">
             <template slot-scope="scope">
               <div>
-                <el-button type="primary" size="mini" @click="handleDetail(scope.$index, scope.row)">资产详情</el-button>
-                <el-button type="success" size="mini" @click="handleRepairList(scope.$index, scope.row)">维修记录</el-button>
+                <el-button type="primary" size="mini" @click="handleDetail(scope.$index, scope.row)" v-show="scope.row.status != 1">维修详情</el-button>
               </div>
             </template>
           </el-table-column>
@@ -48,20 +47,23 @@
 
 <script>
 
-  import { listEquip, deleteNotice, sendNotice} from "@/api/innermessage";
+  import { listEquipRepair, deleteNotice, sendNotice} from "@/api/innermessage";
   import { headercell, headercellcenter, normalcell, normalcellcenter } from "@/utils/tablecellstyle";
   import DateSelect from '@/components/DateSelect'
   import EquipSelect from '@/components/EquipSelect'
   import PageWidget from '@/components/PageWidget'
   import BreadCrumb from '@/components/Breadcrumb'
+  import { mapGetters } from 'vuex'
 
   export default {
     components: { PageWidget, EquipSelect, BreadCrumb },
     data() {
       return {
+        equipId:null,
         queryParam:'',
         maxheight:window.innerHeight - 250,
-        equipStatus:[{ text: '待维修', value: '3' }, { text: '正常', value: '1' }, {text: '维修中', value: '2'}],
+        repairStatus:[{ text: '已报修, 待接单', value: '1' }, { text: '已接单, 维修中', value: '2' }, {text: '待验收', value: '3'}, {text: '验收通过', value: '4'}, {text: '验收不过', value: '5'}],
+        statusDic:{1:'已报修, 待接单', 2:'已接单, 维修中', 3:'待验收', 0:'验收通过', 5:'验收不过'},
         listLoading:true,
         pushStatus:null,
         tableData: {
@@ -73,12 +75,16 @@
         },
       }
     },
+    computed: {
+      ...mapGetters([
+        'equip'
+      ]),
+    },
     mounted() {
 
-      this.$nextTick(() => {
+      this.equipId = this.$route.query.equipId
 
-        this.getList()
-      })
+      this.getList()
     },
     methods:{
       onFilterChange(filters) {
@@ -97,16 +103,6 @@
 
         this.getList()
       },
-      createEquip() {
-
-        this.$store.dispatch('resetEquip')
-          .then(() => {
-
-          let route = {name:'messagepush_inner_create'}
-
-          this.$router.push(route)
-        })
-      },
       getUpateTime(index, row) {
 
         let equipInfo = this.tableData.data[index]
@@ -120,17 +116,7 @@
       },
       getEquipStatusStr(status) {
 
-        if (status == '1') {
-
-          return '正常'
-        }
-
-        if (status === '2') {
-
-          return '待维修'
-        }
-
-        return '维修中'
+        return this.statusDic[status]
       },
       getQueryParams() {
 
@@ -138,18 +124,12 @@
 
           pageIndex:this.tableData.pageIndex,
           pageSize:this.tableData.pageSize,
+          equipId:this.equipId
         }
-
-        let equiptype = this.$refs.equipselector.type
 
         if (this.searching && this.queryParam && this.queryParam.length > 0) {
 
-          data.msgSubject = this.queryParam
-        }
-
-        if (this.pushStatus) {
-
-          data.pushStatus = this.pushStatus
+          data.queryKey = this.queryParam
         }
 
         return data
@@ -160,7 +140,7 @@
 
         const data = this.getQueryParams()
 
-        listEquip(data)
+        listEquipRepair(data)
           .then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
@@ -176,12 +156,12 @@
 
         console.log(respData)
 
-        let equipList = respData.equipList
+        let repairList = respData.repairList
 
         let tableData = {
 
-          totalCount:equipList.totalItem,
-          data:equipList,
+          totalCount:respData.totalItem,
+          data:repairList,
           pageSize:respData.pageSize,
           pageIndex:respData.pageIndex
         }
@@ -236,14 +216,14 @@
           this.getList()
         })
       },
-      handleRepairList(index, row) {
+      handleRepairInfos(index, row) {
 
         let equip = this.tableData.data[index]
 
-        this.$store.dispatch('setEquip', equip)
+        this.$store.dispatch('resetEquip')
           .then(() => {
 
-            let route = {name:'messagepush_inner_repairlist', query:{equipId:equip.id}}
+            let route = {name:'messagepush_inner_create'}
 
             this.$router.push(route)
           })
@@ -263,7 +243,7 @@
 
         const data = this.getQueryParams()
 
-        listEquip(data)
+        listEquipRepair(data)
           .then(respData => {
 
           this.tableData = this.getResponseTableData(respData)
@@ -336,7 +316,7 @@
 
       display: flex;
       justify-content: space-around;
-      align-items: center;
+      align-items: flex-end;
     }
 
     .el-button {

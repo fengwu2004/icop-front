@@ -8,6 +8,14 @@ export function listEquip(query) {
   })
 }
 
+export function listEquipRepair(query) {
+  return request({
+    url: '/s/repair/listEquipRepair',
+    method: 'post',
+    params: query
+  })
+}
+
 export function add(query) {
   return request({
     url: '/notice/add',

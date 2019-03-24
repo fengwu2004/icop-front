@@ -4,6 +4,7 @@ export default {
     messagepush_inner:'资产管理',
     messagepush_inner_edit:'填写内容',
     messagepush_inner_create:'录入资产',
+    messagepush_inner_repairlist:'维修记录',
     messagepush_area:'社区通知',
     messagepush_area_edit:'填写内容',
     messagepush_area_create:'录入资产',

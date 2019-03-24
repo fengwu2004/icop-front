@@ -1,10 +1,12 @@
-const currentEditMessage = {
+const currentEquip = {
   state: {
     equip: {
+      createTime:null,
       name:null,
       describe:null,
       category:'道闸',
-      imageUrl:null
+      imageUrl:null,
+      id:null,
     },
   },
   mutations: {
@@ -26,7 +28,8 @@ const currentEditMessage = {
         name:null,
         describe:null,
         category:'道闸',
-        imageUrl:null
+        imageUrl:null,
+        id:null
       }
     },
   },
@@ -59,6 +62,8 @@ const currentEditMessage = {
       })
     },
     resetEquip({ commit, state }) {
+      
+      console.log('resetEquip')
     
       return new Promise((resolve) => {
       
@@ -70,4 +75,4 @@ const currentEditMessage = {
   }
 }
 
-export default currentEditMessage
+export default currentEquip

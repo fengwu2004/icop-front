@@ -105,6 +105,12 @@ const inner = {
       component: _import('messagepush/inner/create'),
       name: 'messagepush_inner_create',
       meta: {title: 'messagepush_inner_create', hidden:true},
+    },
+    {
+      path: '/messagepush/inner/repairlist',
+      component: _import('messagepush/inner/repairlist'),
+      name: 'messagepush_inner_repairlist',
+      meta: {title: 'messagepush_inner_repairlist', hidden:true},
     }
   ]
 }
