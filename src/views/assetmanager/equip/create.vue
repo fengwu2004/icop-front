@@ -35,9 +35,9 @@
           </div>
           <div class="summary">
             <span class="redstar">*</span><span>上传图片</span>
-            <input type="file" id="uploadimgs" v-on:change="doChange"/>
+            <!--<input type="file" id="imageupload" v-on:change="doChange"/>-->
             <div style="margin-top: 1rem">
-            <el-upload action="" :file-list="fileList" :auto-upload="false" :multiple="true" list-type="picture-card" :on-change="handleImageChange" :on-remove="handleRemove"><i class="el-icon-plus"></i></el-upload>
+            <el-upload action="" :auto-upload="false" :multiple="true" list-type="picture-card" :on-change="handleImageChange" :on-remove="handleRemove"><i class="el-icon-plus"></i></el-upload>
             </div>
           </div>
           <div class="btns">
@@ -92,16 +92,6 @@
       }
     },
     methods: {
-      doChange() {
-
-        var file = document.querySelector("#uploadimgs").files[0];
-
-        var formdata = new FormData();
-
-        formdata.append("file",file)
-
-        console.log(file)
-      },
       handleImageChange(file, fileList) {
 
         console.log(file, fileList)
@@ -116,16 +106,12 @@
       },
       onCreate() {
 
-        console.log('ss')
-
         var formdata = new FormData()
 
-        this.fileList.forEach(img=>{
+        for (let i = 0; i < this.fileList.length; ++i) {
 
-          formdata.append("imgFiles", img)
-        })
-
-        console.log(this.fileList)
+          formdata.append("imgFiles", this.fileList[i].raw)
+        }
 
         this.$refs.formData.validate(valid => {
 
@@ -141,6 +127,10 @@
 
               this.$router.go(-1)
             })
+              .catch(msg=>{
+
+                this.$message.error(msg);
+              })
           }
         })
       },

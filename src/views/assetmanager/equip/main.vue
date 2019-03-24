@@ -180,7 +180,7 @@
 
         let tableData = {
 
-          totalCount:equipList.totalItem,
+          totalCount:equipList.length,
           data:equipList,
           pageSize:respData.pageSize,
           pageIndex:respData.pageIndex

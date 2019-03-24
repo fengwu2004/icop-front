@@ -36,8 +36,8 @@ export function addEquip(data, params) {
   return request({
     url: '/s/equip/addEquip',
     method: 'post',
-    data: data,
-    params: params
+    data:data,
+    params:params
   })
 }
 
