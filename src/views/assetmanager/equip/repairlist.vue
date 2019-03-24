@@ -32,7 +32,7 @@
           <el-table-column label="操作" min-width="150">
             <template slot-scope="scope">
               <div>
-                <el-button type="primary" size="mini" @click="handleDetail(scope.$index, scope.row)" v-show="scope.row.status != 1">维修详情</el-button>
+                <el-button type="primary" size="mini" @click="handleRepairInfos(scope.$index, scope.row)" v-show="scope.row.status != 1">维修详情</el-button>
               </div>
             </template>
           </el-table-column>
@@ -191,42 +191,13 @@
 
         return row.sendStatus === value;
       },
-      handleDetail(index, row) {
-
-        let message = this.tableData.data[index]
-
-        if (message.sendStrategy == 'TIMES' && new Date().getTime() > new Date(message.planSendTime).getTime()) {
-
-          this.$message.error('发布失败，已过计划发布时间');
-
-          return
-        }
-
-        let data = {messageId:message.messageId}
-
-        console.log('发送', data)
-
-        sendNotice(data).then(() => {
-
-          this.$message({
-            type: 'success',
-            message: '发布成功!'
-          });
-
-          this.getList()
-        })
-      },
       handleRepairInfos(index, row) {
 
         let equip = this.tableData.data[index]
 
-        this.$store.dispatch('resetEquip')
-          .then(() => {
+        let route = {name:'assetmanager_repairdetail', query:{id:equip.repairerId}}
 
-            let route = {name:'assetmanager_create'}
-
-            this.$router.push(route)
-          })
+        this.$router.push(route)
       },
       handleSearch(queryParam) {
 

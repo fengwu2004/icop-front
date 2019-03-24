@@ -117,6 +117,12 @@ const equip = {
       component: _import('assetmanager/equip/equipdetail'),
       name: 'assetmanager_equipdetail',
       meta: {title: 'assetmanager_equipdetail', hidden:true},
+    },
+    {
+      path: '/assetmanager/equip/repairdetail',
+      component: _import('assetmanager/equip/repairdetail'),
+      name: 'assetmanager_repairdetail',
+      meta: {title: 'assetmanager_repairdetail', hidden:true},
     }
   ]
 }

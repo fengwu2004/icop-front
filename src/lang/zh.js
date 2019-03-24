@@ -6,6 +6,7 @@ export default {
     assetmanager_create:'录入资产',
     assetmanager_repairlist:'维修记录',
     assetmanager_equipdetail:'资产详情',
+    assetmanager_repairdetail:'维修详情',
     messagepush_area:'社区通知',
     messagepush_area_edit:'填写内容',
     messagepush_area_create:'录入资产',

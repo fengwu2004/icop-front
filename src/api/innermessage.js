@@ -24,6 +24,14 @@ export function getEquipInfoById(query) {
   })
 }
 
+export function getRepairById(query) {
+  return request({
+    url: '/m/repair/getRepairById',
+    method: 'post',
+    params: query
+  })
+}
+
 export function add(query) {
   return request({
     url: '/notice/add',
