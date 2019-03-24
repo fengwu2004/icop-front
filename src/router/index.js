@@ -16,7 +16,7 @@ const repairer = {
   path: '/systemadmin/repairer',
   name: 'systemadmin_repairer',
   component:main,
-  meta: { title: 'systemadmin_repairer', icon: 'systemadmin_repairer', code:'122000,122100,122200,122300,122400,122500,122600,122700', activeicon:'systemadmin_repairer_active' },
+  meta: { title: 'systemadmin_repairer', icon: 'systemadmin_repairer', activeicon:'systemadmin_repairer_active' },
   children: [
     {
       path: '/systemadmin/repairer/main',
@@ -49,7 +49,7 @@ const role = {
   path: '/systemadmin/role',
   name: 'systemadmin_role',
   component:main,
-  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', code: '121000,121100,121200,121300,121400,121500', activeicon:'systemadmin_role_active' },
+  meta: { title: 'systemadmin_role', icon: 'systemadmin_role', activeicon:'systemadmin_role_active' },
   children: [
     {
       path: '/systemadmin/role/main',
@@ -75,7 +75,7 @@ const systemadmin = {
   path: '/systemadmin',
   component: Layout,
   name: 'systemadmin',
-  meta: { title: 'systemadmin', code:'120000,123000,123100,123200,123300,121000,121100,121200,121300,121400,121500,122000,122100,122200,122300,122400,122500,122600,122700' },
+  meta: { title: 'systemadmin' },
   children: [
     role,
     repairer
@@ -87,7 +87,7 @@ const equip = {
   path: '/assetmanager/equip',
   name: 'assetmanager',
   component:main,
-  meta: { title: 'assetmanager', icon: 'equip', code:'112000,112100,112200,112300,112400,112500', activeicon:'equip_active' },
+  meta: { title: 'assetmanager', icon: 'equip', activeicon:'equip_active' },
   children: [
     {
       path: '/assetmanager/equip/main',
@@ -125,7 +125,7 @@ const assetmanager = {
   path: '/messagepush',
   component: Layout,
   name: 'messagepush',
-  meta: { title: 'assetmanager', code:'110000,111000,111100,111200,111300,111400,111500,112000,112100,112200,112300,112400,112500' },
+  meta: { title: 'assetmanager' },
   children: [
     equip,
   ]

@@ -13,8 +13,8 @@
           <el-table-column prop="createTimeStr" label="创建时间" min-width="250"></el-table-column>
           <el-table-column label="操作" min-width="300">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')">编辑</el-button>
-              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')">删除</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" v-show="checkActionEnable('edit')" type="primary">编辑</el-button>
+              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" v-show="checkActionEnable('delete')" type="danger">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
