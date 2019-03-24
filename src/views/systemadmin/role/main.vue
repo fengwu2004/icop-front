@@ -2,7 +2,7 @@
   <div class="rolemain">
     <div class="navibar">
       <bread-crumb class="breadcrumb"></bread-crumb>
-      <div class="addRole" @click="handleAdd">添加管理员&nbsp&nbsp&nbsp&nbsp+</div>
+      <el-button @click="handleAdd" type="primary" style="margin-left: 1rem; background-color: #FF955B;color: #FFFFFF !important;border-color: #FF955B"><i class="el-icon-plus el-icon--left"></i>添加管理员</el-button>
     </div>
     <div class="content">
       <div class="table">

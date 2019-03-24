@@ -221,7 +221,7 @@
         this.$store.dispatch('setCurrentUser', user)
           .then(() => {
 
-          let route = {name:'systemadmin_user_detail'}
+          let route = {name:'systemadmin_repairer_detail'}
 
           this.$router.push(route)
         })
@@ -233,7 +233,7 @@
         this.$store.dispatch('setCurrentUser', user)
           .then(() => {
 
-            let route = {name:'systemadmin_user_edit'}
+            let route = {name:'systemadmin_repairer_edit'}
 
             this.$router.push(route)
           })

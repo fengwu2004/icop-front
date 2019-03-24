@@ -115,7 +115,7 @@
 
             this.$message.success("提交成功")
 
-            let route = {name:'systemadmin_user'}
+            let route = {name:'systemadmin_repairer'}
 
             this.$router.push(route)
           })

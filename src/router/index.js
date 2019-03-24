@@ -11,35 +11,35 @@ import Layout from '../views/layout/Layout'
 
 const main = { template: '<router-view ref="main"></router-view>' }
 
-const user = {
+const repairer = {
   
-  path: '/systemadmin/user',
-  name: 'systemadmin_user',
+  path: '/systemadmin/repairer',
+  name: 'systemadmin_repairer',
   component:main,
-  meta: { title: 'systemadmin_user', icon: 'systemadmin_user', code:'122000,122100,122200,122300,122400,122500,122600,122700', activeicon:'systemadmin_user_active' },
+  meta: { title: 'systemadmin_repairer', icon: 'systemadmin_repairer', code:'122000,122100,122200,122300,122400,122500,122600,122700', activeicon:'systemadmin_repairer_active' },
   children: [
     {
-      path: '/systemadmin/user/main',
-      component:_import('systemadmin/user/main'),
-      meta: { title: 'systemadmin_user_main', hidden:true },
+      path: '/systemadmin/repairer/main',
+      component:_import('systemadmin/repairer/main'),
+      meta: { title: 'systemadmin_repairer_main', hidden:true },
     },
     {
-      path: '/systemadmin/user/edit',
-      component: _import('systemadmin/user/edit'),
-      name: 'systemadmin_user_edit',
-      meta: { title: 'systemadmin_user_edit', hidden:true },
+      path: '/systemadmin/repairer/edit',
+      component: _import('systemadmin/repairer/edit'),
+      name: 'systemadmin_repairer_edit',
+      meta: { title: 'systemadmin_repairer_edit', hidden:true },
     },
     {
-      path: '/systemadmin/user/detail',
-      component: _import('systemadmin/user/detail'),
-      name: 'systemadmin_user_detail',
-      meta: { title: 'systemadmin_user_detail', hidden:true },
+      path: '/systemadmin/repairer/detail',
+      component: _import('systemadmin/repairer/detail'),
+      name: 'systemadmin_repairer_detail',
+      meta: { title: 'systemadmin_repairer_detail', hidden:true },
     },
     {
-      path: '/systemadmin/user/rolesetting',
-      component: _import('systemadmin/user/rolesetting'),
-      name: 'systemadmin_user_rolesetting',
-      meta: {title: 'systemadmin_user_rolesetting', hidden:true },
+      path: '/systemadmin/repairer/rolesetting',
+      component: _import('systemadmin/repairer/rolesetting'),
+      name: 'systemadmin_repairer_rolesetting',
+      meta: {title: 'systemadmin_repairer_rolesetting', hidden:true },
     }
   ]
 }
@@ -78,16 +78,16 @@ const systemadmin = {
   meta: { title: 'systemadmin', code:'120000,123000,123100,123200,123300,121000,121100,121200,121300,121400,121500,122000,122100,122200,122300,122400,122500,122600,122700' },
   children: [
     role,
-    user
+    repairer
   ]
 }
 
-const inner = {
+const equip = {
   
   path: '/assetmanager/equip',
   name: 'assetmanager',
   component:main,
-  meta: { title: 'assetmanager', icon: 'innerpush', code:'112000,112100,112200,112300,112400,112500', activeicon:'innerpush_active' },
+  meta: { title: 'assetmanager', icon: 'equip', code:'112000,112100,112200,112300,112400,112500', activeicon:'equip_active' },
   children: [
     {
       path: '/assetmanager/equip/main',
@@ -127,7 +127,7 @@ const assetmanager = {
   name: 'messagepush',
   meta: { title: 'assetmanager', code:'110000,111000,111100,111200,111300,111400,111500,112000,112100,112200,112300,112400,112500' },
   children: [
-    inner,
+    equip,
   ]
 }
 
