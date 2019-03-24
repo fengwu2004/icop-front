@@ -74,7 +74,9 @@
 
           let {photoUrls, qrCode, name, description, category} = res
 
-          this.photoUrls = photoUrls
+          this.photoUrls = photoUrls.split(',')
+
+          console.log(this.photoUrls)
 
           this.qrCode = qrCode
 
