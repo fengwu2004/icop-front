@@ -35,6 +35,7 @@
           </div>
           <div class="summary">
             <span class="redstar">*</span><span>上传图片</span>
+            <input type="file" id="uploadimgs" v-on:change="doChange"/>
             <div style="margin-top: 1rem">
             <el-upload action="" :file-list="fileList" :auto-upload="false" :multiple="true" list-type="picture-card" :on-change="handleImageChange" :on-remove="handleRemove"><i class="el-icon-plus"></i></el-upload>
             </div>
@@ -91,15 +92,31 @@
       }
     },
     methods: {
+      doChange() {
+
+        var file = document.querySelector("#uploadimgs").files[0];
+
+        var formdata = new FormData();
+
+        formdata.append("file",file)
+
+        console.log(file)
+      },
       handleImageChange(file, fileList) {
+
+        console.log(file, fileList)
 
         this.fileList = fileList
       },
       handleRemove(file, fileList) {
 
+        console.log(file, fileList)
+
         this.fileList = fileList
       },
       onCreate() {
+
+        console.log('ss')
 
         var formdata = new FormData()
 
@@ -107,6 +124,8 @@
 
           formdata.append("imgFiles", img)
         })
+
+        console.log(this.fileList)
 
         this.$refs.formData.validate(valid => {
 

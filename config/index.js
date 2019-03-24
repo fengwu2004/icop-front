@@ -58,10 +58,10 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../icopoms/index.html'),
+    index: path.resolve(__dirname, '../ztoasset/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../icopoms'),
+    assetsRoot: path.resolve(__dirname, '../ztoasset'),
     assetsSubDirectory: 'static',
 
     // you can set by youself according to actual condition
